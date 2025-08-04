@@ -1,0 +1,38 @@
+{
+  "home": {},
+  "Language": {
+    "romanian": "Romana",
+    "russian": "Rusa"
+  },
+  "Date": {
+    "pickADate": "Выберите дату",
+    "weekly": "Еженедельно",
+    "monthly": "Ежемесячно",
+    "yearly": "Ежегодно",
+    "january": "Январь",
+    "february": "Февраль",
+    "march": "Март",
+    "april": "Апрель",
+    "may": "Май",
+    "june": "Июнь",
+    "july": "Июль",
+    "august": "Август",
+    "september": "Сентябрь",
+    "october": "Октябрь",
+    "november": "Ноябрь",
+    "december": "Декабрь",
+    "mon": "Пн",
+    "tue": "Вт",
+    "wed": "Ср",
+    "thu": "Чт",
+    "fri": "Пт",
+    "sat": "Сб",
+    "sun": "Вс"
+  },
+  "Navigation": {
+    "schedule": "Orar",
+    "report": "Raport BAR",
+    "breakList": "Lista de pauze",
+    "ordersList": "Lista de comenzi"
+  }
+}
