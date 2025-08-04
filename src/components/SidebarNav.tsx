@@ -72,7 +72,12 @@ const SidebarNav = () => {
 
       <SidebarFooter>
         <SidebarMenu className="flex flex-row justify-between items-center gap-4 px-6">
-          <LogOut className=" rotate-180 text-blue-600" />
+          <SidebarMenuButton
+            className="cursor-pointer"
+            onClick={() => router.push(`/`)}
+          >
+            <LogOut className=" rotate-180 text-blue-600" />
+          </SidebarMenuButton>
 
           <LanguageSwitcher />
 
