@@ -68,9 +68,9 @@ export default function GoogleSheetTable() {
 
                   let borderClass = "";
                   if (isFirstRow || isFirstThreeColumns) {
-                    borderClass = `text-center text-sm ${
-                      j === 3 ? "text-black" : "text-blue-600"
-                    } `;
+                    borderClass = `text-center ${
+                      j === 4 ? "text-lg text-black!" : "text-sm"
+                    } h-5!  ${j === 3 ? "text-black pl-4" : "text-blue-600"} `;
                   } else if (!isFirstThreeColumns) {
                     borderClass = "border border-gray-400";
                   }
