@@ -29,7 +29,6 @@ const SidebarNav = () => {
           {SIDEBAR_NAVIGATION.map((item) => {
             const isActivePath = pathname === item.url;
 
-            console.log("isActivePath", isActivePath);
             return (
               <SidebarMenuButton
                 key={item.title}
