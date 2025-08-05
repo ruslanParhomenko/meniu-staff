@@ -1,4 +1,6 @@
+import Table from "@/components/BreakListView";
+
 const Page = () => {
-  return <p>breakList</p>;
+  return <Table />;
 };
 export default Page;

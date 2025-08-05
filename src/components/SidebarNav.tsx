@@ -57,16 +57,6 @@ const SidebarNav = () => {
           </SidebarMenu>
         </SidebarContent>
 
-<<<<<<< HEAD
-      <SidebarFooter>
-        <SidebarMenu className="flex flex-row justify-between items-center gap-4 px-6">
-          <SidebarMenuButton
-            className="cursor-pointer"
-            onClick={() => router.push(`/`)}
-          >
-            <LogOut className=" rotate-180 text-blue-600" />
-          </SidebarMenuButton>
-=======
         <SidebarFooter className="pb-20 ">
           <SidebarMenu className="flex flex-row justify-between items-center gap-4 px-6">
             <div
@@ -75,7 +65,6 @@ const SidebarNav = () => {
             >
               <LogOut className=" rotate-180 text-blue-600" />
             </div>
->>>>>>> c4fdd807280adf7e151205ca087ba6f9f6876486
 
             <LanguageSwitcher />
           </SidebarMenu>
