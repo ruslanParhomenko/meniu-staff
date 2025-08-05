@@ -47,45 +47,49 @@ export default function GoogleSheetTable() {
   if (error) return <div>Ошибка: {error}</div>;
   if (!data.length) return <div>Загрузка...</div>;
   return (
-    <table className="border-collapse w-full">
-      <tbody>
-        {data.map((row, i) => {
-          return (
-            <tr key={i}>
-              {row.map((cell, j) => {
-                const isText =
-                  typeof cell === "string" &&
-                  cell.trim() !== "" &&
-                  isNaN(Number(cell));
+    <div className="w-full overflow-x-auto">
+      <table className="min-w-max table-auto">
+        <tbody>
+          {data.map((row, i) => {
+            return (
+              <tr key={i}>
+                {row.map((cell, j) => {
+                  const isText =
+                    typeof cell === "string" &&
+                    cell.trim() !== "" &&
+                    isNaN(Number(cell));
 
-                const isFirstRow = i === 0 || i === 1 || i === data.length - 1;
-                const isFirstThreeColumns = j < 4;
+                  const isFirstRow =
+                    i === 0 || i === 1 || i === data.length - 1;
+                  const isFirstThreeColumns = j < 4;
 
-                let borderClass = "";
-                if (isFirstRow || isFirstThreeColumns) {
-                  borderClass = `text-center text-sm ${
-                    j === 3 ? "text-black" : "text-blue-600"
-                  } `;
-                } else if (!isFirstThreeColumns) {
-                  borderClass = "border border-gray-400";
-                }
+                  let borderClass = "";
+                  if (isFirstRow || isFirstThreeColumns) {
+                    borderClass = `text-center text-sm ${
+                      j === 3 ? "text-black" : "text-blue-600"
+                    } `;
+                  } else if (!isFirstThreeColumns) {
+                    borderClass = "border border-gray-400";
+                  }
 
-                return (
-                  <td
-                    key={j}
-                    className={`
-                    ${borderClass} p-2 h-2 text-center
+                  return (
+                    <td
+                      key={j}
+                      className={`
+                    ${borderClass}  h-10 w-10 text-center
                     ${isText ? " text-blue-600" : ""}
+                    ${j === 4 ? "min-w-50" : ""}
                   `}
-                  >
-                    {cell}
-                  </td>
-                );
-              })}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+                    >
+                      {cell}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
   );
 }
