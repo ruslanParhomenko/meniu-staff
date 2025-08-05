@@ -2,9 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 
-const SHEET_ID = "1E5CLcGxhOw6vwkyvsA7jIk56kaPWpHoeNKlhiLfYIXw";
-const API_KEY = "AIzaSyAmcL2LEcowuzCfEUCK4s4XtiCMvPqcwBc";
-const RANGE = "Waiters!D55:AM75"; // Твой диапазон
+const SHEET_ID = process.env.SHEET_ID;
+const API_KEY = process.env.API_KEY;
+const RANGE = "Waiters!D55:AM75";
+
+console.log("SHEET_ID", SHEET_ID);
 
 export default function GoogleSheetTable() {
   const [data, setData] = useState<string[][]>([]);
