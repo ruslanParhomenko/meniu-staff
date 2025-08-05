@@ -16,6 +16,7 @@ import {
 } from "./ui/sidebar";
 import { cn } from "@/lib/utils";
 import LanguageSwitcher from "./switches/LanguageSwitch";
+import { SidebarToggleButton } from "./switches/SidebarToggleButton";
 
 const SidebarNav = () => {
   const pathname = usePathname();
@@ -23,44 +24,49 @@ const SidebarNav = () => {
   const t = useTranslations("Navigation");
 
   return (
-    <Sidebar className="border-none">
-      <SidebarContent>
-        <SidebarMenu className="flex h-full flex-col gap-4 pt-10 ">
-          {SIDEBAR_NAVIGATION.map((item) => {
-            const isActivePath = pathname === item.url;
+    <>
+      <div className="flex items-center p-4 lg:hidden">
+        <SidebarToggleButton />
+      </div>
+      <Sidebar className="border-none">
+        <SidebarContent>
+          <SidebarMenu className="flex h-full flex-col gap-4 pt-10 ">
+            {SIDEBAR_NAVIGATION.map((item) => {
+              const isActivePath = pathname === item.url;
 
-            return (
-              <SidebarMenuButton
-                key={item.title}
-                isActive={isActivePath}
-                asChild
-                className={cn("text-blue-600 ", {
-                  "bg-blue-300! text-black hover:bg-blue-600 [&>span]:text-black":
-                    isActivePath,
-                })}
-              >
-                <Link href={item.url}>
-                  <span className="text-base">{t(item.title)}</span>
-                </Link>
-              </SidebarMenuButton>
-            );
-          })}
-        </SidebarMenu>
-      </SidebarContent>
+              return (
+                <SidebarMenuButton
+                  key={item.title}
+                  isActive={isActivePath}
+                  asChild
+                  className={cn("text-blue-600 ", {
+                    "bg-blue-300! text-black hover:bg-blue-600 [&>span]:text-black":
+                      isActivePath,
+                  })}
+                >
+                  <Link href={item.url}>
+                    <span className="text-base">{t(item.title)}</span>
+                  </Link>
+                </SidebarMenuButton>
+              );
+            })}
+          </SidebarMenu>
+        </SidebarContent>
 
-      <SidebarFooter className="pb-20 ">
-        <SidebarMenu className="flex flex-row justify-between items-center gap-4 px-6">
-          <div
-            className="cursor-pointer"
-            onClick={() => signOut({ callbackUrl: "/" })}
-          >
-            <LogOut className=" rotate-180 text-blue-600" />
-          </div>
+        <SidebarFooter className="pb-20 ">
+          <SidebarMenu className="flex flex-row justify-between items-center gap-4 px-6">
+            <div
+              className="cursor-pointer"
+              onClick={() => signOut({ callbackUrl: "/" })}
+            >
+              <LogOut className=" rotate-180 text-blue-600" />
+            </div>
 
-          <LanguageSwitcher />
-        </SidebarMenu>
-      </SidebarFooter>
-    </Sidebar>
+            <LanguageSwitcher />
+          </SidebarMenu>
+        </SidebarFooter>
+      </Sidebar>
+    </>
   );
 };
 

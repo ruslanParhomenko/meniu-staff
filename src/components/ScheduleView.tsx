@@ -11,6 +11,7 @@ export default function GoogleSheetTable() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    let intervalId: NodeJS.Timeout;
     async function fetchSheet() {
       try {
         const response = await fetch(
@@ -40,6 +41,9 @@ export default function GoogleSheetTable() {
       }
     }
     fetchSheet();
+    intervalId = setInterval(fetchSheet, 60000); // раз в 60 секунд
+
+    return () => clearInterval(intervalId);
   }, []);
 
   if (error) return <div>Ошибка: {error}</div>;
