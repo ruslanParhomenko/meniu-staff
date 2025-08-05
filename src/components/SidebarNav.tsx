@@ -2,7 +2,7 @@
 import { BarChart2, LineChart, List, LogOut, Pause } from "lucide-react";
 
 import { Link, usePathname } from "@/i18n/navigation";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 
 import React from "react";
 
@@ -22,6 +22,7 @@ const SidebarNav = () => {
   const pathname = usePathname();
 
   const t = useTranslations("Navigation");
+  const { data: session } = useSession();
 
   return (
     <>
@@ -30,6 +31,9 @@ const SidebarNav = () => {
       </div>
       <Sidebar className="border-none">
         <SidebarContent>
+          <span className="text-xs pt-4 pl-2">
+            {session?.user?.email?.split("@")[0] || "BAR"}
+          </span>
           <SidebarMenu className="flex h-full flex-col gap-4 pt-10 ">
             {SIDEBAR_NAVIGATION.map((item) => {
               const isActivePath = pathname === item.url;

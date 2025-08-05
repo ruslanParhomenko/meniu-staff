@@ -10,14 +10,16 @@ const AuthRedirect = ({ children }: { children: React.ReactNode }) => {
 
   const { data: session } = useSession();
 
-  console.log("session", session);
+  console.log("Session data:", session);
 
   useEffect(() => {
+    if (session === undefined) return;
+
     if (session?.user) {
       router.replace("/report");
+    } else {
+      setIsCheckingAuth(false);
     }
-
-    setIsCheckingAuth(false);
   }, [session, router]);
 
   if (isCheckingAuth) return <div>Loading...</div>;
