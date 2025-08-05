@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 
-const SHEET_ID = process.env.SHEET_ID;
-const API_KEY = process.env.API_KEY;
+const SHEET_ID = process.env.NEXT_PUBLIC_SHEET_ID;
+const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const RANGE = "Waiters!D55:AM75";
 
 export default function GoogleSheetTable() {
@@ -40,8 +40,7 @@ export default function GoogleSheetTable() {
       }
     }
     fetchSheet();
-    const intervalId = setInterval(fetchSheet, 60000); // раз в 60 секунд
-
+    const intervalId = setInterval(fetchSheet, 70000);
     return () => clearInterval(intervalId);
   }, []);
 
