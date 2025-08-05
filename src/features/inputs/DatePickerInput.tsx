@@ -42,12 +42,12 @@ function DatePickerInput({ fieldName, fieldLabel }: TextInputProps) {
       name={fieldName}
       render={({ field }) => {
         return (
-          <FormItem className="flex w-1/6  gap-3">
-            <FormLabel className=" align-baseline text-blue-700 text-2xl flex-1/3 ">
+          <FormItem className="flex max-w-xs  gap-3">
+            <FormLabel className=" align-baseline text-blue-700 text-2xl flex-1/4 ">
               {fieldLabel}
             </FormLabel>
             <Popover>
-              <PopoverTrigger asChild className="flex-2/3 ">
+              <PopoverTrigger asChild className="flex-3/4 ">
                 <FormControl className="w-full">
                   <Button
                     variant={"outline"}

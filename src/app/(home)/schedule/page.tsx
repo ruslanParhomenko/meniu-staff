@@ -1,5 +1,7 @@
+import GoogleSheetTable from "@/components/ScheduleView";
+
 const Page = () => {
-  return <p>shedule</p>;
+  return <GoogleSheetTable />;
 };
 
 export default Page;

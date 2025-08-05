@@ -11,9 +11,9 @@ const NavPage = ({
     <SidebarProvider>
       <SidebarNav />
 
-      <div className="flex w-full flex-col">
-        <section className="h-full w-full">
-          <div className="rounded-none bg-white ">
+      <div className="flex w-full flex-col  bg-gray-50">
+        <section className="h-full w-full p-2 pl-4">
+          <div className="rounded-2xl bg-white p-6 ">
             {" "}
             <Form>{children}</Form>
           </div>
