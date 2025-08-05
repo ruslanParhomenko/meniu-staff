@@ -1,7 +1,6 @@
 import AuthRedirect from "@/components/AuthRedirect";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
-import Image from "next/image";
 
 export default function Home() {
   return (
@@ -16,7 +15,7 @@ export default function Home() {
             className="w-full font-bold md:max-w-[40%] lg:max-w-[30%]"
             asChild
           >
-            <Link href={"/api/auth/signin"}>Get Started</Link>
+            <Link href={"/signin"}>Get Started</Link>
           </Button>
         </div>
       </main>

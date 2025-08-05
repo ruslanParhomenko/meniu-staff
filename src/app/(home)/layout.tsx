@@ -12,7 +12,7 @@ const NavPage = ({
       <SidebarNav />
 
       <div className="flex w-full flex-col">
-        <section className="h-full w-full">
+        <section className="h-full w-full px-10 pt-10">
           <div className="rounded-none bg-white ">
             {" "}
             <Form>{children}</Form>

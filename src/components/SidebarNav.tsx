@@ -1,22 +1,16 @@
 "use client";
-
-// import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { BarChart2, LineChart, List, LogOut, Pause } from "lucide-react";
 
-import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
+import { signOut } from "next-auth/react";
 
 import React from "react";
-
-// import { postAuthLogout } from "@/api/auth/logout";
-
-// import { QUERY_KEYS } from "@/constants/queryKeys";
 
 import { useTranslations } from "next-intl";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
 } from "./ui/sidebar";
@@ -24,24 +18,9 @@ import { cn } from "@/lib/utils";
 import LanguageSwitcher from "./switches/LanguageSwitch";
 
 const SidebarNav = () => {
-  const router = useRouter();
   const pathname = usePathname();
-  // const queryClient = useQueryClient();
 
   const t = useTranslations("Navigation");
-
-  // const logoutMutation = useMutation({
-  //   mutationFn: postAuthLogout,
-  //   onSuccess: () => {
-  //     queryClient.invalidateQueries({
-  //       queryKey: [QUERY_KEYS.userData],
-  //     });
-
-  //     router.push(`/sign-in`);
-  //   },
-  // });
-
-  console.log("pathname", pathname);
 
   return (
     <Sidebar className="border-none">
@@ -57,7 +36,7 @@ const SidebarNav = () => {
                 isActive={isActivePath}
                 asChild
                 className={cn("text-blue-600 ", {
-                  "bg-blue-600! text-white hover:bg-blue-600 [&>span]:text-white":
+                  "bg-blue-300! text-black hover:bg-blue-600 [&>span]:text-black":
                     isActivePath,
                 })}
               >
@@ -70,24 +49,16 @@ const SidebarNav = () => {
         </SidebarMenu>
       </SidebarContent>
 
-      <SidebarFooter>
+      <SidebarFooter className="pb-20 ">
         <SidebarMenu className="flex flex-row justify-between items-center gap-4 px-6">
-          <SidebarMenuButton
+          <div
             className="cursor-pointer"
-            onClick={() => router.push(`/`)}
+            onClick={() => signOut({ callbackUrl: "/" })}
           >
             <LogOut className=" rotate-180 text-blue-600" />
-          </SidebarMenuButton>
+          </div>
 
           <LanguageSwitcher />
-
-          {/* <SidebarMenuButton
-            onClick={() => router.push(`/settings/company-info`)}
-          >
-            <Settings className="h-6! w-6! text-blue-600" />
-
-            <span className="text-base text-[#5F6165]">{t("settings")}</span>
-          </SidebarMenuButton> */}
         </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
