@@ -19,7 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Form } from "../ui/form";
 import SelectInput from "../selector/SelectInput";
-import { SubmitHandler, useForm, useWatch } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import {
   BREAK_LIST_DEFAULT,
   BreakListItem,
@@ -38,11 +38,6 @@ type BreakListFormValues = {
 export const BreakListForm = () => {
   const t = useTranslations("UI");
 
-  const isBoulean = (index: number, time: string) => {
-    const fieldName = `rows[${index}][hours][${time}]`;
-    const selectedValue = useWatch({ name: fieldName });
-    return selectedValue === "X";
-  };
   const columns: ColumnDef<BreakListItem>[] = [
     {
       accessorKey: "id",
@@ -83,7 +78,6 @@ export const BreakListForm = () => {
             fieldName={`rows[${row.index}][hours][${time}]`}
             fieldLabel=""
             data={MINUTES_SELECT}
-            disabled={isBoulean(row.index, time)}
           />
         );
       },

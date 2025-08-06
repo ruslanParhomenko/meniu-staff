@@ -61,12 +61,12 @@ function SelectInput({
                 <Select
                   onValueChange={field.onChange}
                   value={field.value}
-                  disabled={disabled}
+                  disabled={disabled ?? field.value === "X" ? true : false}
                 >
                   <FormControl>
                     <SelectTrigger
                       className={`flex h-14  justify-center min-w-10 text-base [&>svg]:hidden ${
-                        disabled ? "bg-gray-600" : ""
+                        field.value === "X" ? "bg-gray-600" : ""
                       }`}
                     >
                       <SelectValue placeholder={placeHolder} />
