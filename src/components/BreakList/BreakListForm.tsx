@@ -37,6 +37,12 @@ type BreakListFormValues = {
 
 export const BreakListForm = () => {
   const t = useTranslations("UI");
+
+  const isBoulean = (index: number, time: string) => {
+    const fieldName = `rows[${index}][hours][${time}]`;
+    const selectedValue = useWatch({ name: fieldName });
+    return selectedValue === "X";
+  };
   const columns: ColumnDef<BreakListItem>[] = [
     {
       accessorKey: "id",
@@ -72,14 +78,12 @@ export const BreakListForm = () => {
       }: {
         row: import("@tanstack/react-table").Row<BreakListItem>;
       }) => {
-        const fieldName = `rows[${row.index}][hours][${time}]`;
-        const selectedValue = useWatch({ name: fieldName });
         return (
           <SelectInput
             fieldName={`rows[${row.index}][hours][${time}]`}
             fieldLabel=""
             data={MINUTES_SELECT}
-            disabled={selectedValue === "X"}
+            disabled={isBoulean(row.index, time)}
           />
         );
       },
