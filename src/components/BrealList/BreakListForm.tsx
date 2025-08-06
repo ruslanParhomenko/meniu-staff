@@ -65,7 +65,11 @@ export const BreakListForm = () => {
     ...TIME_LABELS.map((time) => ({
       accessorKey: time,
       header: time,
-      cell: ({ row }: { row: import("@tanstack/react-table").Row<any> }) => {
+      cell: ({
+        row,
+      }: {
+        row: import("@tanstack/react-table").Row<BreakListItem>;
+      }) => {
         return (
           <SelectInput
             fieldName={`rows[${row.index}][hours][${time}]`}
