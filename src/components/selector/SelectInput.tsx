@@ -46,15 +46,29 @@ function SelectInput({
           name={fieldName}
           render={() => {
             return (
-              <FormItem className="w-full">
-                <Label>{fieldLabel}</Label>
+              <FormItem
+                className={`${fieldLabel ? "flex gap-x-4 " : ""} w-full`}
+              >
+                <Label
+                  className={`${fieldLabel ? "w-2/3" : ""} ${
+                    field.value && field.value !== 0
+                      ? "text-blue-600 font-bold"
+                      : ""
+                  }`}
+                >
+                  {fieldLabel}
+                </Label>
                 <Select
                   onValueChange={field.onChange}
                   value={field.value}
                   disabled={disabled}
                 >
                   <FormControl>
-                    <SelectTrigger className="flex h-14 w-full justify-center py-2 text-base [&>svg]:hidden">
+                    <SelectTrigger
+                      className={`flex h-14  justify-center min-w-10 text-base [&>svg]:hidden ${
+                        disabled ? "bg-gray-600" : ""
+                      }`}
+                    >
                       <SelectValue placeholder={placeHolder} />
                     </SelectTrigger>
                   </FormControl>

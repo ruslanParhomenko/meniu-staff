@@ -36,7 +36,7 @@ function DatePickerInput({ fieldName }: { fieldName: string }) {
         return (
           <FormItem className="w-3xs">
             <Popover>
-              <PopoverTrigger>
+              <PopoverTrigger asChild>
                 <FormControl className="w-full">
                   <Button
                     variant={"outline"}

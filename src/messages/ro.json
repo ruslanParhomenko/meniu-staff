@@ -1,5 +1,13 @@
 {
-  "home": {},
+  "UI": {
+    "close": "Inchide",
+    "open": "Deschide",
+    "toggle": "Comutare",
+    "save": "Salveaza",
+    "cancel": " Anuleaza",
+    "delete": "Sterge",
+    "send": "Trimite"
+  },
   "Language": {
     "romanian": "Romana",
     "russian": "Rusa"

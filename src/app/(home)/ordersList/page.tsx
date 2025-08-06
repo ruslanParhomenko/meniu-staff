@@ -1,4 +1,6 @@
+import OrderListTTNForm from "@/components/orderList/OrderListTTNForm";
+
 const Page = () => {
-  return <p>orderList</p>;
+  return <OrderListTTNForm />;
 };
 export default Page;

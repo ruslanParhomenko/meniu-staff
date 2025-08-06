@@ -19,7 +19,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Form } from "../ui/form";
 import SelectInput from "../selector/SelectInput";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm, useWatch } from "react-hook-form";
 import {
   BREAK_LIST_DEFAULT,
   BreakListItem,
@@ -28,6 +28,7 @@ import {
   TIME_LABELS,
 } from "./constant";
 import DatePickerInput from "@/features/inputs/DatePickerInput";
+import { useTranslations } from "next-intl";
 
 type BreakListFormValues = {
   date?: Date;
@@ -35,12 +36,13 @@ type BreakListFormValues = {
 };
 
 export const BreakListForm = () => {
+  const t = useTranslations("UI");
   const columns: ColumnDef<BreakListItem>[] = [
     {
       accessorKey: "id",
-      size: 12,
-      minSize: 12,
-      maxSize: 12,
+      size: 14,
+      minSize: 14,
+      maxSize: 14,
       cell: (info) => (
         <input
           name={`rows[${info.row.index}][id]`}
@@ -51,9 +53,9 @@ export const BreakListForm = () => {
     },
     {
       accessorKey: "name",
-      size: 160,
-      minSize: 160,
-      maxSize: 160,
+      size: 150,
+      minSize: 150,
+      maxSize: 150,
       cell: ({ row }) => (
         <SelectInput
           fieldName={`rows[${row.index}][name]`}
@@ -70,11 +72,14 @@ export const BreakListForm = () => {
       }: {
         row: import("@tanstack/react-table").Row<BreakListItem>;
       }) => {
+        const fieldName = `rows[${row.index}][hours][${time}]`;
+        const selectedValue = useWatch({ name: fieldName });
         return (
           <SelectInput
             fieldName={`rows[${row.index}][hours][${time}]`}
             fieldLabel=""
             data={MINUTES_SELECT}
+            disabled={selectedValue === "X"}
           />
         );
       },
@@ -87,9 +92,9 @@ export const BreakListForm = () => {
     columnResizeMode: "onChange",
     getCoreRowModel: getCoreRowModel(),
     defaultColumn: {
-      size: 30,
-      minSize: 30,
-      maxSize: 30,
+      size: 38,
+      minSize: 38,
+      maxSize: 38,
     },
   });
   const handleSubmit: SubmitHandler<BreakListFormValues> = (data) => {
@@ -98,7 +103,6 @@ export const BreakListForm = () => {
 
   const form = useForm({
     defaultValues: {
-      date: undefined,
       rows: BREAK_LIST_DEFAULT.map((item) => ({
         id: item.id,
         name: item.name,
@@ -107,15 +111,8 @@ export const BreakListForm = () => {
     },
   });
 
-  // const form = useForm<BreakListFormValues>({
-  //   defaultValues: {
-  //     date: undefined,
-  //     rows: BREAK_LIST_DEFAULT,
-  //   },
-  // });
-
   return (
-    <div className="w-full p-4">
+    <div className="w-full ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
           <DatePickerInput fieldName="date" />
@@ -125,7 +122,10 @@ export const BreakListForm = () => {
                 <TableHead />
                 <TableHead />
                 {TIME_LABELS.map((h, i) => (
-                  <TableHead key={i} className="text-center">
+                  <TableHead
+                    key={i}
+                    className="text-center text-blue-600 font-bold"
+                  >
                     {h}
                   </TableHead>
                 ))}
@@ -152,8 +152,11 @@ export const BreakListForm = () => {
               })}
             </TableBody>
           </Table>
-
-          <Button type="submit">Сохранить</Button>
+          <div className="flex justify-start items-center p-5 pt-20">
+            <Button type="submit" variant={"default"}>
+              {t("save")}
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
