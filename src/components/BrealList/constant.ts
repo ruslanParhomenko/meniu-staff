@@ -1,4 +1,4 @@
-export const BREAK_LIST_DEFAULT = [
+export const BREAK_LIST_DEFAULT: BreakListItem[] = [
   {
     id: "B8",
     name: "Аня",
@@ -244,7 +244,7 @@ export const BREAK_LIST_DEFAULT = [
 export type BreakListItem = {
   id: string;
   name: string;
-  hours: { [key: string]: string };
+  hours: Record<string, string>[];
 };
 
 export const MINUTES_SELECT = [

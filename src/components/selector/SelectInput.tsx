@@ -20,7 +20,7 @@ import { Label } from "../ui/label";
 type Props = {
   fieldName: string;
   fieldLabel?: string;
-  fieldIndex?: number;
+
   placeHolder?: string;
   data: { label: string; value: string }[];
   disabled?: boolean;
@@ -28,7 +28,6 @@ type Props = {
 
 function SelectInput({
   fieldName,
-  fieldIndex,
   placeHolder,
   data,
   disabled,

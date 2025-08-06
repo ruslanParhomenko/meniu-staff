@@ -22,14 +22,20 @@ import SelectInput from "../selector/SelectInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   BREAK_LIST_DEFAULT,
+  BreakListItem,
   MINUTES_SELECT,
   NAMES_SELECT,
   TIME_LABELS,
 } from "./constant";
 import DatePickerInput from "@/features/inputs/DatePickerInput";
 
+type BreakListFormValues = {
+  date?: Date;
+  rows: BreakListItem[];
+};
+
 export const BreakListForm = () => {
-  const columns: ColumnDef<any>[] = [
+  const columns: ColumnDef<BreakListItem>[] = [
     {
       accessorKey: "id",
       size: 12,
@@ -82,12 +88,13 @@ export const BreakListForm = () => {
       maxSize: 30,
     },
   });
-  const handleSubmit: SubmitHandler<any> = (data) => {
+  const handleSubmit: SubmitHandler<BreakListFormValues> = (data) => {
     console.log("submit", data);
   };
 
   const form = useForm({
     defaultValues: {
+      date: undefined,
       rows: BREAK_LIST_DEFAULT.map((item) => ({
         id: item.id,
         name: item.name,
@@ -95,6 +102,13 @@ export const BreakListForm = () => {
       })),
     },
   });
+
+  // const form = useForm<BreakListFormValues>({
+  //   defaultValues: {
+  //     date: undefined,
+  //     rows: BREAK_LIST_DEFAULT,
+  //   },
+  // });
 
   return (
     <div className="w-full p-4">
@@ -134,9 +148,8 @@ export const BreakListForm = () => {
               })}
             </TableBody>
           </Table>
-          <div className="flex items-center justify-start space-x-2 pt-6">
-            <Button type="submit">Сохранить</Button>
-          </div>
+
+          <Button type="submit">Сохранить</Button>
         </form>
       </Form>
     </div>
