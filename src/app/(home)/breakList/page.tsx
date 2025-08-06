@@ -1,6 +1,6 @@
-import Table from "@/components/BreakListView";
+import { BreakListForm } from "@/components/BrealList/BreakListForm";
 
 const Page = () => {
-  return <Table />;
+  return <BreakListForm />;
 };
 export default Page;

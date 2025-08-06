@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 
 import { format, Locale } from "date-fns";
-import { ru, de, fr, enUS } from "date-fns/locale";
+import { ru, ro } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
 
 import { useLocale, useTranslations } from "next-intl";
@@ -9,7 +9,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import {
@@ -21,19 +20,12 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 
-type TextInputProps = {
-  fieldName: string;
-  fieldLabel?: string | undefined;
-};
-
-function DatePickerInput({ fieldName, fieldLabel }: TextInputProps) {
+function DatePickerInput({ fieldName }: { fieldName: string }) {
   const tDate = useTranslations("Date");
   const locale = useLocale();
   const locales: Record<string, Locale> = {
     ru: ru,
-    de: de,
-    fr: fr,
-    en: enUS,
+    ro: ro,
   };
   const { control } = useFormContext();
   return (
@@ -42,12 +34,9 @@ function DatePickerInput({ fieldName, fieldLabel }: TextInputProps) {
       name={fieldName}
       render={({ field }) => {
         return (
-          <FormItem className="flex max-w-xs  gap-3">
-            <FormLabel className=" align-baseline text-blue-700 text-2xl flex-1/4 ">
-              {fieldLabel}
-            </FormLabel>
+          <FormItem className="w-3xs">
             <Popover>
-              <PopoverTrigger asChild className="flex-3/4 ">
+              <PopoverTrigger>
                 <FormControl className="w-full">
                   <Button
                     variant={"outline"}
@@ -67,7 +56,7 @@ function DatePickerInput({ fieldName, fieldLabel }: TextInputProps) {
                   </Button>
                 </FormControl>
               </PopoverTrigger>
-              <PopoverContent className="w-full p-4 " align="center">
+              <PopoverContent className="w-3xs p-2 " align="center">
                 <Calendar
                   mode="single"
                   selected={field.value}

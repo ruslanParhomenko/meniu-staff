@@ -13,10 +13,10 @@ import {
   SidebarFooter,
   SidebarMenu,
   SidebarMenuButton,
-} from "./ui/sidebar";
+} from "../../components/ui/sidebar";
 import { cn } from "@/lib/utils";
-import LanguageSwitcher from "./switches/LanguageSwitch";
-import { SidebarToggleButton } from "./switches/SidebarToggleButton";
+import LanguageSwitcher from "../../components/switches/LanguageSwitch";
+import { SidebarToggleButton } from "../../components/switches/SidebarToggleButton";
 
 const SidebarNav = () => {
   const pathname = usePathname();
