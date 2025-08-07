@@ -1,5 +1,6 @@
 "use client";
 
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import React, { useEffect, useState } from "react";
 
 const SHEET_ID = process.env.NEXT_PUBLIC_SHEET_ID;
@@ -48,11 +49,11 @@ export const ScheduleForm = () => {
   if (!data.length) return <div>Загрузка...</div>;
   return (
     <div className="w-full overflow-x-auto">
-      <table className="min-w-max table-auto">
-        <tbody>
+      <Table>
+        <TableBody>
           {data.map((row, i) => {
             return (
-              <tr key={i}>
+              <TableRow key={i}>
                 {row.map((cell, j) => {
                   const isText =
                     typeof cell === "string" &&
@@ -66,30 +67,30 @@ export const ScheduleForm = () => {
                   let borderClass = "";
                   if (isFirstRow || isFirstThreeColumns) {
                     borderClass = `text-center ${
-                      j === 4 ? "text-lg text-black!" : "text-sm"
-                    } h-5!  ${j === 3 ? "text-black pl-4" : "text-blue-600"} `;
+                      j === 4 ? "text-lg text-black" : "text-sm"
+                    } h-5 ${j === 3 ? "text-black pl-4" : "text-blue-600"}`;
                   } else if (!isFirstThreeColumns) {
-                    borderClass = "border border-gray-400";
+                    borderClass = "border-x border-gray-300";
                   }
 
                   return (
-                    <td
+                    <TableCell
                       key={j}
                       className={`
-                    ${borderClass}  h-10 w-10 text-center
-                    ${isText ? " text-blue-600" : ""}
-                    ${j === 4 ? "min-w-50" : ""}
-                  `}
+                        ${borderClass} h-8 w-8 text-center 
+                        ${isText ? "text-blue-600" : ""}
+                        ${j === 4 ? "min-w-[50px]" : ""}
+                      `}
                     >
                       {cell}
-                    </td>
+                    </TableCell>
                   );
                 })}
-              </tr>
+              </TableRow>
             );
           })}
-        </tbody>
-      </table>
+        </TableBody>
+      </Table>
     </div>
   );
 };
