@@ -23,7 +23,7 @@ export const SIDEBAR_NAVIGATION = [
   },
   {
     title: "orderListBar",
-    url: "/orderListBar",
+    url: "/orders-list/orders-bar",
     icon: List,
   },
 ];

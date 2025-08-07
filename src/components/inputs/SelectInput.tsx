@@ -63,7 +63,7 @@ function SelectInput({
                 >
                   <FormControl className={` ${fieldLabel ? "" : "w-full"}`}>
                     <SelectTrigger
-                      className={`flex h-14   justify-center min-w-12 text-base [&>svg]:hidden ${
+                      className={`flex  justify-center min-w-12 text-base [&>svg]:hidden ${
                         field.value === "X" ? "bg-gray-600" : ""
                       }`}
                     >

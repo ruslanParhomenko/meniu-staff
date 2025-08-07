@@ -43,7 +43,9 @@
     "report": "Raport BAR",
     "breakList": "Tabel pauze",
     "ordersList": "Comenzi TTN",
-    "orderListBar": "Comenzi BAR"
+    "orderListBar": "Comenzi BAR",
+    "cucina": "Bucatarie",
+    "bar": "Bar"
   },
   "Auth": {
     "login": "Вход",

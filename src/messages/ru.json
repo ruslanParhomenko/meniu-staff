@@ -43,7 +43,9 @@
     "report": "Отчет БАР",
     "breakList": "Брэйк-лист",
     "ordersList": "Заказ TTN",
-    "orderListBar": "Заказ БАР"
+    "orderListBar": "Заказ БАР",
+    "cucina": "Кухня",
+    "bar": "Бар"
   },
   "Auth": {
     "login": "Вход",
