@@ -6,10 +6,7 @@ const SHEET_ID = process.env.NEXT_PUBLIC_SHEET_ID;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 const RANGE = "Waiters!D55:AM75";
 
-console.log("SHEET_ID:", SHEET_ID);
-console.log("API_KEY:", API_KEY);
-
-export default function GoogleSheetTable() {
+export const ScheduleForm = () => {
   const [data, setData] = useState<string[][]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -95,4 +92,4 @@ export default function GoogleSheetTable() {
       </table>
     </div>
   );
-}
+};

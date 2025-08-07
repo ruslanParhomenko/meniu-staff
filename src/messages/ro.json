@@ -6,7 +6,8 @@
     "save": "Salveaza",
     "cancel": " Anuleaza",
     "delete": "Sterge",
-    "send": "Trimite"
+    "send": "Trimite",
+    "reset": "Reseteaza"
   },
   "Language": {
     "romanian": "Romana",
@@ -40,8 +41,9 @@
   "Navigation": {
     "schedule": "Orar",
     "report": "Raport BAR",
-    "breakList": "Lista de pauze",
-    "ordersList": "Lista de comenzi"
+    "breakList": "Tabel pauze",
+    "ordersList": "Comenzi TTN",
+    "orderListBar": "Comenzi BAR"
   },
   "Auth": {
     "login": "Вход",
@@ -54,47 +56,6 @@
     "phone": "Телефон",
     "logIn": "Войти",
     "name": "Имя",
-    "adress": "Адрес",
-    "accountCreatedSuccessfully": "Аккаунт успешно создан",
-    "welcomeAboardStartYourSuccessJourneyWith": "Добро пожаловать на борт! Начните свой путь к успеху с ",
-    "letsStart": "Начнём",
-    "incorrectEmailOrPassword": "Неверный email или пароль",
-    "invalidEmail": "Неверный email",
-    "forgotPassword": "Забыли пароль",
-    "enterEmail": "Введите email",
-    "enterPassword": "Введите пароль",
-    "newPassword": "Новый пароль",
-    "createNewPassword": "Создать новый пароль",
-    "createAccount": "Создать аккаунт",
-    "pleaseEnterTheNewPassword": "Пожалуйста, введите новый пароль",
-    "resetPassword": "Сбросить пароль",
-    "continue": "Продолжить",
-    "goBack": "Назад",
-    "backToLogIn": "Назад к авторизации",
-    "sendResetLink": "Отправить ссылку для сброса",
-    "sendCodeNumber": "Отправить код по SMS",
-    "pleaseTryAgain": "Пожалуйста, попробуйте снова.",
-    "getNewLink": "Получить новую ссылку",
-    "recoverPassword": "Восстановить пароль",
-    "confirmPassword": "Подтвердите пароль",
-    "passwordsDontMatch": "Пароли не совпадают",
-    "verificationCode": "Код подтверждения",
-    "resendCodeIn": "Отправить код повторно через",
-    "verify": "Подтвердить",
-    "somethingWentWrong": "Что-то пошло не так",
-    "itLooksLikeYouClickedOnAnInvalidPasswordResetLink": "Похоже, вы перешли по недействительной ссылке для сброса пароля.",
-    "passwordStrength": "Надёжность пароля",
-    "cannotContainYourNameOrEmailAddress": "Не может содержать ваше имя или email",
-    "containsANumberASymbolAnUppercaseCharacter": "Содержит цифру, символ и заглавную букву",
-    "atLeast8Characters": "Не менее 8 символов",
-    "enterAccountEmailBelowWeWillSendYouALinkToResetYourPassword": "Введите email вашего аккаунта. Мы отправим вам ссылку для сброса пароля",
-    "enterYourPhoneNumberWeWillSendYouTheConfirmationCode": "Введите ваш номер телефона, мы отправим вам код подтверждения",
-    "enterYourEmailWeWillSendYouConfirmationCode": "Введите ваш email, мы отправим вам код подтверждения",
-    "pleaseEnterVerificationCodeWeSentItToNumber": "Пожалуйста, введите код подтверждения, отправленный на номер",
-    "selectAPasswordRecoveryMethodAndClickTheContinueButton": "Выберите способ восстановления пароля и нажмите 'Продолжить'",
-    "greatYourPasswordHasBeenChanged": "Отлично! Ваш пароль был изменён",
-    "dontWorryWellLetYouKnowIfTheresAProblemWithYourAccount": "Не волнуйтесь, мы сообщим вам, если возникнут проблемы с аккаунтом",
-    "checkYoureEmailForALinkToResetYourPassword": "Проверьте вашу электронную почту для получения ссылки сброса пароля.",
-    "ifItDoesntAppearWithinAFewMinutesCheckYourSpamFolder": "Если письмо не пришло в течение нескольких минут, проверьте папку 'Спам'."
+    "adress": "Адрес"
   }
 }

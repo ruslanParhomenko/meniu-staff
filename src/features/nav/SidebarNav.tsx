@@ -1,12 +1,10 @@
 "use client";
-import { BarChart2, LineChart, List, LogOut, Pause } from "lucide-react";
+import { LogOut } from "lucide-react";
 
 import { Link, usePathname } from "@/i18n/navigation";
 import { signOut, useSession } from "next-auth/react";
-
-import React from "react";
-
 import { useTranslations } from "next-intl";
+
 import {
   Sidebar,
   SidebarContent,
@@ -17,6 +15,7 @@ import {
 import { cn } from "@/lib/utils";
 import LanguageSwitcher from "../../components/switches/LanguageSwitch";
 import { SidebarToggleButton } from "../../components/switches/SidebarToggleButton";
+import { SIDEBAR_NAVIGATION } from "./constants";
 
 const SidebarNav = () => {
   const pathname = usePathname();
@@ -75,26 +74,3 @@ const SidebarNav = () => {
 };
 
 export default SidebarNav;
-
-export const SIDEBAR_NAVIGATION = [
-  {
-    title: "schedule",
-    url: "/schedule",
-    icon: LineChart,
-  },
-  {
-    title: "report",
-    url: "/report",
-    icon: BarChart2,
-  },
-  {
-    title: "breakList",
-    url: "/breakList",
-    icon: Pause,
-  },
-  {
-    title: "ordersList",
-    url: "/ordersList",
-    icon: List,
-  },
-];

@@ -1,7 +1,7 @@
-import GoogleSheetTable from "@/components/ScheduleView";
+import { ScheduleForm } from "@/features/schedule/ScheduleForm";
 
 const Page = () => {
-  return <GoogleSheetTable />;
+  return <ScheduleForm />;
 };
 
 export default Page;

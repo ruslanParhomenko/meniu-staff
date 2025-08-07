@@ -1,4 +1,4 @@
-import AuthRedirect from "@/components/AuthRedirect";
+import AuthRedirect from "@/providers/AuthRedirect";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
 

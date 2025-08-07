@@ -1,4 +1,4 @@
-import { BreakListForm } from "@/components/BreakList/BreakListForm";
+import { BreakListForm } from "@/features/breakList/BreakListForm";
 
 const Page = () => {
   return <BreakListForm />;

@@ -46,9 +46,7 @@ function SelectInput({
           name={fieldName}
           render={() => {
             return (
-              <FormItem
-                className={`${fieldLabel ? "flex gap-x-4 " : ""} w-full`}
-              >
+              <FormItem className={`${fieldLabel ? "flex gap-x-4" : ""}`}>
                 <Label
                   className={`${fieldLabel ? "w-2/3" : ""} ${
                     field.value && field.value !== 0
@@ -63,9 +61,9 @@ function SelectInput({
                   value={field.value}
                   disabled={disabled ?? field.value === "X" ? true : false}
                 >
-                  <FormControl>
+                  <FormControl className={` ${fieldLabel ? "" : "w-full"}`}>
                     <SelectTrigger
-                      className={`flex h-14  justify-center min-w-10 text-base [&>svg]:hidden ${
+                      className={`flex h-14   justify-center min-w-12 text-base [&>svg]:hidden ${
                         field.value === "X" ? "bg-gray-600" : ""
                       }`}
                     >

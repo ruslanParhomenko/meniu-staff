@@ -17,8 +17,8 @@ import {
 } from "@/components/ui/table";
 
 import { Button } from "@/components/ui/button";
-import { Form } from "../ui/form";
-import SelectInput from "../selector/SelectInput";
+import { Form } from "../../components/ui/form";
+import SelectInput from "../../components/inputs/SelectInput";
 import { SubmitHandler, useForm } from "react-hook-form";
 import {
   BREAK_LIST_DEFAULT,
@@ -27,7 +27,7 @@ import {
   NAMES_SELECT,
   TIME_LABELS,
 } from "./constant";
-import DatePickerInput from "@/features/inputs/DatePickerInput";
+import DatePickerInput from "@/components/inputs/DatePickerInput";
 import { useTranslations } from "next-intl";
 
 type BreakListFormValues = {
@@ -54,9 +54,9 @@ export const BreakListForm = () => {
     },
     {
       accessorKey: "name",
-      size: 150,
-      minSize: 150,
-      maxSize: 150,
+      size: 140,
+      minSize: 140,
+      maxSize: 140,
       cell: ({ row }) => (
         <SelectInput
           fieldName={`rows[${row.index}][name]`}
@@ -90,9 +90,9 @@ export const BreakListForm = () => {
     columnResizeMode: "onChange",
     getCoreRowModel: getCoreRowModel(),
     defaultColumn: {
-      size: 38,
-      minSize: 38,
-      maxSize: 38,
+      size: 40,
+      minSize: 40,
+      maxSize: 40,
     },
   });
   const handleSubmit: SubmitHandler<BreakListFormValues> = (data) => {
@@ -122,9 +122,9 @@ export const BreakListForm = () => {
                 {TIME_LABELS.map((h, i) => (
                   <TableHead
                     key={i}
-                    className="text-center text-blue-600 font-bold"
+                    className="text-center text-blue-600 font-bold text-xl"
                   >
-                    {h}
+                    {h}:
                   </TableHead>
                 ))}
               </TableRow>
