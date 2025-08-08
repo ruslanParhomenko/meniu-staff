@@ -56,9 +56,9 @@ export const BreakListForm = () => {
     },
     {
       accessorKey: "name",
-      size: 140,
-      minSize: 140,
-      maxSize: 140,
+      size: 160,
+      minSize: 160,
+      maxSize: 160,
       cell: ({ row }) => (
         <SelectInput
           fieldName={`rows[${row.index}][name]`}
