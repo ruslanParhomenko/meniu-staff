@@ -79,7 +79,11 @@ export const ScheduleForm = () => {
                       className={`
                         ${borderClass} h-8 w-8 text-center 
                         ${isText ? "text-blue-600" : ""}
-                        ${j === 4 ? "min-w-[50px]" : ""}
+                        ${
+                          j === 4
+                            ? "min-w-[50px] sticky left-0 z-10 bg-white md:static"
+                            : ""
+                        }
                       `}
                     >
                       {cell}

@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator";
 
 export const OrderListBar = () => {
   return (
-    <div className="flex flex-row gap-10 w-full justify-start mx-5">
+    <div className="flex flex-col gap-10 w-full justify-start mx-5 sm:flex-row">
       <div className="flex flex-col w-80 mx-5">
         {FRUITS.map((item, index) => {
           return (

@@ -22,7 +22,7 @@ import { Separator } from "@/components/ui/separator";
 
 export const OrderListCucine = () => {
   return (
-    <div className="flex flex-row  w-full justify-start mx-2">
+    <div className="flex flex-col gap-10 w-full justify-start mx-5 sm:flex-row">
       <div className="flex flex-col w-60 mx-5">
         {VEGETABLES.map((item, index) => {
           return (

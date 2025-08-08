@@ -160,9 +160,16 @@ export const BreakListForm = () => {
               {table.getRowModel().rows.map((row) => {
                 return (
                   <TableRow key={row.id}>
-                    {row.getVisibleCells().map((cell) => {
+                    {row.getVisibleCells().map((cell, index) => {
                       return (
-                        <TableCell key={cell.id}>
+                        <TableCell
+                          key={cell.id}
+                          className={
+                            index === 1
+                              ? "sticky left-0 z-10 bg-white md:static"
+                              : ""
+                          }
+                        >
                           <div style={{ width: cell.column.getSize() }}>
                             {flexRender(
                               cell.column.columnDef.cell,
