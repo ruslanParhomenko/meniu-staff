@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 
 const API_EMPLOYEE_URL =
-  "https://script.google.com/macros/s/AKfycbyQXQBayiq3nwJHS-Q9xqF7TXmw_VVW8yO6CBPr9K5qWcccZigH-1On0uxiPtpnnzi4/exec";
+  "https://script.google.com/macros/s/AKfycbzRtulRAVCjj1gsHQfeKWxyNlSHlv-g5uw6oGvPnnG6jDw9uL0LmV8qHc6T_-USNYs/exec";
 
 export async function GET() {
   try {

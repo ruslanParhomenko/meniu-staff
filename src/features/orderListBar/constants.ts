@@ -33,11 +33,7 @@ export const MISCELLANEOUS = [
   "трубочки черные толстые",
 ];
 
-export const HIMICALS = [
-  "Вода дистиллированная",
-  "Мыло DAVE",
-  "Пакеты черные большие",
-];
+export const HIMICALS = ["Вода дистиллированная", "Мыло DOVE"];
 
 //cucina
 

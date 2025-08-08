@@ -39,8 +39,6 @@ export const OrderListCucine = () => {
           );
         })}
         <Separator className=" bg-blue-600 py-1 my-2" />
-      </div>
-      <div className="flex flex-col w-60 mx-5">
         {GREEN.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
@@ -54,6 +52,8 @@ export const OrderListCucine = () => {
           );
         })}
         <Separator className=" bg-blue-600 py-1 my-2" />
+      </div>
+      <div className="flex flex-col w-60 mx-5">
         {FRUITS_CUCINE.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
@@ -69,7 +69,8 @@ export const OrderListCucine = () => {
           );
         })}
         <Separator className=" bg-blue-600 py-1 my-2" />
-        {NUTS.map((item, index) => {
+
+        {SPICES.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
               <SelectInput
@@ -77,7 +78,7 @@ export const OrderListCucine = () => {
                 fieldLabel={item}
                 data={QUANTITY_SELECT}
               />
-              {NUTS.length - 1 !== index && <Separator className="my-1" />}
+              {SPICES.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}
@@ -93,6 +94,19 @@ export const OrderListCucine = () => {
                 data={QUANTITY_SELECT}
               />
               {MEAT.length - 1 !== index && <Separator className="my-1" />}
+            </div>
+          );
+        })}
+        <Separator className=" bg-blue-600 py-1 my-2" />
+        {SPICES_2.map((item, index) => {
+          return (
+            <div key={index} className="w-60 ">
+              <SelectInput
+                fieldName={item}
+                fieldLabel={item}
+                data={QUANTITY_SELECT}
+              />
+              {SPICES_2.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}
@@ -125,36 +139,6 @@ export const OrderListCucine = () => {
           );
         })}
         <Separator className=" bg-blue-600 py-1 my-2" />
-      </div>
-      <div className="flex flex-col w-60 mx-5">
-        {SPICES.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {SPICES.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
-      </div>
-      <div className="flex flex-col w-60 mx-5">
-        {SPICES_2.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {SPICES_2.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
         {OTHER.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
@@ -164,6 +148,19 @@ export const OrderListCucine = () => {
                 data={QUANTITY_SELECT}
               />
               {OTHER.length - 1 !== index && <Separator className="my-1" />}
+            </div>
+          );
+        })}
+        <Separator className=" bg-blue-600 py-1 my-2" />
+        {NUTS.map((item, index) => {
+          return (
+            <div key={index} className="w-60 ">
+              <SelectInput
+                fieldName={item}
+                fieldLabel={item}
+                data={QUANTITY_SELECT}
+              />
+              {NUTS.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}

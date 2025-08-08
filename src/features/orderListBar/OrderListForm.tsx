@@ -61,12 +61,10 @@ export const OrderListForm = ({ children }: { children: React.ReactNode }) => {
     []
   );
 
-  // базовые значения (все пустые)
   const defaultEmptyValues = Object.fromEntries(
     allFields.map((field) => [field, ""])
   ) as OrderListBarFormValues;
 
-  // если есть localStorage данные — подгружаем
   const localValues =
     typeof window !== "undefined" ? localStorage.getItem(STORAGE_KEY) : null;
 
@@ -77,11 +75,10 @@ export const OrderListForm = ({ children }: { children: React.ReactNode }) => {
   const form = useForm<OrderListBarFormValues>({
     defaultValues: {
       ...defaultEmptyValues,
-      ...parsedLocalValues, // перезапишем если есть сохранённые
+      ...parsedLocalValues,
     },
   });
 
-  // Подписка на изменения формы и сохранение в localStorage
   useEffect(() => {
     const subscription = form.watch((value) => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
@@ -89,7 +86,6 @@ export const OrderListForm = ({ children }: { children: React.ReactNode }) => {
     return () => subscription.unsubscribe();
   }, [form.watch, STORAGE_KEY]);
 
-  // Сабмит
   const sendTextTelegram: SubmitHandler<OrderListBarFormValues> = async (
     data
   ) => {
@@ -123,33 +119,34 @@ export const OrderListForm = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  // Сброс
   const resetForm = () => {
     form.reset(defaultEmptyValues);
     localStorage.removeItem(STORAGE_KEY);
   };
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(sendTextTelegram)}>
-        {children}
-        <div className="flex justify-start items-center p-5 pt-10 gap-4">
-          <Button
-            type="submit"
-            variant={"default"}
-            className="hover:bg-blue-600"
-          >
-            {t("send")}
-          </Button>
-          <Button
-            type="button"
-            variant={"secondary"}
-            onClick={resetForm}
-            className="hover:bg-red-600"
-          >
-            {t("reset")}
-          </Button>
-        </div>
-      </form>
-    </Form>
+    <div className="w-full ">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(sendTextTelegram)}>
+          {children}
+          <div className="flex justify-start items-center p-5 pt-10 gap-4">
+            <Button
+              type="submit"
+              variant={"default"}
+              className="hover:bg-blue-600"
+            >
+              {t("send")}
+            </Button>
+            <Button
+              type="button"
+              variant={"secondary"}
+              onClick={resetForm}
+              className="hover:bg-red-600"
+            >
+              {t("reset")}
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 };

@@ -26,9 +26,9 @@ import {
   MINUTES_SELECT,
   TIME_LABELS,
 } from "./constant";
-import DatePickerInput from "@/components/inputs/DatePickerInput";
 import { useTranslations } from "next-intl";
 import { useEmployeeData } from "@/hooks/use-employee";
+import { useEffect } from "react";
 
 type BreakListFormValues = {
   date?: Date;
@@ -36,9 +36,10 @@ type BreakListFormValues = {
 };
 
 export const BreakListForm = () => {
+  const LOCAL_STORAGE_KEY = "breakListFormData";
   const t = useTranslations("UI");
 
-  const { employees, loading, error } = useEmployeeData();
+  const { employees } = useEmployeeData();
 
   const columns: ColumnDef<BreakListItem>[] = [
     {
@@ -100,9 +101,15 @@ export const BreakListForm = () => {
   const handleSubmit: SubmitHandler<BreakListFormValues> = (data) => {
     console.log("submit", data);
   };
+  const savedData =
+    typeof window !== "undefined"
+      ? localStorage.getItem(LOCAL_STORAGE_KEY)
+      : null;
 
-  const form = useForm({
-    defaultValues: {
+  const parsedSavedData = savedData ? JSON.parse(savedData) : null;
+
+  const form = useForm<BreakListFormValues>({
+    defaultValues: parsedSavedData || {
       rows: BREAK_LIST_DEFAULT.map((item) => ({
         id: item.id,
         name: item.name,
@@ -110,15 +117,30 @@ export const BreakListForm = () => {
       })),
     },
   });
+  const watchAllFields = form.watch();
+  useEffect(() => {
+    if (!watchAllFields) return;
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(watchAllFields));
+    } catch (error) {}
+  }, [watchAllFields]);
+
+  const resetForm = () => {
+    form.reset({
+      rows: BREAK_LIST_DEFAULT.map((item) => ({
+        id: item.id,
+        name: item.name,
+        hours: Object.assign({}, ...item.hours),
+      })),
+    });
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+  };
 
   return (
     <div className="w-full ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
-          <DatePickerInput fieldName="date" />
           <Table>
             <TableHeader>
               <TableRow>
@@ -155,9 +177,17 @@ export const BreakListForm = () => {
               })}
             </TableBody>
           </Table>
-          <div className="flex justify-start items-center p-5 pt-20">
+          <div className="flex justify-start items-center p-5 pt-10 gap-4">
             <Button type="submit" variant={"default"}>
               {t("save")}
+            </Button>
+            <Button
+              type="button"
+              variant={"secondary"}
+              onClick={resetForm}
+              className="hover:bg-red-600"
+            >
+              {t("reset")}
             </Button>
           </div>
         </form>
