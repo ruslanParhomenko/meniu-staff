@@ -3,37 +3,29 @@ import {
   ACVILIN,
   APIFERA,
   AQUATRADE,
+  ARTACULINAR,
+  BLUESHARK,
   BUCURIA,
   CHOCO,
   COCACOLA,
   DAVIDAN,
+  DELPHI,
+  DINOVA,
+  ETALONUS,
   FORWARD,
+  FORWARD_CUCINE,
   FRUITBOX,
+  FRUITBOX_C,
   GLOBARSPIRIT,
+  IMCOMVIL,
+  PRESTAPAC,
+  ROGOB,
   VERGNANO,
+  VITAFOR,
 } from "./constants";
-import {
-  FRUITS_CUCINE,
-  GREEN,
-  MEAT,
-  MILK,
-  NUTS,
-  OTHER,
-  SPICES,
-  SPICES_2,
-  VEGETABLES,
-} from "./constants";
+import {} from "./constants";
 
 type FieldName =
-  | (typeof NUTS)[number]
-  | (typeof SPICES)[number]
-  | (typeof SPICES_2)[number]
-  | (typeof VEGETABLES)[number]
-  | (typeof GREEN)[number]
-  | (typeof FRUITS_CUCINE)[number]
-  | (typeof MEAT)[number]
-  | (typeof MILK)[number]
-  | (typeof OTHER)[number]
   | (typeof AQUATRADE)[number]
   | (typeof BUCURIA)[number]
   | (typeof COCACOLA)[number]
@@ -45,7 +37,19 @@ type FieldName =
   | (typeof CHOCO)[number]
   | (typeof FRUITBOX)[number]
   | (typeof APIFERA)[number]
-  | (typeof DAVIDAN)[number];
+  | (typeof DAVIDAN)[number]
+  | (typeof ROGOB)[number]
+  | (typeof BLUESHARK)[number]
+  | (typeof FRUITBOX_C)[number]
+  | (typeof DINOVA)[number]
+  | (typeof FORWARD_CUCINE)[number]
+  | (typeof PRESTAPAC)[number]
+  | (typeof IMCOMVIL)[number]
+  | (typeof ARTACULINAR)[number]
+  | (typeof ETALONUS)[number]
+  | (typeof VITAFOR)[number]
+  | (typeof DELPHI)[number];
+
 export type OrderListTTNFormValues = {
   [key in FieldName]?: string;
 };
