@@ -3,21 +3,28 @@ import { Form } from "@/components/ui/form";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import {
-  FRUITS,
-  FRUITS_CUCINE,
-  GREEN,
-  GROCERIES,
-  HIMICALS,
-  MEAT,
-  MILK,
-  MISCELLANEOUS,
-  NUTS,
-  OFFICE,
-  OTHER,
-  PHARMACEUTICAL,
-  SPICES,
-  SPICES_2,
-  VEGETABLES,
+  APIFERA,
+  AQUATRADE,
+  ARTACULINAR,
+  BLUESHARK,
+  BUCURIA,
+  CHOCO,
+  COCACOLA,
+  DAVIDAN,
+  DELPHI,
+  DINOVA,
+  ETALONUS,
+  FORWARD,
+  FORWARD_CUCINE,
+  FRUITBOX,
+  FRUITBOX_C,
+  GLOBARSPIRIT,
+  IMCOMVIL,
+  IUG,
+  PRESTAPAC,
+  ROGOB,
+  VERGNANO,
+  VITAFOR,
 } from "./constants";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
@@ -28,7 +35,8 @@ import { format } from "date-fns";
 import toast from "react-hot-toast";
 import { usePathname } from "@/i18n/navigation";
 import { useEffect, useMemo } from "react";
-import { OrderListBarFormValues } from "./schemas";
+import { OrderListTTNFormValues } from "./schemas";
+import { OrderListBarFormValues } from "../orderListBar/schemas";
 
 export const OrderListTTNForm = ({
   children,
@@ -46,21 +54,31 @@ export const OrderListTTNForm = ({
   // поля формы
   const allFields = useMemo(
     () => [
-      ...FRUITS,
-      ...GROCERIES,
-      ...HIMICALS,
-      ...MISCELLANEOUS,
-      ...OFFICE,
-      ...PHARMACEUTICAL,
-      ...NUTS,
-      ...SPICES,
-      ...SPICES_2,
-      ...VEGETABLES,
-      ...GREEN,
-      ...FRUITS_CUCINE,
-      ...MEAT,
-      ...MILK,
-      ...OTHER,
+      ...AQUATRADE,
+      ...BUCURIA,
+      ...COCACOLA,
+      ...DAVIDAN,
+      ...FORWARD,
+      ...FRUITBOX,
+      ...GLOBARSPIRIT,
+      ...VERGNANO,
+      ...CHOCO,
+      ...APIFERA,
+      ...ROGOB,
+      ...BLUESHARK,
+      ...FRUITBOX_C,
+      ...DINOVA,
+      ...IUG,
+      ...PRESTAPAC,
+      ...IMCOMVIL,
+      ...ARTACULINAR,
+      ...ETALONUS,
+      ...VITAFOR,
+      ...FORWARD_CUCINE,
+      ...DELPHI,
+      ...PRESTAPAC,
+      ...IMCOMVIL,
+      ...ETALONUS,
     ],
     []
   );
@@ -68,24 +86,22 @@ export const OrderListTTNForm = ({
   // базовые значения (все пустые)
   const defaultEmptyValues = Object.fromEntries(
     allFields.map((field) => [field, ""])
-  ) as OrderListBarFormValues;
+  ) as OrderListTTNFormValues;
 
-  // если есть localStorage данные — подгружаем
   const localValues =
     typeof window !== "undefined" ? localStorage.getItem(STORAGE_KEY) : null;
 
   const parsedLocalValues = localValues
-    ? (JSON.parse(localValues) as OrderListBarFormValues)
+    ? (JSON.parse(localValues) as OrderListTTNFormValues)
     : {};
 
-  const form = useForm<OrderListBarFormValues>({
+  const form = useForm<OrderListTTNFormValues>({
     defaultValues: {
       ...defaultEmptyValues,
-      ...parsedLocalValues, // перезапишем если есть сохранённые
+      ...parsedLocalValues,
     },
   });
 
-  // Подписка на изменения формы и сохранение в localStorage
   useEffect(() => {
     const subscription = form.watch((value) => {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(value));

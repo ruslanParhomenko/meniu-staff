@@ -18,7 +18,7 @@ export const SIDEBAR_NAVIGATION = [
   },
   {
     title: "ordersList",
-    url: "/orders-list-ttn/orders-bar-ttn",
+    url: "/orders-list-ttn/orders-ttn-bar",
     icon: List,
   },
   {

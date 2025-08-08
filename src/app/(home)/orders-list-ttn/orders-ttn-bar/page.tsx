@@ -1,11 +1,11 @@
-import { OrderListBar } from "@/features/orderListBar/OrderListBar";
+import { OrderListTTNBar } from "@/features/orderListTTN/orderListTtnBar";
 
 import { OrderListTTNForm } from "@/features/orderListTTN/OrderListTTNForm";
 
 const Page = () => {
   return (
     <OrderListTTNForm>
-      <OrderListBar />
+      <OrderListTTNBar />
     </OrderListTTNForm>
   );
 };

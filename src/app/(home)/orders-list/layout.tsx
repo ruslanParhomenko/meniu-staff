@@ -1,9 +1,13 @@
-import OrderNav from "@/features/navigation/OrderNavigasion";
+import PageNav from "@/features/nav/PageNav";
+import {
+  ORDER_NAV_ITEMS,
+  ORDER_TTN_NAV_ITEMS,
+} from "@/features/navigation/constants";
 
 const OrderLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <OrderNav />
+      <PageNav navItems={ORDER_NAV_ITEMS} mainRoute={"orders-list"} />
       {children}
     </>
   );
