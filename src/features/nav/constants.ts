@@ -26,4 +26,9 @@ export const SIDEBAR_NAVIGATION = [
     url: "/orders-list/orders-bar",
     icon: List,
   },
+  {
+    title: "settings",
+    url: "/settings",
+    icon: List,
+  },
 ];

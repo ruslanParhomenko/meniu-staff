@@ -16,36 +16,10 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model MainEntity {
-  id              String             @id @default(cuid())
-  title           String
-  createdAt       DateTime           @default(now())
-
-  servers         ServerUser[]       @relation("Servers")
-  bartenders      BartenderUser[]    @relation("Bartenders")
-
-  stopItems       Json
-  tobacco         Json
-
-  cashChecks      Json
-  penaltyInvoices Json
-}
-
-model ServerUser {
-  id            String        @id @default(cuid())
-  name          String
-  workingTime   String
-
-  mainEntity    MainEntity?   @relation("Servers", fields: [mainEntityId], references: [id])
-  mainEntityId  String?
-}
-
-model BartenderUser {
-  id            String        @id @default(cuid())
-  name          String
-  workingTime   String
-
-  mainEntity    MainEntity?   @relation("Bartenders", fields: [mainEntityId], references: [id])
-  mainEntityId  String?
+model Employee {
+  id        Int     @id @default(autoincrement())
+  name      String
+  position  String
+  createdAt DateTime @default(now())
 }
 

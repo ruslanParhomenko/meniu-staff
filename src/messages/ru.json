@@ -45,7 +45,8 @@
     "ordersList": "Заказ TTN",
     "orderListBar": "Заказ БАР",
     "cucina": "Кухня",
-    "bar": "Бар"
+    "bar": "Бар",
+    "settings": "Настройки"
   },
   "Auth": {
     "login": "Вход",

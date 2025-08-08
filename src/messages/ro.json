@@ -45,7 +45,8 @@
     "ordersList": "Comenzi TTN",
     "orderListBar": "Comenzi BAR",
     "cucina": "Bucatarie",
-    "bar": "Bar"
+    "bar": "Bar",
+    "settings": "Setari"
   },
   "Auth": {
     "login": "Вход",
