@@ -7,7 +7,7 @@ import {
   OFFICE,
   PHARMACEUTICAL,
 } from "./constants";
-import { QUANTITY_SELECT } from "../orderList/constants";
+import { QUANTITY_SELECT } from "../orderListTTN/constants";
 import { Separator } from "@/components/ui/separator";
 
 export const OrderListBar = () => {

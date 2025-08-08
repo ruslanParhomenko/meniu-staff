@@ -24,11 +24,11 @@ import {
   BREAK_LIST_DEFAULT,
   BreakListItem,
   MINUTES_SELECT,
-  NAMES_SELECT,
   TIME_LABELS,
 } from "./constant";
 import DatePickerInput from "@/components/inputs/DatePickerInput";
 import { useTranslations } from "next-intl";
+import { useEmployeeData } from "@/hooks/use-employee";
 
 type BreakListFormValues = {
   date?: Date;
@@ -37,6 +37,8 @@ type BreakListFormValues = {
 
 export const BreakListForm = () => {
   const t = useTranslations("UI");
+
+  const { employees, loading, error } = useEmployeeData();
 
   const columns: ColumnDef<BreakListItem>[] = [
     {
@@ -61,7 +63,7 @@ export const BreakListForm = () => {
         <SelectInput
           fieldName={`rows[${row.index}][name]`}
           fieldLabel=""
-          data={NAMES_SELECT}
+          data={employees}
         />
       ),
     },
@@ -108,6 +110,9 @@ export const BreakListForm = () => {
       })),
     },
   });
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
 
   return (
     <div className="w-full ">

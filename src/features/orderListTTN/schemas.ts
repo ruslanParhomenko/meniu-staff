@@ -1,4 +1,4 @@
-import { QUANTITY_SELECT } from "../orderListTTN/constants";
+import { QUANTITY_SELECT } from "./constants";
 import {
   FRUITS,
   FRUITS_CUCINE,

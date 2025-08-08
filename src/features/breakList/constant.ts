@@ -245,14 +245,6 @@ export const MINUTES_SELECT = [
   { label: "X", value: "X" },
 ];
 
-export const NAMES_SELECT = [
-  { label: "Аня", value: "Аня" },
-  { label: "Олег", value: "Олег" },
-  { label: "Женя", value: "Женя" },
-  { label: "Света", value: "Света" },
-  { label: "Петя", value: "Петя" },
-];
-
 export const TIME_LABELS = [
   "9",
   "10",

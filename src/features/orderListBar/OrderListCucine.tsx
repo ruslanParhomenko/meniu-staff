@@ -17,7 +17,7 @@ import {
   SPICES_2,
   VEGETABLES,
 } from "./constants";
-import { QUANTITY_SELECT } from "../orderList/constants";
+import { QUANTITY_SELECT } from "../orderListTTN/constants";
 import { Separator } from "@/components/ui/separator";
 
 export const OrderListCucine = () => {

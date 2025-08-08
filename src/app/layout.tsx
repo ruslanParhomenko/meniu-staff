@@ -7,6 +7,9 @@ import { getLocale } from "next-intl/server";
 import { SessionProviders } from "@/providers/SessionProviders";
 import { Toaster } from "react-hot-toast";
 
+import "core-js/stable";
+import "regenerator-runtime/runtime";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
