@@ -3,11 +3,14 @@ import { Form } from "@/components/ui/form";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import {
+  ACVAMONT,
+  ACVILIN,
   APIFERA,
   AQUATRADE,
   ARTACULINAR,
   BLUESHARK,
   BUCURIA,
+  BUISNESS,
   CHOCO,
   COCACOLA,
   DAVIDAN,
@@ -23,6 +26,7 @@ import {
   IUG,
   PRESTAPAC,
   ROGOB,
+  UBFB,
   VERGNANO,
   VITAFOR,
 } from "./constants";
@@ -33,7 +37,7 @@ import { useSession } from "next-auth/react";
 import { format } from "date-fns";
 
 import toast from "react-hot-toast";
-import { usePathname } from "@/i18n/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { useEffect, useMemo } from "react";
 import { OrderListTTNFormValues } from "./schemas";
 import { OrderListBarFormValues } from "../orderListBar/schemas";
@@ -44,6 +48,7 @@ export const OrderListTTNForm = ({
   children: React.ReactNode;
 }) => {
   const pathname = usePathname();
+  const router = useRouter();
   const nameOrder =
     pathname.split("/").pop()?.split("-")[1].toLocaleUpperCase() || "";
   const STORAGE_KEY = `order-form-${nameOrder}`;
@@ -51,7 +56,6 @@ export const OrderListTTNForm = ({
   const t = useTranslations("UI");
   const session = useSession();
 
-  // поля формы
   const allFields = useMemo(
     () => [
       ...AQUATRADE,
@@ -79,11 +83,14 @@ export const OrderListTTNForm = ({
       ...PRESTAPAC,
       ...IMCOMVIL,
       ...ETALONUS,
+      ...UBFB,
+      ...BUISNESS,
+      ...ACVAMONT,
+      ...ACVILIN,
     ],
     []
   );
 
-  // базовые значения (все пустые)
   const defaultEmptyValues = Object.fromEntries(
     allFields.map((field) => [field, ""])
   ) as OrderListTTNFormValues;
@@ -109,7 +116,6 @@ export const OrderListTTNForm = ({
     return () => subscription.unsubscribe();
   }, [form.watch, STORAGE_KEY]);
 
-  // Сабмит
   const sendTextTelegram: SubmitHandler<OrderListBarFormValues> = async (
     data
   ) => {
@@ -147,6 +153,7 @@ export const OrderListTTNForm = ({
   const resetForm = () => {
     form.reset(defaultEmptyValues);
     localStorage.removeItem(STORAGE_KEY);
+    router.refresh();
   };
   return (
     <Form {...form}>

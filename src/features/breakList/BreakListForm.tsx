@@ -28,7 +28,8 @@ import {
 } from "./constant";
 import { useTranslations } from "next-intl";
 import { useEmployeeData } from "@/hooks/use-employee";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
 
 type BreakListFormValues = {
   date?: Date;
@@ -39,7 +40,17 @@ export const BreakListForm = () => {
   const LOCAL_STORAGE_KEY = "breakListFormData";
   const t = useTranslations("UI");
 
-  const { employees } = useEmployeeData();
+  // const { employees } = useEmployeeData();
+  const { employees, loading } = useEmployeeSqlData();
+  const selectedEmployees = useMemo(
+    () =>
+      employees.map((employee) => ({
+        label: employee.name,
+        value: employee.name,
+      })),
+    [employees]
+  );
+  console.log("employees", employees);
 
   const columns: ColumnDef<BreakListItem>[] = [
     {
@@ -64,7 +75,7 @@ export const BreakListForm = () => {
         <SelectInput
           fieldName={`rows[${row.index}][name]`}
           fieldLabel=""
-          data={employees}
+          data={selectedEmployees}
         />
       ),
     },
@@ -136,6 +147,10 @@ export const BreakListForm = () => {
     });
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="w-full ">

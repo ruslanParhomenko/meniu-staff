@@ -62,14 +62,16 @@ export const ScheduleForm = () => {
 
                   const isFirstRow =
                     i === 0 || i === 1 || i === data.length - 1;
-                  const isFirstThreeColumns = j < 4;
+                  const isFirstThreeColumns = j < 5;
 
                   let borderClass = "";
                   if (isFirstRow || isFirstThreeColumns) {
-                    borderClass = `text-center ${
-                      j === 4 ? "text-lg text-black" : "text-sm"
-                    } h-5 ${j === 3 ? "text-black pl-4" : "text-blue-600"}`;
-                  } else if (!isFirstThreeColumns) {
+                    borderClass = ` ${
+                      j === 4
+                        ? "text-lg text-black text-left"
+                        : "text-sm text-center"
+                    }  ${j === 3 ? "text-black pl-4" : "text-blue-600"}`;
+                  } else if (!isFirstThreeColumns && !isFirstRow) {
                     borderClass = "border-x border-gray-300";
                   }
 
@@ -77,12 +79,12 @@ export const ScheduleForm = () => {
                     <TableCell
                       key={j}
                       className={`
-                        ${borderClass} h-8 w-8 text-center 
+                        ${borderClass} h-10 w-10  
                         ${isText ? "text-blue-600" : ""}
                         ${
                           j === 4
-                            ? "min-w-[50px] sticky left-0 z-10 bg-white md:static"
-                            : ""
+                            ? "min-w-[50px] sticky left-0 z-10 text-left"
+                            : "text-center"
                         }
                       `}
                     >
