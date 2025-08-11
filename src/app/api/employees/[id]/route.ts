@@ -3,12 +3,9 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET(
   request: Request,
-  context: { params: Record<string, string | string[]> }
+  { params }: { params: { id: string } }
 ) {
-  let id = context.params.id;
-
-  if (Array.isArray(id)) id = id[0];
-
+  const id = params.id;
   const employee = await prisma.employee.findUnique({
     where: { id: Number(id) },
   });
@@ -22,11 +19,9 @@ export async function GET(
 
 export async function DELETE(
   request: Request,
-  context: { params: Record<string, string | string[]> }
+  { params }: { params: { id: string } }
 ) {
-  let id = context.params.id;
-
-  if (Array.isArray(id)) id = id[0];
+  const id = params.id;
 
   try {
     await prisma.employee.delete({
