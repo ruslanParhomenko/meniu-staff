@@ -1,8 +1,8 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
 export async function GET(
-  request: NextRequest,
+  request: Request,
   context: { params: { id: string } }
 ) {
   const { id } = context.params;
@@ -19,7 +19,7 @@ export async function GET(
 }
 
 export async function DELETE(
-  request: NextRequest,
+  request: Request,
   context: { params: { id: string } }
 ) {
   const { id } = context.params;
