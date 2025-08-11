@@ -54,6 +54,7 @@ export default function SettingsForm() {
 
     setLoading(false);
     fetchEmployees();
+    form.reset();
   };
 
   const fetchEmployees = async () => {
@@ -72,13 +73,15 @@ export default function SettingsForm() {
   }, []);
 
   return (
-    <div className="flex flex-row gap-4 w-full justify-between">
-      <div className="w-1/3">
+    <div className="flex flex-col  w-full justify-between md:flex-row  p-10">
+      <div className="w-full md:w-1/4">
         <h1 className="text-2xl font-bold">Добавить сотрудника</h1>
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="my-2">
-              <Label htmlFor="firstName">Имя</Label>
+              <Label className="mb-2" htmlFor="firstName">
+                Имя
+              </Label>
               <Input
                 id="firstName"
                 {...register("firstName", { required: true })}
@@ -89,7 +92,9 @@ export default function SettingsForm() {
             </div>
 
             <div className="my-2">
-              <Label htmlFor="lastName">Фамилия</Label>
+              <Label className="mb-2" htmlFor="lastName">
+                Фамилия
+              </Label>
               <Input
                 id="lastName"
                 {...register("lastName", { required: true })}
@@ -100,7 +105,9 @@ export default function SettingsForm() {
             </div>
 
             <div className="my-2">
-              <Label htmlFor="position">Должность</Label>
+              <Label className="mb-2" htmlFor="position">
+                Должность
+              </Label>
               <Input
                 id="position"
                 {...register("position", { required: true })}
@@ -116,7 +123,7 @@ export default function SettingsForm() {
           </form>
         </Form>
       </div>
-      <div className="w-1/3">
+      <div className="w-full md:w-1/4">
         <h2 className="text-lg font-semibold mt-6">Сотрудники:</h2>
         {employees.map((emp) => (
           <div key={emp.id} className="flex justify-between py-2">
