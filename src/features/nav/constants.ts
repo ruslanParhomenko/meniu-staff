@@ -31,4 +31,9 @@ export const SIDEBAR_NAVIGATION = [
     url: "/settings",
     icon: List,
   },
+  {
+    title: "arhive",
+    url: "/arhive",
+    icon: List,
+  },
 ];

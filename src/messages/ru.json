@@ -46,7 +46,8 @@
     "orderListBar": "Заказ БАР",
     "cucina": "Кухня",
     "bar": "Бар",
-    "settings": "Настройки"
+    "settings": "Настройки",
+    "arhive": "Архив"
   },
   "Auth": {
     "login": "Вход",

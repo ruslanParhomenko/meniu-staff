@@ -23,3 +23,33 @@ model Employee {
   createdAt DateTime @default(now())
 }
 
+
+
+model BreakeList {
+  id       Int      @id @default(autoincrement())
+  date     DateTime
+  rows     Row[]
+
+  @@index([date])
+}
+
+model Row {
+  id         Int      @id @default(autoincrement())
+  externalId String   
+  name       String?  
+  schedule   BreakeList @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+  scheduleId Int
+
+  hours      Hour[]
+}
+model Hour {
+  id    Int    @id @default(autoincrement())
+  hour  String 
+  value String 
+
+  row    Row    @relation(fields: [rowId], references: [id], onDelete: Cascade)
+  rowId  Int
+
+  @@unique([rowId, hour]) 
+}
+

@@ -46,7 +46,8 @@
     "orderListBar": "Comenzi BAR",
     "cucina": "Bucatarie",
     "bar": "Bar",
-    "settings": "Setari"
+    "settings": "Setari",
+    "arhive": "Arhiva"
   },
   "Auth": {
     "login": "Autentificare",

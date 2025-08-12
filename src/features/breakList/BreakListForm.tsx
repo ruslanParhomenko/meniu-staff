@@ -27,11 +27,12 @@ import {
   TIME_LABELS,
 } from "./constant";
 import { useTranslations } from "next-intl";
-import { useEmployeeData } from "@/hooks/use-employee";
+
 import { useEffect, useMemo } from "react";
 import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
+import DatePickerInput from "@/components/inputs/DatePickerInput";
 
-type BreakListFormValues = {
+export type BreakListFormValues = {
   date?: Date;
   rows: BreakListItem[];
 };
@@ -42,6 +43,7 @@ export const BreakListForm = () => {
 
   // const { employees } = useEmployeeData();
   const { employees, loading } = useEmployeeSqlData();
+
   const selectedEmployees = useMemo(
     () =>
       employees.map((employee) => ({
@@ -50,7 +52,6 @@ export const BreakListForm = () => {
       })),
     [employees]
   );
-  console.log("employees", employees);
 
   const columns: ColumnDef<BreakListItem>[] = [
     {
@@ -109,8 +110,15 @@ export const BreakListForm = () => {
       maxSize: 40,
     },
   });
-  const handleSubmit: SubmitHandler<BreakListFormValues> = (data) => {
-    console.log("submit", data);
+  const handleSubmit: SubmitHandler<BreakListFormValues> = async (data) => {
+    await fetch("/api/breakList", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        date: data.date,
+        rows: data.rows,
+      }),
+    });
   };
   const savedData =
     typeof window !== "undefined"
@@ -156,6 +164,7 @@ export const BreakListForm = () => {
     <div className="w-full ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
+          <DatePickerInput fieldName="date" />
           <Table>
             <TableHeader>
               <TableRow>
