@@ -9,12 +9,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useRouter } from "@/i18n/navigation";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 
-export default function BreakeListTable({ data }: { data: any }) {
+export default function BreakeListTable({
+  data,
+  refetch,
+  refetchId,
+}: {
+  data: any;
+  refetch: any;
+  refetchId: any;
+}) {
   const session = useSession();
+  const router = useRouter();
   const isAdmin =
     session.data?.user?.email === "parhomenkogm@gmail.com" ||
     session.data?.user?.email === "cng.nv.rstrnt.mngr@gmail.com";
@@ -28,6 +38,10 @@ export default function BreakeListTable({ data }: { data: any }) {
   const deleteBreakList = async (id: number) => {
     if (!isAdmin) return toast.error(t("insufficientRights"));
     await fetch(`/api/breakList/${id}`, { method: "DELETE" });
+    toast.success("Брейк-лист успешно удалён !");
+    refetch();
+    refetchId();
+    router.refresh();
   };
 
   return (

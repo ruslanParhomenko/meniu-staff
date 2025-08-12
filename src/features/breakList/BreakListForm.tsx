@@ -31,6 +31,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useMemo } from "react";
 import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
 import DatePickerInput from "@/components/inputs/DatePickerInput";
+import toast from "react-hot-toast";
 
 export type BreakListFormValues = {
   date?: Date;
@@ -111,14 +112,23 @@ export const BreakListForm = () => {
     },
   });
   const handleSubmit: SubmitHandler<BreakListFormValues> = async (data) => {
-    await fetch("/api/breakList", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        date: data.date,
-        rows: data.rows,
-      }),
-    });
+    if (!data.date) {
+      toast.error("Дата не выбрана");
+      return;
+    }
+    try {
+      await fetch("/api/breakList", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          date: data.date,
+          rows: data.rows,
+        }),
+      });
+      toast.success("Брейк-лист успешно сохранён !");
+    } catch (e) {
+      toast.error("Ошибка при сохранении брейк-листа");
+    }
   };
   const savedData =
     typeof window !== "undefined"
@@ -147,6 +157,7 @@ export const BreakListForm = () => {
 
   const resetForm = () => {
     form.reset({
+      date: new Date(),
       rows: BREAK_LIST_DEFAULT.map((item) => ({
         id: item.id,
         name: item.name,

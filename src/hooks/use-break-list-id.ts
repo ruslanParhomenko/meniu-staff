@@ -24,7 +24,7 @@ export function useBreakListById(id: number | null) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const fetchData = () => {
     if (!id) return;
 
     setLoading(true);
@@ -39,7 +39,11 @@ export function useBreakListById(id: number | null) {
       })
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchData();
   }, [id]);
 
-  return { data, loading, error };
+  return { data, loading, error, refetch: fetchData };
 }

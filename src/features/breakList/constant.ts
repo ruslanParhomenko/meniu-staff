@@ -1,7 +1,7 @@
 export const BREAK_LIST_DEFAULT: BreakListItem[] = [
   {
     id: "B8",
-    name: "Аня",
+    name: "",
     hours: [
       { "9": "X" },
       { "10": "00" },
@@ -203,7 +203,7 @@ export const BREAK_LIST_DEFAULT: BreakListItem[] = [
   },
   {
     id: "20",
-    name: "Аня",
+    name: "",
     hours: [
       { "9": "X" },
       { "10": "X" },

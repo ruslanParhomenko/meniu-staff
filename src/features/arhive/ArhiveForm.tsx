@@ -15,6 +15,7 @@ import type { Locale as DateFnsLocale } from "date-fns";
 
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
+import { use } from "react";
 
 export const ArhiveForm = () => {
   const t = useTranslations("Navigation");
@@ -26,7 +27,7 @@ export const ArhiveForm = () => {
 
   const form = useForm();
 
-  const { data: breakList } = useBreakLists();
+  const { data: breakList, loading, error, refetch } = useBreakLists();
 
   const dataSelect = breakList?.map((item) => {
     const localeObj = localesMap[locale] || ru;
@@ -46,10 +47,17 @@ export const ArhiveForm = () => {
             {t("breakList")}
           </AccordionTrigger>
           <AccordionContent>
-            <ArhiveBreakListTable data={dataSelect} />
+            <ArhiveBreakListTable
+              data={dataSelect}
+              loading={loading}
+              refetch={refetch}
+            />
           </AccordionContent>
         </AccordionItem>
       </Accordion>
     </Form>
   );
 };
+function useEffect(arg0: () => void) {
+  throw new Error("Function not implemented.");
+}
