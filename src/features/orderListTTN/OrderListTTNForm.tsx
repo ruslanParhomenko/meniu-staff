@@ -29,6 +29,7 @@ import {
   UBFB,
   VERGNANO,
   VITAFOR,
+  UBFB2,
 } from "./constants";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
@@ -87,6 +88,7 @@ export const OrderListTTNForm = ({
       ...BUISNESS,
       ...ACVAMONT,
       ...ACVILIN,
+      ...UBFB2,
     ],
     []
   );
@@ -159,7 +161,7 @@ export const OrderListTTNForm = ({
     <Form {...form}>
       <form onSubmit={form.handleSubmit(sendTextTelegram)}>
         {children}
-        <div className="flex justify-start items-center p-5 pt-10 gap-4">
+        <div className="flex justify-start items-center p-5 pt-5 gap-4">
           <Button
             type="submit"
             variant={"default"}

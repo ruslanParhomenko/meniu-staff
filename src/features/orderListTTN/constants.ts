@@ -55,13 +55,16 @@ export const UBFB = [
   "Baileys",
   "вино PICINI белое",
   "вино PICINI красное",
-  "JP. CHANET красное",
-  "Боржоми 0.5 пластик уп",
-  "Евиан 0.33 пластик уп",
-  "JP. CHANET белое",
+
   "Heineken",
   "Martini Bianco",
   "Martini prosecco",
+];
+export const UBFB2 = [
+  "Боржоми 0.5 пластик уп",
+  "Евиан 0.33 пластик уп",
+  "JP. CHANET красное",
+  "JP. CHANET белое",
 ];
 
 export const BUISNESS = [

@@ -60,5 +60,14 @@
     "logIn": "Войти",
     "name": "Имя",
     "adress": "Адрес"
+  },
+  "Settings": {
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "position": "Должность",
+    "requiredField": "Обязательное поле",
+    "employees": "Сотрудники",
+    "addEmployee": "Добавить сотрудника",
+    "insufficientRights": "Недостаточно прав"
   }
 }

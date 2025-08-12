@@ -14,13 +14,14 @@ import {
   FRUITBOX,
   APIFERA,
   DAVIDAN,
+  UBFB2,
 } from "./constants";
 import { QUANTITY_SELECT } from "../orderListTTN/constants";
 import { Separator } from "@/components/ui/separator";
 
 export const OrderListTTNBar = () => {
   return (
-    <div className="flex flex-col gap-10 w-full justify-start mx-5 sm:flex-row">
+    <div className="flex flex-col  w-full justify-start mx-5 sm:flex-row">
       <div className="flex flex-col w-70 mx-5">
         {AQUATRADE.map((item, index) => {
           return (
@@ -74,32 +75,6 @@ export const OrderListTTNBar = () => {
           );
         })}
         <Separator className=" bg-blue-600 py-1 my-1" />
-        {APIFERA.map((item, index) => {
-          return (
-            <div key={index} className="w-70 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {APIFERA.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
-        {DAVIDAN.map((item, index) => {
-          return (
-            <div key={index} className="w-70 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {DAVIDAN.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
       </div>
       <div className="flex flex-col w-70 mx-5">
         {ACVILIN.map((item, index) => {
@@ -111,34 +86,6 @@ export const OrderListTTNBar = () => {
                 data={QUANTITY_SELECT}
               />
               {FORWARD.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
-
-        {ACVAMONT.map((item, index) => {
-          return (
-            <div key={index} className="w-70 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {ACVAMONT.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
-
-        {CHOCO.map((item, index) => {
-          return (
-            <div key={index} className="w-70 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {CHOCO.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}
@@ -197,6 +144,75 @@ export const OrderListTTNBar = () => {
                 data={QUANTITY_SELECT}
               />
               {UBFB.length - 1 !== index && <Separator className="my-1" />}
+            </div>
+          );
+        })}
+        <Separator className=" bg-blue-600 py-1 my-1" />
+      </div>
+      <div className="flex flex-col w-70 mx-5">
+        {UBFB2.map((item, index) => {
+          return (
+            <div key={index} className="w-70 ">
+              <SelectInput
+                fieldName={item}
+                fieldLabel={item}
+                data={QUANTITY_SELECT}
+              />
+              {UBFB.length - 1 !== index && <Separator className="my-1" />}
+            </div>
+          );
+        })}
+        <Separator className=" bg-blue-600 py-1 my-1" />
+
+        {ACVAMONT.map((item, index) => {
+          return (
+            <div key={index} className="w-70 ">
+              <SelectInput
+                fieldName={item}
+                fieldLabel={item}
+                data={QUANTITY_SELECT}
+              />
+              {ACVAMONT.length - 1 !== index && <Separator className="my-1" />}
+            </div>
+          );
+        })}
+        <Separator className=" bg-blue-600 py-1 my-1" />
+
+        {CHOCO.map((item, index) => {
+          return (
+            <div key={index} className="w-70 ">
+              <SelectInput
+                fieldName={item}
+                fieldLabel={item}
+                data={QUANTITY_SELECT}
+              />
+              {CHOCO.length - 1 !== index && <Separator className="my-1" />}
+            </div>
+          );
+        })}
+        <Separator className=" bg-blue-600 py-1 my-1" />
+        {APIFERA.map((item, index) => {
+          return (
+            <div key={index} className="w-70 ">
+              <SelectInput
+                fieldName={item}
+                fieldLabel={item}
+                data={QUANTITY_SELECT}
+              />
+              {APIFERA.length - 1 !== index && <Separator className="my-1" />}
+            </div>
+          );
+        })}
+        <Separator className=" bg-blue-600 py-1 my-1" />
+        {DAVIDAN.map((item, index) => {
+          return (
+            <div key={index} className="w-70 ">
+              <SelectInput
+                fieldName={item}
+                fieldLabel={item}
+                data={QUANTITY_SELECT}
+              />
+              {DAVIDAN.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}
