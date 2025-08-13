@@ -69,6 +69,7 @@
     "requiredField": "Обязательное поле",
     "employees": "Сотрудники",
     "addEmployee": "Добавить сотрудника",
-    "insufficientRights": "Недостаточно прав"
+    "insufficientRights": "Недостаточно прав",
+    "addEmployees": "Добавить сотрудников"
   }
 }

@@ -69,6 +69,7 @@
     "requiredField": "Câmp obligatoriu",
     "employees": "Angajați",
     "addEmployee": "Adaugă angajat",
-    "insufficientRights": "Drepturi insuficiente"
+    "insufficientRights": "Drepturi insuficiente",
+    "addEmployees": "Adauga angajati"
   }
 }
