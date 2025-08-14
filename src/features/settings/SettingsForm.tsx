@@ -83,13 +83,12 @@ export default function SettingsForm() {
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1">
-        <AccordionTrigger className="text-lg cursor-pointer w-full [&>svg]:hidden">
-          {t("addEmployees")}
+        <AccordionTrigger className="text-lg cursor-pointer w-full [&>svg]:hidden bg-blue-600 px-4 py-2 text-white hover:bg-blue-400 hover:text-black no-underline! focus:no-underline">
+          {t("addEmployees")} +
         </AccordionTrigger>
         <AccordionContent>
-          <div className="flex flex-col  w-full justify-between md:flex-row  p-10">
+          <div className="flex flex-col  w-full justify-between md:flex-row  pt-5 ">
             <div className="w-full md:w-1/4">
-              <h1 className="text-2xl font-bold">{t("addEmployee")}</h1>
               <Form {...form}>
                 <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                   <div className="my-2">

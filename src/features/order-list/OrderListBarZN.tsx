@@ -6,8 +6,8 @@ import {
   MISCELLANEOUS,
   OFFICE,
   PHARMACEUTICAL,
+  QUANTITY_SELECT,
 } from "./constants";
-import { QUANTITY_SELECT } from "../orderListTTN/constants";
 import { Separator } from "@/components/ui/separator";
 
 export const OrderListBar = () => {

@@ -11,7 +11,12 @@ export function SidebarToggleButton() {
   return (
     <button
       onClick={toggleSidebar}
-      className=" max-w-2 md:hidden text-blue-600 hover:bg-gray-100 rounded"
+      className="
+        fixed bottom-4 left-1/2 -translate-x-1/2 
+        z-50 md:hidden
+        p-3 rounded-full bg-white shadow-lg 
+        text-blue-600 hover:bg-gray-100
+      "
       aria-label="Toggle Sidebar"
     >
       <Menu />

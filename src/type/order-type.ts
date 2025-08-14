@@ -1,4 +1,19 @@
 import {
+  FRUITS,
+  GROCERIES,
+  HIMICALS,
+  MISCELLANEOUS,
+  OFFICE,
+  PHARMACEUTICAL,
+  NUTS,
+  SPICES,
+  SPICES_2,
+  VEGETABLES,
+  GREEN,
+  FRUITS_CUCINE,
+  MEAT,
+  MILK,
+  OTHER,
   ACVAMONT,
   ACVILIN,
   APIFERA,
@@ -18,14 +33,17 @@ import {
   FRUITBOX_C,
   GLOBARSPIRIT,
   IMCOMVIL,
+  IUG,
   PRESTAPAC,
   ROGOB,
+  UBFB,
+  UBFB2,
   VERGNANO,
   VITAFOR,
-} from "./constants";
-import {} from "./constants";
+} from "@/features/order-list/constants";
 
 type FieldName =
+  // TTN
   | (typeof AQUATRADE)[number]
   | (typeof BUCURIA)[number]
   | (typeof COCACOLA)[number]
@@ -48,8 +66,27 @@ type FieldName =
   | (typeof ARTACULINAR)[number]
   | (typeof ETALONUS)[number]
   | (typeof VITAFOR)[number]
-  | (typeof DELPHI)[number];
+  | (typeof DELPHI)[number]
+  | (typeof IUG)[number]
+  | (typeof UBFB)[number]
+  | (typeof UBFB2)[number]
+  // BAR
+  | (typeof FRUITS)[number]
+  | (typeof GROCERIES)[number]
+  | (typeof HIMICALS)[number]
+  | (typeof MISCELLANEOUS)[number]
+  | (typeof OFFICE)[number]
+  | (typeof PHARMACEUTICAL)[number]
+  | (typeof NUTS)[number]
+  | (typeof SPICES)[number]
+  | (typeof SPICES_2)[number]
+  | (typeof VEGETABLES)[number]
+  | (typeof GREEN)[number]
+  | (typeof FRUITS_CUCINE)[number]
+  | (typeof MEAT)[number]
+  | (typeof MILK)[number]
+  | (typeof OTHER)[number];
 
-export type OrderListTTNFormValues = {
+export type OrderListFormType = {
   [key in FieldName]?: string;
 };

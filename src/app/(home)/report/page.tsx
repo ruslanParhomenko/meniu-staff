@@ -1,9 +1,6 @@
-"use client";
-
-import StockTable from "@/features/report/ReportBar";
+import ReportBarForm from "@/features/report/ReportBar";
 
 const Page = () => {
-  // return <DatePickerInput fieldName="date" fieldLabel="" />;
-  return <StockTable />;
+  return <ReportBarForm />;
 };
 export default Page;

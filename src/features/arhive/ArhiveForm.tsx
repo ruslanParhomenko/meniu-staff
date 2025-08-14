@@ -43,7 +43,7 @@ export const ArhiveForm = () => {
     <Form {...form}>
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">
-          <AccordionTrigger className="text-lg cursor-pointer w-full [&>svg]:hidden">
+          <AccordionTrigger className="text-lg cursor-pointer w-full [&>svg]:hidden bg-blue-600 px-4 py-2 text-white hover:bg-blue-400 hover:text-black no-underline! focus:no-underline">
             {t("breakList")}
           </AccordionTrigger>
           <AccordionContent>

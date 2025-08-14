@@ -22,14 +22,14 @@ export const SIDEBAR_NAVIGATION = [
   },
   {
     title: "ordersList",
-    url: "/orders-list-ttn/orders-ttn-bar",
-    url2: "/orders-list-ttn/orders-ttn-cucina",
+    url: "/orders-list-ttn/ttn-bar",
+    url2: "/orders-list-ttn/ttn-cucina",
     icon: List,
   },
   {
     title: "orderListBar",
-    url: "/orders-list/orders-bar",
-    url2: "/orders-list/orders-cucina",
+    url: "/orders-list/zn-bar",
+    url2: "/orders-list/zn-cucina",
     icon: List,
   },
   {

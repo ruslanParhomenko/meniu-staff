@@ -1,27 +1,31 @@
+"use client";
 import SelectInput from "@/components/inputs/SelectInput";
 import {
-  ROGOB,
-  BLUESHARK,
-  FRUITBOX_C,
-  DINOVA,
-  FORWARD,
-  IUG,
-  PRESTAPAC,
-  IMCOMVIL,
-  ARTACULINAR,
-  ETALONUS,
-  VITAFOR,
-  FORWARD_CUCINE,
-  DELPHI,
+  BAKERY,
+  EMPTY,
+  FRUITS_CUCINE,
+  GREEN,
+  MEAT,
+  MILK,
+  NUTS,
+  OTHER,
+  QUANTITY_SELECT,
+  SPICES,
+  SPICES_2,
+  VEGETABLES,
 } from "./constants";
-import { QUANTITY_SELECT } from "../orderListTTN/constants";
-import { Separator } from "@/components/ui/separator";
 
-export const OrderListTTNCucine = () => {
+import { Separator } from "@/components/ui/separator";
+import { Input } from "@/components/ui/input";
+import { useFormContext } from "react-hook-form";
+
+export const OrderListCucine = () => {
+  const form = useFormContext();
+  const { register } = form;
   return (
     <div className="flex flex-col gap-10 w-full justify-start mx-5 sm:flex-row">
       <div className="flex flex-col w-60 mx-5">
-        {ROGOB.map((item, index) => {
+        {VEGETABLES.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
               <SelectInput
@@ -29,12 +33,14 @@ export const OrderListTTNCucine = () => {
                 fieldLabel={item}
                 data={QUANTITY_SELECT}
               />
-              {ROGOB.length - 1 !== index && <Separator className="my-1" />}
+              {VEGETABLES.length - 1 !== index && (
+                <Separator className="my-1" />
+              )}
             </div>
           );
         })}
         <Separator className=" bg-blue-600 py-1 my-2" />
-        {BLUESHARK.map((item, index) => {
+        {GREEN.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
               <SelectInput
@@ -42,13 +48,12 @@ export const OrderListTTNCucine = () => {
                 fieldLabel={item}
                 data={QUANTITY_SELECT}
               />
-              {BLUESHARK.length - 1 !== index && <Separator className="my-1" />}
+              {GREEN.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}
         <Separator className=" bg-blue-600 py-1 my-2" />
-
-        {VITAFOR.map((item, index) => {
+        {MILK.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
               <SelectInput
@@ -56,14 +61,27 @@ export const OrderListTTNCucine = () => {
                 fieldLabel={item}
                 data={QUANTITY_SELECT}
               />
-              {VITAFOR.length - 1 !== index && <Separator className="my-1" />}
+              {MILK.length - 1 !== index && <Separator className="my-1" />}
+            </div>
+          );
+        })}
+        <Separator className=" bg-blue-600 py-1 my-2" />
+        {NUTS.map((item, index) => {
+          return (
+            <div key={index} className="w-60 ">
+              <SelectInput
+                fieldName={item}
+                fieldLabel={item}
+                data={QUANTITY_SELECT}
+              />
+              {NUTS.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}
         <Separator className=" bg-blue-600 py-1 my-2" />
       </div>
       <div className="flex flex-col w-60 mx-5">
-        {ARTACULINAR.map((item, index) => {
+        {FRUITS_CUCINE.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
               <SelectInput
@@ -71,28 +89,15 @@ export const OrderListTTNCucine = () => {
                 fieldLabel={item}
                 data={QUANTITY_SELECT}
               />
-              {ARTACULINAR.length - 1 !== index && (
+              {FRUITS_CUCINE.length - 1 !== index && (
                 <Separator className="my-1" />
               )}
             </div>
           );
         })}
         <Separator className=" bg-blue-600 py-1 my-2" />
-        {PRESTAPAC.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {FORWARD.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
 
-        {IMCOMVIL.map((item, index) => {
+        {SPICES.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
               <SelectInput
@@ -100,13 +105,12 @@ export const OrderListTTNCucine = () => {
                 fieldLabel={item}
                 data={QUANTITY_SELECT}
               />
-              {IMCOMVIL.length - 1 !== index && <Separator className="my-1" />}
+              {SPICES.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}
         <Separator className=" bg-blue-600 py-1 my-2" />
-
-        {ETALONUS.map((item, index) => {
+        {BAKERY.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
               <SelectInput
@@ -114,12 +118,12 @@ export const OrderListTTNCucine = () => {
                 fieldLabel={item}
                 data={QUANTITY_SELECT}
               />
-              {ETALONUS.length - 1 !== index && <Separator className="my-1" />}
+              {BAKERY.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}
         <Separator className=" bg-blue-600 py-1 my-2" />
-        {FORWARD_CUCINE.map((item, index) => {
+        {OTHER.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
               <SelectInput
@@ -127,29 +131,14 @@ export const OrderListTTNCucine = () => {
                 fieldLabel={item}
                 data={QUANTITY_SELECT}
               />
-              {FORWARD_CUCINE.length - 1 !== index && (
-                <Separator className="my-1" />
-              )}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
-        {DELPHI.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {DELPHI.length - 1 !== index && <Separator className="my-1" />}
+              {OTHER.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}
         <Separator className=" bg-blue-600 py-1 my-2" />
       </div>
       <div className="flex flex-col w-60 mx-5">
-        {DINOVA.map((item, index) => {
+        {MEAT.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
               <SelectInput
@@ -157,12 +146,12 @@ export const OrderListTTNCucine = () => {
                 fieldLabel={item}
                 data={QUANTITY_SELECT}
               />
-              {DINOVA.length - 1 !== index && <Separator className="my-1" />}
+              {MEAT.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}
         <Separator className=" bg-blue-600 py-1 my-2" />
-        {IUG.map((item, index) => {
+        {SPICES_2.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
               <SelectInput
@@ -170,26 +159,28 @@ export const OrderListTTNCucine = () => {
                 fieldLabel={item}
                 data={QUANTITY_SELECT}
               />
-              {IUG.length - 1 !== index && <Separator className="my-1" />}
+              {SPICES_2.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}
         <Separator className=" bg-blue-600 py-1 my-2" />
-        {FRUITBOX_C.map((item, index) => {
+        {EMPTY.map((item, index) => {
           return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
+            <div
+              key={index}
+              className="w-60 flex flex-row justify-center gap-6"
+            >
+              <Input
+                className="w-3/4 mb-1"
+                {...register(`EMPTY.${index}.name`)}
               />
-              {FRUITBOX_C.length - 1 !== index && (
-                <Separator className="my-1" />
-              )}
+              <Input
+                className="w-1/4"
+                {...register(`EMPTY.${index}.quantity`)}
+              />
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
       </div>
     </div>
   );

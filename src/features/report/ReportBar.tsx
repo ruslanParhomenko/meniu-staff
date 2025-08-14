@@ -10,13 +10,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 type Item = {
   name: string;
@@ -30,15 +23,14 @@ const initialData: Item[] = [
   { name: "Parliament", stock: 162, incoming: 0, outgoing: 0 },
   { name: "Cohiba Siglo I", stock: 1, incoming: 0, outgoing: 0 },
   { name: "Guantonomera", stock: 3, incoming: 0, outgoing: 0 },
-  { name: "Monte Cristo Edmundo", stock: 2, incoming: 0, outgoing: 0 },
+  { name: "Monte Cristo", stock: 2, incoming: 0, outgoing: 0 },
   { name: "R&J N3", stock: 3, incoming: 0, outgoing: 0 },
   { name: "Гильотина (2)", stock: 2, incoming: 0, outgoing: 0 },
   { name: "Пепельница", stock: 16, incoming: 0, outgoing: 0 },
   { name: "Зажигалка", stock: 495, incoming: 0, outgoing: 0 },
 ];
 
-export default function StockTable() {
-  const [filter, setFilter] = useState<string>("all");
+export default function ReportBarForm() {
   const [items, setItems] = useState<Item[]>(initialData);
 
   const handleChange = (
@@ -51,35 +43,12 @@ export default function StockTable() {
     setItems(updated);
   };
 
-  const filteredItems =
-    filter === "all"
-      ? items
-      : items.filter((item) => item.name.includes(filter));
-
   return (
-    <div className="space-y-4 w-[800px]">
-      {/* Фильтр */}
-
-      {/* Таблица */}
-      <Table className="[&_th]:text-center [&_td]:text-center">
+    <div className="w-full">
+      <Table className="[&_th]:text-center [&_td]:text-center md:w-1/3">
         <TableHeader>
           <TableRow className="h-10">
-            <TableHead style={{ width: "80px" }}>
-              {/* <Select
-                onValueChange={(val) => setFilter(val)}
-                defaultValue="all"
-              >
-                <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Выбери категорию" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Все</SelectItem>
-                  <SelectItem value="Marlboro">Marlboro</SelectItem>
-                  <SelectItem value="Parliament">Parliament</SelectItem>
-                  <SelectItem value="Cohiba">Cohiba</SelectItem>
-                </SelectContent>
-              </Select> */}
-            </TableHead>
+            <TableHead style={{ width: "80px" }}></TableHead>
             <TableHead style={{ width: "80px" }}></TableHead>
             <TableHead style={{ width: "50px" }}>+</TableHead>
             <TableHead style={{ width: "50px" }}>-</TableHead>
@@ -87,7 +56,7 @@ export default function StockTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {filteredItems.map((item, idx) => {
+          {items.map((item, idx) => {
             const finalStock = item.stock + item.incoming - item.outgoing;
             return (
               <TableRow key={idx} className="h-10">

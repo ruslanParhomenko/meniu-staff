@@ -14,16 +14,25 @@ import {
 } from "../../components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import LanguageSwitcher from "../../components/switches/LanguageSwitch";
-import { SidebarToggleButton } from "../../components/switches/SidebarToggleButton";
 import { SIDEBAR_NAVIGATION } from "./constants";
 
+import { useSidebar } from "../../components/ui/sidebar";
+import { SidebarToggleButton } from "@/components/switches/SidebarToggleButton";
+
 const SidebarNav = () => {
-  const pathname = usePathname();
+  const { toggleSidebar, isMobile } = useSidebar();
+  const pathname = usePathname().split("/")[1];
 
   const t = useTranslations("Navigation");
   const { data: session } = useSession();
 
   const isCucina = session?.user?.email?.includes("cng.nv.kitchen@gmail.com");
+
+  const handleMenuClick = () => {
+    if (isMobile) {
+      toggleSidebar();
+    }
+  };
 
   return (
     <>
@@ -35,9 +44,9 @@ const SidebarNav = () => {
           <span className="text-xs pt-4 pl-2">
             {session?.user?.email?.split("@")[0] || "BAR"}
           </span>
-          <SidebarMenu className="flex h-full flex-col gap-4 pt-10 ">
+          <SidebarMenu className="flex h-full flex-col gap-4 pt-10  ">
             {SIDEBAR_NAVIGATION.map((item) => {
-              const isActivePath = pathname === item.url;
+              const isActivePath = pathname === item.url.split("/")[1];
 
               return (
                 <SidebarMenuButton
@@ -49,7 +58,10 @@ const SidebarNav = () => {
                       isActivePath,
                   })}
                 >
-                  <Link href={isCucina ? item.url2 : item.url}>
+                  <Link
+                    href={isCucina ? item.url2 : item.url}
+                    onClick={handleMenuClick}
+                  >
                     <span className="text-base">{t(item.title)}</span>
                   </Link>
                 </SidebarMenuButton>
