@@ -23,6 +23,8 @@ const SidebarNav = () => {
   const t = useTranslations("Navigation");
   const { data: session } = useSession();
 
+  const isCucina = session?.user?.email?.includes("cng.nv.kitchen@gmail.com");
+
   return (
     <>
       <div className="flex items-center p-4 lg:hidden">
@@ -47,7 +49,7 @@ const SidebarNav = () => {
                       isActivePath,
                   })}
                 >
-                  <Link href={item.url}>
+                  <Link href={isCucina ? item.url2 : item.url}>
                     <span className="text-base">{t(item.title)}</span>
                   </Link>
                 </SidebarMenuButton>

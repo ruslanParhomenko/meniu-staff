@@ -86,23 +86,87 @@ export const OrderListForm = ({ children }: { children: React.ReactNode }) => {
     return () => subscription.unsubscribe();
   }, [form.watch, STORAGE_KEY]);
 
+  // const sendTextTelegram: SubmitHandler<OrderListBarFormValues> = async (
+  //   data
+  // ) => {
+  //   console.log(data);
+  //   const userName = session?.data?.user?.name ?? "Неизвестный пользователь";
+  //   const formattedDate = format(new Date(), "dd.MM.yyyy HH:mm");
+
+  //   const filteredData = Object.fromEntries(
+  //     Object.entries(data)
+  //       .filter(([, value]) => value !== undefined && value !== "")
+  //       .map(([key, value]) => [key, Number(value)])
+  //   );
+
+  //   const body = Object.entries(filteredData)
+  //     .map(([key, value]) => `${key}: ${value}`)
+  //     .join("\n");
+
+  //   const message = `Заявка :${nameOrder}\n ${formattedDate}\n ${userName}\n\n${body}`;
+
+  //   try {
+  //     const res = await fetch("/api/send-telegram", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ text: message }),
+  //     });
+
+  //     if (!res.ok) throw new Error("Failed to send");
+
+  //     toast.success("Сообщение успешно отправлено!");
+  //   } catch (e) {
+  //     toast.error("Ошибка при отправке сообщения");
+  //   }
+  // };
   const sendTextTelegram: SubmitHandler<OrderListBarFormValues> = async (
     data
   ) => {
+    console.log("Form data:", data);
+
     const userName = session?.data?.user?.name ?? "Неизвестный пользователь";
     const formattedDate = format(new Date(), "dd.MM.yyyy HH:mm");
 
-    const filteredData = Object.fromEntries(
-      Object.entries(data)
-        .filter(([, value]) => value !== undefined && value !== "")
-        .map(([key, value]) => [key, Number(value)])
-    );
+    const bodyLines: string[] = [];
 
-    const body = Object.entries(filteredData)
-      .map(([key, value]) => `${key}: ${value}`)
-      .join("\n");
+    for (const [key, value] of Object.entries(data)) {
+      if (value == null || value === "") continue;
 
-    const message = `Заявка :${nameOrder}\n ${formattedDate}\n ${userName}\n\n${body}`;
+      // Если массив с объектами {name, quantity}
+      if (Array.isArray(value)) {
+        value.forEach((item) => {
+          if (item && item.name && item.quantity) {
+            bodyLines.push(`${item.name}: ${item.quantity}`);
+          }
+        });
+      }
+      // Если объект {name, quantity}
+      else if (
+        typeof value === "object" &&
+        value !== null &&
+        "name" in value &&
+        "quantity" in value &&
+        typeof (value as any).name === "string" &&
+        (value as any).name &&
+        (value as any).quantity
+      ) {
+        bodyLines.push(`${(value as any).name}: ${(value as any).quantity}`);
+      }
+      // Если обычное значение (строка/число)
+      else if (typeof value === "string" || typeof value === "number") {
+        bodyLines.push(`${key}: ${value}`);
+      }
+    }
+
+    const body = bodyLines.join("\n");
+
+    const message = [
+      `Заявка: ${nameOrder}`,
+      formattedDate,
+      userName,
+      "",
+      body,
+    ].join("\n");
 
     try {
       const res = await fetch("/api/send-telegram", {
@@ -111,10 +175,14 @@ export const OrderListForm = ({ children }: { children: React.ReactNode }) => {
         body: JSON.stringify({ text: message }),
       });
 
-      if (!res.ok) throw new Error("Failed to send");
+      if (!res.ok) {
+        console.error(`Telegram error: ${res.status} ${res.statusText}`);
+        throw new Error("Failed to send");
+      }
 
       toast.success("Сообщение успешно отправлено!");
     } catch (e) {
+      console.error(e);
       toast.error("Ошибка при отправке сообщения");
     }
   };

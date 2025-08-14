@@ -25,8 +25,6 @@ function PageNav({
   const selectedPath =
     pathname.replace(basePath, "").split("/")[0] || undefined;
 
-  console.log(selectedPath);
-
   const isActive = (href: string) => {
     return href === "" ? selectedPath === undefined : selectedPath === href;
   };
