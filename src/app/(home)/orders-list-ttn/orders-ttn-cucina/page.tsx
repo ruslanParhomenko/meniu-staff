@@ -1,13 +1,7 @@
-import { OrderListTTNCucine } from "@/features/orderListTTN/orderListTtnCucina";
-
-import { OrderListTTNForm } from "@/features/orderListTTN/OrderListTTNForm";
+import { OrderListTTNFormCucina } from "@/features/orderListTTN/OrderListTTNFormCucina";
 
 const Page = () => {
-  return (
-    <OrderListTTNForm>
-      <OrderListTTNCucine />
-    </OrderListTTNForm>
-  );
+  return <OrderListTTNFormCucina />;
 };
 
 export default Page;

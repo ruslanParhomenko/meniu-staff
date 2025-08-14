@@ -7,28 +7,16 @@ import {
   ACVILIN,
   APIFERA,
   AQUATRADE,
-  ARTACULINAR,
-  BLUESHARK,
   BUCURIA,
   BUISNESS,
   CHOCO,
   COCACOLA,
   DAVIDAN,
-  DELPHI,
-  DINOVA,
-  ETALONUS,
   FORWARD,
-  FORWARD_CUCINE,
   FRUITBOX,
-  FRUITBOX_C,
   GLOBARSPIRIT,
-  IMCOMVIL,
-  IUG,
-  PRESTAPAC,
-  ROGOB,
   UBFB,
   VERGNANO,
-  VITAFOR,
   UBFB2,
 } from "./constants";
 import { Button } from "@/components/ui/button";
@@ -42,17 +30,14 @@ import { usePathname, useRouter } from "@/i18n/navigation";
 import { useEffect, useMemo } from "react";
 import { OrderListTTNFormValues } from "./schemas";
 import { OrderListBarFormValues } from "../orderListBar/schemas";
+import { OrderListTTNBar } from "./orderListTtnBar";
 
-export const OrderListTTNForm = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const OrderListTTNFormBar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const nameOrder =
     pathname.split("/").pop()?.split("-")[1].toLocaleUpperCase() || "";
-  const STORAGE_KEY = `order-form-${nameOrder}`;
+  const STORAGE_KEY_BAR = `order-form-${nameOrder}-bar`;
 
   const t = useTranslations("UI");
   const session = useSession();
@@ -69,21 +54,6 @@ export const OrderListTTNForm = ({
       ...VERGNANO,
       ...CHOCO,
       ...APIFERA,
-      ...ROGOB,
-      ...BLUESHARK,
-      ...FRUITBOX_C,
-      ...DINOVA,
-      ...IUG,
-      ...PRESTAPAC,
-      ...IMCOMVIL,
-      ...ARTACULINAR,
-      ...ETALONUS,
-      ...VITAFOR,
-      ...FORWARD_CUCINE,
-      ...DELPHI,
-      ...PRESTAPAC,
-      ...IMCOMVIL,
-      ...ETALONUS,
       ...UBFB,
       ...BUISNESS,
       ...ACVAMONT,
@@ -98,7 +68,9 @@ export const OrderListTTNForm = ({
   ) as OrderListTTNFormValues;
 
   const localValues =
-    typeof window !== "undefined" ? localStorage.getItem(STORAGE_KEY) : null;
+    typeof window !== "undefined"
+      ? localStorage.getItem(STORAGE_KEY_BAR)
+      : null;
 
   const parsedLocalValues = localValues
     ? (JSON.parse(localValues) as OrderListTTNFormValues)
@@ -113,16 +85,16 @@ export const OrderListTTNForm = ({
 
   useEffect(() => {
     const subscription = form.watch((value) => {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+      localStorage.setItem(STORAGE_KEY_BAR, JSON.stringify(value));
     });
     return () => subscription.unsubscribe();
-  }, [form.watch, STORAGE_KEY]);
+  }, [form.watch, STORAGE_KEY_BAR]);
 
   const sendTextTelegram: SubmitHandler<OrderListBarFormValues> = async (
     data
   ) => {
     const userName = session?.data?.user?.name ?? "Неизвестный пользователь";
-    const formattedDate = format(new Date(), "dd.MM.yyyy HH:mm");
+    const formattedDate = format(new Date(), "dd.MM.yyyy");
 
     const filteredData = Object.fromEntries(
       Object.entries(data)
@@ -131,10 +103,10 @@ export const OrderListTTNForm = ({
     );
 
     const body = Object.entries(filteredData)
-      .map(([key, value]) => `${key}: ${value}`)
+      .map(([key, value], index) => `${index + 1}. ${key}: ${value}`)
       .join("\n");
 
-    const message = `Заявка :${nameOrder}\n ${formattedDate}\n ${userName}\n\n${body}`;
+    const message = `${nameOrder}:${formattedDate} - ${userName}\n\n${body}`;
 
     try {
       const res = await fetch("/api/send-telegram-ttn", {
@@ -154,13 +126,13 @@ export const OrderListTTNForm = ({
   // Сброс
   const resetForm = () => {
     form.reset(defaultEmptyValues);
-    localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem(STORAGE_KEY_BAR);
     router.refresh();
   };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(sendTextTelegram)}>
-        {children}
+        <OrderListTTNBar />
         <div className="flex justify-start items-center p-5 pt-5 gap-4">
           <Button
             type="submit"

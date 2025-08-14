@@ -85,7 +85,7 @@ export const OrderListTTNBar = () => {
                 fieldLabel={item}
                 data={QUANTITY_SELECT}
               />
-              {FORWARD.length - 1 !== index && <Separator className="my-1" />}
+              {ACVILIN.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}
@@ -213,6 +213,19 @@ export const OrderListTTNBar = () => {
                 data={QUANTITY_SELECT}
               />
               {DAVIDAN.length - 1 !== index && <Separator className="my-1" />}
+            </div>
+          );
+        })}
+        <Separator className=" bg-blue-600 py-1 my-1" />
+        {FORWARD.map((item, index) => {
+          return (
+            <div key={index} className="w-70 ">
+              <SelectInput
+                fieldName={item}
+                fieldLabel={item}
+                data={QUANTITY_SELECT}
+              />
+              {FORWARD.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}

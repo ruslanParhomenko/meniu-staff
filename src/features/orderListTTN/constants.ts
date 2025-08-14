@@ -61,10 +61,10 @@ export const UBFB = [
   "Martini prosecco",
 ];
 export const UBFB2 = [
-  "Боржоми 0.5 пластик уп",
-  "Евиан 0.33 пластик уп",
-  "JP. CHANET красное",
-  "JP. CHANET белое",
+  "Боржоми 0,5 пластик уп",
+  "Евиан 0,33 пластик уп",
+  "JP CHANET красное",
+  "JP CHANET белое",
 ];
 
 export const BUISNESS = [
