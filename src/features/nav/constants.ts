@@ -49,4 +49,10 @@ export const SIDEBAR_NAVIGATION = [
     url2: "/stop-list-cucina",
     icon: List,
   },
+  {
+    title: "employeeRemarks",
+    url: "/employee-remarks",
+    url2: "/employee-remarks",
+    icon: List,
+  },
 ];

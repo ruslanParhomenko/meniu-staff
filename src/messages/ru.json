@@ -48,7 +48,8 @@
     "bar": "Бар",
     "settings": "Настройки",
     "arhive": "Архив",
-    "stopList": "Стоп-лист"
+    "stopList": "Стоп-лист",
+    "employeeRemarks": "Журнал замечаний"
   },
   "Auth": {
     "login": "Вход",

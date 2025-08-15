@@ -48,7 +48,8 @@
     "bar": "Bar",
     "settings": "Setari",
     "arhive": "Arhiva",
-    "stopList": "Stop List"
+    "stopList": "Stop List",
+    "employeeRemarks": "Observatii angajati"
   },
   "Auth": {
     "login": "Autentificare",

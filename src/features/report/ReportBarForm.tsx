@@ -68,6 +68,7 @@ export function ReportBarForm() {
         stock: Number(item.stock || 0),
         incoming: Number(item.incoming || 0),
         outgoing: Number(item.outgoing || 0),
+        finalStock: String(item.finalStock || "0"),
       })),
     };
     const res = await fetch("/api/report/create", {
@@ -100,7 +101,7 @@ export function ReportBarForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <div className="grid grid-cols-1 md:grid-cols-[50%_10%_20%] gap-20 pr-20">
+        <div className="grid grid-cols-1 md:grid-cols-[50%_5%_25%] gap-20 pr-20">
           <TableTobacco />
           <div className="w-full" />
           <TableEspenses />
