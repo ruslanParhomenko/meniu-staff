@@ -73,7 +73,7 @@ export const ReportTableByData = ({ report }: any) => {
                   {t?.outgoing.toLocaleString()}
                 </TableCell>
                 <TableCell className="text-center">
-                  {t?.final?.toLocaleString()}
+                  {t?.finalStock?.toLocaleString()}
                 </TableCell>
               </TableRow>
             ))}
