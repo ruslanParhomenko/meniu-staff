@@ -1,4 +1,3 @@
-import { url } from "inspector";
 import { BarChart2, LineChart, List, Pause } from "lucide-react";
 
 export const SIDEBAR_NAVIGATION = [
@@ -42,6 +41,12 @@ export const SIDEBAR_NAVIGATION = [
     title: "arhive",
     url: "/arhive",
     url2: "/arhive",
+    icon: List,
+  },
+  {
+    title: "stopList",
+    url: "/stop-list",
+    url2: "/stop-list-cucina",
     icon: List,
   },
 ];

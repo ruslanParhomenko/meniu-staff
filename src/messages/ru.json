@@ -47,7 +47,8 @@
     "cucina": "Кухня",
     "bar": "Бар",
     "settings": "Настройки",
-    "arhive": "Архив"
+    "arhive": "Архив",
+    "stopList": "Стоп-лист"
   },
   "Auth": {
     "login": "Вход",

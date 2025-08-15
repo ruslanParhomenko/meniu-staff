@@ -1,4 +1,4 @@
-import ReportBarForm from "@/features/report/ReportBar";
+import { ReportBarForm } from "@/features/report/ReportBarForm";
 
 const Page = () => {
   return <ReportBarForm />;

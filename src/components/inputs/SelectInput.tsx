@@ -49,15 +49,17 @@ function SelectInput({
               <FormItem
                 className={`${fieldLabel ? "flex gap-x-4 max-h-6" : ""}`}
               >
-                <Label
-                  className={`${fieldLabel ? "w-2/3" : ""} ${
-                    field.value && field.value !== 0
-                      ? "text-blue-600 font-bold"
-                      : ""
-                  }`}
-                >
-                  {fieldLabel}
-                </Label>
+                {fieldLabel && (
+                  <Label
+                    className={`${fieldLabel ? "w-2/3" : ""} ${
+                      field.value && field.value !== 0
+                        ? "text-blue-600 font-bold"
+                        : ""
+                    }`}
+                  >
+                    {fieldLabel}
+                  </Label>
+                )}
                 <Select
                   onValueChange={field.onChange}
                   value={field.value}

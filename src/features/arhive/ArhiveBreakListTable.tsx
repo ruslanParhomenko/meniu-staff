@@ -17,7 +17,7 @@ export const ArhiveBreakListTable = ({
 
   return (
     <>
-      <div className="w-1/4">
+      <div className="w-1/4 py-4">
         <SelectInput fieldName={"selectDataId"} data={data} />
       </div>
       {dataSelect && (

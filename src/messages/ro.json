@@ -47,7 +47,8 @@
     "cucina": "Bucatarie",
     "bar": "Bar",
     "settings": "Setari",
-    "arhive": "Arhiva"
+    "arhive": "Arhiva",
+    "stopList": "Stop List"
   },
   "Auth": {
     "login": "Autentificare",

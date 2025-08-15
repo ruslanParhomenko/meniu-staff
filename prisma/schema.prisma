@@ -53,3 +53,45 @@ model Hour {
   @@unique([rowId, hour]) 
 }
 
+
+
+
+model DailyReport {
+  id        Int            @id @default(autoincrement())
+  date      DateTime       @default(now())
+  total     Float          @default(0)
+
+  cashVerify CashVerify[]
+  tobacco    Tobacco[]
+  expenses   Expense[]
+}
+
+model CashVerify {
+  id       Int          @id @default(autoincrement())
+  hours    String
+  value    String
+  report   DailyReport  @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  reportId Int
+}
+
+model Tobacco {
+  id         Int          @id @default(autoincrement())
+  name       String
+  stock      Int          @default(0)
+  incoming   Int?
+  outgoing   Int?
+  finalStock String
+  report     DailyReport  @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  reportId   Int
+}
+
+model Expense {
+  id       Int          @id @default(autoincrement())
+  name     String
+  sum      String
+  report   DailyReport  @relation(fields: [reportId], references: [id], onDelete: Cascade)
+  reportId Int
+}
+
+
+

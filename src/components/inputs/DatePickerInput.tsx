@@ -2,7 +2,6 @@ import { useFormContext } from "react-hook-form";
 
 import { format, Locale } from "date-fns";
 import { ru, ro } from "date-fns/locale";
-import { CalendarIcon } from "lucide-react";
 
 import { useLocale, useTranslations } from "next-intl";
 import {
@@ -61,11 +60,10 @@ function DatePickerInput({ fieldName }: { fieldName: string }) {
                     ) : (
                       <span>{tDate("pickADate")}</span>
                     )}
-                    <CalendarIcon className="ml-auto h-4 w-8 opacity-50" />
                   </Button>
                 </FormControl>
               </PopoverTrigger>
-              <PopoverContent className="w-3xs p-2 " align="center">
+              <PopoverContent className="w-3xs " align="center">
                 <Calendar
                   mode="single"
                   selected={field.value}
