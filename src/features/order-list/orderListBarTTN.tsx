@@ -18,14 +18,18 @@ import {
   QUANTITY_SELECT,
 } from "./constants";
 import { Separator } from "@/components/ui/separator";
+import { Label } from "@radix-ui/react-dropdown-menu";
 
 export const OrderListTTNBar = () => {
   return (
     <div className="flex flex-col  w-full justify-start mx-5 sm:flex-row">
-      <div className="flex flex-col w-70 mx-5">
+      <div className="flex flex-col w-60 mx-5">
+        <Label className="py-1 text-center font-bold text-blue-600">
+          AQUATRADE
+        </Label>
         {AQUATRADE.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -35,10 +39,12 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          BUCURIA
+        </Label>
         {BUCURIA.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -48,10 +54,27 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          BUISNESS
+        </Label>
+        {BUISNESS.map((item, index) => {
+          return (
+            <div key={index} className="w-60 ">
+              <SelectInput
+                fieldName={item}
+                fieldLabel={item}
+                data={QUANTITY_SELECT}
+              />
+              {BUISNESS.length - 1 !== index && <Separator className="my-1" />}
+            </div>
+          );
+        })}
+        <Label className="py-1 text-center font-bold text-blue-600">
+          VERGNANO
+        </Label>
         {VERGNANO.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -61,10 +84,12 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          FRUITBOX
+        </Label>
         {FRUITBOX.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -74,12 +99,14 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
       </div>
-      <div className="flex flex-col w-70 mx-5">
+      <div className="flex flex-col w-60 mx-5">
+        <Label className="py-1 text-center font-bold text-blue-600">
+          ACVILIN
+        </Label>
         {ACVILIN.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -89,12 +116,14 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
       </div>
-      <div className="flex flex-col w-70 mx-5">
+      <div className="flex flex-col w-60 mx-5">
+        <Label className="py-1 text-center font-bold text-blue-600">
+          COCACOLA
+        </Label>
         {COCACOLA.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -104,10 +133,12 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          GLOBARSPIRIT
+        </Label>
         {GLOBARSPIRIT.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -119,10 +150,12 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          BUISNESS
+        </Label>
         {BUISNESS.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -132,12 +165,12 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
       </div>
-      <div className="flex flex-col w-70 mx-5">
+      <div className="flex flex-col w-60 mx-5">
+        <Label className="py-1 text-center font-bold text-blue-600">UBFB</Label>
         {UBFB.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -147,12 +180,11 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
       </div>
-      <div className="flex flex-col w-70 mx-5">
+      <div className="flex flex-col w-60 mx-5">
         {UBFB2.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -162,11 +194,13 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          ACVAMONT
+        </Label>
 
         {ACVAMONT.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -176,11 +210,13 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          CHOCO
+        </Label>
 
         {CHOCO.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -190,10 +226,12 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          APIFERA
+        </Label>
         {APIFERA.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -203,10 +241,12 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          DAVIDAN
+        </Label>
         {DAVIDAN.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -216,10 +256,12 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          FORWARD
+        </Label>
         {FORWARD.map((item, index) => {
           return (
-            <div key={index} className="w-70 ">
+            <div key={index} className="w-60 ">
               <SelectInput
                 fieldName={item}
                 fieldLabel={item}
@@ -229,7 +271,6 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-1" />
       </div>
     </div>
   );

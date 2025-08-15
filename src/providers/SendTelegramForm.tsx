@@ -18,9 +18,11 @@ import {
 export const OrderListTelegramForm = ({
   children,
   user,
+  url,
 }: {
   children: React.ReactNode;
   user: string;
+  url: string;
 }) => {
   const DATA_USER = {
     barTTN: {
@@ -39,6 +41,10 @@ export const OrderListTelegramForm = ({
       key: "order-cucina",
       default: defaultValuesZNCucina,
     },
+  };
+  const URL_TELEGRAM = {
+    ttn: "/api/send-telegram-ttn",
+    zn: "/api/send-telegram-zn",
   };
   type UserKey = keyof typeof DATA_USER;
 
@@ -68,7 +74,11 @@ export const OrderListTelegramForm = ({
   };
 
   const sendTextTelegram: SubmitHandler<OrderListFormType> = async (data) => {
-    sendTelegramMessage(data, "/api/send-telegram-ttn", user);
+    sendTelegramMessage(
+      data,
+      URL_TELEGRAM[url as keyof typeof URL_TELEGRAM],
+      user
+    );
   };
 
   return (

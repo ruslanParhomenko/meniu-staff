@@ -15,7 +15,6 @@ import type { Locale as DateFnsLocale } from "date-fns";
 
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
-import { use } from "react";
 
 export const ArhiveForm = () => {
   const t = useTranslations("Navigation");
@@ -43,7 +42,7 @@ export const ArhiveForm = () => {
     <Form {...form}>
       <Accordion type="single" collapsible>
         <AccordionItem value="item-1">
-          <AccordionTrigger className="text-lg cursor-pointer w-full [&>svg]:hidden bg-blue-600 px-4 py-2 text-white hover:bg-blue-400 hover:text-black no-underline! focus:no-underline">
+          <AccordionTrigger className="text-lg cursor-pointer w-full [&>svg]:hidden bg-blue-400 px-4 py-2 hover:bg-blue-600  no-underline! focus:no-underline">
             {t("breakList")}
           </AccordionTrigger>
           <AccordionContent>
@@ -58,6 +57,3 @@ export const ArhiveForm = () => {
     </Form>
   );
 };
-function useEffect(arg0: () => void) {
-  throw new Error("Function not implemented.");
-}

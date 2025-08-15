@@ -16,11 +16,15 @@ import {
   QUANTITY_SELECT,
 } from "./constants";
 import { Separator } from "@/components/ui/separator";
+import { Label } from "@radix-ui/react-dropdown-menu";
 
 export const OrderListTTNCucine = () => {
   return (
     <div className="flex flex-col gap-10 w-full justify-start mx-5 sm:flex-row">
       <div className="flex flex-col w-60 mx-5">
+        <Label className="py-1 text-center font-bold text-blue-600">
+          ROGOB
+        </Label>
         {ROGOB.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
@@ -33,7 +37,9 @@ export const OrderListTTNCucine = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          BLUESHARK
+        </Label>
         {BLUESHARK.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
@@ -46,7 +52,10 @@ export const OrderListTTNCucine = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
+
+        <Label className="py-1 text-center font-bold text-blue-600">
+          VITAFOR
+        </Label>
 
         {VITAFOR.map((item, index) => {
           return (
@@ -60,9 +69,11 @@ export const OrderListTTNCucine = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
       </div>
       <div className="flex flex-col w-60 mx-5">
+        <Label className="py-1 text-center font-bold text-blue-600">
+          ARTACULINAR
+        </Label>
         {ARTACULINAR.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
@@ -77,7 +88,9 @@ export const OrderListTTNCucine = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          PRESTAPAC
+        </Label>
         {PRESTAPAC.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
@@ -90,7 +103,9 @@ export const OrderListTTNCucine = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          IMCOMVIL
+        </Label>
 
         {IMCOMVIL.map((item, index) => {
           return (
@@ -104,7 +119,9 @@ export const OrderListTTNCucine = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          ETALONUS
+        </Label>
 
         {ETALONUS.map((item, index) => {
           return (
@@ -118,7 +135,9 @@ export const OrderListTTNCucine = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          FORWARD
+        </Label>
         {FORWARD_CUCINE.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
@@ -133,7 +152,9 @@ export const OrderListTTNCucine = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          DELPHI
+        </Label>
         {DELPHI.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
@@ -146,9 +167,11 @@ export const OrderListTTNCucine = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
       </div>
       <div className="flex flex-col w-60 mx-5">
+        <Label className="py-1 text-center font-bold text-blue-600">
+          DINOVA
+        </Label>
         {DINOVA.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
@@ -161,7 +184,7 @@ export const OrderListTTNCucine = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
+        <Label className="py-1 text-center font-bold text-blue-600">IUG</Label>
         {IUG.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
@@ -174,7 +197,9 @@ export const OrderListTTNCucine = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
+        <Label className="py-1 text-center font-bold text-blue-600">
+          FRUITBOX
+        </Label>
         {FRUITBOX_C.map((item, index) => {
           return (
             <div key={index} className="w-60 ">
@@ -189,7 +214,6 @@ export const OrderListTTNCucine = () => {
             </div>
           );
         })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
       </div>
     </div>
   );

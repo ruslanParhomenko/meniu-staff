@@ -5,7 +5,6 @@ import BreakeListTable from "../breakList/BreakListByData";
 
 export const ArhiveBreakListTable = ({
   data,
-  loading,
   refetch,
 }: {
   data: any;

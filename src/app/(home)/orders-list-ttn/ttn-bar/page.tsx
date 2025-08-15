@@ -3,7 +3,7 @@ import { OrderListTelegramForm } from "@/providers/SendTelegramForm";
 
 const Page = () => {
   return (
-    <OrderListTelegramForm user="barTTN">
+    <OrderListTelegramForm user="barTTN" url="ttn">
       <OrderListTTNBar />
     </OrderListTelegramForm>
   );

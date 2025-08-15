@@ -83,7 +83,7 @@ export default function SettingsForm() {
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="item-1">
-        <AccordionTrigger className="text-lg cursor-pointer w-full [&>svg]:hidden bg-blue-600 px-4 py-2 text-white hover:bg-blue-400 hover:text-black no-underline! focus:no-underline">
+        <AccordionTrigger className="text-lg cursor-pointer w-full [&>svg]:hidden bg-blue-400 px-4 py-2 hover:bg-blue-600  no-underline! focus:no-underline">
           {t("addEmployees")} +
         </AccordionTrigger>
         <AccordionContent>

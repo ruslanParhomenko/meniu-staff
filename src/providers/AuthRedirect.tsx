@@ -6,11 +6,9 @@ import { useSession } from "next-auth/react";
 
 const AuthRedirect = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
-  const [isCheckingAuth, setIsCheckingAuth] = useState(true);
+  const [isCheckingAuth, setIsCheckingAuth] = useState(false);
 
   const { data: session } = useSession();
-
-  console.log("Session data:", session);
 
   useEffect(() => {
     if (session === undefined) return;
@@ -18,11 +16,11 @@ const AuthRedirect = ({ children }: { children: React.ReactNode }) => {
     if (session?.user) {
       router.replace("/report");
     } else {
-      setIsCheckingAuth(false);
+      setIsCheckingAuth(true);
     }
   }, [session, router]);
 
-  if (isCheckingAuth) return <div>Loading...</div>;
+  if (!isCheckingAuth) return <div>Loading...</div>;
 
   return <>{children}</>;
 };
