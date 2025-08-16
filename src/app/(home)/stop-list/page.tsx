@@ -1,6 +1,6 @@
-import TableStopList from "@/features/stop-list/TableStopList";
+import StopListForm from "@/features/stop-list/StopListForm";
 
 const Page = () => {
-  return <TableStopList />;
+  return <StopListForm />;
 };
 export default Page;

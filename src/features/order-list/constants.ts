@@ -25,7 +25,6 @@ export const PHARMACEUTICAL = [
 
 export const MISCELLANEOUS = [
   "жвачки",
-  "мята",
   "шпажки",
   "Пакеты черные маленькие",
   "Пакеты черные большие",

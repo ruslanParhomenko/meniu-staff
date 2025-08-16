@@ -45,14 +45,17 @@ function SelectField({ fieldName, placeHolder, data, disabled }: Props) {
                 <FormControl className="w-full">
                   <SelectTrigger
                     data-placeholder=""
-                    className="flex justify-center min-w-12 max-w-50 text-base [&>svg]:hidden"
+                    className="flex justify-center min-w-12  text-base [&>svg]:hidden"
                   >
                     <SelectValue placeholder={placeHolder} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {options.map((item) => (
-                    <SelectItem key={item.value} value={item.value}>
+                  {options.map((item, index) => (
+                    <SelectItem
+                      key={`${item.value}-${index}`}
+                      value={item.value}
+                    >
                       {item.label}
                     </SelectItem>
                   ))}
