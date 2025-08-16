@@ -7,15 +7,14 @@ const NavPage = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <SidebarProvider>
-      <SidebarNav />
-
-      <div className="flex w-full flex-col  bg-gray-50 ">
+    <div className="flex w-full flex-col  bg-gray-50 ">
+      <SidebarProvider>
+        <SidebarNav />
         <section className="h-full w-full p-2 px-4">
-          <div className="rounded-2xl bg-white p-6 "> {children}</div>
+          <div className="rounded-2xl bg-white py-4  px-2 ">{children}</div>
         </section>
-      </div>
-    </SidebarProvider>
+      </SidebarProvider>
+    </div>
   );
 };
 

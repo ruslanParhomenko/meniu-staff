@@ -36,7 +36,7 @@ const SidebarNav = () => {
 
   return (
     <>
-      <div className="flex items-center p-4 lg:hidden">
+      <div className="flex items-center lg:hidden">
         <SidebarToggleButton />
       </div>
       <Sidebar className="border-none">

@@ -1,52 +1,15 @@
 "use client";
 
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import React, { useEffect, useState } from "react";
-
-const SHEET_ID = process.env.NEXT_PUBLIC_SHEET_ID;
-const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-const RANGE = "Waiters!D55:AM75";
+import { useSheetData } from "@/hooks/use-schedule-data-google";
 
 export const ScheduleForm = () => {
-  const [data, setData] = useState<string[][]>([]);
-  const [error, setError] = useState<string | null>(null);
+  const { data, loading } = useSheetData();
 
-  useEffect(() => {
-    async function fetchSheet() {
-      try {
-        const response = await fetch(
-          `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`
-        );
-        if (!response.ok) {
-          throw new Error("Ошибка при загрузке данных");
-        }
-        const json = await response.json();
-        const values: string[][] = json.values || [];
+  if (loading) return <div>Loading...</div>;
+  if (!data || data.length === 0) return <div>Schedule not found...</div>;
 
-        const totalRows = 21;
-        const totalCols = 36;
-
-        const filledData: string[][] = [];
-
-        for (let r = 0; r < totalRows; r++) {
-          filledData[r] = [];
-          for (let c = 0; c < totalCols; c++) {
-            filledData[r][c] = values[r]?.[c] ?? "";
-          }
-        }
-
-        setData(filledData);
-      } catch (e) {
-        setError((e as Error).message);
-      }
-    }
-    fetchSheet();
-    const intervalId = setInterval(fetchSheet, 70000);
-    return () => clearInterval(intervalId);
-  }, []);
-
-  if (error) return <div>Ошибка: {error}</div>;
-  if (!data.length) return <div>Загрузка...</div>;
+  console.log(data);
   return (
     <div className="w-full overflow-x-auto">
       <Table>
@@ -55,10 +18,7 @@ export const ScheduleForm = () => {
             return (
               <TableRow key={i}>
                 {row.map((cell, j) => {
-                  const isText =
-                    typeof cell === "string" &&
-                    cell.trim() !== "" &&
-                    isNaN(Number(cell));
+                  const isText = j === 4;
 
                   const isFirstRow =
                     i === 0 || i === 1 || i === data.length - 1;
@@ -72,7 +32,7 @@ export const ScheduleForm = () => {
                         : "text-sm text-center"
                     }  ${j === 3 ? "text-black pl-4" : "text-blue-600"}`;
                   } else if (!isFirstThreeColumns && !isFirstRow) {
-                    borderClass = "border-x border-gray-300";
+                    borderClass = "";
                   }
 
                   return (
