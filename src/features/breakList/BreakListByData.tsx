@@ -14,7 +14,7 @@ import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 
-export default function BreakeListTable({
+export default function BreakListTable({
   data,
   refetch,
   refetchId,
@@ -49,10 +49,10 @@ export default function BreakeListTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead className="min-w-[100px]">ID</TableHead>
-            <TableHead className="min-w-[200px]">Имя</TableHead>
+            <TableHead>ID</TableHead>
+            <TableHead>Имя</TableHead>
             {allHours.map((hour: string) => (
-              <TableHead key={hour} className="text-center min-w-[60px]">
+              <TableHead key={hour} className="text-center">
                 {hour}
               </TableHead>
             ))}

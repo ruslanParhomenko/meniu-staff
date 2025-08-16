@@ -33,7 +33,7 @@ export const MISCELLANEOUS = [
   "трубочки черные толстые",
 ];
 
-export const HIMICALS = ["Вода дистиллированная", "Мыло DOVE"];
+export const CHEMICALS = ["Вода дистиллированная", "Мыло DOVE"];
 
 //cucina
 
@@ -75,7 +75,7 @@ export const VEGETABLES = [
   "дайкон",
 ];
 
-export const FRUITS_CUCINE = [
+export const FRUITS_CUISINE = [
   "абрикосы крупные",
   "банан",
   "яблоки кр + бел",
@@ -188,7 +188,7 @@ export const OTHER = [
   "ланчбоксы",
 ];
 
-export const EMPTY = [" ", " ", " ", " ", " ", " ", " ", " "];
+export const EMPTY = [" ", " ", " ", " "];
 
 // bar ttn
 

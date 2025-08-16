@@ -48,7 +48,7 @@ export const ReportTableByData = ({ report }: any) => {
         })}
       </div>
 
-      <div className="grid grid-cols-[40%_10%] gap-50">
+      <div className="grid md:grid-cols-[40%_10%] md:gap-50 grid-cols-1 gap-4">
         <Table>
           <TableHeader>
             <TableRow>
@@ -83,8 +83,8 @@ export const ReportTableByData = ({ report }: any) => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Expenses</TableHead>
-              <TableHead>Sum</TableHead>
+              <TableHead className="text-center">Expenses</TableHead>
+              <TableHead className="text-center">Sum</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>

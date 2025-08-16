@@ -10,7 +10,7 @@ export const ArhiveReportListTable = ({ data }: { data: any }) => {
 
   return (
     <>
-      <div className="w-1/4 py-4">
+      <div className="md:w-1/4 w-full py-4">
         <SelectInput fieldName={"selectDataId"} data={data} />
       </div>
       {report && <ReportTableByData report={report} />}

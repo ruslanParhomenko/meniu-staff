@@ -20,11 +20,11 @@ import {
   FRUITBOX,
   FRUITBOX_C,
   FRUITS,
-  FRUITS_CUCINE,
+  FRUITS_CUISINE,
   GLOBARSPIRIT,
   GREEN,
   GROCERIES,
-  HIMICALS,
+  CHEMICALS,
   IMCOMVIL,
   IUG,
   MEAT,
@@ -48,7 +48,7 @@ import {
 type FieldNameBar =
   | (typeof FRUITS)[number]
   | (typeof GROCERIES)[number]
-  | (typeof HIMICALS)[number]
+  | (typeof CHEMICALS)[number]
   | (typeof MISCELLANEOUS)[number]
   | (typeof OFFICE)[number]
   | (typeof PHARMACEUTICAL)[number]
@@ -57,7 +57,7 @@ type FieldNameBar =
   | (typeof SPICES_2)[number]
   | (typeof VEGETABLES)[number]
   | (typeof GREEN)[number]
-  | (typeof FRUITS_CUCINE)[number]
+  | (typeof FRUITS_CUISINE)[number]
   | (typeof MEAT)[number]
   | (typeof MILK)[number]
   | (typeof OTHER)[number];
@@ -70,7 +70,7 @@ export type OrderListBarFormValues = {
 const allFieldsBar = [
   ...FRUITS,
   ...GROCERIES,
-  ...HIMICALS,
+  ...CHEMICALS,
   ...MISCELLANEOUS,
   ...OFFICE,
   ...PHARMACEUTICAL,
@@ -79,7 +79,7 @@ const allFieldsBar = [
   ...SPICES_2,
   ...VEGETABLES,
   ...GREEN,
-  ...FRUITS_CUCINE,
+  ...FRUITS_CUISINE,
   ...MEAT,
   ...MILK,
   ...OTHER,
@@ -97,7 +97,7 @@ const allFieldsCucina = [
   ...SPICES_2,
   ...VEGETABLES,
   ...GREEN,
-  ...FRUITS_CUCINE,
+  ...FRUITS_CUISINE,
   ...MEAT,
   ...MILK,
   ...OTHER,

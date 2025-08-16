@@ -4,7 +4,6 @@ import {
   OFFICE,
   PHARMACEUTICAL,
   MISCELLANEOUS,
-  HIMICALS,
   AQUATRADE,
   BUCURIA,
   COCACOLA,
@@ -20,6 +19,7 @@ import {
   FRUITBOX,
   APIFERA,
   DAVIDAN,
+  CHEMICALS,
 } from "../order-list/constants";
 
 export const SELECT_COUNT = [
@@ -182,7 +182,7 @@ export const PRODUCTS = [
   ...OFFICE,
   ...PHARMACEUTICAL,
   ...MISCELLANEOUS,
-  ...HIMICALS,
+  ...CHEMICALS,
   ...AQUATRADE,
   ...BUCURIA,
   ...COCACOLA,

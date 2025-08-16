@@ -3,7 +3,7 @@ import SelectInput from "@/components/inputs/SelectInput";
 import {
   BAKERY,
   EMPTY,
-  FRUITS_CUCINE,
+  FRUITS_CUISINE,
   GREEN,
   MEAT,
   MILK,
@@ -18,170 +18,50 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { useFormContext } from "react-hook-form";
+import { InputWrapper } from "@/components/wrapper/InputWrapper";
+import { OrderCardWrapper } from "@/components/wrapper/OrderCardWrapper";
+import { Label } from "@/components/ui/label";
 
-export const OrderListCucine = () => {
+export const OrderListCuisine = () => {
   const form = useFormContext();
   const { register } = form;
   return (
     <div className="flex flex-col gap-10 w-full justify-start mx-5 sm:flex-row">
-      <div className="flex flex-col w-60 mx-5">
-        {VEGETABLES.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {VEGETABLES.length - 1 !== index && (
-                <Separator className="my-1" />
-              )}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
-        {GREEN.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {GREEN.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
-        {MILK.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {MILK.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
-        {NUTS.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {NUTS.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
-      </div>
-      <div className="flex flex-col w-60 mx-5">
-        {FRUITS_CUCINE.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {FRUITS_CUCINE.length - 1 !== index && (
-                <Separator className="my-1" />
-              )}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
+      <InputWrapper>
+        <OrderCardWrapper data={VEGETABLES} name="VEGETABLES" />
+        <OrderCardWrapper data={GREEN} name="GREEN" />
+        <OrderCardWrapper data={MILK} name="MILK" />
+        <OrderCardWrapper data={NUTS} name="NUTS" />
+      </InputWrapper>
+      <InputWrapper>
+        <OrderCardWrapper data={FRUITS_CUISINE} name="FRUITS_CUISINE" />
 
-        {SPICES.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {SPICES.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
-        {BAKERY.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {BAKERY.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
-        {OTHER.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {OTHER.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
-      </div>
-      <div className="flex flex-col w-60 mx-5">
-        {MEAT.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {MEAT.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
-        {SPICES_2.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {SPICES_2.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
-        <Separator className=" bg-blue-600 py-1 my-2" />
+        <OrderCardWrapper data={SPICES} name="SPICES" />
+        <OrderCardWrapper data={BAKERY} name="BAKERY" />
+        <OrderCardWrapper data={OTHER} name="OTHER" />
+      </InputWrapper>
+      <InputWrapper>
+        <OrderCardWrapper data={MEAT} name="MEAT" />
+        <OrderCardWrapper data={SPICES_2} name="SPICES_2" />
+        <div className="flex flex-col w-full justify-center items-center py-2">
+          <Label className="py-2  font-bold text-blue-600">EMPTY</Label>
+        </div>
+
         {EMPTY.map((item, index) => {
           return (
-            <div
-              key={index}
-              className="w-60 flex flex-row justify-center gap-6"
-            >
+            <div key={index} className="flex justify-between gap-2">
               <Input
-                className="w-3/4 mb-1"
+                className="w-2/4 mb-1"
                 {...register(`EMPTY.${index}.name`)}
               />
               <Input
-                className="w-1/4"
+                className="w-1/4 pr-2"
                 {...register(`EMPTY.${index}.quantity`)}
               />
             </div>
           );
         })}
-      </div>
+      </InputWrapper>
     </div>
   );
 };
