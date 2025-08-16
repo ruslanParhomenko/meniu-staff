@@ -84,21 +84,6 @@ export const OrderListTTNBar = () => {
             </div>
           );
         })}
-        <Label className="py-1 text-center font-bold text-blue-600">
-          FRUITBOX
-        </Label>
-        {FRUITBOX.map((item, index) => {
-          return (
-            <div key={index} className="w-60 ">
-              <SelectInput
-                fieldName={item}
-                fieldLabel={item}
-                data={QUANTITY_SELECT}
-              />
-              {FRUITBOX.length - 1 !== index && <Separator className="my-1" />}
-            </div>
-          );
-        })}
       </div>
       <div className="flex flex-col w-60 mx-5">
         <Label className="py-1 text-center font-bold text-blue-600">
@@ -268,6 +253,21 @@ export const OrderListTTNBar = () => {
                 data={QUANTITY_SELECT}
               />
               {FORWARD.length - 1 !== index && <Separator className="my-1" />}
+            </div>
+          );
+        })}
+        <Label className="py-1 text-center font-bold text-blue-600">
+          FRUITBOX
+        </Label>
+        {FRUITBOX.map((item, index) => {
+          return (
+            <div key={index} className="w-60 ">
+              <SelectInput
+                fieldName={item}
+                fieldLabel={item}
+                data={QUANTITY_SELECT}
+              />
+              {FRUITBOX.length - 1 !== index && <Separator className="my-1" />}
             </div>
           );
         })}

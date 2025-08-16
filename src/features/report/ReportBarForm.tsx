@@ -16,6 +16,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { useEffect } from "react";
 import TableCashVerify from "./TableCashVerify";
+import DatePickerInput from "@/components/inputs/DatePickerInput";
 
 export function ReportBarForm() {
   const STORAGE_KEY = "report-bar";
@@ -101,7 +102,9 @@ export function ReportBarForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <div className="grid grid-cols-1 md:grid-cols-[50%_5%_25%] gap-20 pr-20">
+        <DatePickerInput fieldName="date" />
+
+        <div className="grid grid-cols-1 md:grid-cols-[50%_5%_25%] md:gap-20 md:pr-20 pt-4">
           <TableTobacco />
           <div className="w-full" />
           <TableEspenses />

@@ -25,36 +25,34 @@ export default function TableTobacco() {
   return (
     <div className="w-full">
       <Label className="text-lg font-semibold pb-7">Tobacco</Label>
-      <Table className="[&_th]:text-center [&_td]:text-center">
+      <Table className="w-full [&_th]:text-center [&_td]:text-center">
         <TableHeader>
           <TableRow className="h-10">
-            <TableHead className="w-40">
-              <DatePickerInput fieldName="date" />
-            </TableHead>
+            <TableHead className="w-40"></TableHead>
             <TableHead className="w-30">Stock</TableHead>
-            <TableHead className="w-30">+</TableHead>
-            <TableHead className="w-30">-</TableHead>
+            <TableHead className="w-20">+</TableHead>
+            <TableHead className="w-20">-</TableHead>
             <TableHead className="w-30">Final</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {tobacco?.map((item, idx) => (
             <TableRow key={idx} className="h-10">
-              <TableCell>{item.name}</TableCell>
-              <TableCell>{item.stock}</TableCell>
-              <TableCell>
+              <TableCell className="px-2">{item.name}</TableCell>
+              <TableCell className="px-2">{item.stock}</TableCell>
+              <TableCell className="px-2">
                 <SelectField
                   fieldName={`tobacco.${idx}.incoming`}
                   data={SELECT_COUNT}
                 />
               </TableCell>
-              <TableCell>
+              <TableCell className="px-2">
                 <SelectField
                   fieldName={`tobacco.${idx}.outgoing`}
                   data={SELECT_COUNT}
                 />
               </TableCell>
-              <TableCell>
+              <TableCell className="px-2">
                 {(
                   Number(item.stock || 0) +
                   Number(item.incoming ?? 0) -
