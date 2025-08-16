@@ -1,7 +1,7 @@
 import {
   FRUITS,
   GROCERIES,
-  HIMICALS,
+  CHEMICALS,
   MISCELLANEOUS,
   OFFICE,
   PHARMACEUTICAL,
@@ -10,7 +10,7 @@ import {
   SPICES_2,
   VEGETABLES,
   GREEN,
-  FRUITS_CUCINE,
+  FRUITS_CUISINE,
   MEAT,
   MILK,
   OTHER,
@@ -73,7 +73,7 @@ type FieldName =
   // BAR
   | (typeof FRUITS)[number]
   | (typeof GROCERIES)[number]
-  | (typeof HIMICALS)[number]
+  | (typeof CHEMICALS)[number]
   | (typeof MISCELLANEOUS)[number]
   | (typeof OFFICE)[number]
   | (typeof PHARMACEUTICAL)[number]
@@ -82,7 +82,7 @@ type FieldName =
   | (typeof SPICES_2)[number]
   | (typeof VEGETABLES)[number]
   | (typeof GREEN)[number]
-  | (typeof FRUITS_CUCINE)[number]
+  | (typeof FRUITS_CUISINE)[number]
   | (typeof MEAT)[number]
   | (typeof MILK)[number]
   | (typeof OTHER)[number];
