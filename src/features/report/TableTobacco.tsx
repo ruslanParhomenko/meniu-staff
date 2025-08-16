@@ -28,7 +28,7 @@ export default function TableTobacco() {
       <Table className="w-full [&_th]:text-center [&_td]:text-center">
         <TableHeader>
           <TableRow className="h-10">
-            <TableHead className="w-40"></TableHead>
+            <TableHead className="md:w-40 w-30"></TableHead>
             <TableHead className="w-30">Stock</TableHead>
             <TableHead className="w-20">+</TableHead>
             <TableHead className="w-20">-</TableHead>
