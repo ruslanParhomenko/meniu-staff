@@ -34,6 +34,8 @@ import DatePickerInput from "@/components/inputs/DatePickerInput";
 import toast from "react-hot-toast";
 import { useAbility } from "@/providers/AbilityProvider";
 import { SendResetButton } from "../ui/SendResetButton";
+import { supabase } from "@/lib/supabaseClient";
+import { useSession } from "next-auth/react";
 
 export type BreakListFormValues = {
   date?: Date;
@@ -42,6 +44,8 @@ export type BreakListFormValues = {
 
 export const BreakListForm = () => {
   const { isAdmin, isUser, isObserver } = useAbility();
+
+  const session = useSession();
 
   const LOCAL_STORAGE_KEY = "breakListFormData";
   const t = useTranslations("UI");
@@ -170,6 +174,49 @@ export const BreakListForm = () => {
     });
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   };
+  const sessionEmail = session?.data ? session?.data?.user?.email : "anonymous";
+  // ✅ раз в 1 минуту пушим данные в Supabase
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (!localData) return;
+
+      const parsed = JSON.parse(localData);
+
+      await supabase.from("break_list_realtime").upsert(
+        {
+          user_email: session?.data ? session?.data?.user?.email : "anonymous",
+          form_data: parsed,
+        },
+        { onConflict: "user_email" } // ⚡ чтобы обновлялось по user_email
+      );
+    }, 30 * 60 * 1000); // 1 минута
+
+    return () => clearInterval(interval);
+  }, [sessionEmail]);
+
+  // ✅ подписка на обновления Supabase
+  useEffect(() => {
+    const channel = supabase
+      .channel("break_list_realtime_channel")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "break_list_realtime" },
+        (payload) => {
+          console.log("Realtime update:", payload.new);
+          const newData = (payload.new as any)?.form_data;
+          if (newData) {
+            form.reset(newData);
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [form]);
 
   if (loading) {
     return <div>Loading...</div>;

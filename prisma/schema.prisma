@@ -93,6 +93,18 @@ model Expense {
   reportId Int
 }
 
+model ReportBarRealtime {
+  id         String   @id @default(uuid())
+  user_email String?
+  form_data  Json?
+  created_at DateTime @default(now())
+
+  @@map("report_bar_realtime")
+}
+
+
+
+
 
 model StopListRecord {
   id        Int       @id @default(autoincrement())

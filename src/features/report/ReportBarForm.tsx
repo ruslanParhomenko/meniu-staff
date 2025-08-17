@@ -18,10 +18,17 @@ import { useEffect } from "react";
 import TableCashVerify from "./TableCashVerify";
 import DatePickerInput from "@/components/inputs/DatePickerInput";
 import { useAbility } from "@/providers/AbilityProvider";
+import { supabase } from "@/lib/supabaseClient";
+import { useSession } from "next-auth/react";
+import { da } from "date-fns/locale";
 
 export function ReportBarForm() {
   const STORAGE_KEY = "report-bar";
   const { isObserver } = useAbility();
+
+  const session = useSession();
+
+  console.log(session);
 
   const {
     getValue,
@@ -101,6 +108,48 @@ export function ReportBarForm() {
 
     form.reset(updatedData);
   };
+
+  //supabase
+
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const localData = getValue();
+      if (!localData) return;
+
+      await supabase.from("report_bar_realtime").insert({
+        user_email: session?.data ? session?.data.user?.email : "anonymous",
+        form_data: localData,
+      });
+    }, 30 * 60 * 1000); // 30 минут
+
+    return () => clearInterval(interval);
+  }, [getValue, session?.data ? session?.data.user?.email : "anonymous"]);
+
+  useEffect(() => {
+    const channel = supabase
+      .channel("report_bar_realtime")
+      .on(
+        "postgres_changes",
+        { event: "INSERT", schema: "public", table: "report_bar_realtime" },
+        (payload) => {
+          console.log("📥 Новые данные:", payload.new);
+
+          // можно обновить форму или localStorage
+          const newData = payload.new.form_data as ReportBarFormValues;
+
+          // например — обновим локально, только если дата совпадает
+          if (newData?.date === form.getValues("date")) {
+            form.reset(newData);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [form]);
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
