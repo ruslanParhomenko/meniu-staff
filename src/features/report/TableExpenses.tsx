@@ -14,10 +14,13 @@ import NumericInput from "@/components/inputs/NumericInput";
 import { useEffect } from "react";
 import SelectField from "@/components/inputs/SelectField";
 import { expensesDefault } from "./schema";
+import { useAbility } from "@/providers/AbilityProvider";
 
 const RECIPIENTS = ["NBM", "BAR", "NORI", "DISHES", "BN", "OTHER"];
 
 export default function TableEspenses() {
+  const { isObserver } = useAbility();
+
   const { setValue, control, watch } = useFormContext();
 
   const expenses = useWatch({ name: "expenses", control });
@@ -47,16 +50,20 @@ export default function TableEspenses() {
                 <SelectField
                   data={RECIPIENTS}
                   fieldName={`expenses.${idx}.name`}
+                  disabled={isObserver}
                 />
               </TableCell>
               <TableCell>
-                <NumericInput fieldName={`expenses.${idx}.sum`} />
+                <NumericInput
+                  fieldName={`expenses.${idx}.sum`}
+                  disabled={isObserver}
+                />
               </TableCell>
             </TableRow>
           ))}
           <TableRow className="h-10">
             <TableCell>
-              <NumericInput fieldName="total" />
+              <NumericInput fieldName="total" disabled={isObserver} />
             </TableCell>
           </TableRow>
         </TableBody>

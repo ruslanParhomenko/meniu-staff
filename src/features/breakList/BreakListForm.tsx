@@ -179,7 +179,7 @@ export const BreakListForm = () => {
     <div className="w-full ">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
-          <DatePickerInput fieldName="date" />
+          {!isObserver && <DatePickerInput fieldName="date" />}
           <Table>
             <TableHeader>
               <TableRow>

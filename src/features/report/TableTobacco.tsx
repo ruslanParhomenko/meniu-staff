@@ -14,9 +14,11 @@ import { tobaccoDefault, TobaccoSchemaType } from "./schema";
 import SelectField from "@/components/inputs/SelectField";
 import { SELECT_COUNT } from "./constants";
 import { useFormContext, useWatch } from "react-hook-form";
-import DatePickerInput from "@/components/inputs/DatePickerInput";
+import { useAbility } from "@/providers/AbilityProvider";
 
 export default function TableTobacco() {
+  const { isObserver } = useAbility();
+
   const { control } = useFormContext();
   const tobacco =
     (useWatch({ name: "tobacco", control }) as TobaccoSchemaType) ||
@@ -44,12 +46,14 @@ export default function TableTobacco() {
                 <SelectField
                   fieldName={`tobacco.${idx}.incoming`}
                   data={SELECT_COUNT}
+                  disabled={isObserver}
                 />
               </TableCell>
               <TableCell className="px-2">
                 <SelectField
                   fieldName={`tobacco.${idx}.outgoing`}
                   data={SELECT_COUNT}
+                  disabled={isObserver}
                 />
               </TableCell>
               <TableCell className="px-2">

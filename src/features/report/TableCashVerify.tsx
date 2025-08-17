@@ -10,8 +10,10 @@ import {
 import { Label } from "@/components/ui/label";
 import { HOURS } from "./schema";
 import NumericInput from "@/components/inputs/NumericInput";
+import { useAbility } from "@/providers/AbilityProvider";
 
 export default function TableCashVerify() {
+  const { isObserver } = useAbility();
   return (
     <div className="w-full py-4">
       <Label className="text-lg font-semibold pb-7">Cash Verify</Label>
@@ -30,6 +32,7 @@ export default function TableCashVerify() {
                 <NumericInput
                   fieldName={`cashVerify.${idx}.value`}
                   className="w-12! text-center"
+                  disabled={isObserver}
                 />
               </TableCell>
             ))}

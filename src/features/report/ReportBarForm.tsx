@@ -17,9 +17,11 @@ import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { useEffect } from "react";
 import TableCashVerify from "./TableCashVerify";
 import DatePickerInput from "@/components/inputs/DatePickerInput";
+import { useAbility } from "@/providers/AbilityProvider";
 
 export function ReportBarForm() {
   const STORAGE_KEY = "report-bar";
+  const { isObserver } = useAbility();
 
   const {
     getValue,
@@ -102,7 +104,7 @@ export function ReportBarForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <DatePickerInput fieldName="date" />
+        {!isObserver && <DatePickerInput fieldName="date" />}
 
         <div className="grid grid-cols-1 md:grid-cols-[50%_5%_25%] md:gap-20 md:pr-20 pt-4">
           <TableTobacco />

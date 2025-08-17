@@ -15,6 +15,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Delete } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useAbility } from "@/providers/AbilityProvider";
 
 type StopListItem = {
   key: number;
@@ -27,6 +28,7 @@ type FormValues = {
 };
 
 export default function TableStopListPrisma() {
+  const { isObserver } = useAbility();
   const [recordId, setRecordId] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -169,6 +171,7 @@ export default function TableStopListPrisma() {
                     <SelectField
                       data={PRODUCTS}
                       fieldName={`stopList.${idx}.product`}
+                      disabled={isObserver}
                     />
                   </TableCell>
                   <TableCell>
@@ -180,6 +183,7 @@ export default function TableStopListPrisma() {
                         type="button"
                         variant="destructive"
                         onClick={() => clearSelect(idx)}
+                        disabled={isObserver}
                       >
                         <Delete />
                       </Button>
