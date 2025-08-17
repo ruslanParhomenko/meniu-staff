@@ -3,7 +3,7 @@
 import { useSession } from "next-auth/react";
 import React, { createContext, useContext } from "react";
 
-const ADMIN = ["parhomenkogm@gmail.com", "parhomenkogm@gmail.com"];
+const ADMIN = ["parhomenkogm@gmail.com", "cng.nv.rstrnt@gmail.com"];
 const USER = [
   "cng.nv.kitchen@gmail.com",
   "cng.nv.rstrnt.mngr13@gmail.com",
