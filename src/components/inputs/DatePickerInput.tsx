@@ -20,7 +20,6 @@ import { cn } from "@/lib/utils";
 import { Calendar } from "@/components/ui/calendar";
 
 import React, { useState, useEffect } from "react";
-// ...остальные импорты
 
 function DatePickerInput({ fieldName }: { fieldName: string }) {
   const tDate = useTranslations("Date");

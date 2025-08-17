@@ -32,6 +32,8 @@ import { useEffect, useMemo } from "react";
 import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
 import DatePickerInput from "@/components/inputs/DatePickerInput";
 import toast from "react-hot-toast";
+import { useAbility } from "@/providers/AbilityProvider";
+import { SendResetButton } from "../ui/SendResetButton";
 
 export type BreakListFormValues = {
   date?: Date;
@@ -39,10 +41,10 @@ export type BreakListFormValues = {
 };
 
 export const BreakListForm = () => {
+  const { isAdmin, isUser, isObserver } = useAbility();
+
   const LOCAL_STORAGE_KEY = "breakListFormData";
   const t = useTranslations("UI");
-
-  // const { employees } = useEmployeeData();
   const { employees, loading } = useEmployeeSqlData();
 
   const selectedEmployees = useMemo(
@@ -78,6 +80,7 @@ export const BreakListForm = () => {
           fieldName={`rows[${row.index}][name]`}
           fieldLabel=""
           data={selectedEmployees}
+          disabled={isObserver}
         />
       ),
     },
@@ -94,6 +97,7 @@ export const BreakListForm = () => {
             fieldName={`rows[${row.index}][hours][${time}]`}
             fieldLabel=""
             data={MINUTES_SELECT}
+            disabled={isObserver}
           />
         );
       },
@@ -219,19 +223,7 @@ export const BreakListForm = () => {
               })}
             </TableBody>
           </Table>
-          <div className="flex justify-start items-center p-5 pt-10 gap-4">
-            <Button type="submit" variant={"default"}>
-              {t("save")}
-            </Button>
-            <Button
-              type="button"
-              variant={"secondary"}
-              onClick={resetForm}
-              className="hover:bg-red-600"
-            >
-              {t("reset")}
-            </Button>
-          </div>
+          <SendResetButton resetForm={resetForm} />
         </form>
       </Form>
     </div>
