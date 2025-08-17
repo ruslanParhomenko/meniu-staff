@@ -1,5 +1,7 @@
+import RemarksTable from "@/features/remarks/RemarksTable";
+
 const Page = () => {
-  return <div>remarks</div>;
+  return <RemarksTable />;
 };
 
 export default Page;

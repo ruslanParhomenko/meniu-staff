@@ -102,5 +102,28 @@ model StopListRecord {
 }
 
 
+model RemarkReport {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  remarks   Remark[] 
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Remark {
+  id             Int      @id @default(autoincrement())
+  name           String   @default("")
+  dayHours       String   @default("")
+  nightHours     String   @default("")
+  reason         String   @default("")
+  penality       String   @default("")
+  reasonPenality String   @default("")
+
+  reportId Int
+  report   RemarkReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+}
+
+
 
 

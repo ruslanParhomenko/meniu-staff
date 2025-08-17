@@ -49,7 +49,13 @@
     "settings": "Настройки",
     "arhive": "Архив",
     "stopList": "Стоп-лист",
-    "employeeRemarks": "Журнал замечаний"
+    "employeeRemarks": "Журнал замечаний",
+    "late": "Опоздание",
+    "earlyLeave": "Ранний уход",
+    "absent": "Отсутствие",
+    "over": "Сверхурочно",
+    "replacement": "Замена",
+    "intern": "Стажёр"
   },
   "Auth": {
     "login": "Вход",

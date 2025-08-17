@@ -49,7 +49,13 @@
     "settings": "Setari",
     "arhive": "Arhiva",
     "stopList": "Stop List",
-    "employeeRemarks": "Observatii angajati"
+    "employeeRemarks": "Observatii angajati",
+    "late": "Întârziere",
+    "earlyLeave": "Plecare devreme",
+    "absent": "Absent",
+    "over": "Ore suplimentare",
+    "replacement": "Înlocuire",
+    "intern": "Stagiar"
   },
   "Auth": {
     "login": "Autentificare",
