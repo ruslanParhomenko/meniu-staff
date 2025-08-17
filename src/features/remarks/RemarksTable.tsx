@@ -73,7 +73,9 @@ export default function RemarksTable() {
     [employees]
   );
   useEffect(() => {
-    const subscription = form.watch((value) => setLocalStorage(value));
+    const subscription = form.watch((value) =>
+      setLocalStorage(value as RemarksForm)
+    );
     return () => subscription.unsubscribe();
   }, [form, setLocalStorage]);
 

@@ -6,16 +6,12 @@ import { useState } from "react";
 
 export const ArhiveRemarksListTable = ({ data }: { data: any }) => {
   const id = useWatch({ name: "selectDataId" });
-  const { data: remarks, refetch } = useRemarkById(id);
+  const { data: remarks } = useRemarkById(id);
 
-  // state для управления закрытием Accordion
   const [collapsed, setCollapsed] = useState(false);
 
   const handleDelete = () => {
-    // после удаления закрываем accordion
     setCollapsed(true);
-    // обновляем данные в select / parent
-    refetch();
   };
 
   return (

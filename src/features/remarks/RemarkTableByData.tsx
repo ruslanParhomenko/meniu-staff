@@ -6,7 +6,7 @@ import {
   TableBody,
   Table,
 } from "@/components/ui/table";
-import { RemarkReport } from "@/generated/prisma";
+import { Remark, RemarkReport } from "@/generated/prisma";
 import { useRouter } from "@/i18n/navigation";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
@@ -59,7 +59,7 @@ export default function RemarksTableByData({ data, onDelete }: Props) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.remarks.map((remark) => (
+          {data.remarks.map((remark: Remark) => (
             <TableRow key={remark.id}>
               <TableCell>{remark.name || "-"}</TableCell>
               <TableCell>{remark.dayHours || "-"}</TableCell>
