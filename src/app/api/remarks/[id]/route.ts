@@ -25,20 +25,16 @@ export async function GET(
   }
 }
 
-type Params = {
-  params: { id: string };
-};
-
-export async function DELETE(_req: Request, { params }: Params) {
+export async function DELETE(
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
   try {
-    const reportId = parseInt(params.id, 10);
-
-    if (isNaN(reportId)) {
-      return NextResponse.json({ error: "Invalid ID" }, { status: 400 });
-    }
+    const { id } = await params;
 
     await prisma.remarkReport.delete({
-      where: { id: reportId },
+      where: { id: Number(id) },
+      include: { remarks: true },
     });
 
     return NextResponse.json({ message: "Report deleted successfully" });
