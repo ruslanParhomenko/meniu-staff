@@ -180,13 +180,16 @@ export const BreakListForm = () => {
         const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
         if (!localData || !session?.data?.user?.email) return;
 
-        const { error } = await supabase.from("break_list_realtime").upsert(
-          {
-            user_email: session.data.user.email,
-            form_data: JSON.parse(localData),
-          },
-          { onConflict: "user_email" }
-        );
+        const { data, error } = await supabase
+          .from("break_list_realtime")
+          .upsert(
+            {
+              user_email: session.data.user.email,
+              form_data: JSON.parse(localData),
+            },
+            { onConflict: "user_email" }
+          )
+          .select();
 
         if (error) throw error;
       } catch (err) {
@@ -198,7 +201,7 @@ export const BreakListForm = () => {
   }, [session?.data]);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (typeof window === "undefined" || !session?.data?.user?.email) return;
 
     const channel = supabase
       .channel("break_list_realtime_channel")
@@ -208,7 +211,7 @@ export const BreakListForm = () => {
           event: "UPDATE",
           schema: "public",
           table: "break_list_realtime",
-          filter: `user_email=neq.${session?.data?.user?.email}`,
+          filter: `user_email=neq.${session.data.user.email}`,
         },
         (payload) => {
           const newData = payload.new.form_data;
@@ -221,7 +224,7 @@ export const BreakListForm = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [session?.data]);
+  }, [session?.data?.user?.email]);
 
   if (loading) {
     return <div>Loading...</div>;
