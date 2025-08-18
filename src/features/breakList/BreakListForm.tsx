@@ -174,27 +174,30 @@ export const BreakListForm = () => {
   };
 
   useEffect(() => {
-    const sendDataToSupabase = async () => {
+    const sendDataToApi = async () => {
       const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (!localData) return;
 
       try {
-        const { error } = await supabase.from("break_list_realtime").upsert(
-          {
+        const res = await fetch("/api/break-list-realtime", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
             id: 1,
             form_data: JSON.parse(localData),
-          },
-          { onConflict: "id" }
-        );
+          }),
+        });
 
-        if (error) throw error;
+        const result = await res.json();
+        if (result.error) {
+          console.error("Sync error:", result.error);
+        }
       } catch (err) {
-        console.error("Sync error:", err);
+        console.error("Request error:", err);
       }
     };
 
-    const timeout = setTimeout(sendDataToSupabase, 500);
-
+    const timeout = setTimeout(sendDataToApi, 500);
     return () => clearTimeout(timeout);
   }, [watchAllFields]);
   // useEffect(() => {
@@ -225,13 +228,9 @@ export const BreakListForm = () => {
   useEffect(() => {
     const fetchSupabaseData = async () => {
       try {
-        const { data, error } = await supabase
-          .from("break_list_realtime")
-          .select("form_data")
-          .eq("id", 1)
-          .single();
+        const res = await fetch("/api/break-list-realtime");
+        const data = await res.json();
 
-        if (error && error.code !== "PGRST116") throw error;
         if (data?.form_data) {
           form.reset({
             date: data.form_data.date,
