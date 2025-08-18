@@ -92,6 +92,7 @@ export const FRUITS_CUISINE = [
   "груша",
   "арбуз /дыня",
   "виноград крас/белый",
+  "сливы крупные",
 ];
 
 export const MEAT = [
@@ -460,4 +461,14 @@ export const QUANTITY_SELECT = [
   { label: "18", value: "18" },
   { label: "19", value: "19" },
   { label: "20", value: "20" },
+  { label: "21", value: "21" },
+  { label: "22", value: "22" },
+  { label: "23", value: "23" },
+  { label: "24", value: "24" },
+  { label: "25", value: "25" },
+  { label: "26", value: "26" },
+  { label: "27", value: "27" },
+  { label: "28", value: "28" },
+  { label: "29", value: "29" },
+  { label: "30", value: "30" },
 ];

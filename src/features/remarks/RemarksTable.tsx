@@ -21,6 +21,7 @@ import DatePickerInput from "@/components/inputs/DatePickerInput";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { OVER_HOURS, PENALITY, REASON } from "./constants";
 import toast from "react-hot-toast";
+import { useAbility } from "@/providers/AbilityProvider";
 
 type RemarksForm = {
   date: Date;
@@ -47,6 +48,7 @@ const defaultData: RemarksForm = {
 };
 
 export default function RemarksTable() {
+  const { isObserver } = useAbility();
   const KEY_LOCAL = "remarks";
   const {
     getValue,
@@ -129,36 +131,42 @@ export default function RemarksTable() {
                       fieldName={`remarks.${idx}.name`}
                       fieldLabel=""
                       data={selectedEmployees}
+                      disabled={isObserver}
                     />
                   </TableCell>
                   <TableCell className="min-w-20 md:px-6">
                     <SelectField
                       fieldName={`remarks.${idx}.dayHours`}
                       data={OVER_HOURS}
+                      disabled={isObserver}
                     />
                   </TableCell>
                   <TableCell className="min-w-20 md:px-6">
                     <SelectField
                       fieldName={`remarks.${idx}.nightHours`}
                       data={OVER_HOURS}
+                      disabled={isObserver}
                     />
                   </TableCell>
                   <TableCell className="min-w-40 md:px-6">
                     <SelectField
                       fieldName={`remarks.${idx}.reason`}
                       data={REASON.map((reason) => t(reason) as string)}
+                      disabled={isObserver}
                     />
                   </TableCell>
                   <TableCell className="min-w-20 md:px-6 ">
                     <SelectField
                       fieldName={`remarks.${idx}.penality`}
                       data={PENALITY}
+                      disabled={isObserver}
                     />
                   </TableCell>
                   <TableCell className="min-w-40 md:px-6">
                     <SelectField
                       fieldName={`remarks.${idx}.reasonPenality`}
                       data={REASON.map((reason) => t(reason) as string)}
+                      disabled={isObserver}
                     />
                   </TableCell>
                 </TableRow>
