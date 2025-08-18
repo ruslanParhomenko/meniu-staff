@@ -172,24 +172,20 @@ export const BreakListForm = () => {
     });
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   };
-  const sessionEmail = session?.data ? session?.data?.user?.email : "";
 
   useEffect(() => {
     const sendDataToSupabase = async () => {
-      try {
-        const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
-        if (!localData || !session?.data?.user?.email) return;
+      const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (!localData) return;
 
-        const { data, error } = await supabase
-          .from("break_list_realtime")
-          .upsert(
-            {
-              user_email: session.data.user.email,
-              form_data: JSON.parse(localData),
-            },
-            { onConflict: "user_email" }
-          )
-          .select();
+      try {
+        const { error } = await supabase.from("break_list_realtime").upsert(
+          {
+            id: 1,
+            form_data: JSON.parse(localData),
+          },
+          { onConflict: "id" }
+        );
 
         if (error) throw error;
       } catch (err) {
@@ -197,34 +193,66 @@ export const BreakListForm = () => {
       }
     };
 
-    if (typeof window !== "undefined") sendDataToSupabase();
-  }, [session?.data]);
+    const timeout = setTimeout(sendDataToSupabase, 500);
 
+    return () => clearTimeout(timeout);
+  }, [watchAllFields]);
+  // useEffect(() => {
+  //   if (typeof window === "undefined" || !session?.data?.user?.email) return;
+
+  //   const channel = supabase
+  //     .channel("break_list_realtime_channel")
+  //     .on(
+  //       "postgres_changes",
+  //       {
+  //         event: "UPDATE",
+  //         schema: "public",
+  //         table: "break_list_realtime",
+  //         filter: `user_email=neq.${session.data.user.email}`,
+  //       },
+  //       (payload) => {
+  //         const newData = payload.new.form_data;
+  //         form.reset(newData);
+  //         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
+  //       }
+  //     )
+  //     .subscribe();
+
+  //   return () => {
+  //     supabase.removeChannel(channel);
+  //   };
+  // }, [session?.data?.user?.email]);
   useEffect(() => {
-    if (typeof window === "undefined" || !session?.data?.user?.email) return;
+    const fetchSupabaseData = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("break_list_realtime")
+          .select("form_data")
+          .eq("id", 1)
+          .single();
 
-    const channel = supabase
-      .channel("break_list_realtime_channel")
-      .on(
-        "postgres_changes",
-        {
-          event: "UPDATE",
-          schema: "public",
-          table: "break_list_realtime",
-          filter: `user_email=neq.${session.data.user.email}`,
-        },
-        (payload) => {
-          const newData = payload.new.form_data;
-          form.reset(newData);
-          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
+        if (error && error.code !== "PGRST116") throw error;
+        if (data?.form_data) {
+          form.reset({
+            date: data.form_data.date,
+            rows: data.form_data.rows.map((row: any) => ({
+              id: row.id,
+              name: row.name,
+              hours: row.hours,
+            })),
+          });
+          localStorage.setItem(
+            LOCAL_STORAGE_KEY,
+            JSON.stringify(data.form_data)
+          );
         }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
+      } catch (err) {
+        console.error("Error fetching Supabase data:", err);
+      }
     };
-  }, [session?.data?.user?.email]);
+
+    fetchSupabaseData();
+  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
