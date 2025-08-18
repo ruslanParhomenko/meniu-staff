@@ -29,6 +29,7 @@ type FormValues = {
 
 export default function TableStopListPrisma() {
   const { isObserver } = useAbility();
+
   const [recordId, setRecordId] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);

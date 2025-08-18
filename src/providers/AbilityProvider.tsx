@@ -1,14 +1,10 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
-const ADMIN = ["parhomenkogm@gmail.com", "cng.nv.rstrnt@gmail.com"];
-const USER = [
-  "cng.nv.kitchen@gmail.com",
-  "cng.nv.rstrnt.mngr13@gmail.com",
-  "cng.nv.rstrnt@gmail.com",
-];
+const ADMIN = ["parhomenkogm@gmail.com", "cng.nv.rstrnt.mngr@gmail.com"];
+const USER = ["cng.nv.kitchen@gmail.com", "cng.nv.rstrnt@gmail.com"];
 
 type AbilityContextType = {
   isAdmin: boolean;
@@ -21,12 +17,26 @@ const AbilityContext = createContext<AbilityContextType | null>(null);
 export function AbilityProvider({ children }: { children: React.ReactNode }) {
   const { data } = useSession();
 
-  const isAdmin = ADMIN.includes(data?.user?.email ?? "");
-  const isUser = USER.includes(data?.user?.email ?? "");
-  const isObserver = !isAdmin && !isUser;
+  const [ability, setAbility] = useState<AbilityContextType>({
+    isAdmin: false,
+    isUser: false,
+    isObserver: true,
+  });
+
+  useEffect(() => {
+    if (data?.user?.email) {
+      const isAdmin = ADMIN.includes(data.user.email);
+      const isUser = USER.includes(data.user.email);
+      const isObserver = !isAdmin && !isUser;
+
+      setAbility({ isAdmin, isUser, isObserver });
+    } else {
+      setAbility({ isAdmin: false, isUser: false, isObserver: true });
+    }
+  }, [data?.user?.email]);
 
   return (
-    <AbilityContext.Provider value={{ isAdmin, isUser, isObserver }}>
+    <AbilityContext.Provider value={ability}>
       {children}
     </AbilityContext.Provider>
   );

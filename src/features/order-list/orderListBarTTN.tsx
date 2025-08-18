@@ -14,6 +14,7 @@ import {
   APIFERA,
   DAVIDAN,
   UBFB2,
+  SAMPAREX,
 } from "./constants";
 
 import { InputWrapper } from "@/components/wrapper/InputWrapper";
@@ -46,6 +47,9 @@ export const OrderListTTNBar = () => {
         <OrderCardWrapper data={APIFERA} name="APIFERA" />
         <OrderCardWrapper data={FORWARD} name="FORWARD" />
         <OrderCardWrapper data={FRUITBOX} name="FRUITBOX" />
+      </InputWrapper>
+      <InputWrapper>
+        <OrderCardWrapper data={SAMPAREX} name="SAMPAREX " />
       </InputWrapper>
     </div>
   );

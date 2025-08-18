@@ -43,6 +43,7 @@ import {
   VEGETABLES,
   VERGNANO,
   VITAFOR,
+  SAMPAREX,
 } from "./constants";
 
 type FieldNameBar =
@@ -60,7 +61,8 @@ type FieldNameBar =
   | (typeof FRUITS_CUISINE)[number]
   | (typeof MEAT)[number]
   | (typeof MILK)[number]
-  | (typeof OTHER)[number];
+  | (typeof OTHER)[number]
+  | (typeof SAMPAREX)[number];
 export type OrderListBarFormValues = {
   [key in FieldNameBar]?: string;
 };
@@ -83,6 +85,7 @@ const allFieldsBar = [
   ...MEAT,
   ...MILK,
   ...OTHER,
+  ...SAMPAREX,
 ];
 
 export const defaultValuesZNBar = Object.fromEntries(
@@ -182,6 +185,7 @@ const allFieldsBarTTN = [
   ...ACVAMONT,
   ...ACVILIN,
   ...UBFB2,
+  ...SAMPAREX,
 ];
 
 export const defaultEmptyValuesBar = Object.fromEntries(
