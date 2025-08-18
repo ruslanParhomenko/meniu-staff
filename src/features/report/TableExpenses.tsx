@@ -57,13 +57,18 @@ export default function TableEspenses() {
                 <NumericInput
                   fieldName={`expenses.${idx}.sum`}
                   disabled={isObserver}
+                  className="w-30! text-center"
                 />
               </TableCell>
             </TableRow>
           ))}
           <TableRow className="h-10">
             <TableCell>
-              <NumericInput fieldName="total" disabled={isObserver} />
+              <NumericInput
+                fieldName="total"
+                disabled={isObserver}
+                className="w-30! text-center"
+              />
             </TableCell>
           </TableRow>
         </TableBody>

@@ -1,96 +1,81 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
-datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
-}
-
-
-
 generator client {
   provider = "prisma-client-js"
   output   = "../src/generated/prisma"
 }
 
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
 model Employee {
-  id        Int     @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   name      String
   position  String
   createdAt DateTime @default(now())
 }
 
-
-
 model BreakeList {
-  id       Int      @id @default(autoincrement())
-  date     DateTime
-  rows     Row[]
+  id   Int      @id @default(autoincrement())
+  date DateTime
+  rows Row[]
 
   @@index([date])
 }
 
 model Row {
-  id         Int      @id @default(autoincrement())
-  externalId String   
-  name       String?  
-  schedule   BreakeList @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
+  id         Int        @id @default(autoincrement())
+  externalId String
+  name       String?
   scheduleId Int
-
   hours      Hour[]
+  schedule   BreakeList @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
 }
+
 model Hour {
   id    Int    @id @default(autoincrement())
-  hour  String 
-  value String 
+  hour  String
+  value String
+  rowId Int
+  row   Row    @relation(fields: [rowId], references: [id], onDelete: Cascade)
 
-  row    Row    @relation(fields: [rowId], references: [id], onDelete: Cascade)
-  rowId  Int
-
-  @@unique([rowId, hour]) 
+  @@unique([rowId, hour])
 }
 
-
-
-
 model DailyReport {
-  id        Int            @id @default(autoincrement())
-  date      DateTime       @default(now())
-  total     Float          @default(0)
-
+  id         Int          @id @default(autoincrement())
+  date       DateTime     @default(now())
+  total      Float        @default(0)
   cashVerify CashVerify[]
-  tobacco    Tobacco[]
   expenses   Expense[]
+  tobacco    Tobacco[]
 }
 
 model CashVerify {
-  id       Int          @id @default(autoincrement())
+  id       Int         @id @default(autoincrement())
   hours    String
   value    String
-  report   DailyReport  @relation(fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int
+  report   DailyReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
 }
 
 model Tobacco {
-  id         Int          @id @default(autoincrement())
+  id         Int         @id @default(autoincrement())
   name       String
-  stock      Int          @default(0)
+  stock      Int         @default(0)
   incoming   Int?
   outgoing   Int?
   finalStock String
-  report     DailyReport  @relation(fields: [reportId], references: [id], onDelete: Cascade)
   reportId   Int
+  report     DailyReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
 }
 
 model Expense {
-  id       Int          @id @default(autoincrement())
+  id       Int         @id @default(autoincrement())
   name     String
   sum      String
-  report   DailyReport  @relation(fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int
+  report   DailyReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
 }
 
 model ReportBarRealtime {
@@ -102,49 +87,38 @@ model ReportBarRealtime {
   @@map("report_bar_realtime")
 }
 
-model BreakListRealtime {
-  id         String   @id @default(uuid())
-  user_email String?
+model break_list_realtime {
+  id         String   @id
+  user_email String?  @unique(map: "break_list_realtime_user_email_idx")
   form_data  Json?
   created_at DateTime @default(now())
 
   @@map("break_list_realtime")
 }
 
-
-
-
-
 model StopListRecord {
-  id        Int       @id @default(autoincrement())
-  stopList  Json      // [{ product: string, date: string, id: number }]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-}
-
-
-model RemarkReport {
   id        Int      @id @default(autoincrement())
-  date      DateTime
-  remarks   Remark[] 
-
+  stopList  Json
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model Remark {
-  id             Int      @id @default(autoincrement())
-  name           String   @default("")
-  dayHours       String   @default("")
-  nightHours     String   @default("")
-  reason         String   @default("")
-  penality       String   @default("")
-  reasonPenality String   @default("")
-
-  reportId Int
-  report   RemarkReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+model RemarkReport {
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  remarks   Remark[]
 }
 
-
-
-
+model Remark {
+  id             Int          @id @default(autoincrement())
+  name           String       @default("")
+  dayHours       String       @default("")
+  nightHours     String       @default("")
+  reason         String       @default("")
+  penality       String       @default("")
+  reasonPenality String       @default("")
+  reportId       Int
+  report         RemarkReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
+}

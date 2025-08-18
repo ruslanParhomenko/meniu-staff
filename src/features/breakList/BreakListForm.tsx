@@ -172,7 +172,7 @@ export const BreakListForm = () => {
     });
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   };
-
+  //send supabase
   useEffect(() => {
     const sendDataToApi = async () => {
       const localData = localStorage.getItem(LOCAL_STORAGE_KEY);

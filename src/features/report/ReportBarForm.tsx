@@ -8,6 +8,7 @@ import {
   cashVerifyDefault,
   defaultValuesReportBar,
   expensesDefault,
+  LIST_TOBACCO,
   ReportBarFormValues,
   reportBarSchema,
   TobaccoSchemaType,
@@ -18,15 +19,11 @@ import { useEffect } from "react";
 import TableCashVerify from "./TableCashVerify";
 import DatePickerInput from "@/components/inputs/DatePickerInput";
 import { useAbility } from "@/providers/AbilityProvider";
-import { supabase } from "@/lib/supabaseClient";
-import { useSession } from "next-auth/react";
-import { da } from "date-fns/locale";
+import toast from "react-hot-toast";
 
 export function ReportBarForm() {
   const STORAGE_KEY = "report-bar";
   const { isObserver } = useAbility();
-
-  const session = useSession();
 
   const {
     getValue,
@@ -37,7 +34,7 @@ export function ReportBarForm() {
   const form = useForm<ReportBarFormValues>({
     defaultValues: {
       ...defaultValuesReportBar,
-      ...getValue(),
+      // ...getValue(),
     },
     resolver: yupResolver(
       reportBarSchema
@@ -77,7 +74,11 @@ export function ReportBarForm() {
         stock: Number(item.stock || 0),
         incoming: Number(item.incoming || 0),
         outgoing: Number(item.outgoing || 0),
-        finalStock: String(item.finalStock || "0"),
+        finalStock: String(
+          Number(item.stock || 0) +
+            Number(item.incoming || 0) -
+            Number(item.outgoing || 0)
+        ),
       })),
     };
     const res = await fetch("/api/report/create", {
@@ -102,52 +103,84 @@ export function ReportBarForm() {
 
     const updatedData: ReportBarFormValues = {
       ...data,
+      date: new Date().toDateString(),
       tobacco: updatedTobacco as TobaccoSchemaType,
+      cashVerify: cashVerifyDefault,
+      expenses: expensesDefault,
     };
 
     form.reset(updatedData);
+    toast.success("Бар отчет успешно сохранён !");
   };
 
   //supabase
-
+  const watchAllFields = form.watch();
   useEffect(() => {
-    const interval = setInterval(async () => {
-      const localData = getValue();
+    const sendDataToApi = async () => {
+      const localData = localStorage.getItem(STORAGE_KEY);
       if (!localData) return;
 
-      await supabase.from("report_bar_realtime").insert({
-        user_email: session?.data ? session?.data.user?.email : "anonymous",
-        form_data: localData,
-      });
-    }, 30 * 60 * 1000); // 30 минут
+      try {
+        const res = await fetch("/api/report-realtime", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: 1,
+            form_data: JSON.parse(localData),
+          }),
+        });
 
-    return () => clearInterval(interval);
-  }, [getValue, session?.data ? session?.data.user?.email : "anonymous"]);
+        const result = await res.json();
+        if (result.error) {
+          console.error("Sync error:", result.error);
+        }
+      } catch (err) {
+        console.error("Request error:", err);
+      }
+    };
+
+    const timeout = setTimeout(sendDataToApi, 500);
+    return () => clearTimeout(timeout);
+  }, [watchAllFields]);
 
   useEffect(() => {
-    const channel = supabase
-      .channel("report_bar_realtime")
-      .on(
-        "postgres_changes",
-        { event: "INSERT", schema: "public", table: "report_bar_realtime" },
-        (payload) => {
-          console.log("📥 Новые данные:", payload.new);
+    const fetchSupabaseData = async () => {
+      try {
+        const res = await fetch("/api/report-realtime");
+        const data = await res.json();
 
-          // можно обновить форму или localStorage
-          const newData = payload.new.form_data as ReportBarFormValues;
+        if (data?.form_data) {
+          const tobaccoWithLocalNames = data.form_data.tobacco.map(
+            (item: any, idx: number) => ({
+              ...item,
+              name: LIST_TOBACCO[idx] || "",
+              stock: String(item.stock) || "0",
+            })
+          );
 
-          // например — обновим локально, только если дата совпадает
-          if (newData?.date === form.getValues("date")) {
-            form.reset(newData);
-          }
+          form.reset({
+            ...data.form_data,
+            date: data.form_data.date,
+            tobacco: tobaccoWithLocalNames,
+            cashVerify: data.form_data.cashVerify,
+            expenses: data.form_data.expenses,
+          });
+
+          localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify({
+              ...data.form_data,
+              tobacco: tobaccoWithLocalNames,
+            })
+          );
         }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(channel);
+      } catch (err) {
+        console.error("Error fetching Supabase data:", err);
+      }
     };
-  }, [form]);
+
+    fetchSupabaseData();
+  }, []);
 
   return (
     <Form {...form}>

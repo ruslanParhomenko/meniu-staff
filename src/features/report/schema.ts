@@ -14,7 +14,7 @@ export const expensesDefault = new Array(8).fill({
 });
 
 //tobacco
-const LIST_TOBACCO = [
+export const LIST_TOBACCO = [
   "Marlboro",
   "Parliament",
   "Cohiba Siglo I",
@@ -39,7 +39,7 @@ export const tobaccoSchema = yup.array(
 export type TobaccoSchemaType = yup.InferType<typeof tobaccoSchema>;
 export const tobaccoDefault = LIST_TOBACCO.map((name) => ({
   name,
-  stock: "",
+  stock: "0",
   incoming: "",
   outgoing: "",
   finalStock: "",
