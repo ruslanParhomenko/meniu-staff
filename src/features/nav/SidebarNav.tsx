@@ -42,7 +42,7 @@ const SidebarNav = () => {
       <Sidebar className="border-none">
         <SidebarContent>
           <span className="text-xs pt-4 pl-2">
-            {session?.user?.email?.split("@")[0] || "BAR"}
+            {session?.user?.email?.split("@")[0] || "Loading..."}
           </span>
           <SidebarMenu className="flex h-full flex-col gap-4 pt-10  ">
             {SIDEBAR_NAVIGATION.map((item) => {

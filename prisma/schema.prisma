@@ -102,6 +102,15 @@ model ReportBarRealtime {
   @@map("report_bar_realtime")
 }
 
+model BreakListRealtime {
+  id         String   @id @default(uuid())
+  user_email String?
+  form_data  Json?
+  created_at DateTime @default(now())
+
+  @@map("break_list_realtime")
+}
+
 
 
 

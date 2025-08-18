@@ -16,7 +16,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { Button } from "@/components/ui/button";
 import { Form } from "../../components/ui/form";
 import SelectInput from "../../components/inputs/SelectInput";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -43,12 +42,11 @@ export type BreakListFormValues = {
 };
 
 export const BreakListForm = () => {
-  const { isAdmin, isUser, isObserver } = useAbility();
+  const { isObserver } = useAbility();
 
   const session = useSession();
 
   const LOCAL_STORAGE_KEY = "breakListFormData";
-  const t = useTranslations("UI");
   const { employees, loading } = useEmployeeSqlData();
 
   const selectedEmployees = useMemo(
@@ -174,41 +172,48 @@ export const BreakListForm = () => {
     });
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   };
-  const sessionEmail = session?.data ? session?.data?.user?.email : "anonymous";
-  // ✅ раз в 1 минуту пушим данные в Supabase
+  const sessionEmail = session?.data ? session?.data?.user?.email : "";
+
   useEffect(() => {
-    const interval = setInterval(async () => {
-      const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (!localData) return;
+    const sendDataToSupabase = async () => {
+      try {
+        const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (!localData || !session?.data?.user?.email) return;
 
-      const parsed = JSON.parse(localData);
+        const { error } = await supabase.from("break_list_realtime").upsert(
+          {
+            user_email: session.data.user.email,
+            form_data: JSON.parse(localData),
+          },
+          { onConflict: "user_email" }
+        );
 
-      await supabase.from("break_list_realtime").upsert(
-        {
-          user_email: session?.data ? session?.data?.user?.email : "anonymous",
-          form_data: parsed,
-        },
-        { onConflict: "user_email" } // ⚡ чтобы обновлялось по user_email
-      );
-    }, 30 * 60 * 1000); // 1 минута
+        if (error) throw error;
+      } catch (err) {
+        console.error("Sync error:", err);
+      }
+    };
 
-    return () => clearInterval(interval);
-  }, [sessionEmail]);
+    if (typeof window !== "undefined") sendDataToSupabase();
+  }, [session?.data]);
 
-  // ✅ подписка на обновления Supabase
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const channel = supabase
       .channel("break_list_realtime_channel")
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "break_list_realtime" },
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "break_list_realtime",
+          filter: `user_email=neq.${session?.data?.user?.email}`,
+        },
         (payload) => {
-          console.log("Realtime update:", payload.new);
-          const newData = (payload.new as any)?.form_data;
-          if (newData) {
-            form.reset(newData);
-            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
-          }
+          const newData = payload.new.form_data;
+          form.reset(newData);
+          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
         }
       )
       .subscribe();
@@ -216,7 +221,7 @@ export const BreakListForm = () => {
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [form]);
+  }, [session?.data]);
 
   if (loading) {
     return <div>Loading...</div>;
