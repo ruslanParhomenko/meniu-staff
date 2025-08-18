@@ -28,8 +28,6 @@ export function ReportBarForm() {
 
   const session = useSession();
 
-  console.log(session);
-
   const {
     getValue,
     setValue: setLocalStorage,
@@ -62,6 +60,7 @@ export function ReportBarForm() {
 
     form.reset({
       ...currentValues,
+      date: new Date().toDateString(),
       tobacco: resetTobacco as TobaccoSchemaType,
       cashVerify: cashVerifyDefault,
       expenses: expensesDefault,
