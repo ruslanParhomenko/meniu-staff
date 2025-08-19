@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 
 const SHEET_ID = process.env.NEXT_PUBLIC_SHEET_ID;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
-const RANGE = "Waiters!D55:AM75";
 
-export function useSheetData() {
+export function useSheetData({ range }: { range: string }) {
+  console.log(range);
   const [data, setData] = useState<string[][]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -15,7 +15,7 @@ export function useSheetData() {
       try {
         setLoading(true);
         const response = await fetch(
-          `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${RANGE}?key=${API_KEY}`
+          `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${range}?key=${API_KEY}`
         );
         if (!response.ok) {
           throw new Error("Ошибка при загрузке данных");
@@ -23,7 +23,7 @@ export function useSheetData() {
         const json = await response.json();
         const values: string[][] = json.values || [];
 
-        const totalRows = 21;
+        const totalRows = 22;
         const totalCols = 36;
 
         const filledData: string[][] = [];
@@ -45,7 +45,7 @@ export function useSheetData() {
     fetchSheet();
     const intervalId = setInterval(fetchSheet, 70000);
     return () => clearInterval(intervalId);
-  }, []);
+  }, [range]);
 
   return { data, loading, error };
 }
