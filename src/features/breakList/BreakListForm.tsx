@@ -36,6 +36,7 @@ import { SendResetButton } from "../ui/SendResetButton";
 import { supabase } from "@/lib/supabaseClient";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
+import { USER_EMAIL_FETCH_DATA } from "@/constants/emailUserFetchData";
 
 export type BreakListFormValues = {
   date?: Date;
@@ -202,45 +203,15 @@ export const BreakListForm = () => {
     const timeout = setTimeout(sendDataToApi, 500);
     return () => clearTimeout(timeout);
   }, [watchAllFields]);
-  // useEffect(() => {
-  //   if (typeof window === "undefined" || !session?.data?.user?.email) return;
-
-  //   const channel = supabase
-  //     .channel("break_list_realtime_channel")
-  //     .on(
-  //       "postgres_changes",
-  //       {
-  //         event: "UPDATE",
-  //         schema: "public",
-  //         table: "break_list_realtime",
-  //         filter: `user_email=neq.${session.data.user.email}`,
-  //       },
-  //       (payload) => {
-  //         const newData = payload.new.form_data;
-  //         form.reset(newData);
-  //         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(newData));
-  //       }
-  //     )
-  //     .subscribe();
-
-  //   return () => {
-  //     supabase.removeChannel(channel);
-  //   };
-  // }, [session?.data?.user?.email]);
 
   const fetchSupabaseData = async () => {
     try {
       const res = await fetch("/api/break-list-realtime");
       const allData = await res.json();
 
-      console.log("allData", allData);
-
-      // фильтруем по конкретному email
       const userData = allData.find(
-        (item: any) => item.user_email === "cng.nv.rstrnt@gmail.com"
+        (item: any) => item.user_email === USER_EMAIL_FETCH_DATA
       );
-
-      console.log("userData", userData);
 
       if (userData?.form_data) {
         form.reset({
@@ -314,20 +285,12 @@ export const BreakListForm = () => {
               })}
             </TableBody>
           </Table>
-          <div className="flex flex-col md:flex-row justify-between ">
-            <SendResetButton resetForm={resetForm} />
-            <Button
-              type="button"
-              variant={"secondary"}
-              className="hover:bg-red-600"
-              onClick={() => {
-                fetchSupabaseData();
-              }}
-              disabled={isObserver}
-            >
-              fetch data
-            </Button>
-          </div>
+
+          <SendResetButton
+            resetForm={resetForm}
+            fetchData={fetchSupabaseData}
+          />
+          <div className="flex justify-end items-center w-full   "></div>
         </form>
       </Form>
     </div>
