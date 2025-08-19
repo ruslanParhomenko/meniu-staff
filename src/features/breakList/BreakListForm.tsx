@@ -43,7 +43,7 @@ export type BreakListFormValues = {
 };
 
 export const BreakListForm = () => {
-  const { isObserver } = useAbility();
+  const { isObserver, isUser } = useAbility();
 
   const session = useSession();
 
@@ -178,7 +178,7 @@ export const BreakListForm = () => {
     const sendDataToApi = async () => {
       const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (!localData) return;
-      if (!isObserver) return;
+      if (!isUser) return;
 
       try {
         const res = await fetch("/api/break-list-realtime", {
@@ -233,10 +233,14 @@ export const BreakListForm = () => {
       const res = await fetch("/api/break-list-realtime");
       const allData = await res.json();
 
+      console.log("allData", allData);
+
       // фильтруем по конкретному email
       const userData = allData.find(
         (item: any) => item.user_email === "cng.nv.rstrnt@gmail.com"
       );
+
+      console.log("userData", userData);
 
       if (userData?.form_data) {
         form.reset({
@@ -310,7 +314,7 @@ export const BreakListForm = () => {
               })}
             </TableBody>
           </Table>
-          <div className="flex justify-between items-center p-5 pt-5 gap-30 md:gap-5">
+          <div className="flex justify-between items-center p-5 pt-5 gap-30 md:gap-5 w-full">
             <SendResetButton resetForm={resetForm} />
             <Button
               type="button"
