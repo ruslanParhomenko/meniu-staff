@@ -35,6 +35,7 @@ import { useAbility } from "@/providers/AbilityProvider";
 import { SendResetButton } from "../ui/SendResetButton";
 import { supabase } from "@/lib/supabaseClient";
 import { useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 
 export type BreakListFormValues = {
   date?: Date;
@@ -177,13 +178,14 @@ export const BreakListForm = () => {
     const sendDataToApi = async () => {
       const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (!localData) return;
+      if (!isObserver) return;
 
       try {
         const res = await fetch("/api/break-list-realtime", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            id: 1,
+            user_email: session?.data?.user?.email,
             form_data: JSON.parse(localData),
           }),
         });
@@ -225,33 +227,36 @@ export const BreakListForm = () => {
   //     supabase.removeChannel(channel);
   //   };
   // }, [session?.data?.user?.email]);
-  useEffect(() => {
-    const fetchSupabaseData = async () => {
-      try {
-        const res = await fetch("/api/break-list-realtime");
-        const data = await res.json();
 
-        if (data?.form_data) {
-          form.reset({
-            date: data.form_data.date,
-            rows: data.form_data.rows.map((row: any) => ({
-              id: row.id,
-              name: row.name,
-              hours: row.hours,
-            })),
-          });
-          localStorage.setItem(
-            LOCAL_STORAGE_KEY,
-            JSON.stringify(data.form_data)
-          );
-        }
-      } catch (err) {
-        console.error("Error fetching Supabase data:", err);
+  const fetchSupabaseData = async () => {
+    try {
+      const res = await fetch("/api/break-list-realtime");
+      const allData = await res.json();
+
+      // фильтруем по конкретному email
+      const userData = allData.find(
+        (item: any) => item.user_email === "cng.nv.rstrnt@gmail.com"
+      );
+
+      if (userData?.form_data) {
+        form.reset({
+          date: userData.form_data.date,
+          rows: userData.form_data.rows.map((row: any) => ({
+            id: row.id,
+            name: row.name,
+            hours: row.hours,
+          })),
+        });
+
+        localStorage.setItem(
+          LOCAL_STORAGE_KEY,
+          JSON.stringify(userData.form_data)
+        );
       }
-    };
-
-    fetchSupabaseData();
-  }, []);
+    } catch (err) {
+      console.error("Error fetching Supabase data:", err);
+    }
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -305,7 +310,20 @@ export const BreakListForm = () => {
               })}
             </TableBody>
           </Table>
-          <SendResetButton resetForm={resetForm} />
+          <div className="flex justify-between items-center p-5 pt-5 gap-30 md:gap-5">
+            <SendResetButton resetForm={resetForm} />
+            <Button
+              type="button"
+              variant={"secondary"}
+              className="hover:bg-red-600"
+              onClick={() => {
+                fetchSupabaseData();
+              }}
+              disabled={isObserver}
+            >
+              fetch data
+            </Button>
+          </div>
         </form>
       </Form>
     </div>
