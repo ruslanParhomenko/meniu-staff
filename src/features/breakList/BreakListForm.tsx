@@ -314,7 +314,7 @@ export const BreakListForm = () => {
               })}
             </TableBody>
           </Table>
-          <div className="flex justify-between items-center p-5 pt-5 gap-30 md:gap-5 w-full">
+          <div className="flex flex-col md:flex-row justify-between ">
             <SendResetButton resetForm={resetForm} />
             <Button
               type="button"
