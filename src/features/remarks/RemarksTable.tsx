@@ -22,6 +22,8 @@ import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { OVER_HOURS, PENALITY, REASON } from "./constants";
 import toast from "react-hot-toast";
 import { useAbility } from "@/providers/AbilityProvider";
+import { useSession } from "next-auth/react";
+import { USER_EMAIL_FETCH_DATA } from "@/constants/emailUserFetchData";
 
 type RemarksForm = {
   date: Date;
@@ -48,7 +50,8 @@ const defaultData: RemarksForm = {
 };
 
 export default function RemarksTable() {
-  const { isObserver } = useAbility();
+  const { isObserver, isUser } = useAbility();
+  const session = useSession();
   const KEY_LOCAL = "remarks";
   const {
     getValue,
@@ -100,6 +103,64 @@ export default function RemarksTable() {
       toast.success("Отчет успешно создан");
     } catch (err) {
       console.error(err);
+    }
+  };
+
+  const watchAllFields = form.watch();
+  useEffect(() => {
+    const sendDataToApi = async () => {
+      const localData = localStorage.getItem(KEY_LOCAL);
+      if (!localData) return;
+      if (!isUser) return;
+
+      try {
+        const res = await fetch("/api/remarks-realtime", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_email: session?.data?.user?.email,
+            form_data: JSON.parse(localData),
+          }),
+        });
+
+        const result = await res.json();
+        if (result.error) {
+          console.error("Sync error:", result.error);
+        }
+      } catch (err) {
+        console.error("Request error:", err);
+      }
+    };
+
+    const timeout = setTimeout(sendDataToApi, 500);
+    return () => clearTimeout(timeout);
+  }, [watchAllFields]);
+
+  const fetchSupabaseData = async () => {
+    try {
+      const res = await fetch("/api/remarks-realtime");
+      const allData = await res.json();
+
+      const userData = allData.find(
+        (item: any) => item.user_email === USER_EMAIL_FETCH_DATA
+      );
+
+      if (userData?.form_data) {
+        form.reset({
+          ...userData.form_data,
+          date: userData.form_data.date,
+          remarks: userData.form_data.remarks,
+        });
+
+        localStorage.setItem(
+          KEY_LOCAL,
+          JSON.stringify({
+            ...userData.form_data,
+          })
+        );
+      }
+    } catch (err) {
+      console.error("Error fetching Supabase data:", err);
     }
   };
 
@@ -173,7 +234,10 @@ export default function RemarksTable() {
               ))}
             </TableBody>
           </Table>
-          <SendResetButton resetForm={resetForm} />
+          <SendResetButton
+            resetForm={resetForm}
+            fetchData={fetchSupabaseData}
+          />
         </form>
       </Form>
     </div>

@@ -4,7 +4,7 @@ import { supabase } from "@/lib/supabaseClient";
 export async function GET() {
   try {
     const { data, error } = await supabase
-      .from("report_realtime")
+      .from("remarks_realtime")
       .select("form_data,user_email");
 
     if (error) {
@@ -28,7 +28,7 @@ export async function POST(req: Request) {
       );
     }
 
-    const { error } = await supabase.from("report_realtime").upsert(
+    const { error } = await supabase.from("remarks_realtime").upsert(
       {
         user_email: body.user_email,
         form_data: body.form_data,

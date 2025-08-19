@@ -7,3 +7,4 @@ CREATE TABLE "public"."break_list_realtime" (
 
     CONSTRAINT "break_list_realtime_pkey" PRIMARY KEY ("id")
 );
+
