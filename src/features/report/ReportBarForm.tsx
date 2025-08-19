@@ -20,10 +20,13 @@ import TableCashVerify from "./TableCashVerify";
 import DatePickerInput from "@/components/inputs/DatePickerInput";
 import { useAbility } from "@/providers/AbilityProvider";
 import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
+import { USER_EMAIL_FETCH_DATA } from "@/constants/emailUserFetchData";
 
 export function ReportBarForm() {
   const STORAGE_KEY = "report-bar";
-  const { isObserver } = useAbility();
+  const { isObserver, isUser } = useAbility();
+  const session = useSession();
 
   const {
     getValue,
@@ -34,7 +37,7 @@ export function ReportBarForm() {
   const form = useForm<ReportBarFormValues>({
     defaultValues: {
       ...defaultValuesReportBar,
-      // ...getValue(),
+      ...getValue(),
     },
     resolver: yupResolver(
       reportBarSchema
@@ -81,7 +84,7 @@ export function ReportBarForm() {
         ),
       })),
     };
-    const res = await fetch("/api/report/create", {
+    await fetch("/api/report/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(formatedData),
@@ -119,13 +122,14 @@ export function ReportBarForm() {
     const sendDataToApi = async () => {
       const localData = localStorage.getItem(STORAGE_KEY);
       if (!localData) return;
+      if (!isUser) return;
 
       try {
         const res = await fetch("/api/report-realtime", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            id: 1,
+            user_email: session?.data?.user?.email,
             form_data: JSON.parse(localData),
           }),
         });
@@ -143,44 +147,44 @@ export function ReportBarForm() {
     return () => clearTimeout(timeout);
   }, [watchAllFields]);
 
-  useEffect(() => {
-    const fetchSupabaseData = async () => {
-      try {
-        const res = await fetch("/api/report-realtime");
-        const data = await res.json();
+  const fetchSupabaseData = async () => {
+    try {
+      const res = await fetch("/api/report-realtime");
+      const allData = await res.json();
 
-        if (data?.form_data) {
-          const tobaccoWithLocalNames = data.form_data.tobacco.map(
-            (item: any, idx: number) => ({
-              ...item,
-              name: LIST_TOBACCO[idx] || "",
-              stock: String(item.stock) || "0",
-            })
-          );
+      const userData = allData.find(
+        (item: any) => item.user_email === USER_EMAIL_FETCH_DATA
+      );
 
-          form.reset({
-            ...data.form_data,
-            date: data.form_data.date,
+      if (userData?.form_data) {
+        const tobaccoWithLocalNames = userData.form_data.tobacco.map(
+          (item: any, idx: number) => ({
+            ...item,
+            name: LIST_TOBACCO[idx] || "",
+            stock: String(item.stock) || "0",
+          })
+        );
+
+        form.reset({
+          ...userData.form_data,
+          date: userData.form_data.date,
+          tobacco: tobaccoWithLocalNames,
+          cashVerify: userData.form_data.cashVerify,
+          expenses: userData.form_data.expenses,
+        });
+
+        localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({
+            ...userData.form_data,
             tobacco: tobaccoWithLocalNames,
-            cashVerify: data.form_data.cashVerify,
-            expenses: data.form_data.expenses,
-          });
-
-          localStorage.setItem(
-            STORAGE_KEY,
-            JSON.stringify({
-              ...data.form_data,
-              tobacco: tobaccoWithLocalNames,
-            })
-          );
-        }
-      } catch (err) {
-        console.error("Error fetching Supabase data:", err);
+          })
+        );
       }
-    };
-
-    fetchSupabaseData();
-  }, []);
+    } catch (err) {
+      console.error("Error fetching Supabase data:", err);
+    }
+  };
 
   return (
     <Form {...form}>
@@ -193,7 +197,7 @@ export function ReportBarForm() {
           <TableEspenses />
         </div>
         <TableCashVerify />
-        <SendResetButton resetForm={resetForm} />
+        <SendResetButton resetForm={resetForm} fetchData={fetchSupabaseData} />
       </form>
     </Form>
   );

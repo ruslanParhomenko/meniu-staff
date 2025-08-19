@@ -31,10 +31,10 @@ export async function POST(req: Request) {
 
     const { error } = await supabase.from("break_list_realtime").upsert(
       {
-        user_email: body.user_email, // уникальный ключ
+        user_email: body.user_email,
         form_data: body.form_data,
       },
-      { onConflict: "user_email" } // теперь конфликты по email, а не по id
+      { onConflict: "user_email" }
     );
 
     if (error) {

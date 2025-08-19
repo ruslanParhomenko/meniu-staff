@@ -7,29 +7,38 @@ const supabase = createClient(
 );
 
 export async function GET() {
-  const { data, error } = await supabase
-    .from("report_realtime")
-    .select("form_data")
-    .eq("id", 1)
-    .single();
+  try {
+    const { data, error } = await supabase
+      .from("report_realtime")
+      .select("form_data,user_email");
 
-  if (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json(data);
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
-
-  return NextResponse.json(data);
 }
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
 
+    if (!body.user_email) {
+      return NextResponse.json(
+        { error: "user_email is required" },
+        { status: 400 }
+      );
+    }
+
     const { error } = await supabase.from("report_realtime").upsert(
       {
-        id: body.id,
+        user_email: body.user_email,
         form_data: body.form_data,
       },
-      { onConflict: "id" }
+      { onConflict: "user_email" }
     );
 
     if (error) {

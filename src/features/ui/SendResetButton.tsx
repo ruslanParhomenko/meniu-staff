@@ -20,7 +20,7 @@ export function SendResetButton({
           className="hover:bg-blue-600"
           disabled={isObserver}
         >
-          {t("send")}
+          {t("save")}
         </Button>
         <Button
           type="button"

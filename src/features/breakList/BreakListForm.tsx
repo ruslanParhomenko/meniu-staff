@@ -25,17 +25,13 @@ import {
   MINUTES_SELECT,
   TIME_LABELS,
 } from "./constant";
-import { useTranslations } from "next-intl";
-
 import { useEffect, useMemo } from "react";
 import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
 import DatePickerInput from "@/components/inputs/DatePickerInput";
 import toast from "react-hot-toast";
 import { useAbility } from "@/providers/AbilityProvider";
 import { SendResetButton } from "../ui/SendResetButton";
-import { supabase } from "@/lib/supabaseClient";
 import { useSession } from "next-auth/react";
-import { Button } from "@/components/ui/button";
 import { USER_EMAIL_FETCH_DATA } from "@/constants/emailUserFetchData";
 
 export type BreakListFormValues = {
@@ -45,9 +41,7 @@ export type BreakListFormValues = {
 
 export const BreakListForm = () => {
   const { isObserver, isUser } = useAbility();
-
   const session = useSession();
-
   const LOCAL_STORAGE_KEY = "breakListFormData";
   const { employees, loading } = useEmployeeSqlData();
 
