@@ -19,8 +19,10 @@ export default function SettingsForm() {
             {t("addEmployees")} +
           </AccordionTrigger>
           <AccordionContent>
-            <AddEmployeeForm />
-            <EmployeesListTable />
+            <div className="grid md:grid-cols-2">
+              <AddEmployeeForm />
+              <EmployeesListTable />
+            </div>
           </AccordionContent>
         </AccordionItem>
       </Accordion>

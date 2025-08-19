@@ -11,7 +11,13 @@ export function useEmployeeSqlData() {
   const t = useTranslations("Settings");
 
   const [employees, setEmployees] = useState<
-    { id: number; name: string; position: string; createdAt: string }[]
+    {
+      id: number;
+      name: string;
+      position: string;
+      createdAt: string;
+      rate: string;
+    }[]
   >([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

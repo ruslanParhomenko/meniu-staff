@@ -110,6 +110,7 @@ export default function RemarksTable() {
   useEffect(() => {
     const sendDataToApi = async () => {
       const localData = localStorage.getItem(KEY_LOCAL);
+      console.log(localData);
       if (!localData) return;
       if (!isUser) return;
 

@@ -78,6 +78,7 @@
     "employees": "Angajați",
     "addEmployee": "Adaugă angajat",
     "insufficientRights": "Drepturi insuficiente",
-    "addEmployees": "Adauga angajati"
+    "addEmployees": "Adauga angajati",
+    "rate": "Tarif"
   }
 }

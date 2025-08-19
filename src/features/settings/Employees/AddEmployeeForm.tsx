@@ -29,14 +29,15 @@ export function AddEmployeeForm() {
       body: JSON.stringify({
         name: `${data.firstName} ${data.lastName}`,
         position: data.position,
+        rate: data.rate,
       }),
     });
     form.reset();
   };
   return (
-    <div className="w-full md:w-1/4">
+    <div className="w-full px-2 md:w-1/2 ">
       <Form {...form}>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">
           <div className="my-2">
             <Label className="mb-2" htmlFor="firstName">
               {t("firstName")}
@@ -72,6 +73,15 @@ export function AddEmployeeForm() {
               {...register("position", { required: true })}
             />
             {errors.position && (
+              <p className="text-red-500 text-sm">{t("requiredField")}</p>
+            )}
+          </div>
+          <div className="my-2">
+            <Label className="mb-2" htmlFor="rate">
+              {t("rate")}
+            </Label>
+            <Input id="rate" {...register("rate", { required: false })} />
+            {errors.rate && (
               <p className="text-red-500 text-sm">{t("requiredField")}</p>
             )}
           </div>

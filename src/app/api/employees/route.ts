@@ -7,14 +7,22 @@ export async function GET() {
 }
 
 export async function POST(req: Request) {
-  const data = await req.json();
+  try {
+    const data = await req.json();
+    const newEmployee = await prisma.employee.create({
+      data: {
+        name: data.name,
+        position: data.position,
+        rate: data.rate,
+      },
+    });
 
-  const newEmployee = await prisma.employee.create({
-    data: {
-      name: data.name,
-      position: data.position,
-    },
-  });
-
-  return NextResponse.json(newEmployee, { status: 201 });
+    return NextResponse.json(newEmployee, { status: 201 });
+  } catch (error) {
+    console.error("Prisma create error:", error);
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }
+    );
+  }
 }

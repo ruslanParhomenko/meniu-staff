@@ -78,6 +78,7 @@
     "employees": "Сотрудники",
     "addEmployee": "Добавить сотрудника",
     "insufficientRights": "Недостаточно прав",
-    "addEmployees": "Добавить сотрудников"
+    "addEmployees": "Добавить сотрудников",
+    "rate": "Ставка"
   }
 }

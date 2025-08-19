@@ -12,6 +12,7 @@ model Employee {
   id        Int      @id @default(autoincrement())
   name      String
   position  String
+  rate      String?
   createdAt DateTime @default(now())
 }
 
@@ -94,6 +95,15 @@ model break_list_realtime {
   created_at DateTime @default(now())
 
   @@map("break_list_realtime")
+}
+
+model remarks_realtime {
+  id         String   @id @default(uuid())
+  user_email String?  @unique(map: "remarks_realtime_user_email_idx")
+  form_data  Json?
+  created_at DateTime @default(now())
+
+  @@map("remarks_realtime")
 }
 
 model StopListRecord {
