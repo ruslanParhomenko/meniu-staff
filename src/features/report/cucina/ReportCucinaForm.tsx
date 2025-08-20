@@ -106,7 +106,7 @@ export default function DailyReportForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <div className="md:w-[50%] w-full ">
+        <div className=" w-full md:max-w-[80%] ">
           <DatePickerInput fieldName="date" />
 
           <Label className="font-semibold pt-6">Смены</Label>
