@@ -41,6 +41,7 @@
   "Navigation": {
     "schedule": "График",
     "report": "Отчет БАР",
+    "reportCucina": "Отчет Кухня",
     "breakList": "Брэйк-лист",
     "ordersList": "Заказ TTN",
     "orderListBar": "Заказ БАР",

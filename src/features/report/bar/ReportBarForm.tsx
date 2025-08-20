@@ -1,9 +1,17 @@
 "use client";
 import { Resolver, SubmitHandler, useForm } from "react-hook-form";
-import { SendResetButton } from "../ui/SendResetButton";
-import TableTobacco from "./TableTobacco";
+
 import { Form } from "@/components/ui/form";
-import TableEspenses from "./TableExpenses";
+
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useLocalStorageForm } from "@/hooks/use-local-storage";
+import { useEffect } from "react";
+
+import DatePickerInput from "@/components/inputs/DatePickerInput";
+import { useAbility } from "@/providers/AbilityProvider";
+import toast from "react-hot-toast";
+import { useSession } from "next-auth/react";
+import { USER_EMAIL_FETCH_DATA } from "@/constants/emailUserFetchData";
 import {
   cashVerifyDefault,
   defaultValuesReportBar,
@@ -13,15 +21,10 @@ import {
   reportBarSchema,
   TobaccoSchemaType,
 } from "./schema";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useLocalStorageForm } from "@/hooks/use-local-storage";
-import { useEffect } from "react";
+import TableTobacco from "./TableTobacco";
+import TableEspenses from "./TableExpenses";
 import TableCashVerify from "./TableCashVerify";
-import DatePickerInput from "@/components/inputs/DatePickerInput";
-import { useAbility } from "@/providers/AbilityProvider";
-import toast from "react-hot-toast";
-import { useSession } from "next-auth/react";
-import { USER_EMAIL_FETCH_DATA } from "@/constants/emailUserFetchData";
+import { SendResetButton } from "@/features/ui/SendResetButton";
 
 export function ReportBarForm() {
   const STORAGE_KEY = "report-bar";

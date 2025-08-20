@@ -41,6 +41,7 @@
   "Navigation": {
     "schedule": "Orar",
     "report": "Raport BAR",
+    "reportCucina": "Raport Bucatarie",
     "breakList": "Tabel pauze",
     "ordersList": "Comenzi TTN",
     "orderListBar": "Comenzi BAR",

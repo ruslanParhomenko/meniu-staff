@@ -8,9 +8,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Label } from "@/components/ui/label";
-import { HOURS } from "./schema";
 import NumericInput from "@/components/inputs/NumericInput";
 import { useAbility } from "@/providers/AbilityProvider";
+import { HOURS } from "./schema";
 
 export default function TableCashVerify() {
   const { isObserver } = useAbility();
