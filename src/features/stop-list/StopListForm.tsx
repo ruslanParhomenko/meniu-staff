@@ -9,13 +9,13 @@ import {
 } from "@/components/ui/table";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import SelectField from "@/components/inputs/SelectField";
-import { PRODUCTS } from "../report/constants";
 import { Form } from "@/components/ui/form";
 import { useForm, useWatch } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Delete } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAbility } from "@/providers/AbilityProvider";
+import { PRODUCTS } from "../report/bar/constants";
 
 type StopListItem = {
   key: number;

@@ -10,13 +10,13 @@ import {
 import { Label } from "@radix-ui/react-dropdown-menu";
 import SelectField from "@/components/inputs/SelectField";
 
-import { PRODUCTS } from "../report/constants";
 import { Form } from "@/components/ui/form";
 import { useForm, useWatch } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Delete } from "lucide-react";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { useEffect } from "react";
+import { PRODUCTS } from "../report/bar/constants";
 
 type StopListItem = {
   products?: string;
