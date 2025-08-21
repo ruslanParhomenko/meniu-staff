@@ -40,8 +40,7 @@
   },
   "Navigation": {
     "schedule": "График",
-    "report": "Отчет БАР",
-    "reportCucina": "Отчет Кухня",
+    "report": "Отчет",
     "breakList": "Брэйк-лист",
     "ordersList": "Заказ TTN",
     "orderListBar": "Заказ БАР",
@@ -56,7 +55,8 @@
     "absent": "Отсутствие",
     "over": "Сверхурочно",
     "replacement": "Замена",
-    "intern": "Стажёр"
+    "intern": "Стажёр",
+    "selectMonth": "Выберите месяц"
   },
   "Auth": {
     "login": "Вход",

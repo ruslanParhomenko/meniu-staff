@@ -5,7 +5,6 @@ const SHEET_ID = process.env.NEXT_PUBLIC_SHEET_ID;
 const API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
 export function useSheetData({ range }: { range: string }) {
-  console.log(range);
   const [data, setData] = useState<string[][]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -43,7 +42,7 @@ export function useSheetData({ range }: { range: string }) {
     }
 
     fetchSheet();
-    const intervalId = setInterval(fetchSheet, 70000);
+    const intervalId = setInterval(fetchSheet, 100000);
     return () => clearInterval(intervalId);
   }, [range]);
 

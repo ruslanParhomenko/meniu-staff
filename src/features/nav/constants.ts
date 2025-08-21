@@ -3,22 +3,17 @@ import { BarChart2, LineChart, List, Pause } from "lucide-react";
 export const SIDEBAR_NAVIGATION = [
   {
     title: "schedule",
-    url: "/schedule",
-    url2: "/schedule",
+    url: "/schedule/bar",
+    url2: "/schedule/cucina",
     icon: LineChart,
   },
   {
     title: "report",
-    url: "/report",
-    url2: "/cucina",
+    url: "/report/bar",
+    url2: "report/cucina",
     icon: BarChart2,
   },
-  {
-    title: "reportCucina",
-    url: "/cucina",
-    url2: "/cucina",
-    icon: BarChart2,
-  },
+
   {
     title: "breakList",
     url: "/breakList",

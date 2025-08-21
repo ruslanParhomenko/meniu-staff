@@ -56,7 +56,8 @@
     "absent": "Absent",
     "over": "Ore suplimentare",
     "replacement": "Înlocuire",
-    "intern": "Stagiar"
+    "intern": "Stagiar",
+    "selectMonth": "Alege luna"
   },
   "Auth": {
     "login": "Autentificare",

@@ -1,8 +1,5 @@
 import PageNav from "@/features/nav/PageNav";
-import {
-  ORDER_NAV_ITEMS,
-  ORDER_TTN_NAV_ITEMS,
-} from "@/features/navigation/constants";
+import { ORDER_NAV_ITEMS } from "@/features/navigation/constants";
 
 const OrderLayout = ({ children }: { children: React.ReactNode }) => {
   return (
