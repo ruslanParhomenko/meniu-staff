@@ -1,4 +1,5 @@
 "use client";
+import { usePathname } from "@/i18n/navigation";
 import { useEffect, useState } from "react";
 
 const SHEET_ID = process.env.NEXT_PUBLIC_SHEET_ID;
@@ -8,6 +9,14 @@ export function useSheetData({ range }: { range: string }) {
   const [data, setData] = useState<string[][]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const pathname = usePathname().split("/")[2];
+  console.log(pathname);
+
+  const TABLE_ROWS = {
+    cucina: 12,
+    bar: 22,
+  };
 
   useEffect(() => {
     async function fetchSheet() {
@@ -22,7 +31,8 @@ export function useSheetData({ range }: { range: string }) {
         const json = await response.json();
         const values: string[][] = json.values || [];
 
-        const totalRows = 22;
+        const totalRows =
+          (TABLE_ROWS[pathname as keyof typeof TABLE_ROWS] as number) || 22;
         const totalCols = 36;
 
         const filledData: string[][] = [];
