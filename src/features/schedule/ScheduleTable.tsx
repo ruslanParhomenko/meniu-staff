@@ -23,7 +23,7 @@ export function ScheduleTable({ data }: { data: any }) {
           const hasValueInSelected =
             selectedColumn !== null && row[selectedColumn];
 
-          const noBorderRow = i === 0 || !row[3]; // первая строка + строки без 3-го столбца
+          const noBorderRow = i === 0 || !row[3];
 
           return (
             <TableRow key={i} className="border-0">
@@ -63,7 +63,11 @@ export function ScheduleTable({ data }: { data: any }) {
                   ${noBorderRow ? "" : "border border-gray-200"}
                   ${borderClass}
                   ${isSelected ? "text-blue-600" : ""}
-                  ${j !== 4 && "text-center"}
+                  ${
+                    j === 4
+                      ? "min-w-[30px] sticky left-0 z-10 text-left bg-white/90"
+                      : "text-center"
+                  }
                   ${
                     isHighlighted
                       ? "bg-gray-200 font-bold border border-gray-200 text-red-600"
