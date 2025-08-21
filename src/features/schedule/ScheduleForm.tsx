@@ -77,7 +77,7 @@ export const ScheduleForm = () => {
                 return (
                   <TableRow key={i}>
                     {row.map((cell, j) => {
-                      const isText = j === 4;
+                      const isText = j === 4 || j === 2;
                       const isFirstRow =
                         i === 0 || i === 1 || i === data.length - 1;
                       const isFirstThreeColumns = j < 5;
@@ -106,7 +106,7 @@ export const ScheduleForm = () => {
                               );
                             }
                           }}
-                          className={`
+                          className={` border border-gray-200 
                       ${borderClass} h-9 w-9
                       ${isText ? "text-blue-600" : ""}
                       ${
@@ -114,7 +114,11 @@ export const ScheduleForm = () => {
                           ? "min-w-[40px] sticky left-0 z-10 text-left"
                           : "text-center"
                       }
-                      ${isHighlighted ? "bg-gray-300" : ""}
+                      ${
+                        isHighlighted
+                          ? "bg-gray-300 font-bold text-red-600"
+                          : ""
+                      }
                       ${i === 0 ? "cursor-pointer" : ""}
                       ${shouldEmphasize ? "font-bold text-red-600" : ""}
                     `}
