@@ -11,6 +11,9 @@ export const schemaShift = yup
   )
   .default([{ name: "", time: "", over: "" }]);
 
+export type ReportShiftType = yup.InferType<typeof schemaShift>;
+export const defaultShift: ReportShiftType = schemaShift.getDefault();
+
 export const movementSchema = yup
   .array()
   .of(

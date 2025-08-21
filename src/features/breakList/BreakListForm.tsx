@@ -40,17 +40,24 @@ export type BreakListFormValues = {
 };
 
 export const BreakListForm = () => {
+  const currentHour = new Date().getHours();
+  const currentMinute = new Date().getMinutes();
+
   const { isObserver, isUser } = useAbility();
   const session = useSession();
   const LOCAL_STORAGE_KEY = "breakListFormData";
   const { employees, loading } = useEmployeeSqlData();
 
+  const BAR_EMPLOYEES = ["waiters", "barmen"];
+
   const selectedEmployees = useMemo(
     () =>
-      employees.map((employee) => ({
-        label: employee.name,
-        value: employee.name,
-      })),
+      employees
+        .filter((emp) => BAR_EMPLOYEES.includes(emp.position))
+        .map((employee) => ({
+          label: employee.name,
+          value: employee.name,
+        })),
     [employees]
   );
 
@@ -241,42 +248,39 @@ export const BreakListForm = () => {
               <TableRow>
                 <TableHead />
                 <TableHead />
-                {TIME_LABELS.map((h, i) => (
-                  <TableHead
-                    key={i}
-                    className="text-center text-blue-600 font-bold text-xl"
-                  >
-                    {h}:
-                  </TableHead>
-                ))}
+                {TIME_LABELS.map((h, i) => {
+                  const isCurrentHour = Number(h) === currentHour;
+                  return (
+                    <TableHead
+                      key={i}
+                      className={`text-center text-xl font-bold ${
+                        isCurrentHour ? "text-red-600" : "text-blue-600"
+                      }`}
+                    >
+                      {h}:
+                    </TableHead>
+                  );
+                })}
               </TableRow>
             </TableHeader>
+
             <TableBody>
-              {table.getRowModel().rows.map((row) => {
-                return (
-                  <TableRow key={row.id}>
-                    {row.getVisibleCells().map((cell, index) => {
-                      return (
-                        <TableCell
-                          key={cell.id}
-                          className={
-                            index === 1
-                              ? "sticky left-0 z-10 bg-white md:static"
-                              : ""
-                          }
-                        >
-                          <div style={{ width: cell.column.getSize() }}>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </div>
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
+              {table.getRowModel().rows.map((row, rowIndex) => (
+                <TableRow key={row.id}>
+                  {row.getVisibleCells().map((cell, index) => {
+                    return (
+                      <TableCell key={cell.id}>
+                        <div style={{ width: cell.column.getSize() }}>
+                          {flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext()
+                          )}
+                        </div>
+                      </TableCell>
+                    );
+                  })}
+                </TableRow>
+              ))}
             </TableBody>
           </Table>
 
