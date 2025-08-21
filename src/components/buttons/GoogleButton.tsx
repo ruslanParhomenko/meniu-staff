@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation";
 
 const GoogleButton = () => {
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/report";
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
   return (
     <div className="flex flex-col justify-center items-center h-screen gap-4">
       <button

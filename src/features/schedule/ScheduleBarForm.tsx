@@ -80,6 +80,7 @@ export const ScheduleBarForm = () => {
                 data.map((row, i) => {
                   const hasValueInSelected =
                     selectedColumn !== null && row[selectedColumn];
+                  const noBorderRow = !row[3];
 
                   return (
                     <TableRow key={i}>
@@ -113,7 +114,9 @@ export const ScheduleBarForm = () => {
                                 );
                               }
                             }}
-                            className={` border border-gray-200 h-0!
+                            className={`h-0!${
+                              noBorderRow ? "" : "border border-gray-200 "
+                            }
                       ${borderClass} h-9 w-9
                       ${isText ? "text-blue-600" : ""}
                       ${

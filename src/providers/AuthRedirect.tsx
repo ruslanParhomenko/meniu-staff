@@ -14,7 +14,7 @@ const AuthRedirect = ({ children }: { children: React.ReactNode }) => {
     if (session === undefined) return;
 
     if (session?.user) {
-      router.replace("/report");
+      router.replace("/schedule/bar");
     } else {
       setIsCheckingAuth(true);
     }
