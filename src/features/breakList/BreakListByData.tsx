@@ -49,8 +49,8 @@ export default function BreakListTable({
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>ID</TableHead>
-            <TableHead>Имя</TableHead>
+            <TableHead></TableHead>
+            <TableHead></TableHead>
             {allHours.map((hour: string) => (
               <TableHead key={hour} className="text-center">
                 {hour}

@@ -173,100 +173,11 @@ export const BreakListForm = () => {
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
           {!isObserver && <DatePickerInput fieldName="date" />}
 
-          {/* <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Имя</TableHead>
-                {TIME_LABELS.map((h, i) => {
-                  const isCurrentHour = Number(h) === currentHour;
-                  return (
-                    <TableHead
-                      key={i}
-                      className={`text-center text-xl  ${
-                        isCurrentHour
-                          ? "text-red-600 font-bold text-2xl"
-                          : "text-blue-600"
-                      }`}
-                    >
-                      {h}:
-                    </TableHead>
-                  );
-                })}
-              </TableRow>
-            </TableHeader>
-
-            <TableBody>
-              {form.getValues("rows").map((row, rowIndex) => (
-                <TableRow key={row.id}>
-                  <TableCell>
-                    <input
-                      value={row.id}
-                      disabled
-                      className="w-8 text-center"
-                    />
-                  </TableCell>
-
-                  <TableCell className=" sticky left-0 z-10 text-left bg-white/90">
-                    <SelectField
-                      fieldName={`rows[${rowIndex}].name`}
-                      data={selectedEmployees}
-                      disabled={isObserver}
-                      className="min-w-[100px]!"
-                    />
-                  </TableCell>
-
-                  {TIME_LABELS.map((time, timeIndex) => {
-                    const fieldName = `rows.${rowIndex}.hours.${time}`;
-                    const value = form.getValues(
-                      fieldName as Path<BreakListFormValues>
-                    );
-                    const selectedValue = Array.isArray(value)
-                      ? value[0]
-                      : value;
-
-                    const isCurrentHour = Number(time) === currentHour;
-                    const isCurrentMinute00 = INTERVAL_00.includes(
-                      currentMinute.toLocaleString()
-                    );
-                    const isCurrentMinute20 = INTERVAL_20.includes(
-                      currentMinute.toLocaleString()
-                    );
-                    const isCurrentMinute40 = INTERVAL_40.includes(
-                      currentMinute.toLocaleString()
-                    );
-
-                    const isTrue =
-                      isCurrentHour &&
-                      ((isCurrentMinute00 && value === "00") ||
-                        (isCurrentMinute20 && value === "20") ||
-                        (isCurrentMinute40 && value === "40"));
-                    return (
-                      <TableCell key={timeIndex}>
-                        <SelectField
-                          fieldName={`rows[${rowIndex}].hours.${time}`}
-                          data={MINUTES_SELECT}
-                          disabled={isObserver}
-                          className={`${
-                            isTrue ? "!text-red-600 font-bold text-xl" : ""
-                          }
-                           ${
-                             selectedValue === "X" ? "bg-gray-300" : "bg-white"
-                           } text-center`}
-                        />
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table> */}
-
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>ID</TableHead>
-                <TableHead>Имя</TableHead>
+                <TableHead></TableHead>
+                <TableHead></TableHead>
                 {TIME_LABELS.map((h, i) => {
                   const isCurrentHour = Number(h) === currentHour;
                   return (
@@ -274,7 +185,7 @@ export const BreakListForm = () => {
                       key={i}
                       className={`text-center text-xl ${
                         isCurrentHour
-                          ? "text-red-600 font-bold text-2xl"
+                          ? "text-red-600 font-bold text-xl"
                           : "text-blue-600"
                       }`}
                     >
@@ -287,7 +198,6 @@ export const BreakListForm = () => {
 
             <TableBody>
               {form.getValues("rows").map((row, rowIndex) => {
-                // --- вычисляем, есть ли в строке хотя бы один "isTrue" ---
                 const rowHasTrue = TIME_LABELS.some((time) => {
                   const fieldName = `rows.${rowIndex}.hours.${time}`;
                   const value = form.getValues(
@@ -331,7 +241,7 @@ export const BreakListForm = () => {
                         fieldName={`rows[${rowIndex}].name`}
                         data={selectedEmployees}
                         disabled={isObserver}
-                        className={`min-w-[100px] ${
+                        className={`!min-w-[120px] ${
                           rowHasTrue
                             ? "!text-red-600 font-bold text-[18px]"
                             : ""

@@ -1,19 +1,48 @@
 "use client";
-import { useForm, useFieldArray, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 import { Textarea } from "@/components/ui/textarea";
 import DatePickerInput from "@/components/inputs/DatePickerInput";
 import { Form } from "@/components/ui/form";
-import { defaultReportCucina, ReportCucinaType } from "./schema";
-import { Label } from "@radix-ui/react-dropdown-menu";
+import {
+  defaultProductsCutting,
+  defaultProductsDesserts,
+  defaultProductsSalad,
+  defaultProductsSeconds,
+  defaultRemains,
+  defaultReportCucina,
+  defaultShift,
+  defaultStaff,
+  ReportCucinaType,
+  schemaReportCucina,
+} from "./schema";
 import { SendResetButton } from "@/features/ui/SendResetButton";
-
 import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import {
+  CUCINA_EMPLOYEES,
+  OVER_HOURS,
+  PORTIONS,
+  PRODUCTS_DESSERT,
+  PRODUCTS_INGREDIENTS,
+  PRODUCTS_MEAT,
+  PRODUCTS_MEAT_FISH,
+  PRODUCTS_SALAD,
+  PRODUCTS_STAFF,
+  REASON,
+  REMAINS_PRODUCTS,
+  SELECT_TIME,
+  WEIGTH,
+} from "./constants";
+import { RenderTableByFields } from "./RenderTableByFields";
+import { Label } from "@/components/ui/label";
+import { useTranslations } from "next-intl";
+import { useLocalStorageForm } from "@/hooks/use-local-storage";
 
-import { CUCINA_EMPLOYEES, OVER_HOURS, SELECT_TIME } from "./constants";
-import { RenderEmloyeesTable } from "./renderEmloyeesTable";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function DailyReportForm() {
+  const STORAGE_KEY = "report-cucina";
+  const t = useTranslations("Navigation");
   const { employees } = useEmployeeSqlData();
 
   const selectedEmployees = useMemo(
@@ -24,12 +53,41 @@ export default function DailyReportForm() {
     [employees]
   );
 
+  const {
+    getValue,
+    setValue: setLocalStorage,
+    removeValue,
+  } = useLocalStorageForm<ReportCucinaType>(STORAGE_KEY);
+
   const form = useForm<ReportCucinaType>({
-    defaultValues: defaultReportCucina as ReportCucinaType,
+    defaultValues: {
+      ...(defaultReportCucina as ReportCucinaType),
+      ...getValue(),
+    },
+    resolver: yupResolver(schemaReportCucina),
   });
 
-  const handleSubmit: SubmitHandler<ReportCucinaType> = (data) => {
+  const handleSubmit: SubmitHandler<ReportCucinaType> = async (data) => {
     console.log(data);
+    await fetch("/api/report-cucina/create", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+  };
+
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      setLocalStorage(value as ReportCucinaType);
+    });
+    return () => subscription.unsubscribe();
+  }, [form.watch, setLocalStorage]);
+
+  const resetForm = () => {
+    form.reset(defaultReportCucina);
+
+    removeValue();
+    form.setValue("date", new Date().toDateString());
   };
 
   return (
@@ -38,77 +96,139 @@ export default function DailyReportForm() {
         <div className="w-full md:max-w-[700px] mx-auto">
           <DatePickerInput fieldName="date" />
 
-          <Label className="font-semibold py-4">Смены</Label>
-
-          <RenderEmloyeesTable
+          <RenderTableByFields<ReportCucinaType>
+            name="shifts"
             form={form}
-            employeesArray={selectedEmployees}
-            timeArray={SELECT_TIME}
-            overArray={OVER_HOURS}
+            placeHolder={{
+              field1: "employees",
+              field2: "time",
+              field3: "over",
+            }}
+            dataArrayField1={selectedEmployees}
+            dataArrayField2={SELECT_TIME}
+            dataArrayField3={OVER_HOURS}
+            defaultValue={defaultShift}
           />
 
-          <Label className="font-semibold pt-6">Остатки</Label>
-          {/* {renderArray("leftoversLeft", arrays.leftoversLeft.fields, [
-            "Наименование",
-            "Кол-во",
-          ])} */}
+          <RenderTableByFields<ReportCucinaType>
+            name="remains"
+            form={form}
+            placeHolder={{
+              field1: "product",
+              field2: "portions",
+              field3: "weight",
+            }}
+            dataArrayField1={REMAINS_PRODUCTS}
+            dataArrayField2={PORTIONS}
+            dataArrayField3={WEIGTH}
+            defaultValue={defaultRemains}
+          />
 
-          <Label className="font-semibold pt-6">Приготовлено</Label>
-          <Label>Салаты</Label>
-          {/* {renderArray("preparedSalads", arrays.preparedSalads.fields, [
-            "Наименование",
-            "вес",
-            "порции",
-          ])} */}
+          <RenderTableByFields<ReportCucinaType>
+            name="preparedSalads"
+            form={form}
+            placeHolder={{
+              field1: "product",
+              field2: "portions",
+              field3: "weight",
+            }}
+            dataArrayField1={PRODUCTS_SALAD}
+            dataArrayField2={PORTIONS}
+            dataArrayField3={WEIGTH}
+            defaultValue={defaultProductsSalad}
+          />
 
-          <Label>Вторые</Label>
-          {/* {renderArray("preparedSeconds", arrays.preparedSeconds.fields, [
-            "Наименование",
-            "вес",
-            "порции",
-          ])} */}
+          <RenderTableByFields<ReportCucinaType>
+            name="preparedSeconds"
+            form={form}
+            placeHolder={{
+              field1: "product",
+              field2: "portions",
+              field3: "weight",
+            }}
+            dataArrayField1={PRODUCTS_MEAT}
+            dataArrayField2={PORTIONS}
+            dataArrayField3={WEIGTH}
+            defaultValue={defaultProductsSeconds}
+          />
 
-          <Label>Десерты</Label>
-          {/* {renderArray("preparedDesserts", arrays.preparedDesserts.fields, [
-            "Наименование",
-            "вес",
-            "порции",
-          ])} */}
+          <RenderTableByFields<ReportCucinaType>
+            name="preparedDesserts"
+            form={form}
+            placeHolder={{
+              field1: "product",
+              field2: "portions",
+              field3: "weight",
+            }}
+            dataArrayField1={PRODUCTS_DESSERT}
+            dataArrayField2={PORTIONS}
+            dataArrayField3={WEIGTH}
+            defaultValue={defaultProductsDesserts}
+          />
 
-          <Label className="font-semibold pt-6">Разделка</Label>
+          <RenderTableByFields<ReportCucinaType>
+            name="cutting"
+            form={form}
+            placeHolder={{
+              field1: "product",
+              field2: "",
+              field3: "weight",
+            }}
+            dataArrayField1={PRODUCTS_MEAT_FISH}
+            dataArrayField2={[]}
+            dataArrayField3={WEIGTH}
+            defaultValue={defaultProductsCutting}
+          />
 
-          {/* {renderArray("cuttingLeft", arrays.cuttingLeft.fields, [
-            "Наименование",
-            "вес",
-          ])} */}
+          <RenderTableByFields<ReportCucinaType>
+            name="staff"
+            form={form}
+            placeHolder={{
+              field1: "product",
+              field2: "portions",
+              field3: "weight",
+            }}
+            dataArrayField1={PRODUCTS_STAFF}
+            dataArrayField2={PORTIONS}
+            dataArrayField3={WEIGTH}
+            defaultValue={defaultStaff}
+          />
 
-          <Label className="font-semibold pt-6">Питание стаф</Label>
-          {/* {renderArray("staffMeals", arrays.staffMeals.fields, [
-            "Наименование",
-            "вес",
-            "порции",
-          ])} */}
+          <RenderTableByFields<ReportCucinaType>
+            name="movement"
+            form={form}
+            placeHolder={{
+              field1: "nameOutside",
+              field2: "nameInside",
+              field3: "weight",
+            }}
+            dataArrayField1={PRODUCTS_INGREDIENTS}
+            dataArrayField2={PRODUCTS_INGREDIENTS}
+            dataArrayField3={WEIGTH}
+            defaultValue={defaultStaff}
+          />
 
-          <Label className="font-semibold pt-6">Перемещение</Label>
-          {/* {renderArray("movement", arrays.movement.fields, [
-            "в ...",
-            "... из",
-            "кол-во",
-          ])} */}
-
-          <Label className="font-semibold pt-6">Списание</Label>
-          {/* {renderArray("writeOff", arrays.writeOff.fields, [
-            "Наименование",
-            "Кол-во",
-            "Причина",
-          ])} */}
-
-          <Label className="font-semibold pt-6">Заметки</Label>
+          <RenderTableByFields<ReportCucinaType>
+            name="writeOff"
+            form={form}
+            placeHolder={{
+              field1: "product",
+              field2: "weight",
+              field3: "reason",
+            }}
+            dataArrayField1={PRODUCTS_INGREDIENTS}
+            dataArrayField2={WEIGTH}
+            dataArrayField3={REASON}
+            defaultValue={defaultProductsSeconds}
+          />
+          <Label className="font-semibold py-4 text-md text-blue-600">
+            {t("notes")}
+          </Label>
           <Textarea
             placeholder="Введите текст..."
             {...form.register("notes")}
           />
-          <SendResetButton resetForm={form.reset} />
+          <SendResetButton resetForm={resetForm} />
         </div>
       </form>
     </Form>

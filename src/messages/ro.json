@@ -57,7 +57,17 @@
     "over": "Ore suplimentare",
     "replacement": "Înlocuire",
     "intern": "Stagiar",
-    "selectMonth": "Alege luna"
+    "selectMonth": "Alege luna",
+    "shifts": "Schimburi",
+    "remains": "Rămășițe",
+    "preparedSalads": "Salate preparate",
+    "preparedSeconds": "Feluri principale preparate",
+    "preparedDesserts": "Deserturi preparate",
+    "cutting": "Tăiere",
+    "staff": "Personal",
+    "movement": "Mișcare",
+    "writeOff": "Casare",
+    "notes": "Note"
   },
   "Auth": {
     "login": "Autentificare",

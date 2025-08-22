@@ -41,6 +41,7 @@
   "Navigation": {
     "schedule": "График",
     "report": "Отчет",
+    "reportCucina": "Отчет кухни",
     "breakList": "Брэйк-лист",
     "ordersList": "Заказ TTN",
     "orderListBar": "Заказ БАР",
@@ -56,7 +57,17 @@
     "over": "Сверхурочно",
     "replacement": "Замена",
     "intern": "Стажёр",
-    "selectMonth": "Выберите месяц"
+    "selectMonth": "Выберите месяц",
+    "shifts": "Смены",
+    "remains": "Остатки",
+    "preparedSalads": "Салаты",
+    "preparedSeconds": "Вторые блюда",
+    "preparedDesserts": "Десерты",
+    "cutting": "Разделка",
+    "staff": "Персонал",
+    "movement": "Движение",
+    "writeOff": "Списание",
+    "notes": "Заметки"
   },
   "Auth": {
     "login": "Вход",

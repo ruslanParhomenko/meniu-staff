@@ -1,39 +1,6 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
-interface CashVerify {
-  id: number;
-  hours: string;
-  value: string;
-  reportId: number;
-}
-
-interface Tobacco {
-  id: number;
-  name: string;
-  stock: number;
-  incoming: number | null;
-  outgoing: number | null;
-  finalStock: string;
-  reportId: number;
-}
-
-interface Expense {
-  id: number;
-  name: string;
-  sum: number | string;
-  reportId: number;
-}
-
-interface Report {
-  id: number;
-  date: string;
-  total: number;
-  cashVerify: CashVerify[];
-  tobacco: Tobacco[];
-  expenses: Expense[];
-}
-
-export const useReportListById = (id: number) => {
+export const useReportCucinaListById = (id: number) => {
   const [report, setReport] = useState<Report | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -46,7 +13,7 @@ export const useReportListById = (id: number) => {
       setError(null);
 
       try {
-        const res = await fetch(`/api/report/${id}`);
+        const res = await fetch(`/api/report-cucina/${id}`);
         if (!res.ok) {
           throw new Error("Failed to fetch report");
         }
