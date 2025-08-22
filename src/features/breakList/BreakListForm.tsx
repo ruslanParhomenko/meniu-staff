@@ -289,8 +289,9 @@ export const BreakListForm = () => {
               {form.getValues("rows").map((row, rowIndex) => {
                 // --- вычисляем, есть ли в строке хотя бы один "isTrue" ---
                 const rowHasTrue = TIME_LABELS.some((time) => {
+                  const fieldName = `rows.${rowIndex}.hours.${time}`;
                   const value = form.getValues(
-                    `rows.${rowIndex}.hours.${time}`
+                    fieldName as Path<BreakListFormValues>
                   );
                   const selectedValue = Array.isArray(value) ? value[0] : value;
 
