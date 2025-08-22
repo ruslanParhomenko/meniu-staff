@@ -6,3 +6,6 @@ ignoredBuiltDependencies:
   - prisma
   - sharp
   - unrs-resolver
+
+onlyBuiltDependencies:
+  - '@vercel/speed-insights'
