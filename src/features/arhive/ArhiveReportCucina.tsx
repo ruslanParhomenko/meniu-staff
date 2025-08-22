@@ -8,8 +8,6 @@ export const ArhiveReportCucinaListTable = ({ data }: { data: any }) => {
 
   const { report } = useReportCucinaListById(id);
 
-  console.log(report);
-
   return (
     <>
       <div className="md:w-1/4 w-full py-4">

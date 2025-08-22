@@ -15,75 +15,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
-interface Reportreport {
-  id: number;
-  date: string;
-  notes: string | null;
-  shifts: {
-    id: number;
-    name: string;
-    time: string;
-    over: string;
-    employees: string;
-    reportId: number;
-  }[];
-  remains: {
-    id: number;
-    product: string;
-    portions: string;
-    weight: string;
-    reportId: number;
-  }[];
-  preparedSalads: {
-    id: number;
-    product: string;
-    portions: string;
-    weight: string;
-    reportId: number;
-  }[];
-  preparedSeconds: {
-    id: number;
-    product: string;
-    portions: string;
-    weight: string;
-    reportId: number;
-  }[];
-  preparedDesserts: {
-    id: number;
-    product: string;
-    portions: string;
-    weight: string;
-    reportId: number;
-  }[];
-  cutting: { id: number; product: string; weight: string; reportId: number }[];
-  staff: {
-    id: number;
-    product: string;
-    portions: string;
-    weight: string;
-    reportId: number;
-  }[];
-  movement: {
-    id: number;
-    nameOutside: string;
-    nameInside: string;
-    weight: string;
-    reportId: number;
-  }[];
-  writeOff: {
-    id: number;
-    product: string;
-    weight: string;
-    reason: string;
-    reportId: number;
-  }[];
-}
-
-interface Props {
-  report: Reportreport;
-}
-
-export default function ReportTable({ report }: Props) {
+export default function ReportTable({ report }: any) {
   return (
     <div className="space-y-6">
       <h2 className="text-lg font-semibold">
@@ -106,7 +38,7 @@ export default function ReportTable({ report }: Props) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {report.shifts.map((shift) => (
+                {report.shifts.map((shift: any) => (
                   <TableRow key={shift.id}>
                     <TableCell>{shift.name}</TableCell>
                     <TableCell>{shift.time}</TableCell>
@@ -132,7 +64,7 @@ export default function ReportTable({ report }: Props) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {report.remains.map((item) => (
+                {report.remains.map((item: any) => (
                   <TableRow key={item.id}>
                     <TableCell>{item.product}</TableCell>
                     <TableCell>{item.portions}</TableCell>
@@ -157,7 +89,7 @@ export default function ReportTable({ report }: Props) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {report.preparedSalads.map((item) => (
+                {report.preparedSalads.map((item: any) => (
                   <TableRow key={item.id}>
                     <TableCell>{item.product}</TableCell>
                     <TableCell>{item.portions}</TableCell>
@@ -182,7 +114,7 @@ export default function ReportTable({ report }: Props) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {report.preparedSeconds.map((item) => (
+                {report.preparedSeconds.map((item: any) => (
                   <TableRow key={item.id}>
                     <TableCell>{item.product}</TableCell>
                     <TableCell>{item.portions}</TableCell>
@@ -207,7 +139,7 @@ export default function ReportTable({ report }: Props) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {report.preparedDesserts.map((item) => (
+                {report.preparedDesserts.map((item: any) => (
                   <TableRow key={item.id}>
                     <TableCell>{item.product}</TableCell>
                     <TableCell>{item.portions}</TableCell>
@@ -231,7 +163,7 @@ export default function ReportTable({ report }: Props) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {report.cutting.map((item) => (
+                {report.cutting.map((item: any) => (
                   <TableRow key={item.id}>
                     <TableCell>{item.product}</TableCell>
                     <TableCell>{item.weight}</TableCell>
@@ -255,7 +187,7 @@ export default function ReportTable({ report }: Props) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {report.staff.map((item) => (
+                {report.staff.map((item: any) => (
                   <TableRow key={item.id}>
                     <TableCell>{item.product}</TableCell>
                     <TableCell>{item.portions}</TableCell>
@@ -280,7 +212,7 @@ export default function ReportTable({ report }: Props) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {report.movement.map((item) => (
+                {report.movement.map((item: any) => (
                   <TableRow key={item.id}>
                     <TableCell>{item.nameOutside}</TableCell>
                     <TableCell>{item.nameInside}</TableCell>
@@ -305,7 +237,7 @@ export default function ReportTable({ report }: Props) {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {report.writeOff.map((item) => (
+                {report.writeOff.map((item: any) => (
                   <TableRow key={item.id}>
                     <TableCell>{item.product}</TableCell>
                     <TableCell>{item.weight}</TableCell>
