@@ -1,12 +1,26 @@
 "use client";
 
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  ColumnDef,
-} from "@tanstack/react-table";
+import { useEffect, useMemo } from "react";
+import { useForm, SubmitHandler, Path } from "react-hook-form";
+import toast from "react-hot-toast";
 
+import { Form } from "../../components/ui/form";
+import DatePickerInput from "@/components/inputs/DatePickerInput";
+import { SendResetButton } from "../ui/SendResetButton";
+
+import {
+  BREAK_LIST_DEFAULT,
+  BreakListItem,
+  INTERVAL_00,
+  INTERVAL_20,
+  INTERVAL_40,
+  MINUTES_SELECT,
+  TIME_LABELS,
+} from "./constant";
+import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
+import { useAbility } from "@/providers/AbilityProvider";
+import { useSession } from "next-auth/react";
+import { USER_EMAIL_FETCH_DATA } from "@/constants/emailUserFetchData";
 import {
   Table,
   TableBody,
@@ -15,24 +29,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-import { Form } from "../../components/ui/form";
-import SelectInput from "../../components/inputs/SelectInput";
-import { SubmitHandler, useForm } from "react-hook-form";
-import {
-  BREAK_LIST_DEFAULT,
-  BreakListItem,
-  MINUTES_SELECT,
-  TIME_LABELS,
-} from "./constant";
-import { useEffect, useMemo } from "react";
-import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
-import DatePickerInput from "@/components/inputs/DatePickerInput";
-import toast from "react-hot-toast";
-import { useAbility } from "@/providers/AbilityProvider";
-import { SendResetButton } from "../ui/SendResetButton";
-import { useSession } from "next-auth/react";
-import { USER_EMAIL_FETCH_DATA } from "@/constants/emailUserFetchData";
+import SelectField from "@/components/inputs/SelectField";
 
 export type BreakListFormValues = {
   date?: Date;
@@ -54,91 +51,10 @@ export const BreakListForm = () => {
     () =>
       employees
         .filter((emp) => BAR_EMPLOYEES.includes(emp.position))
-        .map((employee) => ({
-          label: employee.name,
-          value: employee.name,
-        })),
+        .map((employee) => employee.name),
     [employees]
   );
 
-  const columns: ColumnDef<BreakListItem>[] = [
-    {
-      accessorKey: "id",
-      size: 14,
-      minSize: 14,
-      maxSize: 14,
-      cell: (info) => (
-        <input
-          name={`rows[${info.row.index}][id]`}
-          value={info.getValue() as string}
-          disabled
-        />
-      ),
-    },
-    {
-      accessorKey: "name",
-      size: 160,
-      minSize: 160,
-      maxSize: 160,
-      cell: ({ row }) => (
-        <SelectInput
-          fieldName={`rows[${row.index}][name]`}
-          fieldLabel=""
-          data={selectedEmployees}
-          disabled={isObserver}
-        />
-      ),
-    },
-    ...TIME_LABELS.map((time) => ({
-      accessorKey: time,
-      header: time,
-      cell: ({
-        row,
-      }: {
-        row: import("@tanstack/react-table").Row<BreakListItem>;
-      }) => {
-        return (
-          <SelectInput
-            fieldName={`rows[${row.index}][hours][${time}]`}
-            fieldLabel=""
-            data={MINUTES_SELECT}
-            disabled={isObserver}
-          />
-        );
-      },
-    })),
-  ];
-
-  const table = useReactTable({
-    data: BREAK_LIST_DEFAULT,
-    columns,
-    columnResizeMode: "onChange",
-    getCoreRowModel: getCoreRowModel(),
-    defaultColumn: {
-      size: 40,
-      minSize: 40,
-      maxSize: 40,
-    },
-  });
-  const handleSubmit: SubmitHandler<BreakListFormValues> = async (data) => {
-    if (!data.date) {
-      toast.error("Дата не выбрана");
-      return;
-    }
-    try {
-      await fetch("/api/breakList", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          date: data.date,
-          rows: data.rows,
-        }),
-      });
-      toast.success("Брейк-лист успешно сохранён !");
-    } catch (e) {
-      toast.error("Ошибка при сохранении брейк-листа");
-    }
-  };
   const savedData =
     typeof window !== "undefined"
       ? localStorage.getItem(LOCAL_STORAGE_KEY)
@@ -155,14 +71,32 @@ export const BreakListForm = () => {
       })),
     },
   });
+
   const watchAllFields = form.watch();
+
   useEffect(() => {
     if (!watchAllFields) return;
-
     try {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(watchAllFields));
     } catch (error) {}
   }, [watchAllFields]);
+
+  const handleSubmit: SubmitHandler<BreakListFormValues> = async (data) => {
+    if (!data.date) {
+      toast.error("Дата не выбрана");
+      return;
+    }
+    try {
+      await fetch("/api/breakList", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ date: data.date, rows: data.rows }),
+      });
+      toast.success("Брейк-лист успешно сохранён !");
+    } catch (e) {
+      toast.error("Ошибка при сохранении брейк-листа");
+    }
+  };
 
   const resetForm = () => {
     form.reset({
@@ -175,35 +109,6 @@ export const BreakListForm = () => {
     });
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   };
-  //send supabase
-  useEffect(() => {
-    const sendDataToApi = async () => {
-      const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (!localData) return;
-      if (!isUser) return;
-
-      try {
-        const res = await fetch("/api/break-list-realtime", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user_email: session?.data?.user?.email,
-            form_data: JSON.parse(localData),
-          }),
-        });
-
-        const result = await res.json();
-        if (result.error) {
-          console.error("Sync error:", result.error);
-        }
-      } catch (err) {
-        console.error("Request error:", err);
-      }
-    };
-
-    const timeout = setTimeout(sendDataToApi, 500);
-    return () => clearTimeout(timeout);
-  }, [watchAllFields]);
 
   const fetchSupabaseData = async () => {
     try {
@@ -223,7 +128,6 @@ export const BreakListForm = () => {
             hours: row.hours,
           })),
         });
-
         localStorage.setItem(
           LOCAL_STORAGE_KEY,
           JSON.stringify(userData.form_data)
@@ -234,27 +138,55 @@ export const BreakListForm = () => {
     }
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    const sendDataToApi = async () => {
+      const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (!localData) return;
+      if (!isUser) return;
+
+      try {
+        const res = await fetch("/api/break-list-realtime", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_email: session?.data?.user?.email,
+            form_data: JSON.parse(localData),
+          }),
+        });
+
+        const result = await res.json();
+        if (result.error) console.error("Sync error:", result.error);
+      } catch (err) {
+        console.error("Request error:", err);
+      }
+    };
+
+    const timeout = setTimeout(sendDataToApi, 500);
+    return () => clearTimeout(timeout);
+  }, [watchAllFields]);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
           {!isObserver && <DatePickerInput fieldName="date" />}
-          <Table>
+
+          {/* <Table>
             <TableHeader>
               <TableRow>
-                <TableHead />
-                <TableHead />
+                <TableHead>ID</TableHead>
+                <TableHead>Имя</TableHead>
                 {TIME_LABELS.map((h, i) => {
                   const isCurrentHour = Number(h) === currentHour;
                   return (
                     <TableHead
                       key={i}
-                      className={`text-center text-xl font-bold ${
-                        isCurrentHour ? "text-red-600" : "text-blue-600"
+                      className={`text-center text-xl  ${
+                        isCurrentHour
+                          ? "text-red-600 font-bold text-2xl"
+                          : "text-blue-600"
                       }`}
                     >
                       {h}:
@@ -265,22 +197,191 @@ export const BreakListForm = () => {
             </TableHeader>
 
             <TableBody>
-              {table.getRowModel().rows.map((row, rowIndex) => (
+              {form.getValues("rows").map((row, rowIndex) => (
                 <TableRow key={row.id}>
-                  {row.getVisibleCells().map((cell, index) => {
+                  <TableCell>
+                    <input
+                      value={row.id}
+                      disabled
+                      className="w-8 text-center"
+                    />
+                  </TableCell>
+
+                  <TableCell className=" sticky left-0 z-10 text-left bg-white/90">
+                    <SelectField
+                      fieldName={`rows[${rowIndex}].name`}
+                      data={selectedEmployees}
+                      disabled={isObserver}
+                      className="min-w-[100px]!"
+                    />
+                  </TableCell>
+
+                  {TIME_LABELS.map((time, timeIndex) => {
+                    const fieldName = `rows.${rowIndex}.hours.${time}`;
+                    const value = form.getValues(
+                      fieldName as Path<BreakListFormValues>
+                    );
+                    const selectedValue = Array.isArray(value)
+                      ? value[0]
+                      : value;
+
+                    const isCurrentHour = Number(time) === currentHour;
+                    const isCurrentMinute00 = INTERVAL_00.includes(
+                      currentMinute.toLocaleString()
+                    );
+                    const isCurrentMinute20 = INTERVAL_20.includes(
+                      currentMinute.toLocaleString()
+                    );
+                    const isCurrentMinute40 = INTERVAL_40.includes(
+                      currentMinute.toLocaleString()
+                    );
+
+                    const isTrue =
+                      isCurrentHour &&
+                      ((isCurrentMinute00 && value === "00") ||
+                        (isCurrentMinute20 && value === "20") ||
+                        (isCurrentMinute40 && value === "40"));
                     return (
-                      <TableCell key={cell.id}>
-                        <div style={{ width: cell.column.getSize() }}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
-                        </div>
+                      <TableCell key={timeIndex}>
+                        <SelectField
+                          fieldName={`rows[${rowIndex}].hours.${time}`}
+                          data={MINUTES_SELECT}
+                          disabled={isObserver}
+                          className={`${
+                            isTrue ? "!text-red-600 font-bold text-xl" : ""
+                          }
+                           ${
+                             selectedValue === "X" ? "bg-gray-300" : "bg-white"
+                           } text-center`}
+                        />
                       </TableCell>
                     );
                   })}
                 </TableRow>
               ))}
+            </TableBody>
+          </Table> */}
+
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>ID</TableHead>
+                <TableHead>Имя</TableHead>
+                {TIME_LABELS.map((h, i) => {
+                  const isCurrentHour = Number(h) === currentHour;
+                  return (
+                    <TableHead
+                      key={i}
+                      className={`text-center text-xl ${
+                        isCurrentHour
+                          ? "text-red-600 font-bold text-2xl"
+                          : "text-blue-600"
+                      }`}
+                    >
+                      {h}:
+                    </TableHead>
+                  );
+                })}
+              </TableRow>
+            </TableHeader>
+
+            <TableBody>
+              {form.getValues("rows").map((row, rowIndex) => {
+                // --- вычисляем, есть ли в строке хотя бы один "isTrue" ---
+                const rowHasTrue = TIME_LABELS.some((time) => {
+                  const value = form.getValues(
+                    `rows.${rowIndex}.hours.${time}`
+                  );
+                  const selectedValue = Array.isArray(value) ? value[0] : value;
+
+                  const isCurrentHour = Number(time) === currentHour;
+                  const isCurrentMinute00 = INTERVAL_00.includes(
+                    currentMinute.toLocaleString()
+                  );
+                  const isCurrentMinute20 = INTERVAL_20.includes(
+                    currentMinute.toLocaleString()
+                  );
+                  const isCurrentMinute40 = INTERVAL_40.includes(
+                    currentMinute.toLocaleString()
+                  );
+
+                  return (
+                    isCurrentHour &&
+                    ((isCurrentMinute00 && selectedValue === "00") ||
+                      (isCurrentMinute20 && selectedValue === "20") ||
+                      (isCurrentMinute40 && selectedValue === "40"))
+                  );
+                });
+
+                return (
+                  <TableRow key={row.id}>
+                    <TableCell>
+                      <input
+                        value={row.id}
+                        disabled
+                        className="w-8 text-center"
+                      />
+                    </TableCell>
+
+                    <TableCell
+                      className={`sticky left-0 z-10 text-left bg-white/90 `}
+                    >
+                      <SelectField
+                        fieldName={`rows[${rowIndex}].name`}
+                        data={selectedEmployees}
+                        disabled={isObserver}
+                        className={`min-w-[100px] ${
+                          rowHasTrue
+                            ? "!text-red-600 font-bold text-[18px]"
+                            : ""
+                        }`}
+                      />
+                    </TableCell>
+
+                    {TIME_LABELS.map((time, timeIndex) => {
+                      const fieldName = `rows.${rowIndex}.hours.${time}`;
+                      const value = form.getValues(
+                        fieldName as Path<BreakListFormValues>
+                      );
+                      const selectedValue = Array.isArray(value)
+                        ? value[0]
+                        : value;
+
+                      const isCurrentHour = Number(time) === currentHour;
+                      const isCurrentMinute00 = INTERVAL_00.includes(
+                        currentMinute.toLocaleString()
+                      );
+                      const isCurrentMinute20 = INTERVAL_20.includes(
+                        currentMinute.toLocaleString()
+                      );
+                      const isCurrentMinute40 = INTERVAL_40.includes(
+                        currentMinute.toLocaleString()
+                      );
+
+                      const isTrue =
+                        isCurrentHour &&
+                        ((isCurrentMinute00 && selectedValue === "00") ||
+                          (isCurrentMinute20 && selectedValue === "20") ||
+                          (isCurrentMinute40 && selectedValue === "40"));
+
+                      return (
+                        <TableCell key={timeIndex}>
+                          <SelectField
+                            fieldName={`rows[${rowIndex}].hours.${time}`}
+                            data={MINUTES_SELECT}
+                            disabled={isObserver}
+                            className={`${
+                              isTrue ? "!text-red-600 font-bold text-xl" : ""
+                            } ${
+                              selectedValue === "X" ? "bg-gray-300" : "bg-white"
+                            } text-center`}
+                          />
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
 
@@ -288,7 +389,6 @@ export const BreakListForm = () => {
             resetForm={resetForm}
             fetchData={fetchSupabaseData}
           />
-          <div className="flex justify-end items-center w-full   "></div>
         </form>
       </Form>
     </div>

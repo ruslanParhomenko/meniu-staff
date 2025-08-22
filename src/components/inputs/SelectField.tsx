@@ -20,9 +20,16 @@ type Props = {
   placeHolder?: string;
   data: string[];
   disabled?: boolean;
+  className?: string;
 };
 
-function SelectField({ fieldName, placeHolder, data, disabled }: Props) {
+function SelectField({
+  fieldName,
+  placeHolder,
+  data,
+  disabled,
+  className,
+}: Props) {
   const { control } = useFormContext();
 
   const options = data.map((item) => ({ label: item, value: item }));
@@ -45,7 +52,7 @@ function SelectField({ fieldName, placeHolder, data, disabled }: Props) {
                 <FormControl className="w-full">
                   <SelectTrigger
                     data-placeholder=""
-                    className="flex justify-center min-w-12  text-base [&>svg]:hidden"
+                    className={`${className} flex justify-center min-w-12   [&>svg]:hidden`}
                   >
                     <SelectValue placeholder={placeHolder} />
                   </SelectTrigger>

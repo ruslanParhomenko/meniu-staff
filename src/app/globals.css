@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* @import "tailwindcss/preflight"; */
+
+@tailwind utilities;
+
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -112,7 +116,7 @@
   --foreground: #21212b; /* oklch(0.13 0.028 261.692) */
 }
 
-.dark {
+/* .dark {
   --background: oklch(0.13 0.028 261.692);
   --foreground: oklch(0.985 0.002 247.839);
   --card: oklch(0.21 0.034 264.665);
@@ -144,6 +148,39 @@
   --sidebar-accent-foreground: oklch(0.985 0.002 247.839);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
+} */
+.dark {
+  --background: #21212b;
+  --foreground: #f9fafb;
+  --card: #4c51bf;
+  --card-foreground: #f9fafb;
+  --popover: #4c51bf;
+  --popover-foreground: #f9fafb;
+  --primary: #ededef; /* заменяем светлый цвет для контраста */
+  --primary-foreground: #4c51bf;
+  --secondary: #475569;
+  --secondary-foreground: #f9fafb;
+  --muted: #475569;
+  --muted-foreground: #818cf8;
+  --accent: #475569;
+  --accent-foreground: #f9fafb;
+  --destructive: #b91c1c;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.15);
+  --ring: #818cf8;
+  --chart-1: #3cb371;
+  --chart-2: #4682f4;
+  --chart-3: #fbbf24;
+  --chart-4: #9876f0;
+  --chart-5: #a52a2a;
+  --sidebar: #4c51bf;
+  --sidebar-foreground: #f9fafb;
+  --sidebar-primary: #3cb371;
+  --sidebar-primary-foreground: #f9fafb;
+  --sidebar-accent: #475569;
+  --sidebar-accent-foreground: #f9fafb;
+  --sidebar-border: rgba(255, 255, 255, 0.1);
+  --sidebar-ring: #818cf8;
 }
 
 @layer base {
