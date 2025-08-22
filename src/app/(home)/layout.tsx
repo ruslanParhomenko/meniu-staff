@@ -1,5 +1,6 @@
 import SidebarNav from "@/features/nav/SidebarNav";
 import { SidebarProvider } from "@/components/ui/sidebar";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const NavPage = ({
   children,
@@ -11,7 +12,10 @@ const NavPage = ({
       <SidebarProvider>
         <SidebarNav />
         <section className="h-full w-full p-2 px-4">
-          <div className="rounded-2xl bg-white py-4  px-2 ">{children}</div>
+          <div className="rounded-2xl bg-white py-4  px-2 ">
+            {children}
+            <SpeedInsights />
+          </div>
         </section>
       </SidebarProvider>
     </div>
