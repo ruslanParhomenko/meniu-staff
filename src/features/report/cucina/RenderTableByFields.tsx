@@ -14,6 +14,7 @@ import { Separator } from "@radix-ui/react-separator";
 import { useAbility } from "@/providers/AbilityProvider";
 import dynamic from "next/dynamic";
 import { ReportCucinaType } from "./schema";
+import SelectFieldWithSearch from "@/components/inputs/SelectWithSearch";
 
 type RenderEmployeesTableProps = {
   name: ArrayPath<ReportCucinaType>;
@@ -53,7 +54,7 @@ const RenderTable = <T extends FieldValues>({
         <div key={field.id} className="flex items-center py-1">
           <div className="grid grid-cols-[40%_25%_15%] gap-1 md:grid-cols-[50%_20%_15%] md:gap-3 w-full ">
             {field1 && (
-              <SelectField
+              <SelectFieldWithSearch
                 fieldName={`${name}.${index}.${field1}`}
                 data={dataArrayField1}
                 placeHolder={field1 ? t(field1) : ""}
