@@ -7,7 +7,12 @@
     "cancel": " Anuleaza",
     "delete": "Sterge",
     "send": "Trimite",
-    "reset": "Reseteaza"
+    "reset": "Reseteaza",
+    "confirmSave": "Confirma Salvarea",
+    "confirmDelete": "Confirma Stergerea",
+    "confirmSend": "Confirma Trimiterea",
+    "confirmReset": "Confirma Resetearea",
+    "confirm": "Confirma"
   },
   "Language": {
     "romanian": "Romana",
