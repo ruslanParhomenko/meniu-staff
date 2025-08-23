@@ -27,6 +27,7 @@ import {
   PRODUCTS_MEAT,
   PRODUCTS_MEAT_FISH,
   PRODUCTS_SALAD,
+  PRODUCTS_SEMIFINISHED,
   PRODUCTS_STAFF,
   REASON,
   REMAINS_PRODUCTS,
@@ -176,7 +177,7 @@ export default function DailyReportForm() {
               field2: "",
               field3: "weight",
             }}
-            dataArrayField1={PRODUCTS_MEAT_FISH}
+            dataArrayField1={[...PRODUCTS_MEAT_FISH, ...PRODUCTS_SEMIFINISHED]}
             dataArrayField2={[]}
             dataArrayField3={WEIGTH}
             defaultValue={defaultProductsCutting}
