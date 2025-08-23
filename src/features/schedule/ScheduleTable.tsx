@@ -1,7 +1,9 @@
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { useEffect, useState } from "react";
+import { useSheetData } from "@/hooks/use-schedule-data-google";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
-export function ScheduleTable({ data }: { data: any }) {
+export function ScheduleTable({ dataRange }: { dataRange: any }) {
+  const { data } = useSheetData({ range: dataRange as string });
   const [selectedColumn, setSelectedColumn] = useState<number | null>(null);
   const todayDay = new Date().getDate();
 

@@ -138,7 +138,10 @@ export type ReportWriteOffType = yup.InferType<typeof writeOffSchema>;
 export const defaultWriteOff: ReportWriteOffType = writeOffSchema.getDefault();
 // form schema
 export const schemaReportCucina = yup.object({
-  date: yup.string().nullable().default(""),
+  date: yup
+    .string()
+    .required("Date is required")
+    .default(new Date().toString()),
   shifts: schemaShift,
   remains: remainsSchema,
 

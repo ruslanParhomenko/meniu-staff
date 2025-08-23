@@ -1,3 +1,4 @@
+"use client";
 import {
   ArrayPath,
   FieldValues,
@@ -10,12 +11,13 @@ import { AddRemomeFieldsButton } from "@/features/ui/AddRemomeFieldsButton";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
 import { Separator } from "@radix-ui/react-separator";
-import { use } from "react";
 import { useAbility } from "@/providers/AbilityProvider";
+import dynamic from "next/dynamic";
+import { ReportCucinaType } from "./schema";
 
-type RenderEmployeesTableProps<T extends FieldValues> = {
-  name: ArrayPath<T>;
-  form: UseFormReturn<T>;
+type RenderEmployeesTableProps = {
+  name: ArrayPath<ReportCucinaType>;
+  form: UseFormReturn<ReportCucinaType>;
   placeHolder: {
     field1: string;
     field2: string;
@@ -27,7 +29,7 @@ type RenderEmployeesTableProps<T extends FieldValues> = {
   dataArrayField3: string[];
   defaultValue: {};
 };
-export const RenderTableByFields = <T extends FieldValues>({
+const RenderTable = <T extends FieldValues>({
   name,
   form,
   placeHolder,
@@ -35,18 +37,18 @@ export const RenderTableByFields = <T extends FieldValues>({
   dataArrayField2,
   dataArrayField3,
   defaultValue,
-}: RenderEmployeesTableProps<T>) => {
+}: RenderEmployeesTableProps) => {
   const t = useTranslations("Navigation");
   const fieldsArray = useFieldArray({ control: form.control, name: name });
   const { isObserver } = useAbility();
 
   const { field1, field2, field3 } = placeHolder;
   return (
-    <div className="pt-4">
+    <div className="pt-6">
       <Label className="font-semibold py-2 text-md text-blue-600">
-        {t(name as string)}
+        {t(name as string)} :
       </Label>
-      <Separator className="py-px  bg-blue-600" />
+      <Separator className="py-px my-1  bg-blue-600" />
       {fieldsArray.fields.map((field, index) => (
         <div key={field.id} className="flex items-center py-1">
           <div className="grid grid-cols-[40%_25%_15%] gap-1 md:grid-cols-[50%_20%_15%] md:gap-3 w-full ">
@@ -54,7 +56,7 @@ export const RenderTableByFields = <T extends FieldValues>({
               <SelectField
                 fieldName={`${name}.${index}.${field1}`}
                 data={dataArrayField1}
-                placeHolder={field1}
+                placeHolder={field1 ? t(field1) : ""}
                 disabled={isObserver}
                 className="!text-gray-800"
               />
@@ -63,7 +65,7 @@ export const RenderTableByFields = <T extends FieldValues>({
               <SelectField
                 fieldName={`${name}.${index}.${field2}`}
                 data={dataArrayField2}
-                placeHolder={field2}
+                placeHolder={field2 ? t(field2) : ""}
                 disabled={isObserver}
                 className="!text-gray-800"
               />
@@ -72,7 +74,7 @@ export const RenderTableByFields = <T extends FieldValues>({
               <SelectField
                 fieldName={`${name}.${index}.${field3}`}
                 data={dataArrayField3}
-                placeHolder={field3}
+                placeHolder={field3 ? t(field3) : ""}
                 disabled={isObserver}
                 className="!text-gray-800"
               />
@@ -91,3 +93,10 @@ export const RenderTableByFields = <T extends FieldValues>({
     </div>
   );
 };
+
+export const RenderTableByFields = dynamic(() => Promise.resolve(RenderTable), {
+  ssr: false,
+  loading: () => (
+    <div className="text-center h-10 text-4xl text-blue-800">...</div>
+  ),
+});

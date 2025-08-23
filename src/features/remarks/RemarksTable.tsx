@@ -96,21 +96,14 @@ export default function RemarksTable() {
         body: JSON.stringify(data),
       });
 
-      if (!res.ok) {
-        throw new Error("Ошибка при создании отчета");
-      }
-
       toast.success("Отчет успешно создан");
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) {}
   };
 
   const watchAllFields = form.watch();
   useEffect(() => {
     const sendDataToApi = async () => {
       const localData = localStorage.getItem(KEY_LOCAL);
-      console.log(localData);
       if (!localData) return;
       if (!isUser) return;
 
@@ -126,11 +119,8 @@ export default function RemarksTable() {
 
         const result = await res.json();
         if (result.error) {
-          console.error("Sync error:", result.error);
         }
-      } catch (err) {
-        console.error("Request error:", err);
-      }
+      } catch (err) {}
     };
 
     const timeout = setTimeout(sendDataToApi, 500);
@@ -160,9 +150,7 @@ export default function RemarksTable() {
           })
         );
       }
-    } catch (err) {
-      console.error("Error fetching Supabase data:", err);
-    }
+    } catch (err) {}
   };
 
   const remarks = form.watch("remarks");

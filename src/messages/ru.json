@@ -54,7 +54,7 @@
     "late": "Опоздание",
     "earlyLeave": "Ранний уход",
     "absent": "Отсутствие",
-    "over": "Сверхурочно",
+    "over": "+ -",
     "replacement": "Замена",
     "intern": "Стажёр",
     "selectMonth": "Выберите месяц",
@@ -65,9 +65,17 @@
     "preparedDesserts": "Десерты",
     "cutting": "Разделка",
     "staff": "Персонал",
-    "movement": "Движение",
+    "movement": "Перемещение",
     "writeOff": "Списание",
-    "notes": "Заметки"
+    "notes": "Заметки",
+    "product": "Продукты",
+    "portions": "Порции",
+    "weight": "Вес",
+    "time": "Смена",
+    "employees": "Сотрудник",
+    "nameOutside": "в ...",
+    "nameInside": "из ...",
+    "reason": "Причина"
   },
   "Auth": {
     "login": "Вход",

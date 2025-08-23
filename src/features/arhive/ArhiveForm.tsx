@@ -1,4 +1,5 @@
 "use client";
+import dynamic from "next/dynamic";
 import { format } from "date-fns";
 import { ru, ro } from "date-fns/locale";
 import {
@@ -20,7 +21,11 @@ import { ArhiveReportListTable } from "./ArhiveReportBarTable";
 import { ArhiveRemarksListTable } from "./ArhiveRemarksListTable";
 import { useRemarks } from "@/hooks/use-remarks-list";
 import { useReportCucinaList } from "@/hooks/use-report-cucina-list";
-import { ArhiveReportCucinaListTable } from "./ArhiveReportCucina";
+
+const ArhiveReportCucinaListTable = dynamic(
+  () => import("./ArhiveReportCucina"),
+  { ssr: false }
+);
 
 export const ArhiveForm = () => {
   const t = useTranslations("Navigation");
@@ -36,8 +41,6 @@ export const ArhiveForm = () => {
   const { data: reportList } = useReportList();
   const { data: remarksList } = useRemarks();
   const { data: reportCucinaList } = useReportCucinaList();
-
-  console.log(reportCucinaList);
 
   const dataSelect = breakList?.map((item) => {
     const localeObj = localesMap[locale] || ru;

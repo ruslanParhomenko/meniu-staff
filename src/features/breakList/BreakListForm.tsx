@@ -30,13 +30,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import SelectField from "@/components/inputs/SelectField";
+import dynamic from "next/dynamic";
 
 export type BreakListFormValues = {
   date?: Date;
   rows: BreakListItem[];
 };
 
-export const BreakListForm = () => {
+const BreakListForm = () => {
   const currentHour = new Date().getHours();
   const currentMinute = new Date().getMinutes();
 
@@ -164,8 +165,6 @@ export const BreakListForm = () => {
     const timeout = setTimeout(sendDataToApi, 500);
     return () => clearTimeout(timeout);
   }, [watchAllFields]);
-
-  if (loading) return <div>Loading...</div>;
 
   return (
     <div className="w-full">
@@ -305,3 +304,10 @@ export const BreakListForm = () => {
     </div>
   );
 };
+
+export const BreakList = dynamic(() => Promise.resolve(BreakListForm), {
+  ssr: false,
+  loading: () => (
+    <div className="text-center h-10 text-4xl text-blue-800">...</div>
+  ),
+});

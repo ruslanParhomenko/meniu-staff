@@ -12,7 +12,11 @@ export function SendResetButton({
   const { isObserver } = useAbility();
   const t = useTranslations("UI");
   return (
-    <div className="flex flex-col justify-between md:flex-row ">
+    <div
+      className={`flex flex-col justify-between md:flex-row sticky bottom-0 ${
+        fetchData ? "pb-6" : ""
+      }`}
+    >
       <div className="flex justify-between md:justify-start items-center  py-5  md:gap-10">
         <Button
           type="submit"
@@ -22,17 +26,6 @@ export function SendResetButton({
         >
           {t("save")}
         </Button>
-        <Button
-          type="button"
-          variant={"secondary"}
-          onClick={resetForm}
-          className="hover:bg-red-600"
-          disabled={isObserver}
-        >
-          {t("reset")}
-        </Button>
-      </div>
-      <div className="flex justify-end items-center w-full">
         {fetchData && (
           <Button
             type="button"
@@ -45,6 +38,15 @@ export function SendResetButton({
             fetch data
           </Button>
         )}
+        <Button
+          type="button"
+          variant={"secondary"}
+          onClick={resetForm}
+          className="hover:bg-red-600"
+          disabled={isObserver}
+        >
+          {t("reset")}
+        </Button>
       </div>
     </div>
   );

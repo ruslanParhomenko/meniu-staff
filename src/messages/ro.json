@@ -67,7 +67,15 @@
     "staff": "Personal",
     "movement": "Mișcare",
     "writeOff": "Casare",
-    "notes": "Note"
+    "notes": "Note",
+    "product": "Produs",
+    "portions": "Portiuni",
+    "weight": "Greutate",
+    "time": "Timp",
+    "employees": "Angajat",
+    "nameOutside": "in ...",
+    "nameInside": "din ...",
+    "reason": "Motiv"
   },
   "Auth": {
     "login": "Autentificare",

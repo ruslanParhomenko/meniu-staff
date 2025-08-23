@@ -3,7 +3,7 @@ import { useWatch } from "react-hook-form";
 import { useReportCucinaListById } from "@/hooks/use-report-cucina-id";
 import ReportTable from "../report/cucina/ReportTableByData";
 
-export const ArhiveReportCucinaListTable = ({ data }: { data: any }) => {
+const ArhiveReportCucinaListTable = ({ data }: { data: any }) => {
   const id = useWatch({ name: "selectDataId" });
 
   const { report } = useReportCucinaListById(id);
@@ -17,3 +17,5 @@ export const ArhiveReportCucinaListTable = ({ data }: { data: any }) => {
     </>
   );
 };
+
+export default ArhiveReportCucinaListTable;

@@ -11,8 +11,6 @@ export function useSheetData({ range }: { range: string }) {
   const [error, setError] = useState<string | null>(null);
 
   const pathname = usePathname().split("/")[2];
-  console.log(pathname);
-
   const TABLE_ROWS = {
     cucina: 12,
     bar: 22,

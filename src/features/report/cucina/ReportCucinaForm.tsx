@@ -42,6 +42,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 export default function DailyReportForm() {
   const STORAGE_KEY = "report-cucina";
+
   const t = useTranslations("Navigation");
   const { employees } = useEmployeeSqlData();
 
@@ -57,12 +58,12 @@ export default function DailyReportForm() {
     getValue,
     setValue: setLocalStorage,
     removeValue,
-  } = useLocalStorageForm<ReportCucinaType>(STORAGE_KEY);
+  } = useLocalStorageForm(STORAGE_KEY);
 
   const form = useForm<ReportCucinaType>({
     defaultValues: {
       ...(defaultReportCucina as ReportCucinaType),
-      ...getValue(),
+      ...(getValue() as ReportCucinaType),
     },
     resolver: yupResolver(schemaReportCucina),
   });
@@ -87,30 +88,31 @@ export default function DailyReportForm() {
     form.reset(defaultReportCucina);
 
     removeValue();
-    form.setValue("date", new Date().toDateString());
   };
 
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <div className="w-full md:max-w-[700px] mx-auto">
+        <div className="w-full md:px-10 md:mx-auto md:max-w-3xl">
           <DatePickerInput fieldName="date" />
 
-          <RenderTableByFields<ReportCucinaType>
-            name="shifts"
-            form={form}
-            placeHolder={{
-              field1: "employees",
-              field2: "time",
-              field3: "over",
-            }}
-            dataArrayField1={selectedEmployees}
-            dataArrayField2={SELECT_TIME}
-            dataArrayField3={OVER_HOURS}
-            defaultValue={defaultShift}
-          />
+          {selectedEmployees.length > 0 && (
+            <RenderTableByFields
+              name="shifts"
+              form={form}
+              placeHolder={{
+                field1: "employees",
+                field2: "time",
+                field3: "over",
+              }}
+              dataArrayField1={selectedEmployees}
+              dataArrayField2={SELECT_TIME}
+              dataArrayField3={OVER_HOURS}
+              defaultValue={defaultShift}
+            />
+          )}
 
-          <RenderTableByFields<ReportCucinaType>
+          <RenderTableByFields
             name="remains"
             form={form}
             placeHolder={{
@@ -124,7 +126,7 @@ export default function DailyReportForm() {
             defaultValue={defaultRemains}
           />
 
-          <RenderTableByFields<ReportCucinaType>
+          <RenderTableByFields
             name="preparedSalads"
             form={form}
             placeHolder={{
@@ -138,7 +140,7 @@ export default function DailyReportForm() {
             defaultValue={defaultProductsSalad}
           />
 
-          <RenderTableByFields<ReportCucinaType>
+          <RenderTableByFields
             name="preparedSeconds"
             form={form}
             placeHolder={{
@@ -152,7 +154,7 @@ export default function DailyReportForm() {
             defaultValue={defaultProductsSeconds}
           />
 
-          <RenderTableByFields<ReportCucinaType>
+          <RenderTableByFields
             name="preparedDesserts"
             form={form}
             placeHolder={{
@@ -166,7 +168,7 @@ export default function DailyReportForm() {
             defaultValue={defaultProductsDesserts}
           />
 
-          <RenderTableByFields<ReportCucinaType>
+          <RenderTableByFields
             name="cutting"
             form={form}
             placeHolder={{
@@ -180,7 +182,7 @@ export default function DailyReportForm() {
             defaultValue={defaultProductsCutting}
           />
 
-          <RenderTableByFields<ReportCucinaType>
+          <RenderTableByFields
             name="staff"
             form={form}
             placeHolder={{
@@ -194,7 +196,7 @@ export default function DailyReportForm() {
             defaultValue={defaultStaff}
           />
 
-          <RenderTableByFields<ReportCucinaType>
+          <RenderTableByFields
             name="movement"
             form={form}
             placeHolder={{
@@ -208,7 +210,7 @@ export default function DailyReportForm() {
             defaultValue={defaultStaff}
           />
 
-          <RenderTableByFields<ReportCucinaType>
+          <RenderTableByFields
             name="writeOff"
             form={form}
             placeHolder={{

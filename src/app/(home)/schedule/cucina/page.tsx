@@ -1,7 +1,7 @@
-import { ScheduleCucinaForm } from "@/features/schedule/SheduleCucinaForm";
+import { ScheduleForm } from "@/features/schedule/ScheduleFormComponent";
 
 const Page = () => {
-  return <ScheduleCucinaForm />;
+  return <ScheduleForm />;
 };
 
 export default Page;

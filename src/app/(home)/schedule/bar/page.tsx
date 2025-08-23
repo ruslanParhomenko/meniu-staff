@@ -1,7 +1,7 @@
-import { ScheduleBarForm } from "@/features/schedule/ScheduleBarForm";
+import { ScheduleForm } from "@/features/schedule/ScheduleFormComponent";
 
 const Page = () => {
-  return <ScheduleBarForm />;
+  return <ScheduleForm />;
 };
 
 export default Page;
