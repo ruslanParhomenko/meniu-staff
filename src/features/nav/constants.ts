@@ -10,7 +10,7 @@ export const SIDEBAR_NAVIGATION = [
   {
     title: "report",
     url: "/report/bar",
-    url2: "report/cucina",
+    url2: "/report/cucina",
     icon: BarChart2,
   },
 
