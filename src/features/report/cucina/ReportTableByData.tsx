@@ -18,32 +18,35 @@ import {
 export default function ReportTable({ report }: any) {
   return (
     <div className="space-y-6">
-      <h2 className="text-lg font-semibold">
-        Report Date: {new Date(report.date).toLocaleDateString()}
-      </h2>
+      <div className="text-base font-semibold">
+        {new Date(report.date).toLocaleDateString(undefined, {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })}
+      </div>
       {report.notes && <p>Notes: {report.notes}</p>}
 
-      {/* Shifts */}
       <Accordion type="single" collapsible>
         <AccordionItem value="shifts">
-          <AccordionTrigger>Shifts</AccordionTrigger>
+          <AccordionTrigger className="text-base cursor-pointer w-full [&>svg]:hidden px-4 py-1  no-underline! focus:no-underline">
+            Shifts
+          </AccordionTrigger>
           <AccordionContent>
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Name</TableHead>
+                  <TableHead>Employees</TableHead>
                   <TableHead>Time</TableHead>
                   <TableHead>Over</TableHead>
-                  <TableHead>Employees</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {report.shifts.map((shift: any) => (
                   <TableRow key={shift.id}>
-                    <TableCell>{shift.name}</TableCell>
+                    <TableCell>{shift.employees}</TableCell>
                     <TableCell>{shift.time}</TableCell>
                     <TableCell>{shift.over}</TableCell>
-                    <TableCell>{shift.employees}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
@@ -51,9 +54,10 @@ export default function ReportTable({ report }: any) {
           </AccordionContent>
         </AccordionItem>
 
-        {/* Remains */}
         <AccordionItem value="remains">
-          <AccordionTrigger>Remains</AccordionTrigger>
+          <AccordionTrigger className="text-base cursor-pointer w-full [&>svg]:hidden px-4 py-1  no-underline! focus:no-underline">
+            Remains
+          </AccordionTrigger>
           <AccordionContent>
             <Table>
               <TableHeader>
@@ -76,9 +80,10 @@ export default function ReportTable({ report }: any) {
           </AccordionContent>
         </AccordionItem>
 
-        {/* Prepared Salads */}
         <AccordionItem value="preparedSalads">
-          <AccordionTrigger>Prepared Salads</AccordionTrigger>
+          <AccordionTrigger className="text-base cursor-pointer w-full [&>svg]:hidden px-4 py-1  no-underline! focus:no-underline">
+            Prepared Salads
+          </AccordionTrigger>
           <AccordionContent>
             <Table>
               <TableHeader>
@@ -101,9 +106,10 @@ export default function ReportTable({ report }: any) {
           </AccordionContent>
         </AccordionItem>
 
-        {/* Prepared Seconds */}
         <AccordionItem value="preparedSeconds">
-          <AccordionTrigger>Prepared Seconds</AccordionTrigger>
+          <AccordionTrigger className="text-base cursor-pointer w-full [&>svg]:hidden px-4 py-1  no-underline! focus:no-underline">
+            Prepared Seconds
+          </AccordionTrigger>
           <AccordionContent>
             <Table>
               <TableHeader>
@@ -126,9 +132,10 @@ export default function ReportTable({ report }: any) {
           </AccordionContent>
         </AccordionItem>
 
-        {/* Prepared Desserts */}
         <AccordionItem value="preparedDesserts">
-          <AccordionTrigger>Prepared Desserts</AccordionTrigger>
+          <AccordionTrigger className="text-base cursor-pointer w-full [&>svg]:hidden px-4 py-1  no-underline! focus:no-underline">
+            Prepared Desserts
+          </AccordionTrigger>
           <AccordionContent>
             <Table>
               <TableHeader>
@@ -151,9 +158,10 @@ export default function ReportTable({ report }: any) {
           </AccordionContent>
         </AccordionItem>
 
-        {/* Cutting */}
         <AccordionItem value="cutting">
-          <AccordionTrigger>Cutting</AccordionTrigger>
+          <AccordionTrigger className="text-base cursor-pointer w-full [&>svg]:hidden px-4 py-1  no-underline! focus:no-underline">
+            Cutting
+          </AccordionTrigger>
           <AccordionContent>
             <Table>
               <TableHeader>
@@ -174,9 +182,10 @@ export default function ReportTable({ report }: any) {
           </AccordionContent>
         </AccordionItem>
 
-        {/* Staff */}
         <AccordionItem value="staff">
-          <AccordionTrigger>Staff</AccordionTrigger>
+          <AccordionTrigger className="text-base cursor-pointer w-full [&>svg]:hidden px-4 py-1  no-underline! focus:no-underline">
+            Staff
+          </AccordionTrigger>
           <AccordionContent>
             <Table>
               <TableHeader>
@@ -199,9 +208,10 @@ export default function ReportTable({ report }: any) {
           </AccordionContent>
         </AccordionItem>
 
-        {/* Movement */}
         <AccordionItem value="movement">
-          <AccordionTrigger>Movement</AccordionTrigger>
+          <AccordionTrigger className="text-base cursor-pointer w-full [&>svg]:hidden px-4 py-1  no-underline! focus:no-underline">
+            Movement
+          </AccordionTrigger>
           <AccordionContent>
             <Table>
               <TableHeader>
@@ -224,9 +234,10 @@ export default function ReportTable({ report }: any) {
           </AccordionContent>
         </AccordionItem>
 
-        {/* Write Off */}
         <AccordionItem value="writeOff">
-          <AccordionTrigger>Write Off</AccordionTrigger>
+          <AccordionTrigger className="text-base cursor-pointer w-full [&>svg]:hidden px-4 py-1  no-underline! focus:no-underline">
+            Write Off
+          </AccordionTrigger>
           <AccordionContent>
             <Table>
               <TableHeader>

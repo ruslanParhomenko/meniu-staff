@@ -35,7 +35,7 @@ export default function TableEspenses() {
   }, [expenses, setValue]);
 
   return (
-    <div className="w-full">
+    <div className="">
       <Label className="text-lg font-semibold pb-7">Expenses</Label>
       <Table className="[&_th]:text-center [&_td]:text-center">
         <TableHeader>
@@ -54,7 +54,7 @@ export default function TableEspenses() {
                   disabled={isObserver}
                 />
               </TableCell>
-              <TableCell>
+              <TableCell className="flex items-center justify-center">
                 <NumericInput
                   fieldName={`expenses.${idx}.sum`}
                   disabled={isObserver}
@@ -63,6 +63,7 @@ export default function TableEspenses() {
               </TableCell>
             </TableRow>
           ))}
+
           <TableRow className="h-10">
             <TableCell>
               <NumericInput

@@ -25,11 +25,6 @@ export const ReportTableByData = ({ report }: any) => {
 
   if (!report) return <div>Loading...</div>;
 
-  const cashColumns: CashVerify[][] = [[], []];
-  report.cashVerify.forEach((item: CashVerify, idx: number) => {
-    cashColumns[idx % 2].push(item);
-  });
-
   const deleteReportList = async (id: number) => {
     if (!isAdmin) return toast.error(t("insufficientRights"));
     await fetch(`/api/report/${id}`, { method: "DELETE" });
@@ -48,80 +43,81 @@ export const ReportTableByData = ({ report }: any) => {
         })}
       </div>
 
-      <div className="grid md:grid-cols-[40%_10%] md:gap-50 grid-cols-1 gap-4">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Tobacco</TableHead>
-              <TableHead className="text-center">Stock</TableHead>
-              <TableHead className="text-center">Incoming</TableHead>
-              <TableHead className="text-center">Outgoing</TableHead>
-              <TableHead className="text-center">Final</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {report.tobacco.map((t: any) => (
-              <TableRow key={t.id}>
-                <TableCell>{t?.name}</TableCell>
-                <TableCell className="text-center">
-                  {t?.stock.toLocaleString()}
-                </TableCell>
-                <TableCell className="text-center">
-                  {t?.incoming.toLocaleString()}
-                </TableCell>
-                <TableCell className="text-center">
-                  {t?.outgoing.toLocaleString()}
-                </TableCell>
-                <TableCell className="text-center">
-                  {t?.finalStock?.toLocaleString()}
-                </TableCell>
+      <div className="grid md:grid-cols-2 md:gap-10 grid-cols-1 gap-4">
+        <div>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Tobacco</TableHead>
+                <TableHead className="text-center">Stock</TableHead>
+                <TableHead className="text-center">Incoming</TableHead>
+                <TableHead className="text-center">Outgoing</TableHead>
+                <TableHead className="text-center">Final</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="text-center">Expenses</TableHead>
-              <TableHead className="text-center">Sum</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {report.expenses.map((e: any) => (
-              <TableRow key={e.id}>
-                <TableCell className="text-center">{e.name || "—"}</TableCell>
-                <TableCell className="text-center">{e.sum || "0"}</TableCell>
+            </TableHeader>
+            <TableBody>
+              {report.tobacco.map((t: any) => (
+                <TableRow key={t.id}>
+                  <TableCell>{t?.name}</TableCell>
+                  <TableCell className="text-center">
+                    {t?.stock.toLocaleString()}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {t?.incoming.toLocaleString()}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {t?.outgoing.toLocaleString()}
+                  </TableCell>
+                  <TableCell className="text-center">
+                    {t?.finalStock?.toLocaleString()}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+        <div className="flex flex-col items-center space-y-8">
+          <Table className="w-full">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Expenses</TableHead>
+                <TableHead>Sum</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+            </TableHeader>
+            <TableBody>
+              {report.expenses.map((e: any) => {
+                if (e.name === "") return;
+                return (
+                  <TableRow key={e.id}>
+                    <TableCell>{e.name || "—"}</TableCell>
+                    <TableCell>{e.sum || "0"}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+          <Table className="w-full">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Hours</TableHead>
+                <TableHead>Value</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {report.cashVerify.map((c: CashVerify) => {
+                if (c.value === "0") return;
+                return (
+                  <TableRow key={c.id}>
+                    <TableCell>{c.hours ?? "—"}</TableCell>
+                    <TableCell>{c.value ?? "—"}</TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-1 ">
-        {cashColumns.map((col, i) => (
-          <div key={i} className="overflow-x-auto">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Hours</TableHead>
-                  {col.map((c) => (
-                    <TableHead key={c.id}>{c.hours}</TableHead>
-                  ))}
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                <TableRow>
-                  <TableCell>Value</TableCell>
-                  {col.map((c) => (
-                    <TableCell key={c.id}>{c.value ?? "—"}</TableCell>
-                  ))}
-                </TableRow>
-              </TableBody>
-            </Table>
-          </div>
-        ))}
-      </div>
       <div className="flex justify-start items-center p-5 pt-10 gap-4">
         <Button
           type="button"

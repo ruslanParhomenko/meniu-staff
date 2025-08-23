@@ -43,9 +43,13 @@ export default function RemarksTableByData({ data, onDelete }: Props) {
 
   return (
     <div className="p-4 border rounded-lg shadow-md">
-      <h2 className="text-lg font-semibold mb-4">
-        {new Date(data.date).toLocaleDateString()}
-      </h2>
+      <div className="text-lg font-semibold">
+        {new Date(data.date).toLocaleDateString(undefined, {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })}
+      </div>
 
       <Table>
         <TableHeader>
@@ -59,16 +63,19 @@ export default function RemarksTableByData({ data, onDelete }: Props) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.remarks.map((remark: Remark) => (
-            <TableRow key={remark.id}>
-              <TableCell>{remark.name || "-"}</TableCell>
-              <TableCell>{remark.dayHours || "-"}</TableCell>
-              <TableCell>{remark.nightHours || "-"}</TableCell>
-              <TableCell>{remark.reason || "-"}</TableCell>
-              <TableCell>{remark.penality || "-"}</TableCell>
-              <TableCell>{remark.reasonPenality || "-"}</TableCell>
-            </TableRow>
-          ))}
+          {data.remarks.map((remark: Remark) => {
+            if (!remark.name) return;
+            return (
+              <TableRow key={remark.id}>
+                <TableCell>{remark.name || "-"}</TableCell>
+                <TableCell>{remark.dayHours || "-"}</TableCell>
+                <TableCell>{remark.nightHours || "-"}</TableCell>
+                <TableCell>{remark.reason || "-"}</TableCell>
+                <TableCell>{remark.penality || "-"}</TableCell>
+                <TableCell>{remark.reasonPenality || "-"}</TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
 
