@@ -9,7 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useData } from "@/hooks/use-data";
 
 import { format, type Locale as DateFnsLocale } from "date-fns";
@@ -30,20 +30,12 @@ export const ArhiveListTable = ({
     ro,
   };
 
+  const [dataSelect,setDataSelect] = useState([{label:'',value:''}])
+  const [openItem, setOpenItem] = useState<string | null>(null);
+
   const { data, refetch } = useData({
     api: nameTag,
   });
-  const dataSelect = data
-    ? data?.map((item) => {
-        const localeObj = localesMap[locale] || ru;
-        return {
-          label: item.id.toLocaleString(),
-          value: format(new Date(item.date), "dd.MM.yyyy", {
-            locale: localeObj,
-          }),
-        };
-      })
-    : [{ label: "", value: "" }];
 
   const id = useWatch({ name: "selectDataId" });
 
@@ -52,21 +44,46 @@ export const ArhiveListTable = ({
     api: nameTag,
   });
 
+  useEffect(()=>{
+    if(!data)return
+    const formattedData = data?.map((item) => {
+        const localeObj = localesMap[locale] || ru;
+        return {
+          label: item.id.toLocaleString(),
+          value: format(new Date(item.date), "dd.MM.yyyy", {
+            locale: localeObj,
+          }),
+        };
+      })
+      setDataSelect(formattedData)
+  },[data,nameTag])
+
   const handleRefetch = () => {
     refetchId();
     refetch();
   };
+  useEffect(()=>{
+    setDataSelect([{label:'',value:''}])
+  },[])
 
-  return (
-    <Accordion type="single" collapsible className="mb-8">
-      <AccordionItem value="item-1">
-        <AccordionTrigger className="text-lg cursor-pointer w-full [&>svg]:hidden bg-blue-400 px-4 py-2 hover:bg-blue-600  no-underline! focus:no-underline">
+return (
+    <Accordion
+      type="single"
+      collapsible
+      className="mb-8"
+      value={openItem ?? ""}
+      onValueChange={(val) => setOpenItem(val)}
+    >
+      <AccordionItem value={nameTag}> {/* Уникальный value */}
+        <AccordionTrigger className="text-lg cursor-pointer w-full [&>svg]:hidden bg-blue-400 px-4 py-2 hover:bg-blue-600">
           {t(nameTag)}
         </AccordionTrigger>
+
         <AccordionContent>
-          <div className="md:w-1/4 w-full py-4 ">
+          <div className="md:w-1/4 w-full py-4" key={nameTag}>
             <SelectInput fieldName={"selectDataId"} data={dataSelect} />
           </div>
+
           {breakList && (
             <>
               <DeleteListButton
@@ -74,7 +91,6 @@ export const ArhiveListTable = ({
                 api={nameTag}
                 refetch={handleRefetch}
               />
-
               {children(breakList)}
             </>
           )}
