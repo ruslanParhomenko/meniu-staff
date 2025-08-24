@@ -5,11 +5,11 @@ import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 
 export const DeleteListButton = ({
-  id,
+  data,
   api,
   refetch,
 }: {
-  id: number;
+  data: { id: number; date: string };
   api: string;
   refetch?: () => void;
 }) => {
@@ -20,7 +20,7 @@ export const DeleteListButton = ({
 
   const deleteBreakList = async (id: number) => {
     if (!isAdmin) return toast.error(t("insufficientRights"));
-    await fetch(`/api/${api}/${id}`, { method: "DELETE" });
+    await fetch(`/api/${api}/${data?.id}`, { method: "DELETE" });
     toast.success("Брейк-лист успешно удалён !");
 
     if (refetch) {
@@ -30,11 +30,18 @@ export const DeleteListButton = ({
     router.refresh();
   };
   return (
-    <div className="flex justify-start items-center py-2 pt-4">
+    <div className="flex w-full justify-between items-center py-2 pt-4">
+      <div className="text-lg font-semibold">
+        {new Date(data.date).toLocaleDateString(undefined, {
+          day: "2-digit",
+          month: "long",
+          year: "numeric",
+        })}
+      </div>
       <Button
         type="button"
         variant={"default"}
-        onClick={() => deleteBreakList(id)}
+        onClick={() => deleteBreakList(data?.id)}
       >
         {tUI("delete")}
       </Button>
