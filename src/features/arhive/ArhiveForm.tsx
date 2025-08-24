@@ -37,8 +37,8 @@ export const ArhiveForm = () => {
 
   const form = useForm();
 
-  const { data: breakList, loading, error, refetch } = useBreakLists();
-  const { data: reportList } = useReportList();
+  const { data: breakList, error, refetch: refetchBreak } = useBreakLists();
+  const { data: reportList, refetch: refetchReport } = useReportList();
   const { data: remarksList } = useRemarks();
   const { data: reportCucinaList } = useReportCucinaList();
 
@@ -90,11 +90,7 @@ export const ArhiveForm = () => {
             {t("breakList")}
           </AccordionTrigger>
           <AccordionContent>
-            <ArhiveBreakListTable
-              data={dataSelect}
-              loading={loading}
-              refetch={refetch}
-            />
+            <ArhiveBreakListTable data={dataSelect} refetch={refetchBreak} />
           </AccordionContent>
         </AccordionItem>
       </Accordion>
@@ -104,7 +100,10 @@ export const ArhiveForm = () => {
             {t("report")}
           </AccordionTrigger>
           <AccordionContent>
-            <ArhiveReportListTable data={dataSelectReport} />
+            <ArhiveReportListTable
+              data={dataSelectReport}
+              refetch={refetchReport}
+            />
           </AccordionContent>
         </AccordionItem>
       </Accordion>

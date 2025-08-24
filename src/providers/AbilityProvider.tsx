@@ -3,7 +3,11 @@
 import { useSession } from "next-auth/react";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-const ADMIN = ["parhomenkogm@gmail.com", "cng.nv.rstrnt.mngr@gmail.com"];
+const ADMIN = [
+  "parhomenkogm@gmail.com",
+  "cng.nv.rstrnt.mngr@gmail.com",
+  "lavandavazat5@gmail.com",
+];
 const USER = ["cng.nv.kitchen@gmail.com", "cng.nv.rstrnt@gmail.com"];
 
 type AbilityContextType = {

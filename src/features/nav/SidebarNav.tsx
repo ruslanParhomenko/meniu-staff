@@ -18,6 +18,7 @@ import { SIDEBAR_NAVIGATION } from "./constants";
 
 import { useSidebar } from "../../components/ui/sidebar";
 import { SidebarToggleButton } from "@/components/switches/SidebarToggleButton";
+import Image from "next/image";
 
 const SidebarNav = () => {
   const { toggleSidebar, isMobile } = useSidebar();
@@ -44,6 +45,7 @@ const SidebarNav = () => {
           <span className="text-xs pt-4 pl-2">
             {session?.user?.email?.split("@")[0] || "Loading..."}
           </span>
+
           <SidebarMenu className="flex h-full flex-col gap-4 pt-10  ">
             {SIDEBAR_NAVIGATION.map((item) => {
               const isActivePath = pathname === item.url.split("/")[1];
