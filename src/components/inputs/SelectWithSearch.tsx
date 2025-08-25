@@ -76,6 +76,7 @@ function SelectFieldWithSearch({
                           : "text-gray-600 text-base",
                         className
                       )}
+                      disabled={disabled}
                     >
                       {field.value || placeHolder}
                       <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
@@ -88,6 +89,7 @@ function SelectFieldWithSearch({
                         className="h-9"
                         value={search}
                         onValueChange={(val) => setSearch(val)}
+                        disabled={disabled}
                       />
                       <CommandList>
                         <CommandEmpty>No results found.</CommandEmpty>
