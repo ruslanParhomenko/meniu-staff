@@ -1,13 +1,22 @@
+"use client";
 import { OrderListTTNCucine } from "@/features/order-list/orderListCucinaTTN";
+import { InsufficientRights } from "@/features/ui/InsufficientRights";
+import { useAbility } from "@/providers/AbilityProvider";
 import { OrderListTelegramForm } from "@/providers/SendTelegramForm";
 
-export const dynamic = "force-dynamic";
-
 const Page = () => {
+  const { isAdmin, isCucina } = useAbility();
+
   return (
-    <OrderListTelegramForm user="cucinaTTN" url="ttn">
-      <OrderListTTNCucine />
-    </OrderListTelegramForm>
+    <>
+      {isAdmin || isCucina ? (
+        <OrderListTelegramForm user="cucinaTTN" url="ttn">
+          <OrderListTTNCucine />
+        </OrderListTelegramForm>
+      ) : (
+        <InsufficientRights />
+      )}
+    </>
   );
 };
 

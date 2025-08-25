@@ -1,11 +1,17 @@
+"use client";
 import { OrderListCuisine } from "@/features/order-list/OrderListCucineZN";
+import { InsufficientRights } from "@/features/ui/InsufficientRights";
+import { useAbility } from "@/providers/AbilityProvider";
 import { OrderListTelegramForm } from "@/providers/SendTelegramForm";
 
 const Page = () => {
-  return (
+  const { isAdmin, isCucina } = useAbility();
+  return isAdmin || isCucina ? (
     <OrderListTelegramForm user="cucinaZN" url="zn">
       <OrderListCuisine />
     </OrderListTelegramForm>
+  ) : (
+    <InsufficientRights />
   );
 };
 

@@ -40,11 +40,16 @@ import { useTranslations } from "next-intl";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAbility } from "@/providers/AbilityProvider";
+import { InsufficientRights } from "@/features/ui/InsufficientRights";
 
 export default function DailyReportForm() {
+  const t = useTranslations("Navigation");
+
+  const { isAdmin } = useAbility();
+
   const STORAGE_KEY = "report-cucina";
 
-  const t = useTranslations("Navigation");
   const { employees } = useEmployeeSqlData();
 
   const selectedEmployees = useMemo(
@@ -91,10 +96,12 @@ export default function DailyReportForm() {
     removeValue();
   };
 
+  // if (isAdmin) return <InsufficientRights />;
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
-        <div className="w-full md:px-10 md:mx-auto md:max-w-3xl">
+        <div className="w-full md:px-10 md:mx-auto md:max-w-5xl">
           <DatePickerInput fieldName="date" />
 
           {selectedEmployees.length > 0 && (

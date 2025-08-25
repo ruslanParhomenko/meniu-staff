@@ -1,13 +1,22 @@
+"use client";
 import { OrderListTTNBar } from "@/features/order-list/orderListBarTTN";
+import { InsufficientRights } from "@/features/ui/InsufficientRights";
+import { useAbility } from "@/providers/AbilityProvider";
 import { OrderListTelegramForm } from "@/providers/SendTelegramForm";
 
-export const dynamic = "force-dynamic";
-
 const Page = () => {
+  const { isAdmin, isBar } = useAbility();
+
   return (
-    <OrderListTelegramForm user="barTTN" url="ttn">
-      <OrderListTTNBar />
-    </OrderListTelegramForm>
+    <>
+      {isAdmin || isBar ? (
+        <OrderListTelegramForm user="barTTN" url="ttn">
+          <OrderListTTNBar />
+        </OrderListTelegramForm>
+      ) : (
+        <InsufficientRights />
+      )}
+    </>
   );
 };
 

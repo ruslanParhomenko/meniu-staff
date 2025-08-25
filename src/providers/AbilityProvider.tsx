@@ -8,11 +8,12 @@ const ADMIN = [
   "cng.nv.rstrnt.mngr@gmail.com",
   "lavandavazat5@gmail.com",
 ];
-const USER = ["cng.nv.kitchen@gmail.com", "cng.nv.rstrnt@gmail.com"];
-
+const BAR = ["cng.nv.rstrnt@gmail.com"];
+const CUCINA = ["cng.nv.kitchen@gmail.com"];
 type AbilityContextType = {
   isAdmin: boolean;
-  isUser: boolean;
+  isBar: boolean;
+  isCucina: boolean;
   isObserver: boolean;
 };
 
@@ -23,19 +24,26 @@ export function AbilityProvider({ children }: { children: React.ReactNode }) {
 
   const [ability, setAbility] = useState<AbilityContextType>({
     isAdmin: false,
-    isUser: false,
+    isBar: false,
+    isCucina: false,
     isObserver: true,
   });
 
   useEffect(() => {
     if (data?.user?.email) {
       const isAdmin = ADMIN.includes(data.user.email);
-      const isUser = USER.includes(data.user.email);
-      const isObserver = !isAdmin && !isUser;
+      const isCucina = CUCINA.includes(data.user.email);
+      const isBar = BAR.includes(data.user.email);
+      const isObserver = !isAdmin && !isCucina && !isBar;
 
-      setAbility({ isAdmin, isUser, isObserver });
+      setAbility({ isAdmin, isCucina, isBar, isObserver });
     } else {
-      setAbility({ isAdmin: false, isUser: false, isObserver: true });
+      setAbility({
+        isAdmin: false,
+        isCucina: false,
+        isBar: false,
+        isObserver: true,
+      });
     }
   }, [data?.user?.email]);
 
