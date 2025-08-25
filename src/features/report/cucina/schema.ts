@@ -4,12 +4,12 @@ export const schemaShift = yup
   .array()
   .of(
     yup.object({
-      name: yup.string().nullable().default(""),
+      employees: yup.string().nullable().default(""),
       time: yup.string().nullable().default(""),
       over: yup.string().nullable().default(""),
     })
   )
-  .default([{ name: "", time: "", over: "" }]);
+  .default([{ employees: "", time: "", over: "" }]);
 
 export type ReportShiftType = yup.InferType<typeof schemaShift>;
 export const defaultShift: ReportShiftType = schemaShift.getDefault();
@@ -84,10 +84,11 @@ export const productsCuttingSchema = yup
   .of(
     yup.object({
       product: yup.string().nullable().default(""),
+      portions: yup.string().nullable().default(""),
       weight: yup.string().nullable().default(""),
     })
   )
-  .default([{ product: "", weight: "" }]);
+  .default([{ product: "", portions: "", weight: "" }]);
 export type ReportProductsCuttingType = yup.InferType<
   typeof productsCuttingSchema
 >;

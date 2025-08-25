@@ -202,6 +202,7 @@ model PreparedDessert {
 model Cutting {
   id       Int                  @id @default(autoincrement())
   product  String
+  portions String?
   weight   String
   report   DailyReportCucina    @relation("DailyReportCucinaCutting", fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int

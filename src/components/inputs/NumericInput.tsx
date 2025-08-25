@@ -6,7 +6,6 @@ import { Input } from "../ui/input";
 
 type NumericInputProps = {
   fieldName: string;
-  required?: boolean | undefined;
   id?: string;
   type?: string;
   readonly?: boolean;
@@ -20,7 +19,6 @@ type NumericInputProps = {
 
 function NumericInput({
   fieldName,
-  required,
   id,
   placeholder,
   readonly,
@@ -31,7 +29,7 @@ function NumericInput({
   max,
   className,
 }: NumericInputProps) {
-  const { control, trigger, watch } = useFormContext();
+  const { control, watch } = useFormContext();
   watch();
   return (
     <FormField
@@ -42,11 +40,7 @@ function NumericInput({
           <FormField
             control={control}
             name={fieldName}
-            render={({
-              field: { value, onChange },
-              fieldState: { error },
-              formState: { errors },
-            }) => (
+            render={({ field: { value, onChange } }) => (
               <FormItem>
                 <div>
                   <FormControl>
@@ -61,7 +55,7 @@ function NumericInput({
                       onChange={onChange}
                       readOnly={readonly}
                       disabled={disabled}
-                      className={`flex w-10 items-center justify-center px-0 text-center text-xs md:w-36 md:text-base ${
+                      className={`flex w-15 items-center justify-center px-0 text-center text-xs md:w-36 md:text-base ${
                         className ?? ""
                       }`}
                     />

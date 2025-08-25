@@ -38,7 +38,7 @@ function SelectField({
     <Controller
       control={control}
       name={fieldName}
-      render={({ field }) => (
+      render={({ field, fieldState }) => (
         <FormField
           control={control}
           name={fieldName}
@@ -52,7 +52,7 @@ function SelectField({
                 <FormControl className="w-full">
                   <SelectTrigger
                     data-placeholder=""
-                    className={`${className} flex justify-center min-w-12   [&>svg]:hidden`}
+                    className={`${className} flex justify-center min-w-15   [&>svg]:hidden`}
                   >
                     <SelectValue placeholder={placeHolder} />
                   </SelectTrigger>
@@ -68,7 +68,7 @@ function SelectField({
                   ))}
                 </SelectContent>
               </Select>
-              <FormMessage />
+              <FormMessage>{fieldState?.error?.message}</FormMessage>
             </FormItem>
           )}
         />

@@ -15,6 +15,7 @@ import { useAbility } from "@/providers/AbilityProvider";
 import dynamic from "next/dynamic";
 import { ReportCucinaType } from "./schema";
 import SelectFieldWithSearch from "@/components/inputs/SelectWithSearch";
+import NumericInput from "@/components/inputs/NumericInput";
 
 type RenderEmployeesTableProps = {
   name: ArrayPath<ReportCucinaType>;
@@ -25,9 +26,9 @@ type RenderEmployeesTableProps = {
     field3: string;
   };
 
-  dataArrayField1: string[];
-  dataArrayField2: string[];
-  dataArrayField3: string[];
+  dataArrayField1?: string[];
+  dataArrayField2?: string[];
+  dataArrayField3?: string[];
   defaultValue: {};
 };
 const RenderTable = <T extends FieldValues>({
@@ -51,9 +52,9 @@ const RenderTable = <T extends FieldValues>({
       </Label>
       <Separator className="py-px my-1  bg-blue-600" />
       {fieldsArray.fields.map((field, index) => (
-        <div key={field.id} className="flex items-center py-1">
-          <div className="grid grid-cols-[40%_25%_15%] gap-1 md:grid-cols-[50%_20%_15%] md:gap-3 w-full ">
-            {field1 && (
+        <div key={field.id} className="flex items-center ">
+          <div className="grid grid-cols-[50%_25%_15%] gap-1 md:grid-cols-[50%_20%_15%] md:gap-3 w-full ">
+            {field1 && dataArrayField1 && (
               <SelectFieldWithSearch
                 fieldName={`${name}.${index}.${field1}`}
                 data={dataArrayField1}
@@ -61,19 +62,31 @@ const RenderTable = <T extends FieldValues>({
                 disabled={isObserver}
               />
             )}
-            {field2 && (
+            {field2 && dataArrayField2 ? (
               <SelectField
                 fieldName={`${name}.${index}.${field2}`}
                 data={dataArrayField2}
                 placeHolder={field2 ? t(field2) : ""}
                 disabled={isObserver}
               />
+            ) : (
+              <NumericInput
+                fieldName={`${name}.${index}.${field2}`}
+                placeholder={field2 ? t(field2) : ""}
+                disabled={isObserver}
+              />
             )}
-            {field3 && (
+            {field3 && dataArrayField3 ? (
               <SelectField
                 fieldName={`${name}.${index}.${field3}`}
                 data={dataArrayField3}
                 placeHolder={field3 ? t(field3) : ""}
+                disabled={isObserver}
+              />
+            ) : (
+              <NumericInput
+                fieldName={`${name}.${index}.${field3}`}
+                placeholder={field3 ? t(field3) : ""}
                 disabled={isObserver}
               />
             )}

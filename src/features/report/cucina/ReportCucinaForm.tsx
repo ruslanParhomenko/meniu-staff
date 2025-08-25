@@ -41,6 +41,7 @@ import { useTranslations } from "next-intl";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import toast from "react-hot-toast";
 
 export default function DailyReportForm() {
   const t = useTranslations("Navigation");
@@ -72,12 +73,28 @@ export default function DailyReportForm() {
   });
 
   const handleSubmit: SubmitHandler<ReportCucinaType> = async (data) => {
-    console.log(data);
-    await fetch("/api/report-cucina/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
+    const invalidShift = data.shifts.some((shift) => !shift.employees?.trim());
+    if (invalidShift) {
+      toast.error("Заполните всех сотрудников в сменах!");
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/report-cucina/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error("Ошибка при отправке формы");
+      }
+
+      toast.success("Форма успешно отправлена!");
+    } catch (error: any) {
+      console.error(error);
+      toast.error(error?.message || "Произошла ошибка");
+    }
   };
 
   useEffect(() => {
@@ -124,8 +141,6 @@ export default function DailyReportForm() {
               field3: "weight",
             }}
             dataArrayField1={REMAINS_PRODUCTS}
-            dataArrayField2={PORTIONS}
-            dataArrayField3={WEIGTH}
             defaultValue={defaultRemains}
           />
 
@@ -138,8 +153,6 @@ export default function DailyReportForm() {
               field3: "weight",
             }}
             dataArrayField1={[...PRODUCTS_GARNISH, ...PRODUCTS_SALAD]}
-            dataArrayField2={PORTIONS}
-            dataArrayField3={WEIGTH}
             defaultValue={defaultProductsSalad}
           />
 
@@ -152,8 +165,6 @@ export default function DailyReportForm() {
               field3: "weight",
             }}
             dataArrayField1={PRODUCTS_MEAT}
-            dataArrayField2={PORTIONS}
-            dataArrayField3={WEIGTH}
             defaultValue={defaultProductsSeconds}
           />
 
@@ -166,8 +177,6 @@ export default function DailyReportForm() {
               field3: "weight",
             }}
             dataArrayField1={PRODUCTS_DESSERT}
-            dataArrayField2={PORTIONS}
-            dataArrayField3={WEIGTH}
             defaultValue={defaultProductsDesserts}
           />
 
@@ -176,12 +185,10 @@ export default function DailyReportForm() {
             form={form}
             placeHolder={{
               field1: "product",
-              field2: "",
+              field2: "portions",
               field3: "weight",
             }}
-            dataArrayField1={[...PRODUCTS_MEAT_FISH, ...PRODUCTS_SEMIFINISHED]}
-            dataArrayField2={[]}
-            dataArrayField3={WEIGTH}
+            dataArrayField1={[...PRODUCTS_SEMIFINISHED, ...PRODUCTS_MEAT_FISH]}
             defaultValue={defaultProductsCutting}
           />
 
@@ -194,8 +201,6 @@ export default function DailyReportForm() {
               field3: "weight",
             }}
             dataArrayField1={PRODUCTS_STAFF}
-            dataArrayField2={PORTIONS}
-            dataArrayField3={WEIGTH}
             defaultValue={defaultStaff}
           />
 
@@ -209,7 +214,6 @@ export default function DailyReportForm() {
             }}
             dataArrayField1={PRODUCTS_INGREDIENTS}
             dataArrayField2={PRODUCTS_INGREDIENTS}
-            dataArrayField3={WEIGTH}
             defaultValue={defaultStaff}
           />
 
@@ -222,7 +226,6 @@ export default function DailyReportForm() {
               field3: "reason",
             }}
             dataArrayField1={PRODUCTS_INGREDIENTS}
-            dataArrayField2={WEIGTH}
             dataArrayField3={REASON}
             defaultValue={defaultProductsSeconds}
           />
