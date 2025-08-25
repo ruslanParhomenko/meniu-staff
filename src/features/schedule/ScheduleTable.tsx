@@ -28,7 +28,7 @@ export function ScheduleTable({ dataRange }: { dataRange: any }) {
           const noBorderRow = i === 0 || !row[3];
 
           return (
-            <TableRow key={i} className="border-0">
+            <TableRow key={i} className="border-0 text-sm">
               {row.map((cell: any, j: number) => {
                 const isSelected = j === 4 || j === 2;
                 const isBlueColor =
@@ -61,7 +61,7 @@ export function ScheduleTable({ dataRange }: { dataRange: any }) {
                       }
                     }}
                     className={`
-                  h-9 w-9
+                  h-10 w-9
                   ${noBorderRow ? "" : "border border-gray-200"}
                   ${borderClass}
                   ${isSelected ? "text-blue-600" : ""}
@@ -70,13 +70,9 @@ export function ScheduleTable({ dataRange }: { dataRange: any }) {
                       ? "min-w-[30px] sticky left-0 z-10 text-left bg-white/90"
                       : "text-center"
                   }
-                  ${
-                    isHighlighted
-                      ? "bg-gray-200 font-bold border border-gray-200 text-red-600"
-                      : ""
-                  }
+                  ${isHighlighted ? "font-bold  text-red-600 " : ""}
                   ${i === 0 ? "cursor-pointer" : ""}
-                  ${shouldEmphasize ? "font-bold text-red-600" : ""}
+                  ${shouldEmphasize ? "font-bold text-red-600 " : ""}
                 `}
                   >
                     {cell}

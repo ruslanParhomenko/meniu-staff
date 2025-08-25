@@ -8,8 +8,8 @@ const ADMIN = [
   "cng.nv.rstrnt.mngr@gmail.com",
   "lavandavazat5@gmail.com",
 ];
-const BAR = ["cng.nv.rstrnt@gmail.com"];
-const CUCINA = ["cng.nv.kitchen@gmail.com"];
+export const BAR = ["cng.nv.rstrnt@gmail.com"];
+export const CUCINA = ["cng.nv.kitchen@gmail.com"];
 type AbilityContextType = {
   isAdmin: boolean;
   isBar: boolean;

@@ -87,6 +87,14 @@ model ReportBarRealtime {
 
   @@map("report_bar_realtime")
 }
+model ReportCucinaRealtime {
+  id         String   @id @default(uuid())
+  user_email String?
+  form_data  Json?
+  created_at DateTime @default(now())
+
+  @@map("report_cucina_realtime")
+}
 
 model break_list_realtime {
   id         String   @id

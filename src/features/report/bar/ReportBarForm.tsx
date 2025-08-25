@@ -8,10 +8,9 @@ import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { useEffect } from "react";
 
 import DatePickerInput from "@/components/inputs/DatePickerInput";
-import { useAbility } from "@/providers/AbilityProvider";
+import { BAR, useAbility } from "@/providers/AbilityProvider";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
-import { USER_EMAIL_FETCH_DATA } from "@/constants/emailUserFetchData";
 import {
   cashVerifyDefault,
   defaultValuesReportBar,
@@ -155,9 +154,7 @@ export function ReportBarForm() {
       const res = await fetch("/api/report-realtime");
       const allData = await res.json();
 
-      const userData = allData.find(
-        (item: any) => item.user_email === USER_EMAIL_FETCH_DATA
-      );
+      const userData = allData.find((item: any) => item.user_email === BAR[0]);
 
       if (userData?.form_data) {
         const tobaccoWithLocalNames = userData.form_data.tobacco.map(

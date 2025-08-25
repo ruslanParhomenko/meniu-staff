@@ -21,7 +21,6 @@ import { useEffect, useMemo } from "react";
 import {
   CUCINA_EMPLOYEES,
   OVER_HOURS,
-  PORTIONS,
   PRODUCTS_DESSERT,
   PRODUCTS_GARNISH,
   PRODUCTS_INGREDIENTS,
@@ -33,7 +32,6 @@ import {
   REASON,
   REMAINS_PRODUCTS,
   SELECT_TIME,
-  WEIGTH,
 } from "./constants";
 import { RenderTableByFields } from "./RenderTableByFields";
 import { Label } from "@/components/ui/label";
@@ -42,11 +40,15 @@ import { useLocalStorageForm } from "@/hooks/use-local-storage";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
+import { CUCINA, useAbility } from "@/providers/AbilityProvider";
+import { useSession } from "next-auth/react";
 
 export default function DailyReportForm() {
   const t = useTranslations("Navigation");
 
   const STORAGE_KEY = "report-cucina";
+  const { isObserver, isCucina } = useAbility();
+  const session = useSession();
 
   const { employees } = useEmployeeSqlData();
 
@@ -94,6 +96,64 @@ export default function DailyReportForm() {
     } catch (error: any) {
       console.error(error);
       toast.error(error?.message || "Произошла ошибка");
+    }
+  };
+  //supabase
+  const watchAllFields = form.watch();
+  useEffect(() => {
+    const sendDataToApi = async () => {
+      const localData = localStorage.getItem(STORAGE_KEY);
+      if (!localData) return;
+      if (!isCucina) return;
+      console.log("watchAllFields", watchAllFields);
+
+      try {
+        const res = await fetch("/api/report-cucina-realtime", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_email: session?.data?.user?.email,
+            form_data: JSON.parse(localData),
+          }),
+        });
+
+        const result = await res.json();
+        if (result.error) {
+          console.error("Sync error:", result.error);
+        }
+      } catch (err) {
+        console.error("Request error:", err);
+      }
+    };
+
+    const timeout = setTimeout(sendDataToApi, 500);
+    return () => clearTimeout(timeout);
+  }, [watchAllFields]);
+
+  const fetchSupabaseData = async () => {
+    try {
+      const res = await fetch("/api/report-cucina-realtime");
+      const allData = await res.json();
+
+      const userData = allData.find(
+        (item: any) => item.user_email === CUCINA[0]
+      );
+      console.log(allData, CUCINA[0]);
+
+      if (userData?.form_data) {
+        form.reset({
+          ...(userData.form_data as ReportCucinaType),
+        });
+
+        localStorage.setItem(
+          STORAGE_KEY,
+          JSON.stringify({
+            ...userData?.form_data,
+          })
+        );
+      }
+    } catch (err) {
+      console.error("Error fetching Supabase data:", err);
     }
   };
 
@@ -236,7 +296,10 @@ export default function DailyReportForm() {
             placeholder="Введите текст..."
             {...form.register("notes")}
           />
-          <SendResetButton resetForm={resetForm} />
+          <SendResetButton
+            resetForm={resetForm}
+            fetchData={fetchSupabaseData}
+          />
         </div>
       </form>
     </Form>
