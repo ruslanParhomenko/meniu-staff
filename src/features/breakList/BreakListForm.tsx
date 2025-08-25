@@ -41,7 +41,7 @@ const BreakListForm = () => {
   const currentHour = new Date().getHours();
   const currentMinute = new Date().getMinutes();
 
-  const { isObserver, isUser } = useAbility();
+  const { isObserver } = useAbility();
   const session = useSession();
   const LOCAL_STORAGE_KEY = "breakListFormData";
   const { employees, loading } = useEmployeeSqlData();
