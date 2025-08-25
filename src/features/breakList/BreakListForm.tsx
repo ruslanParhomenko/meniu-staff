@@ -18,9 +18,9 @@ import {
   TIME_LABELS,
 } from "./constant";
 import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
-import { useAbility } from "@/providers/AbilityProvider";
+import { BAR, useAbility } from "@/providers/AbilityProvider";
 import { useSession } from "next-auth/react";
-import { USER_EMAIL_FETCH_DATA } from "@/constants/emailUserFetchData";
+
 import {
   Table,
   TableBody,
@@ -116,9 +116,7 @@ const BreakListForm = () => {
       const res = await fetch("/api/break-list-realtime");
       const allData = await res.json();
 
-      const userData = allData.find(
-        (item: any) => item.user_email === USER_EMAIL_FETCH_DATA
-      );
+      const userData = allData.find((item: any) => item.user_email === BAR[0]);
 
       if (userData?.form_data) {
         form.reset({

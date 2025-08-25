@@ -2,30 +2,15 @@ import { useSession } from "next-auth/react";
 import { format } from "date-fns";
 import { toast } from "react-hot-toast";
 import { useCallback } from "react";
-import { useTranslations } from "next-intl";
-import { PERMISSION } from "@/constants/permission";
 
 export const useSendTelegram = () => {
   const session = useSession();
-  const tS = useTranslations("Settings");
 
   const sendTelegramMessage = useCallback(
     async (data: Record<string, any>, url: string, nameOrder: string) => {
       const userName = session?.data?.user?.name ?? "Неизвестный пользователь";
-      const userEmail = session?.data?.user?.email ?? "";
-
-      if (!PERMISSION.includes(userEmail)) {
-        toast.error(tS("insufficientRights"));
-        return;
-      }
 
       const formattedDate = format(new Date(), "dd.MM.yyyy");
-
-      //   const filteredData = Object.fromEntries(
-      //     Object.entries(data)
-      //       .filter(([, value]) => value !== undefined && value !== "")
-      //       .map(([key, value]) => [key, Number(value)])
-      //   );
 
       const filteredData: string[] = [];
       for (const [key, value] of Object.entries(data)) {
