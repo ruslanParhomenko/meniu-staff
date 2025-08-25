@@ -38,8 +38,6 @@ export const useSendTelegram = () => {
         }
       }
 
-      console.log(filteredData);
-
       const body = filteredData
         .map((value, index) => `${index + 1}. ${value}`)
         .join("\n");

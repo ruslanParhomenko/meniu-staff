@@ -105,7 +105,6 @@ export default function DailyReportForm() {
       const localData = localStorage.getItem(STORAGE_KEY);
       if (!localData) return;
       if (!isCucina) return;
-      console.log("watchAllFields", watchAllFields);
 
       try {
         const res = await fetch("/api/report-cucina-realtime", {
@@ -138,7 +137,6 @@ export default function DailyReportForm() {
       const userData = allData.find(
         (item: any) => item.user_email === CUCINA[0]
       );
-      console.log(allData, CUCINA[0]);
 
       if (userData?.form_data) {
         form.reset({
