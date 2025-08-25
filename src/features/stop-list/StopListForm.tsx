@@ -15,7 +15,11 @@ import { Button } from "@/components/ui/button";
 import { Delete } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAbility } from "@/providers/AbilityProvider";
-import { PRODUCTS, PRODUCTS_CUCINA } from "../report/bar/constants";
+import {
+  MENU_ITEMS_CUCINA,
+  PRODUCTS,
+  PRODUCTS_CUCINA,
+} from "../report/bar/constants";
 import { useTranslations } from "next-intl";
 import SelectFieldWithSearch from "@/components/inputs/SelectWithSearch";
 
@@ -251,7 +255,7 @@ export default function TableStopListPrisma() {
                   <TableRow key={item.key}>
                     <TableCell>
                       <SelectFieldWithSearch
-                        data={PRODUCTS_CUCINA}
+                        data={[...PRODUCTS_CUCINA, ...MENU_ITEMS_CUCINA]}
                         fieldName={`stopListCucina.${idx}.product`}
                         disabled={isObserver}
                         className="!h-9"
