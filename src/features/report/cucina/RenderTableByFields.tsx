@@ -59,7 +59,6 @@ const RenderTable = <T extends FieldValues>({
                 data={dataArrayField1}
                 placeHolder={field1 ? t(field1) : ""}
                 disabled={isObserver}
-                className="!text-gray-800"
               />
             )}
             {field2 && (
@@ -68,7 +67,6 @@ const RenderTable = <T extends FieldValues>({
                 data={dataArrayField2}
                 placeHolder={field2 ? t(field2) : ""}
                 disabled={isObserver}
-                className="!text-gray-800"
               />
             )}
             {field3 && (
@@ -77,7 +75,6 @@ const RenderTable = <T extends FieldValues>({
                 data={dataArrayField3}
                 placeHolder={field3 ? t(field3) : ""}
                 disabled={isObserver}
-                className="!text-gray-800"
               />
             )}
           </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { useState, useMemo } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import {
@@ -8,13 +9,24 @@ import {
   FormItem,
   FormMessage,
 } from "@/components/ui/form";
+
+import { Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
+
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 
 type Props = {
   fieldName: string;
@@ -32,9 +44,9 @@ function SelectFieldWithSearch({
   className,
 }: Props) {
   const { control } = useFormContext();
+  const [open, setOpen] = useState(false);
   const [search, setSearch] = useState("");
 
-  // фильтруем данные по введенному поиску
   const filteredOptions = useMemo(() => {
     if (!search) return data;
     return data.filter((item) =>
@@ -51,43 +63,62 @@ function SelectFieldWithSearch({
           control={control}
           name={fieldName}
           render={() => (
-            <FormItem className="">
-              <Select
-                onValueChange={field.onChange}
-                value={field.value}
-                disabled={disabled}
-              >
-                <FormControl className="w-full">
-                  <SelectTrigger
-                    data-placeholder=""
-                    className={`${className} flex justify-center min-w-12 [&>svg]:hidden`}
-                  >
-                    <SelectValue
-                      placeholder={placeHolder}
-                      onInput={(e: any) => setSearch(e.target.value)}
-                    />
-                  </SelectTrigger>
-                </FormControl>
-
-                <SelectContent>
-                  {/* Опционально: добавить input для поиска сверху */}
-                  <div className="px-2 py-1">
-                    <input
-                      type="text"
-                      className="w-full border rounded px-2 py-1 text-sm"
-                      placeholder="Search..."
-                      value={search}
-                      onChange={(e) => setSearch(e.target.value)}
-                    />
-                  </div>
-
-                  {filteredOptions.map((item, index) => (
-                    <SelectItem key={`${item}-${index}`} value={item}>
-                      {item}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <FormItem>
+              <FormControl>
+                <Popover open={open} onOpenChange={setOpen}>
+                  <PopoverTrigger asChild>
+                    <button
+                      type="button"
+                      className={cn(
+                        "w-full border rounded-md px-2 py-1 text-left flex justify-between items-center [&>svg]:hidden",
+                        field.value
+                          ? "text-red-600 font-bold text-base overflow-hidden text-ellipsis whitespace-nowrap"
+                          : "text-gray-600 text-base",
+                        className
+                      )}
+                    >
+                      {field.value || placeHolder}
+                      <ChevronsUpDown className="ml-2 h-4 w-4 opacity-50" />
+                    </button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-full p-0">
+                    <Command>
+                      <CommandInput
+                        placeholder="Search..."
+                        className="h-9"
+                        value={search}
+                        onValueChange={(val) => setSearch(val)}
+                      />
+                      <CommandList>
+                        <CommandEmpty>No results found.</CommandEmpty>
+                        <CommandGroup>
+                          {filteredOptions.map((item) => (
+                            <CommandItem
+                              key={item}
+                              value={item}
+                              onSelect={(val) => {
+                                field.onChange(val);
+                                setOpen(false);
+                                setSearch(val);
+                              }}
+                            >
+                              {item}
+                              <Check
+                                className={cn(
+                                  "ml-auto",
+                                  field.value === item
+                                    ? "opacity-100"
+                                    : "opacity-0"
+                                )}
+                              />
+                            </CommandItem>
+                          ))}
+                        </CommandGroup>
+                      </CommandList>
+                    </Command>
+                  </PopoverContent>
+                </Popover>
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
