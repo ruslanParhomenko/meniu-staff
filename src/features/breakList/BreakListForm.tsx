@@ -41,10 +41,10 @@ const BreakListForm = () => {
   const currentHour = new Date().getHours();
   const currentMinute = new Date().getMinutes();
 
-  const { isObserver } = useAbility();
+  const { isObserver, isBar } = useAbility();
   const session = useSession();
   const LOCAL_STORAGE_KEY = "breakListFormData";
-  const { employees, loading } = useEmployeeSqlData();
+  const { employees } = useEmployeeSqlData();
 
   const BAR_EMPLOYEES = ["waiters", "barmen"];
 
@@ -143,7 +143,7 @@ const BreakListForm = () => {
     const sendDataToApi = async () => {
       const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
       if (!localData) return;
-      if (!isUser) return;
+      if (!isBar) return;
 
       try {
         const res = await fetch("/api/break-list-realtime", {
