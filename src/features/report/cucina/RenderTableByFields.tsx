@@ -52,8 +52,8 @@ const RenderTable = <T extends FieldValues>({
       </Label>
       <Separator className="py-px my-1  bg-blue-600" />
       {fieldsArray.fields.map((field, index) => (
-        <div key={field.id} className="flex items-center ">
-          <div className="grid grid-cols-[50%_25%_15%] gap-1 md:grid-cols-[50%_20%_15%] md:gap-3 w-full ">
+        <div key={field.id} className="flex items-center">
+          <div className="grid grid-cols-[50%_25%_15%] gap-1 md:grid-cols-[50%_20%_15%] md:gap-3 w-full pb-2 ">
             {field1 && dataArrayField1 && (
               <SelectFieldWithSearch
                 fieldName={`${name}.${index}.${field1}`}
