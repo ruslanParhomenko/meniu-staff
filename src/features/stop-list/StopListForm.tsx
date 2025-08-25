@@ -22,6 +22,7 @@ import {
 } from "../report/bar/constants";
 import { useTranslations } from "next-intl";
 import SelectFieldWithSearch from "@/components/inputs/SelectWithSearch";
+import toast from "react-hot-toast";
 
 type StopListItem = {
   key: number;
@@ -36,7 +37,7 @@ type FormValues = {
 
 export default function TableStopListPrisma() {
   const t = useTranslations("Navigation");
-  const { isObserver } = useAbility();
+  const { isObserver, isCucina, isAdmin, isBar } = useAbility();
 
   const [recordId, setRecordId] = useState<number | null>(null);
   const [saving, setSaving] = useState(false);
@@ -178,18 +179,28 @@ export default function TableStopListPrisma() {
   }, [stopListValues, recordId, loading, stopListCucinaValues]);
 
   const clearSelect = (index: number) => {
-    form.setValue(`stopList.${index}`, {
-      ...stopListValues[index],
-      product: "",
-      date: "",
-    });
+    if (isBar || isAdmin) {
+      form.setValue(`stopList.${index}`, {
+        ...stopListValues[index],
+        product: "",
+        date: "",
+      });
+    } else {
+      toast.error("Только БАР");
+      return;
+    }
   };
   const clearSelectCucina = (index: number) => {
-    form.setValue(`stopListCucina.${index}`, {
-      ...stopListCucinaValues[index],
-      product: "",
-      date: "",
-    });
+    if (isCucina || isAdmin) {
+      form.setValue(`stopListCucina.${index}`, {
+        ...stopListCucinaValues[index],
+        product: "",
+        date: "",
+      });
+    } else {
+      toast.error("Только КУХНЯ");
+      return;
+    }
   };
 
   return (
@@ -215,7 +226,7 @@ export default function TableStopListPrisma() {
                       <SelectField
                         data={PRODUCTS}
                         fieldName={`stopList.${idx}.product`}
-                        disabled={isObserver}
+                        disabled={isObserver || isCucina}
                       />
                     </TableCell>
                     <TableCell>
@@ -257,7 +268,7 @@ export default function TableStopListPrisma() {
                       <SelectFieldWithSearch
                         data={[...PRODUCTS_CUCINA, ...MENU_ITEMS_CUCINA]}
                         fieldName={`stopListCucina.${idx}.product`}
-                        disabled={isObserver}
+                        disabled={isObserver || isBar}
                         className="!h-9"
                       />
                     </TableCell>
