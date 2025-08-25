@@ -26,7 +26,10 @@ export async function PUT(req: Request) {
 
   const updated = await prisma.stopListRecord.update({
     where: { id: data.id },
-    data: { stopList: data.stopList },
+    data: {
+      stopList: data.stopList,
+      stopListCucina: data.stopListCucina,
+    },
   });
 
   return NextResponse.json(updated);

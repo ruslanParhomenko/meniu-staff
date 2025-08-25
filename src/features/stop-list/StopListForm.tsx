@@ -15,7 +15,9 @@ import { Button } from "@/components/ui/button";
 import { Delete } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useAbility } from "@/providers/AbilityProvider";
-import { PRODUCTS } from "../report/bar/constants";
+import { PRODUCTS, PRODUCTS_CUCINA } from "../report/bar/constants";
+import { useTranslations } from "next-intl";
+import SelectFieldWithSearch from "@/components/inputs/SelectWithSearch";
 
 type StopListItem = {
   key: number;
@@ -25,9 +27,11 @@ type StopListItem = {
 
 type FormValues = {
   stopList: StopListItem[];
+  stopListCucina: StopListItem[];
 };
 
 export default function TableStopListPrisma() {
+  const t = useTranslations("Navigation");
   const { isObserver } = useAbility();
 
   const [recordId, setRecordId] = useState<number | null>(null);
@@ -51,6 +55,10 @@ export default function TableStopListPrisma() {
     control: form.control,
     name: "stopList",
   }) as StopListItem[];
+  const stopListCucinaValues = useWatch({
+    control: form.control,
+    name: "stopListCucina",
+  });
 
   useEffect(() => {
     const initRecord = async () => {
@@ -75,11 +83,18 @@ export default function TableStopListPrisma() {
 
         setRecordId(data.id);
         form.reset({
-          stopList: data.stopList.map((item: any, idx: number) => ({
+          stopList: data.stopList?.map((item: any, idx: number) => ({
             key: idx + 1,
             product: item.product,
             date: item.date,
           })),
+          stopListCucina: data.stopListCucina?.map(
+            (item: any, idx: number) => ({
+              key: idx + 1,
+              product: item.product,
+              date: item.date,
+            })
+          ),
         });
       } catch (err) {
         console.error(err);
@@ -94,7 +109,7 @@ export default function TableStopListPrisma() {
   useEffect(() => {
     const now = new Date();
 
-    stopListValues.forEach((item, idx) => {
+    stopListValues?.forEach((item, idx) => {
       if (item && item.product && !item.date) {
         form.setValue(
           `stopList.${idx}.date`,
@@ -107,7 +122,20 @@ export default function TableStopListPrisma() {
         );
       }
     });
-  }, [stopListValues, form]);
+    stopListCucinaValues?.forEach((item, idx) => {
+      if (item && item.product && !item.date) {
+        form.setValue(
+          `stopListCucina.${idx}.date`,
+          `${now.getDate().toString().padStart(2, "0")}.${(now.getMonth() + 1)
+            .toString()
+            .padStart(2, "0")} ${now
+            .getHours()
+            .toString()
+            .padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`
+        );
+      }
+    });
+  }, [stopListValues, form, stopListCucinaValues]);
 
   useEffect(() => {
     if (!stopListValues.length || loading || !recordId) return;
@@ -117,7 +145,11 @@ export default function TableStopListPrisma() {
       try {
         const payload = {
           id: recordId,
-          stopList: stopListValues.map(({ product, date }) => ({
+          stopList: stopListValues?.map(({ product, date }) => ({
+            product,
+            date,
+          })),
+          stopListCucina: stopListCucinaValues?.map(({ product, date }) => ({
             product,
             date,
           })),
@@ -139,7 +171,7 @@ export default function TableStopListPrisma() {
 
     const timeout = setTimeout(saveData, 500);
     return () => clearTimeout(timeout);
-  }, [stopListValues, recordId, loading]);
+  }, [stopListValues, recordId, loading, stopListCucinaValues]);
 
   const clearSelect = (index: number) => {
     form.setValue(`stopList.${index}`, {
@@ -148,51 +180,103 @@ export default function TableStopListPrisma() {
       date: "",
     });
   };
+  const clearSelectCucina = (index: number) => {
+    form.setValue(`stopListCucina.${index}`, {
+      ...stopListCucinaValues[index],
+      product: "",
+      date: "",
+    });
+  };
 
   return (
     <Form {...form}>
       <form className="space-y-2">
-        <Label className="text-lg font-semibold pb-7">
-          Stop List {saving && "(Saving...)"}
-        </Label>
-        <div className="grid grid-cols-2 gap-10">
-          <Table className="[&_th]:text-center [&_td]:text-center ">
-            <TableHeader>
-              <TableRow className="h-10 ">
-                <TableCell>Product</TableCell>
-                <TableCell>Date</TableCell>
-                <TableCell>Actions</TableCell>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {stopListValues.map((item, idx) => (
-                <TableRow key={item.key}>
-                  <TableCell>
-                    <SelectField
-                      data={PRODUCTS}
-                      fieldName={`stopList.${idx}.product`}
-                      disabled={isObserver}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    {item.product && <Label>{item.date}</Label>}
-                  </TableCell>
-                  <TableCell>
-                    {item.product && (
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        onClick={() => clearSelect(idx)}
-                        disabled={isObserver}
-                      >
-                        <Delete />
-                      </Button>
-                    )}
-                  </TableCell>
+        <div className="grid md:grid-cols-2 ">
+          <div className="md:px-5">
+            <Label className="text-lg font-semibold pb-7">
+              {t("stopListBar")} {saving && "(Saving...)"}
+            </Label>
+            <Table className="[&_th]:text-center [&_td]:text-center ">
+              <TableHeader>
+                <TableRow className="h-10 ">
+                  <TableCell>Product</TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Actions</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {stopListValues.map((item, idx) => (
+                  <TableRow key={item.key}>
+                    <TableCell>
+                      <SelectField
+                        data={PRODUCTS}
+                        fieldName={`stopList.${idx}.product`}
+                        disabled={isObserver}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      {item.product && <Label>{item.date}</Label>}
+                    </TableCell>
+                    <TableCell>
+                      {item.product && (
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          onClick={() => clearSelect(idx)}
+                          disabled={isObserver}
+                        >
+                          <Delete />
+                        </Button>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
+          <div className="md:px-5">
+            <Label className="text-lg font-semibold pb-7">
+              {t("stopListCucina")} {saving && "(Saving...)"}
+            </Label>
+            <Table className="[&_th]:text-center [&_td]:text-center ">
+              <TableHeader>
+                <TableRow className="h-10 ">
+                  <TableCell>Product</TableCell>
+                  <TableCell>Date</TableCell>
+                  <TableCell>Actions</TableCell>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {stopListCucinaValues?.map((item, idx) => (
+                  <TableRow key={item.key}>
+                    <TableCell>
+                      <SelectFieldWithSearch
+                        data={PRODUCTS_CUCINA}
+                        fieldName={`stopListCucina.${idx}.product`}
+                        disabled={isObserver}
+                        className="!h-9"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      {item.product && <Label>{item.date}</Label>}
+                    </TableCell>
+                    <TableCell>
+                      {item.product && (
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          onClick={() => clearSelectCucina(idx)}
+                          disabled={isObserver}
+                        >
+                          <Delete />
+                        </Button>
+                      )}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </div>
         </div>
       </form>
     </Form>

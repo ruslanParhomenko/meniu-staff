@@ -20,6 +20,27 @@ import {
   FRUITBOX,
   APIFERA,
   DAVIDAN,
+  DINOVA,
+  ARTACULINAR,
+  BLUESHARK,
+  DELPHI,
+  ETALONUS,
+  FORWARD_CUCINE,
+  FRUITBOX_C,
+  FRUITS_CUISINE,
+  GREEN,
+  IMCOMVIL,
+  IUG,
+  MEAT,
+  MILK,
+  NUTS,
+  OTHER,
+  PRESTAPAC,
+  ROGOB,
+  SPICES,
+  SPICES_2,
+  VEGETABLES,
+  VITAFOR,
 } from "@/features/order-list/constants";
 
 export const SELECT_COUNT = [
@@ -198,6 +219,29 @@ export const PRODUCTS = [
   ...FRUITBOX,
   ...APIFERA,
   ...DAVIDAN,
+];
+
+export const PRODUCTS_CUCINA = [
+  ...FRUITS_CUISINE,
+  ...MEAT,
+  ...MILK,
+  ...NUTS,
+  ...OTHER,
+  ...SPICES,
+  ...SPICES_2,
+  ...VEGETABLES,
+  ...GREEN,
+  ...DINOVA,
+  ...DELPHI,
+  ...FORWARD_CUCINE,
+  ...PRESTAPAC,
+  ...IMCOMVIL,
+  ...ARTACULINAR,
+  ...ETALONUS,
+  ...VITAFOR,
+  ...ROGOB,
+  ...BLUESHARK,
+  ...IUG,
 ];
 
 // Алкогольная продукция

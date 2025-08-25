@@ -82,7 +82,9 @@
     "employees": "Сотрудник",
     "nameOutside": "в ...",
     "nameInside": "из ...",
-    "reason": "Причина"
+    "reason": "Причина",
+    "stopListCucina": "Стоп-лист кухни",
+    "stopListBar": "Стоп-лист Бара"
   },
   "Auth": {
     "login": "Вход",

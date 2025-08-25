@@ -87,6 +87,7 @@ model ReportBarRealtime {
 
   @@map("report_bar_realtime")
 }
+
 model ReportCucinaRealtime {
   id         String   @id @default(uuid())
   user_email String?
@@ -115,10 +116,11 @@ model remarks_realtime {
 }
 
 model StopListRecord {
-  id        Int      @id @default(autoincrement())
-  stopList  Json
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             Int      @id @default(autoincrement())
+  stopList       Json
+  stopListCucina Json?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
 
 model RemarkReport {
@@ -141,87 +143,83 @@ model Remark {
   report         RemarkReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
 }
 
-
-
-
-
 model DailyReportCucina {
-  id                Int               @id @default(autoincrement())
-  date              DateTime
-  notes             String?
+  id    Int      @id @default(autoincrement())
+  date  DateTime
+  notes String?
 
-  shifts            Shift[]           @relation("DailyReportCucinaShifts")
-  remains           Remain[]          @relation("DailyReportCucinaRemains")
-  preparedSalads    PreparedSalad[]   @relation("DailyReportCucinaPreparedSalads")
-  preparedSeconds   PreparedSecond[]  @relation("DailyReportCucinaPreparedSeconds")
-  preparedDesserts  PreparedDessert[] @relation("DailyReportCucinaPreparedDesserts")
-  cutting           Cutting[]         @relation("DailyReportCucinaCutting")
-  staff             Staff[]           @relation("DailyReportCucinaStaff")
-  movement          Movement[]        @relation("DailyReportCucinaMovement")
-  writeOff          WriteOff[]        @relation("DailyReportCucinaWriteOff")
+  shifts           Shift[]           @relation("DailyReportCucinaShifts")
+  remains          Remain[]          @relation("DailyReportCucinaRemains")
+  preparedSalads   PreparedSalad[]   @relation("DailyReportCucinaPreparedSalads")
+  preparedSeconds  PreparedSecond[]  @relation("DailyReportCucinaPreparedSeconds")
+  preparedDesserts PreparedDessert[] @relation("DailyReportCucinaPreparedDesserts")
+  cutting          Cutting[]         @relation("DailyReportCucinaCutting")
+  staff            Staff[]           @relation("DailyReportCucinaStaff")
+  movement         Movement[]        @relation("DailyReportCucinaMovement")
+  writeOff         WriteOff[]        @relation("DailyReportCucinaWriteOff")
 }
 
 model Shift {
-  id         Int                 @id @default(autoincrement())
-  name       String?
-  time       String
-  over       String
-  employees  String
-  report     DailyReportCucina   @relation("DailyReportCucinaShifts", fields: [reportId], references: [id], onDelete: Cascade)
-  reportId   Int
+  id        Int               @id @default(autoincrement())
+  name      String?
+  time      String
+  over      String
+  employees String
+  report    DailyReportCucina @relation("DailyReportCucinaShifts", fields: [reportId], references: [id], onDelete: Cascade)
+  reportId  Int
 }
 
 model Remain {
-  id       Int                  @id @default(autoincrement())
+  id       Int               @id @default(autoincrement())
   product  String
   portions String
   weight   String
-  report   DailyReportCucina    @relation("DailyReportCucinaRemains", fields: [reportId], references: [id], onDelete: Cascade)
+  report   DailyReportCucina @relation("DailyReportCucinaRemains", fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int
 }
 
 model PreparedSalad {
-  id       Int                  @id @default(autoincrement())
+  id       Int               @id @default(autoincrement())
   product  String
   portions String
   weight   String
-  report   DailyReportCucina    @relation("DailyReportCucinaPreparedSalads", fields: [reportId], references: [id], onDelete: Cascade)
+  report   DailyReportCucina @relation("DailyReportCucinaPreparedSalads", fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int
 }
 
 model PreparedSecond {
-  id       Int                  @id @default(autoincrement())
+  id       Int               @id @default(autoincrement())
   product  String
   portions String
   weight   String
-  report   DailyReportCucina    @relation("DailyReportCucinaPreparedSeconds", fields: [reportId], references: [id], onDelete: Cascade)
+  report   DailyReportCucina @relation("DailyReportCucinaPreparedSeconds", fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int
 }
 
 model PreparedDessert {
-  id       Int                  @id @default(autoincrement())
+  id       Int               @id @default(autoincrement())
   product  String
   portions String
   weight   String
-  report   DailyReportCucina    @relation("DailyReportCucinaPreparedDesserts", fields: [reportId], references: [id], onDelete: Cascade)
+  report   DailyReportCucina @relation("DailyReportCucinaPreparedDesserts", fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int
 }
 
 model Cutting {
-  id       Int                  @id @default(autoincrement())
+  id       Int               @id @default(autoincrement())
   product  String
   portions String?
   weight   String
-  report   DailyReportCucina    @relation("DailyReportCucinaCutting", fields: [reportId], references: [id], onDelete: Cascade)
+  report   DailyReportCucina @relation("DailyReportCucinaCutting", fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int
 }
 
 model Staff {
-  id       Int                  @id @default(autoincrement())
+  id       Int               @id @default(autoincrement())
   product  String
   portions String
   weight   String
-  report   DailyReportCucina    @relation("DailyReportCucinaStaff", fields: [reportId], references: [id], onDelete: Cascade)
+  report   DailyReportCucina @relation("DailyReportCucinaStaff", fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int
 }
 
@@ -235,11 +233,10 @@ model Movement {
 }
 
 model WriteOff {
-  id       Int                  @id @default(autoincrement())
+  id       Int               @id @default(autoincrement())
   product  String
   weight   String
   reason   String
-  report   DailyReportCucina    @relation("DailyReportCucinaWriteOff", fields: [reportId], references: [id], onDelete: Cascade)
+  report   DailyReportCucina @relation("DailyReportCucinaWriteOff", fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int
 }
-
