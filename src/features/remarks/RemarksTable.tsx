@@ -50,7 +50,7 @@ const defaultData: RemarksForm = {
 };
 
 export default function RemarksTable() {
-  const { isObserver, isUser } = useAbility();
+  const { isObserver, isBar, isCucina } = useAbility();
   const session = useSession();
   const KEY_LOCAL = "remarks";
   const {
@@ -105,7 +105,7 @@ export default function RemarksTable() {
     const sendDataToApi = async () => {
       const localData = localStorage.getItem(KEY_LOCAL);
       if (!localData) return;
-      if (!isUser) return;
+      if (!isCucina || !isBar) return;
 
       try {
         const res = await fetch("/api/remarks-realtime", {
