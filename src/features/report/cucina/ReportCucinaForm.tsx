@@ -23,6 +23,7 @@ import {
   OVER_HOURS,
   PORTIONS,
   PRODUCTS_DESSERT,
+  PRODUCTS_GARNISH,
   PRODUCTS_INGREDIENTS,
   PRODUCTS_MEAT,
   PRODUCTS_MEAT_FISH,
@@ -40,13 +41,9 @@ import { useTranslations } from "next-intl";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useAbility } from "@/providers/AbilityProvider";
-import { InsufficientRights } from "@/features/ui/InsufficientRights";
 
 export default function DailyReportForm() {
   const t = useTranslations("Navigation");
-
-  const { isAdmin } = useAbility();
 
   const STORAGE_KEY = "report-cucina";
 
@@ -96,8 +93,6 @@ export default function DailyReportForm() {
     removeValue();
   };
 
-  // if (isAdmin) return <InsufficientRights />;
-
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
@@ -142,7 +137,7 @@ export default function DailyReportForm() {
               field2: "portions",
               field3: "weight",
             }}
-            dataArrayField1={PRODUCTS_SALAD}
+            dataArrayField1={[...PRODUCTS_GARNISH, ...PRODUCTS_SALAD]}
             dataArrayField2={PORTIONS}
             dataArrayField3={WEIGTH}
             defaultValue={defaultProductsSalad}

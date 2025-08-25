@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export function useEmployeeSqlData() {
-  const { isAdmin, isUser, isObserver } = useAbility();
+  const { isAdmin } = useAbility();
 
   const t = useTranslations("Settings");
 

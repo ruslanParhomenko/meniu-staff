@@ -28,7 +28,7 @@ import { SendResetButton } from "@/features/ui/SendResetButton";
 
 export function ReportBarForm() {
   const STORAGE_KEY = "report-bar";
-  const { isObserver, isUser } = useAbility();
+  const { isObserver, isBar } = useAbility();
   const session = useSession();
 
   const {
@@ -125,7 +125,7 @@ export function ReportBarForm() {
     const sendDataToApi = async () => {
       const localData = localStorage.getItem(STORAGE_KEY);
       if (!localData) return;
-      if (!isUser) return;
+      if (!isBar) return;
 
       try {
         const res = await fetch("/api/report-realtime", {
