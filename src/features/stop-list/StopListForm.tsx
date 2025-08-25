@@ -150,16 +150,15 @@ export default function TableStopListPrisma() {
   };
 
   return (
-    <div className="w-full md:w-2/4 px-2">
-      <Form {...form}>
-        <form className="space-y-2">
-          <Label className="text-lg font-semibold pb-7">
-            Stop List {saving && "(Saving...)"}
-          </Label>
-
-          <Table className="[&_th]:text-center [&_td]:text-center">
+    <Form {...form}>
+      <form className="space-y-2">
+        <Label className="text-lg font-semibold pb-7">
+          Stop List {saving && "(Saving...)"}
+        </Label>
+        <div className="grid grid-cols-2 gap-10">
+          <Table className="[&_th]:text-center [&_td]:text-center ">
             <TableHeader>
-              <TableRow className="h-10">
+              <TableRow className="h-10 ">
                 <TableCell>Product</TableCell>
                 <TableCell>Date</TableCell>
                 <TableCell>Actions</TableCell>
@@ -194,8 +193,8 @@ export default function TableStopListPrisma() {
               ))}
             </TableBody>
           </Table>
-        </form>
-      </Form>
-    </div>
+        </div>
+      </form>
+    </Form>
   );
 }

@@ -47,7 +47,7 @@ export const SIDEBAR_NAVIGATION = [
   {
     title: "stopList",
     url: "/stop-list",
-    url2: "/stop-list-cucina",
+    url2: "/stop-list",
     icon: List,
   },
   {
