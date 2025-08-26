@@ -95,16 +95,16 @@ const RenderTable = ({
         return (
           <div
             key={field.id}
-            className="grid md:grid-cols-[90%_10%] grid-cols-[82%_14%]"
+            className="grid md:grid-cols-[90%_10%] grid-cols-[80%_14%]"
           >
-            <div className="grid grid-cols-[45%_20%_20%_8%] gap-1 md:grid-cols-[50%_20%_15%_10%] md:gap-3 pb-2 ">
+            <div className="grid grid-cols-[42%_20%_20%_8%] gap-1 md:grid-cols-[50%_20%_15%_10%] md:gap-3 pb-2">
               {field1 && dataArrayField1 && (
                 <SelectFieldWithSearch
                   fieldName={`${name}.${index}.${field1}`}
                   data={dataArrayField1}
                   placeHolder={field1 ? t(field1) : ""}
                   disabled={isObserver}
-                  className="md:w-85 w-35"
+                  className="md:w-85 w-30"
                 />
               )}
               {field2 && dataArrayField2 ? (

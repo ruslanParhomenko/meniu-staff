@@ -11,12 +11,12 @@ import {
 
 export default function ReportTable({ data: report }: any) {
   return (
-    <div className="p-4 border border-gray-200 rounded-md md:p-4 grid grid-cols-1 md:grid-cols-[33%_33%_33%] gap-4">
+    <div className="py-4 px-2 border border-gray-200 rounded-md md:p-4 grid grid-cols-1 md:grid-cols-[33%_33%_33%] gap-4">
       <div className="flex flex-col gap-4">
         <Table className="md:w-120 table-fixed">
           <TableHeader>
             <TableRow>
-              <TableHead className="text-blue-600 w-60">Employees</TableHead>
+              <TableHead className="text-blue-600 w-55">Employees</TableHead>
               <TableHead className="text-blue-600 w-15">Time</TableHead>
               <TableHead className="text-blue-600 w-15">Over</TableHead>
             </TableRow>
@@ -34,7 +34,7 @@ export default function ReportTable({ data: report }: any) {
         <Table className="md:w-120 table-fixed">
           <TableHeader>
             <TableRow>
-              <TableHead className="text-blue-600 w-60">Remains</TableHead>
+              <TableHead className="text-blue-600 w-55">Remains</TableHead>
               <TableHead className="text-blue-600 w-15">p.</TableHead>
               <TableHead className="text-blue-600 w-15">w.</TableHead>
             </TableRow>
@@ -54,16 +54,16 @@ export default function ReportTable({ data: report }: any) {
         <Table className="md:w-120 table-fixed">
           <TableHeader>
             <TableRow>
-              <TableHead className="text-blue-600 w-35">Transfer</TableHead>
-              <TableHead className="text-blue-600 w-35"></TableHead>
+              <TableHead className="text-blue-600 w-30">Transfer</TableHead>
+              <TableHead className="text-blue-600 w-30"></TableHead>
               <TableHead className="text-blue-600 w-15">w.</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {report.movement.map((item: any) => (
               <TableRow key={item.id}>
-                <TableCell>{item.nameOutside}</TableCell>
-                <TableCell>{item.nameInside}</TableCell>
+                <TableCell className="truncate">{item.nameOutside}</TableCell>
+                <TableCell className="truncate">{item.nameInside}</TableCell>
                 <TableCell>{item.weight}</TableCell>
               </TableRow>
             ))}
@@ -72,7 +72,7 @@ export default function ReportTable({ data: report }: any) {
         <Table className="md:w-120 table-fixed">
           <TableHeader>
             <TableRow>
-              <TableHead className="text-blue-600 w-60">Write-off</TableHead>
+              <TableHead className="text-blue-600 w-55">Write-off</TableHead>
               <TableHead className="text-blue-600 w-15">w.</TableHead>
               <TableHead className="text-blue-600 w-15">reason</TableHead>
             </TableRow>
