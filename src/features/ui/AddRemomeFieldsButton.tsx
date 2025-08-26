@@ -18,6 +18,15 @@ export function AddRemomeFieldsButton({
         <>
           <Button
             type="button"
+            variant="destructive"
+            size="icon"
+            onClick={() => formField.replace(defaultValues)}
+            disabled={disabled}
+          >
+            -
+          </Button>
+          <Button
+            type="button"
             variant="outline"
             size="icon"
             onClick={() => formField.append(defaultValues)}
@@ -25,6 +34,9 @@ export function AddRemomeFieldsButton({
           >
             +
           </Button>
+        </>
+      ) : index === formField.fields.length - 1 ? (
+        <>
           <Button
             type="button"
             variant="destructive"
@@ -34,17 +46,16 @@ export function AddRemomeFieldsButton({
           >
             -
           </Button>
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={() => formField.append(defaultValues)}
+            disabled={disabled}
+          >
+            +
+          </Button>
         </>
-      ) : index === formField.fields.length - 1 ? (
-        <Button
-          type="button"
-          variant="outline"
-          size="icon"
-          onClick={() => formField.append(defaultValues)}
-          disabled={disabled}
-        >
-          +
-        </Button>
       ) : (
         <Button
           type="button"

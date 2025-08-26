@@ -40,7 +40,7 @@ export function SendResetButton({
       <div
         className={`flex flex-col justify-between md:flex-row ${
           fetchData ? "pb-6" : ""
-        }  sticky bottom-0`}
+        }  sticky bottom-0 bg-white/80`}
       >
         <div className="flex justify-between md:justify-start items-center py-5 md:gap-10">
           <Button

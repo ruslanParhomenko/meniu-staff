@@ -38,16 +38,6 @@ export function ScheduleTable({ dataRange }: { dataRange: any }) {
                   j === 0 ||
                   j === 1 ||
                   j === 2;
-
-                let borderClass = "";
-                if (isBlueColor) {
-                  borderClass = ` ${
-                    j === 4
-                      ? "min-w-[30px] sticky left-0 z-10 text-left bg-white/80"
-                      : "text-sm text-center text-blue-600"
-                  }`;
-                }
-
                 const isHighlighted = selectedColumn === j;
                 const shouldEmphasize =
                   isSelected && hasValueInSelected && i !== 0;
@@ -60,17 +50,20 @@ export function ScheduleTable({ dataRange }: { dataRange: any }) {
                         setSelectedColumn((prev) => (prev === j ? null : j));
                       }
                     }}
+                    style={{ color: isHighlighted ? "#dc2626" : undefined }}
                     className={`
                   h-10 w-9
-                  ${noBorderRow ? "" : "border border-gray-200"}
-                  ${borderClass}
+                  ${noBorderRow ? "" : "border"}
+                  ${noBorderRow ? "" : "border-[#e5e7eb]"}
+                  ${isBlueColor ? "text-blue-600" : ""}
                   ${isSelected ? "text-blue-600" : ""}
                   ${
                     j === 4
-                      ? "min-w-[30px] sticky left-0 z-10 text-left bg-white/90"
+                      ? "min-w-[30px] sticky left-0 z-5 text-left bg-white/90"
                       : "text-center"
                   }
                   ${isHighlighted ? "font-bold  text-red-600 " : ""}
+                  
                   ${i === 0 ? "cursor-pointer" : ""}
                   ${shouldEmphasize ? "font-bold text-red-600 " : ""}
                 `}

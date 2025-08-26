@@ -30,43 +30,43 @@ export const ArhiveListTable = ({
     ro,
   };
 
-  const [dataSelect,setDataSelect] = useState([{label:'',value:''}])
+  const [dataSelect, setDataSelect] = useState([{ label: "", value: "" }]);
   const [openItem, setOpenItem] = useState<string | null>(null);
 
   const { data, refetch } = useData({
     api: nameTag,
   });
 
-  const id = useWatch({ name: "selectDataId" });
+  const id = useWatch({ name: `selectDataId_${nameTag}` });
 
-  const { data: breakList, refetch: refetchId } = useDataById({
+  const { data: dataId, refetch: refetchId } = useDataById({
     id: id,
     api: nameTag,
   });
 
-  useEffect(()=>{
-    if(!data)return
+  useEffect(() => {
+    if (!data) return;
     const formattedData = data?.map((item) => {
-        const localeObj = localesMap[locale] || ru;
-        return {
-          label: item.id.toLocaleString(),
-          value: format(new Date(item.date), "dd.MM.yyyy", {
-            locale: localeObj,
-          }),
-        };
-      })
-      setDataSelect(formattedData)
-  },[data,nameTag])
+      const localeObj = localesMap[locale] || ru;
+      return {
+        label: item.id.toLocaleString(),
+        value: format(new Date(item.date), "dd.MM.yyyy", {
+          locale: localeObj,
+        }),
+      };
+    });
+    setDataSelect(formattedData);
+  }, [data, nameTag]);
 
   const handleRefetch = () => {
     refetchId();
     refetch();
   };
-  useEffect(()=>{
-    setDataSelect([{label:'',value:''}])
-  },[])
+  useEffect(() => {
+    setDataSelect([{ label: "", value: "" }]);
+  }, []);
 
-return (
+  return (
     <Accordion
       type="single"
       collapsible
@@ -74,24 +74,27 @@ return (
       value={openItem ?? ""}
       onValueChange={(val) => setOpenItem(val)}
     >
-      <AccordionItem value={nameTag}> {/* Уникальный value */}
+      <AccordionItem value={nameTag}>
         <AccordionTrigger className="text-lg cursor-pointer w-full [&>svg]:hidden bg-blue-400 px-4 py-2 hover:bg-blue-600">
           {t(nameTag)}
         </AccordionTrigger>
 
         <AccordionContent>
           <div className="md:w-1/4 w-full py-4" key={nameTag}>
-            <SelectInput fieldName={"selectDataId"} data={dataSelect} />
+            <SelectInput
+              fieldName={`selectDataId_${nameTag}`}
+              data={dataSelect}
+            />
           </div>
 
-          {breakList && (
+          {dataId && (
             <>
               <DeleteListButton
-                data={breakList}
+                data={dataId}
                 api={nameTag}
                 refetch={handleRefetch}
               />
-              {children(breakList)}
+              {children(dataId)}
             </>
           )}
         </AccordionContent>

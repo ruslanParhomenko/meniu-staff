@@ -45,7 +45,7 @@ export async function DELETE(
 ) {
   const { id } = await params;
   try {
-    await prisma.dailyReport.delete({
+    await prisma.dailyReportCucina.delete({
       where: { id: Number(id) },
     });
 

@@ -21,7 +21,7 @@ export const DeleteListButton = ({
   const deleteBreakList = async (id: number) => {
     if (!isAdmin) return toast.error(t("insufficientRights"));
     await fetch(`/api/${api}/${data?.id}`, { method: "DELETE" });
-    toast.success("Брейк-лист успешно удалён !");
+    toast.success("Архив успешно удалён !");
 
     if (refetch) {
       refetch();

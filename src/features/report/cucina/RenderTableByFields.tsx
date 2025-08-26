@@ -93,7 +93,7 @@ const RenderTable = ({
         );
 
         return (
-          <div key={field.id} className="flex items-center">
+          <div key={field.id} className="grid grid-cols-[90%_10%]">
             <div className="grid grid-cols-[40%_20%_20%_8%] gap-1 md:grid-cols-[40%_20%_20%_10%] md:gap-3 w-full pb-2 ">
               {field1 && dataArrayField1 && (
                 <SelectFieldWithSearch
@@ -138,7 +138,7 @@ const RenderTable = ({
               )}
             </div>
 
-            <div className="flex gap-2">
+            <div className="flex gap-1">
               <AddRemomeFieldsButton
                 formField={fieldsArray}
                 defaultValues={defaultValue}
