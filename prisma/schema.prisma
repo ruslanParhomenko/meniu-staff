@@ -183,6 +183,7 @@ model PreparedSalad {
   product  String
   portions String
   weight   String
+  time     String?
   report   DailyReportCucina @relation("DailyReportCucinaPreparedSalads", fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int
 }
@@ -192,6 +193,7 @@ model PreparedSecond {
   product  String
   portions String
   weight   String
+  time     String?
   report   DailyReportCucina @relation("DailyReportCucinaPreparedSeconds", fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int
 }
@@ -201,6 +203,7 @@ model PreparedDessert {
   product  String
   portions String
   weight   String
+  time     String?
   report   DailyReportCucina @relation("DailyReportCucinaPreparedDesserts", fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int
 }
@@ -210,6 +213,7 @@ model Cutting {
   product  String
   portions String?
   weight   String
+  time     String?
   report   DailyReportCucina @relation("DailyReportCucinaCutting", fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int
 }
@@ -219,6 +223,7 @@ model Staff {
   product  String
   portions String
   weight   String
+  time     String?
   report   DailyReportCucina @relation("DailyReportCucinaStaff", fields: [reportId], references: [id], onDelete: Cascade)
   reportId Int
 }

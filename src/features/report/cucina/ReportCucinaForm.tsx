@@ -209,6 +209,7 @@ export default function DailyReportForm() {
               field1: "product",
               field2: "portions",
               field3: "weight",
+              field4: "time",
             }}
             dataArrayField1={[...PRODUCTS_GARNISH, ...PRODUCTS_SALAD]}
             defaultValue={defaultProductsSalad}
@@ -221,6 +222,7 @@ export default function DailyReportForm() {
               field1: "product",
               field2: "portions",
               field3: "weight",
+              field4: "time",
             }}
             dataArrayField1={PRODUCTS_MEAT}
             defaultValue={defaultProductsSeconds}
@@ -233,6 +235,7 @@ export default function DailyReportForm() {
               field1: "product",
               field2: "portions",
               field3: "weight",
+              field4: "time",
             }}
             dataArrayField1={PRODUCTS_DESSERT}
             defaultValue={defaultProductsDesserts}
@@ -245,6 +248,7 @@ export default function DailyReportForm() {
               field1: "product",
               field2: "portions",
               field3: "weight",
+              field4: "time",
             }}
             dataArrayField1={[...PRODUCTS_SEMIFINISHED, ...PRODUCTS_MEAT_FISH]}
             defaultValue={defaultProductsCutting}
@@ -257,6 +261,7 @@ export default function DailyReportForm() {
               field1: "product",
               field2: "portions",
               field3: "weight",
+              field4: "time",
             }}
             dataArrayField1={PRODUCTS_STAFF}
             defaultValue={defaultStaff}

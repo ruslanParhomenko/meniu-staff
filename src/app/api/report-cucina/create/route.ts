@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { time } from "console";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -46,47 +47,55 @@ export async function POST(req: Request) {
 
         preparedSalads: {
           create: preparedSalads.map(
-            (p: { product: any; portions: any; weight: any }) => ({
+            (p: { product: any; portions: any; weight: any; time: any }) => ({
               product: p.product,
               portions: p.portions,
               weight: p.weight,
+              time: p.time,
             })
           ),
         },
 
         preparedSeconds: {
           create: preparedSeconds.map(
-            (p: { product: any; portions: any; weight: any }) => ({
+            (p: { product: any; portions: any; weight: any; time: any }) => ({
               product: p.product,
               portions: p.portions,
               weight: p.weight,
+              time: p.time,
             })
           ),
         },
 
         preparedDesserts: {
           create: preparedDesserts.map(
-            (p: { product: any; portions: any; weight: any }) => ({
+            (p: { product: any; portions: any; weight: any; time: any }) => ({
               product: p.product,
               portions: p.portions,
               weight: p.weight,
+              time: p.time,
             })
           ),
         },
 
         cutting: {
-          create: cutting.map((c: { product: any; weight: any }) => ({
-            product: c.product,
-            weight: c.weight,
-          })),
+          create: cutting.map(
+            (c: { product: any; portions: any; weight: any; time: any }) => ({
+              product: c.product,
+              portions: c.portions,
+              weight: c.weight,
+              time: c.time,
+            })
+          ),
         },
 
         staff: {
           create: staff.map(
-            (s: { product: any; portions: any; weight: any }) => ({
+            (s: { product: any; portions: any; weight: any; time: any }) => ({
               product: s.product,
               portions: s.portions,
               weight: s.weight,
+              time: s.time,
             })
           ),
         },

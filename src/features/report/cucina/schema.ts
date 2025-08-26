@@ -1,3 +1,4 @@
+import { time } from "console";
 import * as yup from "yup";
 
 export const schemaShift = yup
@@ -37,9 +38,10 @@ export const productsSaladSchema = yup
       product: yup.string().nullable().default(""),
       portions: yup.string().nullable().default(""),
       weight: yup.string().nullable().default(""),
+      time: yup.string().nullable().default(""),
     })
   )
-  .default([{ product: "", portions: "", weight: "" }]);
+  .default([{ product: "", portions: "", weight: "", time: "" }]);
 export type ReportProductsSaladType = yup.InferType<typeof productsSaladSchema>;
 export const defaultProductsSalad: ReportProductsSaladType =
   productsSaladSchema.getDefault();
@@ -52,9 +54,10 @@ export const productsSecondsSchema = yup
       product: yup.string().nullable().default(""),
       portions: yup.string().nullable().default(""),
       weight: yup.string().nullable().default(""),
+      time: yup.string().nullable().default(""),
     })
   )
-  .default([{ product: "", portions: "", weight: "" }]);
+  .default([{ product: "", portions: "", weight: "", time: "" }]);
 export type ReportProductsSecondsType = yup.InferType<
   typeof productsSecondsSchema
 >;
@@ -69,9 +72,10 @@ export const productsDessertsSchema = yup
       product: yup.string().nullable().default(""),
       portions: yup.string().nullable().default(""),
       weight: yup.string().nullable().default(""),
+      time: yup.string().nullable().default(""),
     })
   )
-  .default([{ product: "", portions: "", weight: "" }]);
+  .default([{ product: "", portions: "", weight: "", time: "" }]);
 export type ReportProductsDessertsType = yup.InferType<
   typeof productsDessertsSchema
 >;
@@ -86,9 +90,10 @@ export const productsCuttingSchema = yup
       product: yup.string().nullable().default(""),
       portions: yup.string().nullable().default(""),
       weight: yup.string().nullable().default(""),
+      time: yup.string().nullable().default(""),
     })
   )
-  .default([{ product: "", portions: "", weight: "" }]);
+  .default([{ product: "", portions: "", weight: "", time: "" }]);
 export type ReportProductsCuttingType = yup.InferType<
   typeof productsCuttingSchema
 >;
@@ -104,9 +109,10 @@ export const staffSchema = yup
       product: yup.string().nullable().default(""),
       portions: yup.string().nullable().default(""),
       weight: yup.string().nullable().default(""),
+      time: yup.string().nullable().default(""),
     })
   )
-  .default([{ product: "", portions: "", weight: "" }]);
+  .default([{ product: "", portions: "", weight: "", time: "" }]);
 export type ReportStaffType = yup.InferType<typeof staffSchema>;
 export const defaultStaff: ReportStaffType = staffSchema.getDefault();
 
