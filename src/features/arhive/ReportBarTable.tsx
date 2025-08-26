@@ -13,7 +13,7 @@ export const ReportBarTable = ({ data }: { data: any }) => {
   return (
     <>
       <div className="border border-gray-200 rounded-md md:p-4">
-        <div className="grid grid-cols-1 md:grid-cols-[60%_30%] gap-10 pb-4">
+        <div className="grid grid-cols-1 md:grid-cols-[40%_40%] gap-10 pb-4">
           <Table>
             <TableHeader>
               <TableRow>
@@ -44,51 +44,53 @@ export const ReportBarTable = ({ data }: { data: any }) => {
               ))}
             </TableBody>
           </Table>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="text-center">expenses</TableHead>
-                <TableHead className="text-center">sum</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {data.expenses
-                .filter((e: any) => e.name !== "")
-                .map((e: any) => (
-                  <TableRow>
-                    <TableCell className="text-center" key={`name-${e.id}`}>
-                      {e.name || "—"} :
-                    </TableCell>
-                    <TableCell className="text-center" key={`sum-${e.id}`}>
-                      {e.sum || "0"}
-                    </TableCell>
-                  </TableRow>
-                ))}
-            </TableBody>
-          </Table>
+          <div className="flex flex-col items-center justify-between gap-4">
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-center">expenses</TableHead>
+                  <TableHead className="text-center">sum</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {data.expenses
+                  .filter((e: any) => e.name !== "")
+                  .map((e: any, idx: number) => (
+                    <TableRow key={idx}>
+                      <TableCell className="text-center">
+                        {e.name || "—"} :
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {e.sum || "0"}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+            <Table>
+              <TableBody>
+                <TableRow>
+                  <TableCell className="font-bold">hours:</TableCell>
+                  {data.cashVerify
+                    .filter((c: CashVerify) => c.value !== "0")
+                    .map((c: CashVerify) => (
+                      <TableCell key={`h-${c.id}`}>
+                        {c?.hours?.split(":")[0] || "—"}
+                      </TableCell>
+                    ))}
+                </TableRow>
+                <TableRow>
+                  <TableCell className="font-bold">value:</TableCell>
+                  {data.cashVerify
+                    .filter((c: CashVerify) => c.value !== "0")
+                    .map((c: CashVerify) => (
+                      <TableCell key={`v-${c.id}`}>{c.value || "—"}</TableCell>
+                    ))}
+                </TableRow>
+              </TableBody>
+            </Table>
+          </div>
         </div>
-        <Table>
-          <TableBody>
-            <TableRow>
-              <TableCell className="font-bold">hours:</TableCell>
-              {data.cashVerify
-                .filter((c: CashVerify) => c.value !== "0")
-                .map((c: CashVerify) => (
-                  <TableCell key={`h-${c.id}`}>
-                    {c?.hours?.split(":")[0] || "—"}
-                  </TableCell>
-                ))}
-            </TableRow>
-            <TableRow>
-              <TableCell className="font-bold">value:</TableCell>
-              {data.cashVerify
-                .filter((c: CashVerify) => c.value !== "0")
-                .map((c: CashVerify) => (
-                  <TableCell key={`v-${c.id}`}>{c.value || "—"}</TableCell>
-                ))}
-            </TableRow>
-          </TableBody>
-        </Table>
       </div>
     </>
   );

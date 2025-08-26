@@ -21,6 +21,7 @@ type Props = {
   data: string[];
   disabled?: boolean;
   className?: string;
+  style?: React.CSSProperties;
 };
 
 function SelectField({
@@ -29,6 +30,7 @@ function SelectField({
   data,
   disabled,
   className,
+  style,
 }: Props) {
   const { control } = useFormContext();
 
@@ -52,7 +54,8 @@ function SelectField({
                 <FormControl className="w-full">
                   <SelectTrigger
                     data-placeholder=""
-                    className={`${className} flex justify-center min-w-15   [&>svg]:hidden`}
+                    className={`${className} flex justify-center min-w-12   [&>svg]:hidden`}
+                    style={style}
                   >
                     <SelectValue placeholder={placeHolder} />
                   </SelectTrigger>

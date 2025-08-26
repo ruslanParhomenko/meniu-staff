@@ -3,7 +3,7 @@ import { ArhiveListTable } from "./ArhiveListTable";
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import BreakListTable from "./BreakListTable";
-import ReportTable from "./ReportTable";
+import ReportTable from "./ReportCucinaTable";
 import RemarkTable from "./RemarkTable";
 import { ReportBarTable } from "./ReportBarTable";
 

@@ -50,7 +50,12 @@ export function ScheduleTable({ dataRange }: { dataRange: any }) {
                         setSelectedColumn((prev) => (prev === j ? null : j));
                       }
                     }}
-                    style={{ color: isHighlighted ? "#dc2626" : undefined }}
+                    style={{
+                      color:
+                        isHighlighted || shouldEmphasize
+                          ? "#dc2626"
+                          : undefined,
+                    }}
                     className={`
                   h-10 w-9
                   ${noBorderRow ? "" : "border"}

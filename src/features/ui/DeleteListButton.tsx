@@ -30,11 +30,11 @@ export const DeleteListButton = ({
     router.refresh();
   };
   return (
-    <div className="flex w-full justify-between items-center py-2 pt-4">
+    <div className="flex w-full justify-between items-center p-4 pt-4">
       <div className="text-lg font-semibold">
-        {new Date(data.date).toLocaleDateString(undefined, {
+        {new Date(data.date).toLocaleDateString("ru-RU", {
           day: "2-digit",
-          month: "long",
+          month: "2-digit",
           year: "numeric",
         })}
       </div>

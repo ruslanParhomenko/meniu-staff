@@ -75,7 +75,13 @@ export const ArhiveListTable = ({
       onValueChange={(val) => setOpenItem(val)}
     >
       <AccordionItem value={nameTag}>
-        <AccordionTrigger className="text-lg cursor-pointer w-full [&>svg]:hidden bg-blue-400 px-4 py-2 hover:bg-blue-600">
+        <AccordionTrigger
+          className="text-lg cursor-pointer w-full  [&>svg]:hidden px-4 py-2 hover:no-underline"
+          style={{
+            backgroundColor: "#60a5fa",
+            color: "#1f2937",
+          }}
+        >
           {t(nameTag)}
         </AccordionTrigger>
 

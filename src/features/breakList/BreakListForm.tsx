@@ -32,6 +32,7 @@ import {
 import SelectField from "@/components/inputs/SelectField";
 import dynamic from "next/dynamic";
 import { FetchDataButton } from "../ui/FetchDataButton";
+import { useSidebar } from "@/components/ui/sidebar";
 
 export type BreakListFormValues = {
   date?: Date;
@@ -43,6 +44,7 @@ const BreakListForm = () => {
   const currentMinute = new Date().getMinutes();
 
   const { isObserver, isBar } = useAbility();
+  const { isMobile } = useSidebar();
   const session = useSession();
   const LOCAL_STORAGE_KEY = "breakListFormData";
   const { employees } = useEmployeeSqlData();
@@ -184,6 +186,7 @@ const BreakListForm = () => {
                   return (
                     <TableHead
                       key={i}
+                      style={{ color: isCurrentHour ? "red" : "blue" }}
                       className={`text-center text-xl ${
                         isCurrentHour
                           ? "text-red-600 font-bold text-xl"
@@ -236,7 +239,11 @@ const BreakListForm = () => {
                     </TableCell>
 
                     <TableCell
-                      className={`sticky left-0 z-10 text-left bg-white/90 `}
+                      className={`${
+                        isMobile
+                          ? "sticky left-0 z-10 text-left bg-white/90"
+                          : "text-left"
+                      }`}
                     >
                       <SelectField
                         fieldName={`rows[${rowIndex}].name`}
@@ -247,6 +254,7 @@ const BreakListForm = () => {
                             ? "!text-red-600 font-bold text-[18px]"
                             : ""
                         }`}
+                        style={rowHasTrue ? { color: "#dc2626" } : undefined}
                       />
                     </TableCell>
 
@@ -285,8 +293,14 @@ const BreakListForm = () => {
                             className={`${
                               isTrue ? "!text-red-600 font-bold text-xl" : ""
                             } ${
-                              selectedValue === "X" ? "bg-gray-300" : "bg-white"
-                            } text-center`}
+                              selectedValue === "X" ? "bg-gray-400" : "bg-white"
+                            }`}
+                            style={{
+                              color: isTrue ? "#dc2626" : undefined,
+                              backgroundColor:
+                                selectedValue === "X" ? "#9ca3af" : "#ffffff",
+                              fontWeight: isTrue ? 700 : undefined,
+                            }}
                           />
                         </TableCell>
                       );

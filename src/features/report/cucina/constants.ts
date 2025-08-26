@@ -92,7 +92,16 @@ export const WEIGTH = [
   "20",
 ];
 
-export const REASON = ["порча", "отработка", "кухня", "стафф", "админ", "офис"];
+export const REASON = [
+  "порча",
+  "отработка",
+  "кухня",
+  "стафф",
+  "админ",
+  "офис",
+  "БАР",
+  "КУХНЯ",
+];
 
 // списание
 export const PRODUCTS_INGREDIENTS = [
