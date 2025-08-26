@@ -38,7 +38,7 @@ export function AbilityProvider({ children }: { children: React.ReactNode }) {
       const isCucina = CUCINA.includes(data.user.email);
       const isBar = BAR.includes(data.user.email);
       const isUser = USER.includes(data.user.email);
-      const isObserver = !isAdmin && !isCucina && !isBar;
+      const isObserver = !isAdmin && !isCucina && !isBar && !isUser;
 
       setAbility({ isAdmin, isCucina, isBar, isObserver, isUser });
     } else {

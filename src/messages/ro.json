@@ -106,6 +106,9 @@
     "addEmployee": "Adaugă angajat",
     "insufficientRights": "Drepturi insuficiente",
     "addEmployees": "Adauga angajati",
-    "rate": "Tarif"
+    "rate": "Tarif",
+    "addUsers": "Adauga utilizatori",
+    "mail": "Email",
+    "role": "Rol"
   }
 }
