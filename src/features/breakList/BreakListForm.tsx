@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/table";
 import SelectField from "@/components/inputs/SelectField";
 import dynamic from "next/dynamic";
+import { FetchDataButton } from "../ui/FetchDataButton";
 
 export type BreakListFormValues = {
   date?: Date;
@@ -168,7 +169,10 @@ const BreakListForm = () => {
     <div className="w-full">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
-          {!isObserver && <DatePickerInput fieldName="date" />}
+          <div className="flex items-center gap-4 justify-between">
+            {!isObserver && <DatePickerInput fieldName="date" />}
+            <FetchDataButton fetchData={fetchSupabaseData} />
+          </div>
 
           <Table>
             <TableHeader>

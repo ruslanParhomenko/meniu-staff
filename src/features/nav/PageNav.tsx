@@ -30,7 +30,7 @@ function PageNav({
   };
 
   return (
-    <div className="pb-4 pt-2 px-4 sticky top-0 z-10 bg-white">
+    <div className="pb-4 pt-2 px-2 sticky top-0 z-10 bg-white">
       <div className="flex flex-row justify-end md:justify-start gap-6 border-b border-gray-200  ">
         {navItems
           .filter((page) => page.href !== "#")

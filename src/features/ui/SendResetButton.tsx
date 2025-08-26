@@ -11,6 +11,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useSidebar } from "@/components/ui/sidebar";
 
 export function SendResetButton({
   resetForm,
@@ -20,6 +21,7 @@ export function SendResetButton({
   fetchData?: () => void;
 }) {
   const { isObserver } = useAbility();
+  const { toggleSidebar, isMobile } = useSidebar();
   const t = useTranslations("UI");
 
   const [openModal, setOpenModal] = useState<"save" | "reset" | null>(null);
@@ -38,11 +40,11 @@ export function SendResetButton({
   return (
     <>
       <div
-        className={`flex flex-col justify-between md:flex-row ${
-          fetchData ? "pb-6" : ""
-        }  sticky bottom-0 bg-white/80`}
+        className={
+          "flex flex-col justify-between md:flex-row bottom-2 sticky  bg-white/80 z-10"
+        }
       >
-        <div className="flex justify-between md:justify-start items-center py-5 md:gap-10">
+        <div className="flex justify-between md:justify-start items-center py-2 md:gap-10">
           <Button
             type="button"
             variant="default"
@@ -52,17 +54,6 @@ export function SendResetButton({
           >
             {t("save")}
           </Button>
-
-          {fetchData && (
-            <Button
-              type="button"
-              variant="secondary"
-              className="hover:bg-red-600"
-              onClick={() => fetchData?.()}
-            >
-              fetch data
-            </Button>
-          )}
 
           <Button
             type="button"

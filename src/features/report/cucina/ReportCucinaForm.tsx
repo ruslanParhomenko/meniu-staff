@@ -42,6 +42,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
 import { CUCINA, useAbility } from "@/providers/AbilityProvider";
 import { useSession } from "next-auth/react";
+import { FetchDataButton } from "@/features/ui/FetchDataButton";
 
 export default function DailyReportForm() {
   const t = useTranslations("Navigation");
@@ -172,7 +173,10 @@ export default function DailyReportForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <div className="w-full md:px-10 md:mx-auto md:max-w-5xl">
-          <DatePickerInput fieldName="date" />
+          <div className="flex items-center gap-4 justify-between">
+            {!isObserver && <DatePickerInput fieldName="date" />}
+            <FetchDataButton fetchData={fetchSupabaseData} />
+          </div>
 
           {selectedEmployees.length > 0 && (
             <RenderTableByFields

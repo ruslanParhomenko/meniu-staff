@@ -23,6 +23,7 @@ import { OVER_HOURS, PENALITY, REASON } from "./constants";
 import toast from "react-hot-toast";
 import { BAR, useAbility } from "@/providers/AbilityProvider";
 import { useSession } from "next-auth/react";
+import { FetchDataButton } from "../ui/FetchDataButton";
 
 type RemarksForm = {
   date: Date;
@@ -156,8 +157,9 @@ export default function RemarksTable() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
           <Label className="text-lg font-semibold pb-7">Employee Remarks</Label>
-          <div className="md:px-6">
-            <DatePickerInput fieldName="date" />
+          <div className="flex items-center gap-4 justify-between">
+            {!isObserver && <DatePickerInput fieldName="date" />}
+            <FetchDataButton fetchData={fetchSupabaseData} />
           </div>
           <Table className="[&_th]:text-center [&_td]:text-center ">
             <TableHeader>

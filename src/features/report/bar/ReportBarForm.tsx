@@ -24,6 +24,7 @@ import TableTobacco from "./TableTobacco";
 import TableEspenses from "./TableExpenses";
 import TableCashVerify from "./TableCashVerify";
 import { SendResetButton } from "@/features/ui/SendResetButton";
+import { FetchDataButton } from "@/features/ui/FetchDataButton";
 
 export function ReportBarForm() {
   const STORAGE_KEY = "report-bar";
@@ -189,7 +190,10 @@ export function ReportBarForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
-        {!isObserver && <DatePickerInput fieldName="date" />}
+        <div className="flex items-center gap-4 justify-between">
+          {!isObserver && <DatePickerInput fieldName="date" />}
+          <FetchDataButton fetchData={fetchSupabaseData} />
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-[50%_5%_25%] md:gap-20 md:pr-20 pt-4">
           <TableTobacco />
@@ -197,7 +201,7 @@ export function ReportBarForm() {
           <TableEspenses />
         </div>
         <TableCashVerify />
-        <SendResetButton resetForm={resetForm} fetchData={fetchSupabaseData} />
+        <SendResetButton resetForm={resetForm} />
       </form>
     </Form>
   );
