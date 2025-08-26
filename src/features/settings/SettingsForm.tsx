@@ -16,7 +16,7 @@ export default function SettingsForm() {
   return (
     <div className="flex flex-col gap-4">
       <Accordion type="single" collapsible>
-        <AccordionItem value="item-1">
+        <AccordionItem value="employees">
           <AccordionTrigger className="text-lg cursor-pointer w-full [&>svg]:hidden bg-blue-400 px-4 py-2 hover:bg-blue-600  no-underline! focus:no-underline">
             {t("addEmployees")} +
           </AccordionTrigger>
@@ -29,7 +29,7 @@ export default function SettingsForm() {
         </AccordionItem>
       </Accordion>
       <Accordion type="single" collapsible>
-        <AccordionItem value="item-1">
+        <AccordionItem value="users">
           <AccordionTrigger className="text-lg cursor-pointer w-full [&>svg]:hidden bg-blue-400 px-4 py-2 hover:bg-blue-600  no-underline! focus:no-underline">
             {t("addUsers")} +
           </AccordionTrigger>

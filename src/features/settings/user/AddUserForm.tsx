@@ -1,7 +1,8 @@
 "use client";
+import SelectField from "@/components/inputs/SelectField";
+import TextInput from "@/components/inputs/TextInput";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAbility } from "@/providers/AbilityProvider";
 import { useTranslations } from "next-intl";
@@ -14,14 +15,12 @@ export function AddUserForm() {
   const t = useTranslations("Settings");
 
   const form = useForm<any>();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = form;
+  const { handleSubmit } = form;
 
   const onSubmit = async (data: any) => {
     if (!isAdmin) return toast.error(t("insufficientRights"));
+
+    console.log(data);
 
     // await fetch("/api/employees", {
     //   method: "POST",
@@ -39,51 +38,20 @@ export function AddUserForm() {
       <Form {...form}>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">
           <div className="my-2">
-            <Label className="mb-2" htmlFor="firstName">
+            <Label className="mb-2" htmlFor="mail">
               {t("mail")}
             </Label>
-            <Input
-              id="firstName"
-              {...register("firstName", { required: true })}
-            />
-            {errors.firstName && (
-              <p className="text-red-500 text-sm">{t("requiredField")}</p>
-            )}
+            <TextInput fieldName="mail" fieldLabel="" />
           </div>
 
           <div className="my-2">
-            <Label className="mb-2" htmlFor="lastName">
+            <Label className="mb-2" htmlFor="role">
               {t("role")}
             </Label>
-            <Input
-              id="lastName"
-              {...register("lastName", { required: true })}
+            <SelectField
+              fieldName="role"
+              data={["admin", "user", "observer", "guest", "bar", "cucina"]}
             />
-            {errors.lastName && (
-              <p className="text-red-500 text-sm">{t("requiredField")}</p>
-            )}
-          </div>
-
-          <div className="my-2">
-            <Label className="mb-2" htmlFor="position">
-              {t("position")}
-            </Label>
-            <Input
-              id="position"
-              {...register("position", { required: true })}
-            />
-            {errors.position && (
-              <p className="text-red-500 text-sm">{t("requiredField")}</p>
-            )}
-          </div>
-          <div className="my-2">
-            <Label className="mb-2" htmlFor="rate">
-              {t("rate")}
-            </Label>
-            <Input id="rate" {...register("rate", { required: false })} />
-            {errors.rate && (
-              <p className="text-red-500 text-sm">{t("requiredField")}</p>
-            )}
           </div>
 
           <Button type="submit" disabled={form.formState.isSubmitting}>

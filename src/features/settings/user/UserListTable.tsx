@@ -9,24 +9,11 @@ import { useTranslations } from "next-intl";
 export function UserListTable() {
   const t = useTranslations("Settings");
   const { isAdmin } = useAbility();
-  const { employees, loading, deleteEmployee } = useEmployeeSqlData();
+  // const { employees, loading, deleteEmployee } = useEmployeeSqlData();
 
-  if (loading) return <div>Loading...</div>;
   return (
     <div className="w-full px-2 md:w-1/2">
       <h2 className="text-lg font-semibold mt-6">{t("employees")}:</h2>
-      {employees.map((emp) => (
-        <div key={emp.id} className="flex justify-between py-2">
-          <Label className="min-w-1/3">{emp.name}</Label>
-          <Label className="text-muted-foreground ">{emp.position}</Label>
-          <Label className="text-muted-foreground ">
-            {isAdmin ? `${emp.rate}` : "-"}
-          </Label>
-          <Button type="button" onClick={() => deleteEmployee(emp.id)}>
-            <Delete />
-          </Button>
-        </div>
-      ))}
     </div>
   );
 }

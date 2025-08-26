@@ -15,6 +15,7 @@ type TextInputProps = {
   maxRows?: number | undefined;
   type?: string;
   withButton?: React.ReactNode;
+  className?: string;
 };
 
 function TextInput({
@@ -23,6 +24,7 @@ function TextInput({
   placeholder,
   type,
   withButton,
+  className,
 }: TextInputProps) {
   const { control } = useFormContext();
   return (
@@ -32,10 +34,12 @@ function TextInput({
       defaultValue={""}
       render={({ field }) => {
         return (
-          <FormItem className="grid grid-cols-1 place-items-start justify-items-start gap-1 lg:grid-cols-2 lg:gap-4 xl:grid-cols-3">
-            <Label className="text-nowrap text-[16px] font-semibold lg:pr-14">
-              {fieldLabel}
-            </Label>
+          <FormItem className="grid grid-cols-1 place-items-start justify-items-start gap-1 ">
+            {fieldLabel && (
+              <Label className="text-nowrap text-[16px] font-semibold lg:pr-14">
+                {fieldLabel}
+              </Label>
+            )}
 
             <div className="w-full">
               <div className="flex gap-2">
