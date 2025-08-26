@@ -1,3 +1,4 @@
+"use client";
 import SelectInput from "@/components/inputs/SelectInput";
 import { useDataById } from "@/hooks/use-data-id";
 import { useWatch } from "react-hook-form";
@@ -39,7 +40,7 @@ export const ArhiveListTable = ({
 
   const id = useWatch({ name: `selectDataId_${nameTag}` });
 
-  const { data: dataId, refetch: refetchId } = useDataById({
+  const { data: dataId, refetch: refetchId } = useDataById<any>({
     id: id,
     api: nameTag,
   });
