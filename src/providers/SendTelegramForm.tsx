@@ -5,14 +5,14 @@ import { useEffect } from "react";
 import { useSendTelegram } from "@/hooks/use-send-telegram";
 
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
-import { SendResetButton } from "@/features/ui/SendResetButton";
+import { SendResetButton } from "@/components/buttons/SendResetButton";
 
-import { OrderListFormType } from "@/type/order-type";
 import {
   defaultEmptyValuesBar,
   defaultEmptyValuesCucina,
   defaultValuesZNBar,
   defaultValuesZNCucina,
+  OrderListFormType,
 } from "@/features/order-list/schemas";
 
 export const OrderListTelegramForm = ({

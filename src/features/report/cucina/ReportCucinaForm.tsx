@@ -15,7 +15,7 @@ import {
   ReportCucinaType,
   schemaReportCucina,
 } from "./schema";
-import { SendResetButton } from "@/features/ui/SendResetButton";
+import { SendResetButton } from "@/components/buttons/SendResetButton";
 import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
 import { useEffect, useMemo } from "react";
 import {
@@ -34,7 +34,7 @@ import {
   REMAINS_PRODUCTS,
   SELECT_TIME,
 } from "./constants";
-import { RenderTableByFields } from "./RenderTableByFields";
+
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
@@ -43,7 +43,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
 import { CUCINA, useAbility } from "@/providers/AbilityProvider";
 import { useSession } from "next-auth/react";
-import { FetchDataButton } from "@/features/ui/FetchDataButton";
+import { FetchDataButton } from "@/components/buttons/FetchDataButton";
+import RenderTableCucina from "./RenderTableByFields";
 
 export default function DailyReportForm() {
   const t = useTranslations("Navigation");
@@ -175,12 +176,12 @@ export default function DailyReportForm() {
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <div className="w-full md:px-10 md:mx-auto md:max-w-5xl">
           <div className="flex items-center gap-4 justify-between">
-            {!isObserver && <DatePickerInput fieldName="date" />}
+            <DatePickerInput fieldName="date" />
             <FetchDataButton fetchData={fetchSupabaseData} />
           </div>
 
           {selectedEmployees.length > 0 && (
-            <RenderTableByFields
+            <RenderTableCucina
               name="shifts"
               form={form}
               placeHolder={{
@@ -195,7 +196,7 @@ export default function DailyReportForm() {
             />
           )}
 
-          <RenderTableByFields
+          <RenderTableCucina
             name="remains"
             form={form}
             placeHolder={{
@@ -207,7 +208,7 @@ export default function DailyReportForm() {
             defaultValue={defaultRemains}
           />
 
-          <RenderTableByFields
+          <RenderTableCucina
             name="preparedSalads"
             form={form}
             placeHolder={{
@@ -224,7 +225,7 @@ export default function DailyReportForm() {
             defaultValue={defaultProductsSalad}
           />
 
-          <RenderTableByFields
+          <RenderTableCucina
             name="preparedSeconds"
             form={form}
             placeHolder={{
@@ -237,7 +238,7 @@ export default function DailyReportForm() {
             defaultValue={defaultProductsSeconds}
           />
 
-          <RenderTableByFields
+          <RenderTableCucina
             name="preparedDesserts"
             form={form}
             placeHolder={{
@@ -250,7 +251,7 @@ export default function DailyReportForm() {
             defaultValue={defaultProductsDesserts}
           />
 
-          <RenderTableByFields
+          <RenderTableCucina
             name="cutting"
             form={form}
             placeHolder={{
@@ -263,7 +264,7 @@ export default function DailyReportForm() {
             defaultValue={defaultProductsCutting}
           />
 
-          <RenderTableByFields
+          <RenderTableCucina
             name="staff"
             form={form}
             placeHolder={{
@@ -276,7 +277,7 @@ export default function DailyReportForm() {
             defaultValue={defaultStaff}
           />
 
-          <RenderTableByFields
+          <RenderTableCucina
             name="movement"
             form={form}
             placeHolder={{
@@ -289,7 +290,7 @@ export default function DailyReportForm() {
             defaultValue={defaultStaff}
           />
 
-          <RenderTableByFields
+          <RenderTableCucina
             name="writeOff"
             form={form}
             placeHolder={{

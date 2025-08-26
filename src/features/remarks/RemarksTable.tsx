@@ -13,7 +13,7 @@ import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useEffect, useMemo } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { SendResetButton } from "../ui/SendResetButton";
+import { SendResetButton } from "../../components/buttons/SendResetButton";
 import SelectField from "@/components/inputs/SelectField";
 import { useTranslations } from "next-intl";
 
@@ -23,7 +23,7 @@ import { OVER_HOURS, PENALITY, REASON } from "./constants";
 import toast from "react-hot-toast";
 import { BAR, useAbility } from "@/providers/AbilityProvider";
 import { useSession } from "next-auth/react";
-import { FetchDataButton } from "../ui/FetchDataButton";
+import { FetchDataButton } from "../../components/buttons/FetchDataButton";
 
 type RemarksForm = {
   date: Date;

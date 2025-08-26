@@ -1,6 +1,6 @@
 "use client";
 import { OrderListTTNCucine } from "@/features/order-list/orderListCucinaTTN";
-import { InsufficientRights } from "@/features/ui/InsufficientRights";
+import { InsufficientRights } from "@/components/wrapper/InsufficientRights";
 import { useAbility } from "@/providers/AbilityProvider";
 import { OrderListTelegramForm } from "@/providers/SendTelegramForm";
 

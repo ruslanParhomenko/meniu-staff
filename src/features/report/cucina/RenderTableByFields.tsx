@@ -7,7 +7,7 @@ import {
 } from "react-hook-form";
 
 import SelectField from "@/components/inputs/SelectField";
-import { AddRemomeFieldsButton } from "@/features/ui/AddRemomeFieldsButton";
+import { AddRemomeFieldsButton } from "@/components/buttons/AddRemomeFieldsButton";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
 import { Separator } from "@radix-ui/react-separator";
@@ -41,7 +41,7 @@ const formatNow = () => {
     .toString()
     .padStart(2, "0")}`;
 };
-const RenderTable = ({
+const RenderTableCucina = ({
   name,
   form,
   placeHolder,
@@ -52,7 +52,9 @@ const RenderTable = ({
 }: RenderEmployeesTableProps) => {
   const t = useTranslations("Navigation");
   const fieldsArray = useFieldArray({ control: form.control, name: name });
-  const { isObserver } = useAbility();
+  const { isObserver, isUser } = useAbility();
+
+  const isDisabled = isObserver || isUser;
 
   const { field1, field2, field3, field4 } = placeHolder;
 
@@ -103,7 +105,7 @@ const RenderTable = ({
                   fieldName={`${name}.${index}.${field1}`}
                   data={dataArrayField1}
                   placeHolder={field1 ? t(field1) : ""}
-                  disabled={isObserver}
+                  disabled={isDisabled}
                   className="md:w-85 w-30"
                 />
               )}
@@ -112,14 +114,14 @@ const RenderTable = ({
                   fieldName={`${name}.${index}.${field2}`}
                   data={dataArrayField2}
                   placeHolder={field2 ? t(field2) : ""}
-                  disabled={isObserver}
+                  disabled={isDisabled}
                   className="md:w-30 w-14"
                 />
               ) : (
                 <NumericInput
                   fieldName={`${name}.${index}.${field2}`}
                   placeholder={field2 ? t(field2) : ""}
-                  disabled={isObserver}
+                  disabled={isDisabled}
                   className="md:w-30 w-14"
                 />
               )}
@@ -128,14 +130,14 @@ const RenderTable = ({
                   fieldName={`${name}.${index}.${field3}`}
                   data={dataArrayField3}
                   placeHolder={field3 ? t(field3) : ""}
-                  disabled={isObserver}
+                  disabled={isDisabled}
                   className="md:w-20 w-14"
                 />
               ) : (
                 <NumericInput
                   fieldName={`${name}.${index}.${field3}`}
                   placeholder={field3 ? t(field3) : ""}
-                  disabled={isObserver}
+                  disabled={isDisabled}
                   className="md:w-20 w-14"
                 />
               )}
@@ -151,7 +153,7 @@ const RenderTable = ({
                 formField={fieldsArray}
                 defaultValues={defaultValue}
                 index={index}
-                disabled={isObserver}
+                disabled={isDisabled}
               />
             </div>
           </div>
@@ -161,9 +163,4 @@ const RenderTable = ({
   );
 };
 
-export const RenderTableByFields = dynamic(() => Promise.resolve(RenderTable), {
-  ssr: false,
-  loading: () => (
-    <div className="text-center h-10 text-4xl text-blue-800">...</div>
-  ),
-});
+export default RenderTableCucina;

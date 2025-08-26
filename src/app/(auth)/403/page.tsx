@@ -1,4 +1,4 @@
-import { InsufficientRights } from "@/features/ui/InsufficientRights";
+import { InsufficientRights } from "@/components/wrapper/InsufficientRights";
 
 const Page = () => {
   return <InsufficientRights />;

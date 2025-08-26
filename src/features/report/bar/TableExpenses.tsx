@@ -20,7 +20,9 @@ import { expensesDefault } from "./schema";
 const RECIPIENTS = ["NBM", "BAR", "NORI", "DISHES", "BN", "OTHER"];
 
 export default function TableEspenses() {
-  const { isObserver } = useAbility();
+  const { isObserver, isUser } = useAbility();
+
+  const isDisabled = isObserver || isUser;
 
   const { setValue, control, watch } = useFormContext();
 
@@ -51,13 +53,13 @@ export default function TableEspenses() {
                 <SelectField
                   data={RECIPIENTS}
                   fieldName={`expenses.${idx}.name`}
-                  disabled={isObserver}
+                  disabled={isDisabled}
                 />
               </TableCell>
               <TableCell className="flex items-center justify-center">
                 <NumericInput
                   fieldName={`expenses.${idx}.sum`}
-                  disabled={isObserver}
+                  disabled={isDisabled}
                   className="w-30! text-center"
                 />
               </TableCell>

@@ -13,7 +13,8 @@ import { useAbility } from "@/providers/AbilityProvider";
 import { HOURS } from "./schema";
 
 export default function TableCashVerify() {
-  const { isObserver } = useAbility();
+  const { isObserver, isUser } = useAbility();
+  const isDisabled = isObserver || isUser;
   return (
     <div className="w-full py-4">
       <Label className="text-lg font-semibold pb-7">Cash Verify</Label>
@@ -32,7 +33,7 @@ export default function TableCashVerify() {
                 <NumericInput
                   fieldName={`cashVerify.${idx}.value`}
                   className="w-12! text-center"
-                  disabled={isObserver}
+                  disabled={isDisabled}
                 />
               </TableCell>
             ))}

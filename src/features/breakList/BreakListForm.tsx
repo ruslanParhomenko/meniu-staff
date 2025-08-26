@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 
 import { Form } from "../../components/ui/form";
 import DatePickerInput from "@/components/inputs/DatePickerInput";
-import { SendResetButton } from "../ui/SendResetButton";
+import { SendResetButton } from "../../components/buttons/SendResetButton";
 
 import {
   BREAK_LIST_DEFAULT,
@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/table";
 import SelectField from "@/components/inputs/SelectField";
 import dynamic from "next/dynamic";
-import { FetchDataButton } from "../ui/FetchDataButton";
+import { FetchDataButton } from "../../components/buttons/FetchDataButton";
 import { useSidebar } from "@/components/ui/sidebar";
 
 export type BreakListFormValues = {

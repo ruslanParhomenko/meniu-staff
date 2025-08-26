@@ -23,12 +23,12 @@ import {
 import TableTobacco from "./TableTobacco";
 import TableEspenses from "./TableExpenses";
 import TableCashVerify from "./TableCashVerify";
-import { SendResetButton } from "@/features/ui/SendResetButton";
-import { FetchDataButton } from "@/features/ui/FetchDataButton";
+import { SendResetButton } from "@/components/buttons/SendResetButton";
+import { FetchDataButton } from "@/components/buttons/FetchDataButton";
 
 export function ReportBarForm() {
   const STORAGE_KEY = "report-bar";
-  const { isObserver, isBar } = useAbility();
+  const { isBar } = useAbility();
   const session = useSession();
 
   const {
@@ -191,7 +191,7 @@ export function ReportBarForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <div className="flex items-center gap-4 justify-between">
-          {!isObserver && <DatePickerInput fieldName="date" />}
+          <DatePickerInput fieldName="date" />
           <FetchDataButton fetchData={fetchSupabaseData} />
         </div>
 

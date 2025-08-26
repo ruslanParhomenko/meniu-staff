@@ -17,7 +17,9 @@ import { useFormContext, useWatch } from "react-hook-form";
 import { useAbility } from "@/providers/AbilityProvider";
 
 export default function TableTobacco() {
-  const { isObserver } = useAbility();
+  const { isObserver, isUser } = useAbility();
+
+  const isDisabled = isObserver || isUser;
 
   const { control } = useFormContext();
   const tobacco =
@@ -46,14 +48,14 @@ export default function TableTobacco() {
                 <SelectField
                   fieldName={`tobacco.${idx}.incoming`}
                   data={SELECT_COUNT}
-                  disabled={isObserver}
+                  disabled={isDisabled}
                 />
               </TableCell>
               <TableCell className="px-2">
                 <SelectField
                   fieldName={`tobacco.${idx}.outgoing`}
                   data={SELECT_COUNT}
-                  disabled={isObserver}
+                  disabled={isDisabled}
                 />
               </TableCell>
               <TableCell className="px-2">

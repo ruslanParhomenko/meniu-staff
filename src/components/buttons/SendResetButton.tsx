@@ -11,17 +11,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useSidebar } from "@/components/ui/sidebar";
 
-export function SendResetButton({
-  resetForm,
-  fetchData,
-}: {
-  resetForm: () => void;
-  fetchData?: () => void;
-}) {
-  const { isObserver } = useAbility();
-  const { toggleSidebar, isMobile } = useSidebar();
+export function SendResetButton({ resetForm }: { resetForm: () => void }) {
+  const { isObserver, isUser } = useAbility();
+  const isDisabled = isObserver || isUser;
   const t = useTranslations("UI");
 
   const [openModal, setOpenModal] = useState<"save" | "reset" | null>(null);
@@ -49,7 +42,7 @@ export function SendResetButton({
             type="button"
             variant="default"
             className="hover:bg-blue-600"
-            disabled={isObserver}
+            disabled={isDisabled}
             onClick={() => setOpenModal("save")}
           >
             {t("save")}
@@ -59,7 +52,7 @@ export function SendResetButton({
             type="button"
             variant="secondary"
             className="hover:bg-red-600"
-            disabled={isObserver}
+            disabled={isDisabled}
             onClick={() => setOpenModal("reset")}
           >
             {t("reset")}

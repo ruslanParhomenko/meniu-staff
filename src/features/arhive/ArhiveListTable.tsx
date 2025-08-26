@@ -1,7 +1,7 @@
 import SelectInput from "@/components/inputs/SelectInput";
 import { useDataById } from "@/hooks/use-data-id";
 import { useWatch } from "react-hook-form";
-import { DeleteListButton } from "../ui/DeleteListButton";
+import { DeleteListButton } from "../../components/buttons/DeleteListButton";
 import { useLocale, useTranslations } from "next-intl";
 import {
   Accordion,

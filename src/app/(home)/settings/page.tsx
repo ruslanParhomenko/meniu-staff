@@ -1,6 +1,6 @@
 "use client";
 import SettingsForm from "@/features/settings/SettingsForm";
-import { InsufficientRights } from "@/features/ui/InsufficientRights";
+import { InsufficientRights } from "@/components/wrapper/InsufficientRights";
 import { useAbility } from "@/providers/AbilityProvider";
 
 const Page = () => {

@@ -1,10 +1,10 @@
 "use client";
 import { BreakList } from "@/features/breakList/BreakListForm";
-import { InsufficientRights } from "@/features/ui/InsufficientRights";
+import { InsufficientRights } from "@/components/wrapper/InsufficientRights";
 import { useAbility } from "@/providers/AbilityProvider";
 
 const Page = () => {
-  const { isAdmin, isBar } = useAbility();
-  return isAdmin || isBar ? <BreakList /> : <InsufficientRights />;
+  const { isAdmin, isBar, isUser } = useAbility();
+  return isAdmin || isBar || isUser ? <BreakList /> : <InsufficientRights />;
 };
 export default Page;
