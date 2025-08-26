@@ -222,10 +222,7 @@ export default function RemarksTable() {
               ))}
             </TableBody>
           </Table>
-          <SendResetButton
-            resetForm={resetForm}
-            fetchData={fetchSupabaseData}
-          />
+          <SendResetButton resetForm={resetForm} />
         </form>
       </Form>
     </div>

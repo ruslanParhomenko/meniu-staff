@@ -309,10 +309,7 @@ export default function DailyReportForm() {
             placeholder="Введите текст..."
             {...form.register("notes")}
           />
-          <SendResetButton
-            resetForm={resetForm}
-            fetchData={fetchSupabaseData}
-          />
+          <SendResetButton resetForm={resetForm} />
         </div>
       </form>
     </Form>
