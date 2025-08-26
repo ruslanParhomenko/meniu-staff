@@ -50,7 +50,7 @@ export default function DailyReportForm() {
   const t = useTranslations("Navigation");
 
   const STORAGE_KEY = "report-cucina";
-  const { isObserver, isCucina } = useAbility();
+  const { isCucina } = useAbility();
   const session = useSession();
 
   const { employees } = useEmployeeSqlData();

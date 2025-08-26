@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { UseFieldArrayReturn } from "react-hook-form";
 
-export function AddRemomeFieldsButton({
+export function AddRemoveFieldsButton({
   formField,
   defaultValues,
   index,

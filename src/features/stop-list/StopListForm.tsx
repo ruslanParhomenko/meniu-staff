@@ -23,6 +23,7 @@ import {
 import { useTranslations } from "next-intl";
 import SelectFieldWithSearch from "@/components/inputs/SelectWithSearch";
 import toast from "react-hot-toast";
+import { formatNowData } from "@/utils/formatNow";
 
 type StopListItem = {
   key: number;
@@ -116,28 +117,12 @@ export default function TableStopListPrisma() {
 
     stopListValues?.forEach((item, idx) => {
       if (item && item.product && !item.date) {
-        form.setValue(
-          `stopList.${idx}.date`,
-          `${now.getDate().toString().padStart(2, "0")}.${(now.getMonth() + 1)
-            .toString()
-            .padStart(2, "0")} ${now
-            .getHours()
-            .toString()
-            .padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`
-        );
+        form.setValue(`stopList.${idx}.date`, formatNowData());
       }
     });
     stopListCucinaValues?.forEach((item, idx) => {
       if (item && item.product && !item.date) {
-        form.setValue(
-          `stopListCucina.${idx}.date`,
-          `${now.getDate().toString().padStart(2, "0")}.${(now.getMonth() + 1)
-            .toString()
-            .padStart(2, "0")} ${now
-            .getHours()
-            .toString()
-            .padStart(2, "0")}:${now.getMinutes().toString().padStart(2, "0")}`
-        );
+        form.setValue(`stopListCucina.${idx}.date`, formatNowData());
       }
     });
   }, [stopListValues, form, stopListCucinaValues]);

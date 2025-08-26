@@ -7,16 +7,16 @@ import {
 } from "react-hook-form";
 
 import SelectField from "@/components/inputs/SelectField";
-import { AddRemomeFieldsButton } from "@/components/buttons/AddRemomeFieldsButton";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
 import { Separator } from "@radix-ui/react-separator";
 import { useAbility } from "@/providers/AbilityProvider";
-import dynamic from "next/dynamic";
 import { ReportCucinaType } from "./schema";
 import SelectFieldWithSearch from "@/components/inputs/SelectWithSearch";
 import NumericInput from "@/components/inputs/NumericInput";
 import { useEffect } from "react";
+import { AddRemoveFieldsButton } from "@/components/buttons/AddRemoveFieldsButton";
+import { formatNow } from "@/utils/formatNow";
 
 type RenderEmployeesTableProps = {
   name: ArrayPath<ReportCucinaType>;
@@ -34,13 +34,6 @@ type RenderEmployeesTableProps = {
   defaultValue: {};
 };
 
-const formatNow = () => {
-  const now = new Date();
-  return `${now.getHours().toString().padStart(2, "0")}:${now
-    .getMinutes()
-    .toString()
-    .padStart(2, "0")}`;
-};
 const RenderTableCucina = ({
   name,
   form,
@@ -149,7 +142,7 @@ const RenderTableCucina = ({
             </div>
 
             <div className="flex gap-1">
-              <AddRemomeFieldsButton
+              <AddRemoveFieldsButton
                 formField={fieldsArray}
                 defaultValues={defaultValue}
                 index={index}

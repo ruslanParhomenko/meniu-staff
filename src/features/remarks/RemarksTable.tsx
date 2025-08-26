@@ -24,33 +24,34 @@ import toast from "react-hot-toast";
 import { BAR, useAbility } from "@/providers/AbilityProvider";
 import { useSession } from "next-auth/react";
 import { FetchDataButton } from "../../components/buttons/FetchDataButton";
+import { defaultRemarksForm, RemarksForm } from "./schema";
 
-type RemarksForm = {
-  date: Date;
-  remarks: {
-    name: string;
-    dayHours?: string;
-    nightHours?: string;
-    reason?: string;
-    penality?: string;
-    reasonPenality?: string;
-  }[];
-};
+// type RemarksForm = {
+//   date: Date;
+//   remarks: {
+//     name: string;
+//     dayHours?: string;
+//     nightHours?: string;
+//     reason?: string;
+//     penality?: string;
+//     reasonPenality?: string;
+//   }[];
+// };
 
-const defaultData: RemarksForm = {
-  date: new Date(),
-  remarks: new Array(10).fill({
-    name: "",
-    dayHours: "",
-    nightHours: "",
-    reason: "",
-    penality: "",
-    reasonPenality: "",
-  }),
-};
+// const defaultData: RemarksForm = {
+//   date: new Date(),
+//   remarks: new Array(10).fill({
+//     name: "",
+//     dayHours: "",
+//     nightHours: "",
+//     reason: "",
+//     penality: "",
+//     reasonPenality: "",
+//   }),
+// };
 
 export default function RemarksTable() {
-  const { isObserver, isBar, isCucina } = useAbility();
+  const { isObserver, isBar } = useAbility();
   const session = useSession();
   const KEY_LOCAL = "remarks";
   const {
@@ -63,7 +64,7 @@ export default function RemarksTable() {
   const localData = getValue();
   const form = useForm<RemarksForm>({
     defaultValues: {
-      ...defaultData,
+      ...defaultRemarksForm,
       ...localData,
     },
   });
@@ -85,12 +86,12 @@ export default function RemarksTable() {
   }, [form, setLocalStorage]);
 
   const resetForm = () => {
-    form.reset(defaultData);
+    form.reset(defaultRemarksForm);
     removeValue();
   };
   const handleSubmit: SubmitHandler<RemarksForm> = async (data) => {
     try {
-      const res = await fetch("/api/remarks", {
+      await fetch("/api/remarks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -105,7 +106,7 @@ export default function RemarksTable() {
     const sendDataToApi = async () => {
       const localData = localStorage.getItem(KEY_LOCAL);
       if (!localData) return;
-      if (!isCucina || !isBar) return;
+      if (!isBar) return;
 
       try {
         const res = await fetch("/api/remarks-realtime", {
@@ -158,7 +159,7 @@ export default function RemarksTable() {
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
           <Label className="text-lg font-semibold pb-7">Employee Remarks</Label>
           <div className="flex items-center gap-4 justify-between">
-            {!isObserver && <DatePickerInput fieldName="date" />}
+            <DatePickerInput fieldName="date" />
             <FetchDataButton fetchData={fetchSupabaseData} />
           </div>
           <Table className="[&_th]:text-center [&_td]:text-center ">

@@ -1,4 +1,3 @@
-import { time } from "console";
 import * as yup from "yup";
 
 export const schemaShift = yup

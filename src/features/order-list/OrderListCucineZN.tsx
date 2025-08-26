@@ -1,5 +1,4 @@
 "use client";
-import SelectInput from "@/components/inputs/SelectInput";
 import {
   BAKERY,
   EMPTY,
@@ -9,13 +8,10 @@ import {
   MILK,
   NUTS,
   OTHER,
-  QUANTITY_SELECT,
   SPICES,
   SPICES_2,
   VEGETABLES,
 } from "./constants";
-
-import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { useFormContext } from "react-hook-form";
 import { InputWrapper } from "@/components/wrapper/InputWrapper";
