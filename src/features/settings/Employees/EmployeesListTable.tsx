@@ -1,7 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
+import { useEmployees } from "@/hooks/useEmploees";
+
 import { useAbility } from "@/providers/AbilityProvider";
 import { Delete } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -9,9 +10,14 @@ import { useTranslations } from "next-intl";
 export function EmployeesListTable() {
   const t = useTranslations("Settings");
   const { isAdmin } = useAbility();
-  const { employees, loading, deleteEmployee } = useEmployeeSqlData();
+  const { employeesQuery, deleteMutation } = useEmployees();
 
-  if (loading) return <div>Loading...</div>;
+  const employees = employeesQuery.data || [];
+  const deleteEmployee = (id: number) => {
+    if (!isAdmin) return;
+    deleteMutation.mutate(id);
+  };
+
   return (
     <div className="w-full px-2 md:w-1/2">
       <h2 className="text-lg font-semibold mt-6">{t("employees")}:</h2>

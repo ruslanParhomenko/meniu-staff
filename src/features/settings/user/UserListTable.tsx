@@ -1,15 +1,9 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
-import { useAbility } from "@/providers/AbilityProvider";
-import { Delete } from "lucide-react";
+
 import { useTranslations } from "next-intl";
 
 export function UserListTable() {
   const t = useTranslations("Settings");
-  const { isAdmin } = useAbility();
-  // const { employees, loading, deleteEmployee } = useEmployeeSqlData();
 
   return (
     <div className="w-full px-2 md:w-1/2">

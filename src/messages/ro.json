@@ -12,7 +12,9 @@
     "confirmDelete": "Confirma Stergerea",
     "confirmSend": "Confirma Trimiterea",
     "confirmReset": "Confirma Resetearea",
-    "confirm": "Confirma"
+    "confirm": "Confirma",
+    "createdSuccessfully": "Creat cu succes",
+    "errorOccurred": "A aparut o eroare"
   },
   "Language": {
     "romanian": "Romana",
@@ -82,7 +84,9 @@
     "employees": "Angajat",
     "nameOutside": "in ...",
     "nameInside": "din ...",
-    "reason": "Motiv"
+    "reason": "Motiv",
+    "stopListCucina": "Stop List Bucatarie",
+    "stopListBar": "Stop List Bar"
   },
   "Auth": {
     "login": "Autentificare",

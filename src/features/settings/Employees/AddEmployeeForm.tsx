@@ -3,12 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useEmployees } from "@/hooks/useEmploees";
 import { useAbility } from "@/providers/AbilityProvider";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 
 export function AddEmployeeForm() {
+  const { createMutation } = useEmployees();
+
   const { isAdmin } = useAbility();
   const tUI = useTranslations("UI");
   const t = useTranslations("Settings");
@@ -18,21 +21,23 @@ export function AddEmployeeForm() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = form;
 
   const onSubmit = async (data: any) => {
     if (!isAdmin) return toast.error(t("insufficientRights"));
 
-    await fetch("/api/employees", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
+    try {
+      await createMutation.mutateAsync({
         name: `${data.firstName} ${data.lastName}`,
         position: data.position,
         rate: data.rate,
-      }),
-    });
-    form.reset();
+      });
+      toast.success(tUI("createdSuccessfully"));
+      reset();
+    } catch (error) {
+      toast.error(tUI("errorOccurred"));
+    }
   };
   return (
     <div className="w-full px-2 md:w-1/2 ">

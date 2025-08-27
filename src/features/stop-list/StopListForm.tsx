@@ -1,282 +1,93 @@
 "use client";
-
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Label } from "@radix-ui/react-dropdown-menu";
-import SelectField from "@/components/inputs/SelectField";
 import { Form } from "@/components/ui/form";
-import { useForm, useWatch } from "react-hook-form";
-import { Button } from "@/components/ui/button";
-import { Delete } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useAbility } from "@/providers/AbilityProvider";
-import {
-  MENU_ITEMS_CUCINA,
-  PRODUCTS,
-  PRODUCTS_CUCINA,
-} from "../report/bar/constants";
-import { useTranslations } from "next-intl";
-import SelectFieldWithSearch from "@/components/inputs/SelectWithSearch";
-import toast from "react-hot-toast";
+import { useFieldArray, useForm, useWatch } from "react-hook-form";
+import { useEffect } from "react";
 import { formatNowData } from "@/utils/formatNow";
+import { useStopList } from "@/hooks/useStopList";
+import { stopListSchema, StopListSchemaType } from "./schema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { StopListTable } from "./StopListTable";
 
-type StopListItem = {
-  key: number;
-  product?: string;
-  date?: string;
-};
+export default function StopListForm() {
+  const { stopListQuery, saveMutation } = useStopList();
+  const { data, isLoading } = stopListQuery;
 
-type FormValues = {
-  stopList: StopListItem[];
-  stopListCucina: StopListItem[];
-};
-
-export default function TableStopListPrisma() {
-  const t = useTranslations("Navigation");
-  const { isObserver, isCucina, isAdmin, isBar } = useAbility();
-
-  const [recordId, setRecordId] = useState<number | null>(null);
-  const [saving, setSaving] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  const defaultStopList: StopListItem[] = Array.from(
-    { length: 12 },
-    (_, i) => ({
-      key: i + 1,
-      product: "",
-      date: "",
-    })
-  );
-
-  const form = useForm<FormValues>({
-    defaultValues: { stopList: defaultStopList },
+  const form = useForm<StopListSchemaType>({
+    resolver: yupResolver(stopListSchema),
+    defaultValues: stopListSchema.getDefault(),
   });
 
-  const stopListValues = useWatch({
+  const stopListValues = useFieldArray({
     control: form.control,
     name: "stopList",
-  }) as StopListItem[];
-  const stopListCucinaValues = useWatch({
+  });
+  const stopListCucinaValues = useFieldArray({
+    control: form.control,
+    name: "stopListCucina",
+  });
+  useEffect(() => {
+    if (!data) return;
+    form.reset(data);
+  }, [data, form]);
+
+  const watchStopList = useWatch({ control: form.control, name: "stopList" });
+  const watchStopListCucina = useWatch({
     control: form.control,
     name: "stopListCucina",
   });
 
+  // Автозаполнение даты
   useEffect(() => {
-    const initRecord = async () => {
-      try {
-        const res = await fetch("/api/stop-list");
-        let data = await res.json();
-
-        if (!data) {
-          const createRes = await fetch("/api/stop-list", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              stopList: defaultStopList.map(({ product, date }) => ({
-                product,
-                date,
-              })),
-            }),
-          });
-
-          data = await createRes.json();
-        }
-
-        setRecordId(data.id);
-        form.reset({
-          stopList: data.stopList?.map((item: any, idx: number) => ({
-            key: idx + 1,
-            product: item.product,
-            date: item.date,
-          })),
-          stopListCucina: data.stopListCucina?.map(
-            (item: any, idx: number) => ({
-              key: idx + 1,
-              product: item.product,
-              date: item.date,
-            })
-          ),
+    watchStopList.forEach((item, idx) => {
+      if (item?.product && !item.date) {
+        form.setValue(`stopList.${idx}.date`, formatNowData(), {
+          shouldDirty: true,
         });
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    initRecord();
-  }, [form]);
-
-  useEffect(() => {
-    const now = new Date();
-
-    stopListValues?.forEach((item, idx) => {
-      if (item && item.product && !item.date) {
-        form.setValue(`stopList.${idx}.date`, formatNowData());
       }
     });
-    stopListCucinaValues?.forEach((item, idx) => {
-      if (item && item.product && !item.date) {
-        form.setValue(`stopListCucina.${idx}.date`, formatNowData());
+  }, [watchStopList]);
+
+  // автозаполнение даты
+  useEffect(() => {
+    watchStopListCucina.forEach((item, idx) => {
+      if (item?.product && !item.date) {
+        form.setValue(`stopListCucina.${idx}.date`, formatNowData(), {
+          shouldDirty: true,
+        });
       }
     });
-  }, [stopListValues, form, stopListCucinaValues]);
+  }, [watchStopListCucina]);
 
+  // авто-сохранение при изменении формы
   useEffect(() => {
-    if (!stopListValues.length || loading || !recordId) return;
-    setSaving(true);
+    const subscription = form.watch((values) => {
+      if (!values || !data) return;
+      const payload = {
+        id: data.id,
+        stopList: values.stopList,
+        stopListCucina: values.stopListCucina,
+      };
+      saveMutation.mutate(payload);
+    });
+    return () => subscription.unsubscribe();
+  }, [form, data, saveMutation]);
 
-    const saveData = async () => {
-      try {
-        const payload = {
-          id: recordId,
-          stopList: stopListValues?.map(({ product, date }) => ({
-            product,
-            date,
-          })),
-          stopListCucina: stopListCucinaValues?.map(({ product, date }) => ({
-            product,
-            date,
-          })),
-        };
-
-        const res = await fetch("/api/stop-list", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        });
-
-        if (!res.ok) throw new Error("Ошибка сохранения");
-      } catch (err) {
-        console.error(err);
-      } finally {
-        setSaving(false);
-      }
-    };
-
-    const timeout = setTimeout(saveData, 500);
-    return () => clearTimeout(timeout);
-  }, [stopListValues, recordId, loading, stopListCucinaValues]);
-
-  const clearSelect = (index: number) => {
-    if (isBar || isAdmin) {
-      form.setValue(`stopList.${index}`, {
-        ...stopListValues[index],
-        product: "",
-        date: "",
-      });
-    } else {
-      toast.error("Только БАР");
-      return;
-    }
-  };
-  const clearSelectCucina = (index: number) => {
-    if (isCucina || isAdmin) {
-      form.setValue(`stopListCucina.${index}`, {
-        ...stopListCucinaValues[index],
-        product: "",
-        date: "",
-      });
-    } else {
-      toast.error("Только КУХНЯ");
-      return;
-    }
-  };
+  if (isLoading) return null;
 
   return (
     <Form {...form}>
       <form className="space-y-2">
-        <div className="grid md:grid-cols-2 ">
-          <div className="md:px-5">
-            <Label className="text-lg font-semibold pb-7">
-              {t("stopListBar")} {saving && "(Saving...)"}
-            </Label>
-            <Table className="[&_th]:text-center [&_td]:text-center ">
-              <TableHeader>
-                <TableRow className="h-10 ">
-                  <TableCell>Product</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Actions</TableCell>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {stopListValues.map((item, idx) => (
-                  <TableRow key={item.key}>
-                    <TableCell>
-                      <SelectField
-                        data={PRODUCTS}
-                        fieldName={`stopList.${idx}.product`}
-                        disabled={isObserver || isCucina}
-                      />
-                    </TableCell>
-                    <TableCell>
-                      {item.product && <Label>{item.date}</Label>}
-                    </TableCell>
-                    <TableCell>
-                      {item.product && (
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          onClick={() => clearSelect(idx)}
-                          disabled={isObserver}
-                        >
-                          <Delete />
-                        </Button>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-          <div className="md:px-5">
-            <Label className="text-lg font-semibold pb-7">
-              {t("stopListCucina")} {saving && "(Saving...)"}
-            </Label>
-            <Table className="[&_th]:text-center [&_td]:text-center ">
-              <TableHeader>
-                <TableRow className="h-10 ">
-                  <TableCell>Product</TableCell>
-                  <TableCell>Date</TableCell>
-                  <TableCell>Actions</TableCell>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {stopListCucinaValues?.map((item, idx) => (
-                  <TableRow key={item.key}>
-                    <TableCell>
-                      <SelectFieldWithSearch
-                        data={[...PRODUCTS_CUCINA, ...MENU_ITEMS_CUCINA]}
-                        fieldName={`stopListCucina.${idx}.product`}
-                        disabled={isObserver || isBar}
-                        className="!h-9"
-                      />
-                    </TableCell>
-                    <TableCell>
-                      {item.product && <Label>{item.date}</Label>}
-                    </TableCell>
-                    <TableCell>
-                      {item.product && (
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          onClick={() => clearSelectCucina(idx)}
-                          disabled={isObserver}
-                        >
-                          <Delete />
-                        </Button>
-                      )}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
+        <div className="grid xl:grid-cols-2 gap-5">
+          <StopListTable
+            formFields={stopListValues}
+            nameTag="bar"
+            saveMutation={saveMutation}
+          />
+          <StopListTable
+            formFields={stopListCucinaValues}
+            nameTag="cucina"
+            saveMutation={saveMutation}
+          />
         </div>
       </form>
     </Form>

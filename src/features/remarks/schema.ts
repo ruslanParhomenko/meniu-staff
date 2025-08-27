@@ -1,11 +1,14 @@
 import * as yup from "yup";
 export const schemaRemarks = yup.object().shape({
-  name: yup.string(),
-  dayHours: yup.string(),
-  nightHours: yup.string(),
-  penality: yup.string(),
-  reason: yup.string(),
+  name: yup.string().default(""),
+  dayHours: yup.string().default(""),
+  nightHours: yup.string().default(""),
+  penality: yup.string().default(""),
+  reason: yup.string().default(""),
 });
+export type Remarks = yup.InferType<typeof schemaRemarks>;
+export const defaultRemarks = schemaRemarks.getDefault();
+
 export const schemaRemarksForm = yup.object().shape({
   date: yup
     .string()

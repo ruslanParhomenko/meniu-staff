@@ -10,6 +10,7 @@ import { Toaster } from "react-hot-toast";
 import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { AbilityProvider } from "@/providers/AbilityProvider";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,7 +41,9 @@ export default async function RootLayout({
       >
         <SessionProviders>
           <NextIntlClientProvider>
-            <AbilityProvider>{children}</AbilityProvider>
+            <AbilityProvider>
+              <ReactQueryProvider>{children}</ReactQueryProvider>
+            </AbilityProvider>
           </NextIntlClientProvider>
         </SessionProviders>
         <Toaster position="bottom-right" />

@@ -17,7 +17,6 @@ import {
   MINUTES_SELECT,
   TIME_LABELS,
 } from "./constant";
-import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
 import { BAR, useAbility } from "@/providers/AbilityProvider";
 import { useSession } from "next-auth/react";
 
@@ -30,16 +29,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import SelectField from "@/components/inputs/SelectField";
-import dynamic from "next/dynamic";
 import { FetchDataButton } from "../../components/buttons/FetchDataButton";
 import { useSidebar } from "@/components/ui/sidebar";
+import { useEmployees } from "@/hooks/useEmploees";
 
 export type BreakListFormValues = {
   date?: Date;
   rows: BreakListItem[];
 };
 
-const BreakListForm = () => {
+const BreakList = () => {
+  const BAR_EMPLOYEES = ["waiters", "barmen"];
   const currentHour = new Date().getHours();
   const currentMinute = new Date().getMinutes();
 
@@ -47,17 +47,13 @@ const BreakListForm = () => {
   const { isMobile } = useSidebar();
   const session = useSession();
   const LOCAL_STORAGE_KEY = "breakListFormData";
-  const { employees } = useEmployeeSqlData();
+  // const { employees } = useEmployeeSqlData();
+  const { employeesQuery, createMutation, deleteMutation } = useEmployees();
 
-  const BAR_EMPLOYEES = ["waiters", "barmen"];
-
-  const selectedEmployees = useMemo(
-    () =>
-      employees
-        .filter((emp) => BAR_EMPLOYEES.includes(emp.position))
-        .map((employee) => employee.name),
-    [employees]
-  );
+  const employees = employeesQuery.data ?? [];
+  const selectedEmployees = employees
+    .filter((emp) => BAR_EMPLOYEES.includes(emp.position))
+    .map((employee) => employee.name);
 
   const savedData =
     typeof window !== "undefined"
@@ -318,9 +314,4 @@ const BreakListForm = () => {
   );
 };
 
-export const BreakList = dynamic(() => Promise.resolve(BreakListForm), {
-  ssr: false,
-  loading: () => (
-    <div className="text-center h-10 text-4xl text-blue-800">...</div>
-  ),
-});
+export default BreakList;

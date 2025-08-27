@@ -12,61 +12,40 @@ export function AddRemoveFieldsButton({
   index: number;
   disabled?: boolean;
 }) {
+  const isOnlyOne = formField.fields.length === 1;
+  const isLast = index === formField.fields.length - 1;
+
+  const handleRemove = () => {
+    if (isOnlyOne) {
+      formField.replace(defaultValues);
+    } else {
+      formField.remove(index);
+    }
+  };
+
   return (
-    <>
-      {formField.fields.length === 1 ? (
-        <>
-          <Button
-            type="button"
-            variant="destructive"
-            size="icon"
-            onClick={() => formField.replace(defaultValues)}
-            disabled={disabled}
-          >
-            -
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            onClick={() => formField.append(defaultValues)}
-            disabled={disabled}
-          >
-            +
-          </Button>
-        </>
-      ) : index === formField.fields.length - 1 ? (
-        <>
-          <Button
-            type="button"
-            variant="destructive"
-            size="icon"
-            onClick={() => formField.replace(defaultValues)}
-            disabled={disabled}
-          >
-            -
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            size="icon"
-            onClick={() => formField.append(defaultValues)}
-            disabled={disabled}
-          >
-            +
-          </Button>
-        </>
-      ) : (
+    <div className="flex gap-1 justify-center items-center">
+      <Button
+        type="button"
+        variant="destructive"
+        size="icon"
+        onClick={handleRemove}
+        disabled={disabled}
+      >
+        -
+      </Button>
+
+      {(isOnlyOne || isLast) && (
         <Button
           type="button"
-          variant="destructive"
+          variant="outline"
           size="icon"
-          onClick={() => formField.remove(index)}
+          onClick={() => formField.append(defaultValues)}
           disabled={disabled}
         >
-          -
+          +
         </Button>
       )}
-    </>
+    </div>
   );
 }

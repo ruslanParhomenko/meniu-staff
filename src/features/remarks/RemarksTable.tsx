@@ -9,10 +9,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
 import { Label } from "@radix-ui/react-dropdown-menu";
 import { useEffect, useMemo } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { SendResetButton } from "../../components/buttons/SendResetButton";
 import SelectField from "@/components/inputs/SelectField";
 import { useTranslations } from "next-intl";
@@ -24,31 +23,9 @@ import toast from "react-hot-toast";
 import { BAR, useAbility } from "@/providers/AbilityProvider";
 import { useSession } from "next-auth/react";
 import { FetchDataButton } from "../../components/buttons/FetchDataButton";
-import { defaultRemarksForm, RemarksForm } from "./schema";
-
-// type RemarksForm = {
-//   date: Date;
-//   remarks: {
-//     name: string;
-//     dayHours?: string;
-//     nightHours?: string;
-//     reason?: string;
-//     penality?: string;
-//     reasonPenality?: string;
-//   }[];
-// };
-
-// const defaultData: RemarksForm = {
-//   date: new Date(),
-//   remarks: new Array(10).fill({
-//     name: "",
-//     dayHours: "",
-//     nightHours: "",
-//     reason: "",
-//     penality: "",
-//     reasonPenality: "",
-//   }),
-// };
+import { defaultRemarks, defaultRemarksForm, RemarksForm } from "./schema";
+import { useEmployees } from "@/hooks/useEmploees";
+import { AddRemoveFieldsButton } from "@/components/buttons/AddRemoveFieldsButton";
 
 export default function RemarksTable() {
   const { isObserver, isBar } = useAbility();
@@ -68,7 +45,9 @@ export default function RemarksTable() {
       ...localData,
     },
   });
-  const { employees } = useEmployeeSqlData();
+  const { employeesQuery } = useEmployees();
+
+  const employees = employeesQuery.data || [];
 
   const selectedEmployees = useMemo(
     () =>
@@ -152,80 +131,87 @@ export default function RemarksTable() {
     } catch (err) {}
   };
 
-  const remarks = form.watch("remarks");
+  const remarks = useFieldArray({
+    control: form.control,
+    name: "remarks",
+  });
+
+  console.log(remarks.fields);
   return (
-    <div className="w-full  p-2">
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
-          <Label className="text-lg font-semibold pb-7">Employee Remarks</Label>
-          <div className="flex items-center gap-4 justify-between">
-            <DatePickerInput fieldName="date" />
-            <FetchDataButton fetchData={fetchSupabaseData} />
-          </div>
-          <Table className="[&_th]:text-center [&_td]:text-center ">
-            <TableHeader>
-              <TableRow className="h-10">
-                <TableCell className="text-center">Name</TableCell>
-                <TableCell className="text-center"> day hours</TableCell>
-                <TableCell className="text-center"> night hours</TableCell>
-                <TableCell className="text-center">reason</TableCell>
-                <TableCell className="text-center">penality</TableCell>
-                <TableCell className="text-center ">reason penality</TableCell>
+    <Form {...form}>
+      <form
+        onSubmit={form.handleSubmit(handleSubmit)}
+        className="space-y-2 p-5"
+      >
+        <Label className="text-lg font-semibold pb-7">Employee Remarks</Label>
+        <div className="flex items-center gap-4 justify-between">
+          <DatePickerInput fieldName="date" />
+          <FetchDataButton fetchData={fetchSupabaseData} />
+        </div>
+        <Table className="[&_th]:text-center [&_td]:text-center table-fixed xl:w-280">
+          <TableHeader>
+            <TableRow className="h-10">
+              <TableCell className="text-center">Name</TableCell>
+              <TableCell className="text-center"> day hours</TableCell>
+              <TableCell className="text-center"> night hours</TableCell>
+              <TableCell className="text-center">penality</TableCell>
+              <TableCell className="text-center">reason</TableCell>
+              <TableCell className="text-center">actions</TableCell>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {remarks?.fields?.map((item, idx) => (
+              <TableRow key={idx}>
+                <TableCell className=" min-w-40 md:px-6">
+                  <SelectInput
+                    fieldName={`remarks.${idx}.name`}
+                    fieldLabel=""
+                    data={selectedEmployees}
+                    disabled={isObserver}
+                  />
+                </TableCell>
+                <TableCell className="min-w-20 md:px-6">
+                  <SelectField
+                    fieldName={`remarks.${idx}.dayHours`}
+                    data={OVER_HOURS}
+                    disabled={isObserver}
+                  />
+                </TableCell>
+                <TableCell className="min-w-20 md:px-6">
+                  <SelectField
+                    fieldName={`remarks.${idx}.nightHours`}
+                    data={OVER_HOURS}
+                    disabled={isObserver}
+                  />
+                </TableCell>
+                <TableCell className="min-w-20 md:px-6 ">
+                  <SelectField
+                    fieldName={`remarks.${idx}.penality`}
+                    data={PENALITY}
+                    disabled={isObserver}
+                  />
+                </TableCell>
+                <TableCell className="min-w-40 md:px-6">
+                  <SelectField
+                    fieldName={`remarks.${idx}.reason`}
+                    data={REASON.map((reason) => t(reason) as string)}
+                    disabled={isObserver}
+                  />
+                </TableCell>
+                <TableCell className="min-w-20 md:px-6">
+                  <AddRemoveFieldsButton
+                    formField={remarks}
+                    defaultValues={defaultRemarks}
+                    index={idx}
+                    disabled={isObserver}
+                  />
+                </TableCell>
               </TableRow>
-            </TableHeader>
-            <TableBody>
-              {remarks?.map((item, idx) => (
-                <TableRow key={idx}>
-                  <TableCell className=" min-w-40 md:px-6">
-                    <SelectInput
-                      fieldName={`remarks.${idx}.name`}
-                      fieldLabel=""
-                      data={selectedEmployees}
-                      disabled={isObserver}
-                    />
-                  </TableCell>
-                  <TableCell className="min-w-20 md:px-6">
-                    <SelectField
-                      fieldName={`remarks.${idx}.dayHours`}
-                      data={OVER_HOURS}
-                      disabled={isObserver}
-                    />
-                  </TableCell>
-                  <TableCell className="min-w-20 md:px-6">
-                    <SelectField
-                      fieldName={`remarks.${idx}.nightHours`}
-                      data={OVER_HOURS}
-                      disabled={isObserver}
-                    />
-                  </TableCell>
-                  <TableCell className="min-w-40 md:px-6">
-                    <SelectField
-                      fieldName={`remarks.${idx}.reason`}
-                      data={REASON.map((reason) => t(reason) as string)}
-                      disabled={isObserver}
-                    />
-                  </TableCell>
-                  <TableCell className="min-w-20 md:px-6 ">
-                    <SelectField
-                      fieldName={`remarks.${idx}.penality`}
-                      data={PENALITY}
-                      disabled={isObserver}
-                    />
-                  </TableCell>
-                  <TableCell className="min-w-40 md:px-6">
-                    <SelectField
-                      fieldName={`remarks.${idx}.reasonPenality`}
-                      data={REASON.map((reason) => t(reason) as string)}
-                      disabled={isObserver}
-                    />
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <SendResetButton resetForm={resetForm} />
-        </form>
-      </Form>
-    </div>
+            ))}
+          </TableBody>
+        </Table>
+        <SendResetButton resetForm={resetForm} />
+      </form>
+    </Form>
   );
 }

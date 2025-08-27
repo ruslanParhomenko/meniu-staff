@@ -16,7 +16,6 @@ import {
   schemaReportCucina,
 } from "./schema";
 import { SendResetButton } from "@/components/buttons/SendResetButton";
-import { useEmployeeSqlData } from "@/hooks/use-employee-sql";
 import { useEffect, useMemo } from "react";
 import {
   CUCINA_EMPLOYEES,
@@ -45,6 +44,7 @@ import { CUCINA, useAbility } from "@/providers/AbilityProvider";
 import { useSession } from "next-auth/react";
 import { FetchDataButton } from "@/components/buttons/FetchDataButton";
 import RenderTableCucina from "./RenderTableByFields";
+import { useEmployees } from "@/hooks/useEmploees";
 
 export default function DailyReportForm() {
   const t = useTranslations("Navigation");
@@ -53,7 +53,9 @@ export default function DailyReportForm() {
   const { isCucina } = useAbility();
   const session = useSession();
 
-  const { employees } = useEmployeeSqlData();
+  const { employeesQuery } = useEmployees();
+
+  const employees = employeesQuery.data || [];
 
   const selectedEmployees = useMemo(
     () =>

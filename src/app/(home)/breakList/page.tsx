@@ -1,6 +1,7 @@
 "use client";
-import { BreakList } from "@/features/breakList/BreakListForm";
+
 import { InsufficientRights } from "@/components/wrapper/InsufficientRights";
+import BreakList from "@/features/breakList/BreakListForm";
 import { useAbility } from "@/providers/AbilityProvider";
 
 const Page = () => {

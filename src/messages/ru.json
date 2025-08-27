@@ -12,7 +12,9 @@
     "confirmDelete": "Подтвердить удаление",
     "confirmSend": "Подтвердить отправку",
     "confirmReset": "Подтвердить сброс",
-    "confirm": "Подтвердить"
+    "confirm": "Подтвердить",
+    "createdSuccessfully": "Создано успешно",
+    "errorOccurred": "Произошла ошибка"
   },
   "Language": {
     "romanian": "Румынский",
