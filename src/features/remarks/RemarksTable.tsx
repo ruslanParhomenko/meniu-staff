@@ -148,7 +148,7 @@ export default function RemarksTable() {
           <DatePickerInput fieldName="date" />
           <FetchDataButton fetchData={fetchSupabaseData} />
         </div>
-        <Table className="[&_th]:text-center [&_td]:text-center table-fixed xl:w-280">
+        <Table className="[&_th]:text-center [&_td]:text-center md:table-fixed xl:w-280">
           <TableHeader>
             <TableRow className="h-10">
               <TableCell className="text-center">Name</TableCell>
