@@ -17,7 +17,7 @@ import {
   MINUTES_SELECT,
   TIME_LABELS,
 } from "./constant";
-import { BAR, useAbility } from "@/providers/AbilityProvider";
+import { useAbility } from "@/providers/AbilityProvider";
 import { useSession } from "next-auth/react";
 
 import {

@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { useEffect } from "react";
 import DatePickerInput from "@/components/inputs/DatePickerInput";
-import { BAR, useAbility } from "@/providers/AbilityProvider";
+import { useAbility } from "@/providers/AbilityProvider";
 import toast from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import {
