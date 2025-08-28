@@ -39,9 +39,9 @@ export const SIDEBAR_NAVIGATION = [
     icon: List,
   },
   {
-    title: "arhive",
-    url: "/arhive",
-    url2: "/arhive",
+    title: "archive",
+    url: "/archive",
+    url2: "/archive",
     icon: List,
   },
   {

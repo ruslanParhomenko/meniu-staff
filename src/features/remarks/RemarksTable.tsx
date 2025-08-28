@@ -148,21 +148,28 @@ export default function RemarksTable() {
           <DatePickerInput fieldName="date" />
           <FetchDataButton fetchData={fetchSupabaseData} />
         </div>
-        <Table className="[&_th]:text-center [&_td]:text-center md:table-fixed xl:w-280">
+        <Table className="[&_th]:text-center [&_td]:text-center table-fixed xl:w-300 w-150">
           <TableHeader>
-            <TableRow className="h-10">
-              <TableCell className="text-center">Name</TableCell>
-              <TableCell className="text-center"> day hours</TableCell>
-              <TableCell className="text-center"> night hours</TableCell>
-              <TableCell className="text-center">penality</TableCell>
-              <TableCell className="text-center">reason</TableCell>
-              <TableCell className="text-center">actions</TableCell>
+            <TableRow className="h-10 ">
+              <TableCell className="text-center md:w-80 w-12">Name</TableCell>
+              <TableCell className="text-center md:w-20 w-5">
+                {" "}
+                day hours
+              </TableCell>
+              <TableCell className="text-center md:w-20 w-5">
+                night hours
+              </TableCell>
+              <TableCell className="text-center md:w-40 w-8">
+                penality
+              </TableCell>
+              <TableCell className="text-center md:w-80 w-8">reason</TableCell>
+              <TableCell className="text-center md:w-20 w-5">actions</TableCell>
             </TableRow>
           </TableHeader>
           <TableBody>
             {remarks?.fields?.map((item, idx) => (
               <TableRow key={idx}>
-                <TableCell className=" min-w-40 md:px-6">
+                <TableCell>
                   <SelectInput
                     fieldName={`remarks.${idx}.name`}
                     fieldLabel=""
@@ -170,35 +177,35 @@ export default function RemarksTable() {
                     disabled={isObserver}
                   />
                 </TableCell>
-                <TableCell className="min-w-20 md:px-6">
+                <TableCell>
                   <SelectField
                     fieldName={`remarks.${idx}.dayHours`}
                     data={OVER_HOURS}
                     disabled={isObserver}
                   />
                 </TableCell>
-                <TableCell className="min-w-20 md:px-6">
+                <TableCell>
                   <SelectField
                     fieldName={`remarks.${idx}.nightHours`}
                     data={OVER_HOURS}
                     disabled={isObserver}
                   />
                 </TableCell>
-                <TableCell className="min-w-20 md:px-6 ">
+                <TableCell>
                   <SelectField
                     fieldName={`remarks.${idx}.penality`}
                     data={PENALITY}
                     disabled={isObserver}
                   />
                 </TableCell>
-                <TableCell className="min-w-40 md:px-6">
+                <TableCell>
                   <SelectField
                     fieldName={`remarks.${idx}.reason`}
                     data={REASON.map((reason) => t(reason) as string)}
                     disabled={isObserver}
                   />
                 </TableCell>
-                <TableCell className="min-w-20 md:px-6">
+                <TableCell>
                   <AddRemoveFieldsButton
                     formField={remarks}
                     defaultValues={defaultRemarks}

@@ -112,8 +112,8 @@ export default function ReportTable({ data: report }: any) {
               ...report.cutting,
             ]
               .filter((item) => item.product)
-              .map((item: any) => (
-                <TableRow key={item.id}>
+              .map((item: any, index) => (
+                <TableRow key={`${item.id}-${index}`}>
                   <TableCell>{item.product}</TableCell>
                   <TableCell>{item.portions}</TableCell>
                   <TableCell>{item.weight}</TableCell>

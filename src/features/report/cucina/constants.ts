@@ -292,6 +292,7 @@ export const PRODUCTS_INGREDIENTS = [
 //salad
 
 export const PRODUCTS_SALAD = [
+  "Гивеч",
   "Салат Винегрет",
   "Салат с козьим сыром",
   "Салат с грушей и сыром",
@@ -341,6 +342,8 @@ export const PRODUCTS_SOUP = [
 // meat
 
 export const PRODUCTS_MEAT = [
+  "Семга стейк",
+  "Куриный стейк",
   "Тушёная свинина",
   "Куриные котлеты",
   "Свиные рёбра с капустой",
@@ -425,6 +428,8 @@ export const PRODUCTS_SEMIFINISHED = [
   "Фарш для бургера п/ф, кг",
   "Хариф п.ф., кг",
   "Шакшука",
+  "Сухари Панко",
+  "Баклажан п.ф., кг",
 ];
 
 export const REMAINS_PRODUCTS = [
