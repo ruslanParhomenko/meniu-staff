@@ -63,9 +63,6 @@ export const ArhiveListTable = ({
     refetchId();
     refetch();
   };
-  useEffect(() => {
-    setDataSelect([{ label: "", value: "" }]);
-  }, []);
 
   return (
     <Accordion

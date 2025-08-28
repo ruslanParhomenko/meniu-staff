@@ -1,5 +1,5 @@
 "use client";
-import { ArhiveListTable } from "./ArhiveListTable";
+import { ArhiveListTable } from "./ArchiveListTable";
 import { useForm } from "react-hook-form";
 import { Form } from "@/components/ui/form";
 import BreakListTable from "./BreakListTable";
@@ -7,7 +7,7 @@ import ReportTable from "./ReportCucinaTable";
 import RemarkTable from "./RemarkTable";
 import { ReportBarTable } from "./ReportBarTable";
 
-export const ArhiveForm = () => {
+export const ArchiveForm = () => {
   const form = useForm();
 
   return (
