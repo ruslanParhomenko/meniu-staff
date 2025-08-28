@@ -24,7 +24,7 @@ export default function TableEspenses() {
 
   const isDisabled = isObserver || isUser;
 
-  const { setValue, control, watch } = useFormContext();
+  const { setValue, control } = useFormContext();
 
   const expenses = useWatch({ name: "expenses", control });
   useEffect(() => {

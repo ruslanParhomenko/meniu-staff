@@ -6,13 +6,13 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { AddEmployeeForm } from "./Employees/AddEmployeeForm";
-import { EmployeesListTable } from "./Employees/EmployeesListTable";
+import { AddEmployeeForm } from "./employees/AddEmployeeForm";
+import { EmployeesListTable } from "./employees/EmployeesListTable";
 import { AddUserForm } from "./user/AddUserForm";
 import { UserListTable } from "./user/UserListTable";
 
 export default function SettingsForm() {
-  const t = useTranslations("Settings");
+  const t = useTranslations("Home");
   return (
     <div className="flex flex-col gap-4">
       <Accordion type="single" collapsible>

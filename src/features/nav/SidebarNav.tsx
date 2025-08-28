@@ -1,10 +1,8 @@
 "use client";
 import { LogOut } from "lucide-react";
-
 import { Link, usePathname } from "@/i18n/navigation";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-
 import {
   Sidebar,
   SidebarContent,
@@ -15,16 +13,14 @@ import {
 import { cn } from "@/lib/utils";
 import LanguageSwitcher from "../../components/switches/LanguageSwitch";
 import { SIDEBAR_NAVIGATION } from "./constants";
-
 import { useSidebar } from "../../components/ui/sidebar";
 import { SidebarToggleButton } from "@/components/switches/SidebarToggleButton";
-import Image from "next/image";
 
 const SidebarNav = () => {
   const { toggleSidebar, isMobile } = useSidebar();
   const pathname = usePathname().split("/")[1];
 
-  const t = useTranslations("Navigation");
+  const t = useTranslations("Home");
   const { data: session } = useSession();
 
   const isCucina = session?.user?.email?.includes("cng.nv.kitchen@gmail.com");

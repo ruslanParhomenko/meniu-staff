@@ -1,5 +1,4 @@
 "use client";
-
 import SelectInput from "@/components/inputs/SelectInput";
 import { Form } from "@/components/ui/form";
 import {
@@ -15,7 +14,6 @@ import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
 import { SendResetButton } from "../../components/buttons/SendResetButton";
 import SelectField from "@/components/inputs/SelectField";
 import { useTranslations } from "next-intl";
-
 import DatePickerInput from "@/components/inputs/DatePickerInput";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { OVER_HOURS, PENALITY, REASON } from "./constants";
@@ -24,8 +22,8 @@ import { BAR, useAbility } from "@/providers/AbilityProvider";
 import { useSession } from "next-auth/react";
 import { FetchDataButton } from "../../components/buttons/FetchDataButton";
 import { defaultRemarks, defaultRemarksForm, RemarksForm } from "./schema";
-import { useEmployees } from "@/hooks/useEmploees";
 import { AddRemoveFieldsButton } from "@/components/buttons/AddRemoveFieldsButton";
+import { useEmployees } from "@/providers/EmployeeProvider";
 
 export default function RemarksTable() {
   const { isObserver, isBar } = useAbility();
@@ -36,7 +34,7 @@ export default function RemarksTable() {
     setValue: setLocalStorage,
     removeValue,
   } = useLocalStorageForm<RemarksForm>(KEY_LOCAL);
-  const t = useTranslations("Navigation");
+  const t = useTranslations("Home");
 
   const localData = getValue();
   const form = useForm<RemarksForm>({
@@ -45,10 +43,8 @@ export default function RemarksTable() {
       ...localData,
     },
   });
-  const { employeesQuery } = useEmployees();
 
-  const employees = employeesQuery.data || [];
-
+  const { employees } = useEmployees();
   const selectedEmployees = useMemo(
     () =>
       employees.map((employee) => ({
@@ -135,8 +131,6 @@ export default function RemarksTable() {
     control: form.control,
     name: "remarks",
   });
-
-  console.log(remarks.fields);
   return (
     <Form {...form}>
       <form
@@ -153,7 +147,6 @@ export default function RemarksTable() {
             <TableRow className="h-10 ">
               <TableCell className="text-center md:w-80 w-12">Name</TableCell>
               <TableCell className="text-center md:w-20 w-5">
-                {" "}
                 day hours
               </TableCell>
               <TableCell className="text-center md:w-20 w-5">

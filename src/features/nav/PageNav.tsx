@@ -19,7 +19,7 @@ function PageNav({
 }) {
   const pathname = usePathname();
 
-  const t = useTranslations("Navigation");
+  const t = useTranslations("Home");
 
   const basePath = mainRoute ? `/${mainRoute}/` : "/";
   const selectedPath =

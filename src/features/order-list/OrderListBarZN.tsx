@@ -7,12 +7,9 @@ import {
   OFFICE,
   PHARMACEUTICAL,
 } from "./constants";
-import { useFormContext } from "react-hook-form";
 import { InputWrapper } from "@/components/wrapper/InputWrapper";
 import { OrderCardWrapper } from "@/components/wrapper/OrderCardWrapper";
-
 export const OrderListBar = () => {
-  const form = useFormContext();
   return (
     <div className="flex flex-col gap-10 w-full justify-start mx-5 sm:flex-row">
       <InputWrapper>

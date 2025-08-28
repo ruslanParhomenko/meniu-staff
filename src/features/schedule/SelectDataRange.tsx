@@ -17,7 +17,7 @@ const SELECT_DATA = {
 };
 
 export const SelectDataRange = () => {
-  const t = useTranslations("Navigation");
+  const t = useTranslations("Home");
   const pathname = usePathname()?.split("/")[2] || "bar";
   const LOKAL_KEY = `lokal-month-${pathname}`;
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { useForm, SubmitHandler, Path } from "react-hook-form";
 import toast from "react-hot-toast";
 
@@ -31,7 +31,7 @@ import {
 import SelectField from "@/components/inputs/SelectField";
 import { FetchDataButton } from "../../components/buttons/FetchDataButton";
 import { useSidebar } from "@/components/ui/sidebar";
-import { useEmployees } from "@/hooks/useEmploees";
+import { useEmployees } from "@/providers/EmployeeProvider";
 
 export type BreakListFormValues = {
   date?: Date;
@@ -47,9 +47,7 @@ const BreakList = () => {
   const { isMobile } = useSidebar();
   const session = useSession();
   const LOCAL_STORAGE_KEY = "breakListFormData";
-  const { employeesQuery } = useEmployees();
-
-  const employees = employeesQuery.data ?? [];
+  const { employees } = useEmployees();
   const selectedEmployees = employees
     .filter((emp) => BAR_EMPLOYEES.includes(emp.position))
     .map((employee) => employee.name);

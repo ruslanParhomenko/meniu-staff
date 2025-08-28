@@ -33,29 +33,25 @@ import {
   REMAINS_PRODUCTS,
   SELECT_TIME,
 } from "./constants";
-
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
-
 import { yupResolver } from "@hookform/resolvers/yup";
 import toast from "react-hot-toast";
 import { CUCINA, useAbility } from "@/providers/AbilityProvider";
 import { useSession } from "next-auth/react";
 import { FetchDataButton } from "@/components/buttons/FetchDataButton";
 import RenderTableCucina from "./RenderTableByFields";
-import { useEmployees } from "@/hooks/useEmploees";
+import { useEmployees } from "@/providers/EmployeeProvider";
 
 export default function DailyReportForm() {
-  const t = useTranslations("Navigation");
+  const t = useTranslations("Home");
 
   const STORAGE_KEY = "report-cucina";
   const { isCucina } = useAbility();
   const session = useSession();
 
-  const { employeesQuery } = useEmployees();
-
-  const employees = employeesQuery.data || [];
+  const { employees } = useEmployees();
 
   const selectedEmployees = useMemo(
     () =>

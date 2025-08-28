@@ -24,7 +24,7 @@ export default function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
 
-  const tLanguage = useTranslations("Language");
+  const t = useTranslations("Home");
 
   const changeLanguage = (lang: string) => {
     document.cookie = `NEXT_LOCALE_BAR=${lang}; path=/; expires=Fri, 31 Dec 9999 23:59:59 GMT;`;
@@ -56,7 +56,7 @@ export default function LanguageSwitcher() {
               onSelect={() => changeLanguage(lang)}
               className="cursor-pointer px-4 py-2 text-sm hover:bg-[#175CD340] hover:text-white focus:bg-[#347AE2] focus:text-white"
             >
-              {tLanguage(label)}
+              {t(label)}
             </DropdownMenuItem>
           )
         )}

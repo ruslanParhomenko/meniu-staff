@@ -1,23 +1,24 @@
 "use client";
 import SelectField from "@/components/inputs/SelectField";
 import TextInput from "@/components/inputs/TextInput";
-import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { useAbility } from "@/providers/AbilityProvider";
 import { useTranslations } from "next-intl";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { defaultUser, schemaUser, UserType } from "./scema";
+import { defaultUser, schemaUser, UserType } from "./schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SendResetButton } from "@/components/buttons/SendResetButton";
-import { useUsers } from "@/hooks/useUser";
+import { useApi } from "@/hooks/use-query";
 
 export function AddUserForm() {
   const { isAdmin } = useAbility();
-  const tUI = useTranslations("UI");
-  const t = useTranslations("Settings");
-  const { usersQuery, createUser, deleteUser } = useUsers();
+  const t = useTranslations("Home");
+  const { createMutation } = useApi<UserType>({
+    endpoint: "user",
+    queryKey: "users",
+  });
 
   const form = useForm<UserType>({
     resolver: yupResolver(schemaUser),
@@ -27,7 +28,7 @@ export function AddUserForm() {
 
   const onSubmit: SubmitHandler<UserType> = async (data) => {
     if (!isAdmin) return toast.error(t("insufficientRights"));
-    await createUser.mutateAsync(data);
+    await createMutation.mutateAsync(data);
     form.reset();
   };
   return (

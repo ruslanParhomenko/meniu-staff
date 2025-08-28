@@ -1,5 +1,5 @@
 {
-  "UI": {
+  "Home": {
     "close": "Inchide",
     "open": "Deschide",
     "toggle": "Comutare",
@@ -14,13 +14,9 @@
     "confirmReset": "Confirma Resetearea",
     "confirm": "Confirma",
     "createdSuccessfully": "Creat cu succes",
-    "errorOccurred": "A aparut o eroare"
-  },
-  "Language": {
+    "errorOccurred": "A aparut o eroare",
     "romanian": "Romana",
-    "russian": "Rusa"
-  },
-  "Date": {
+    "russian": "Rusa",
     "pickADate": "Alegeti data",
     "weekly": "Săptămânal",
     "monthly": "Lunar",
@@ -43,9 +39,7 @@
     "thu": "Jo",
     "fri": "Vi",
     "sat": "Sâ",
-    "sun": "Du"
-  },
-  "Navigation": {
+    "sun": "Du",
     "schedule": "Orar",
     "report": "Raport",
     "reportCucina": "Raport Bucatarie",
@@ -81,14 +75,11 @@
     "portions": "Portiuni",
     "weight": "Greutate",
     "time": "Timp",
-    "employees": "Angajat",
     "nameOutside": "in ...",
     "nameInside": "din ...",
     "reason": "Motiv",
     "stopListCucina": "Stop List Bucatarie",
-    "stopListBar": "Stop List Bar"
-  },
-  "Auth": {
+    "stopListBar": "Stop List Bar",
     "login": "Autentificare",
     "logout": "Deconectare",
     "register": "Înregistrare",
@@ -99,9 +90,7 @@
     "phone": "Telefon",
     "logIn": "Autentificare",
     "name": "Nume",
-    "adress": "Adresă"
-  },
-  "Settings": {
+    "adress": "Adresă",
     "firstName": "Nume",
     "lastName": "Prenume",
     "position": "Funcție",

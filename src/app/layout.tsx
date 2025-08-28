@@ -11,6 +11,7 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { AbilityProvider } from "@/providers/AbilityProvider";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import { EmployeesProvider } from "@/providers/EmployeeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,7 +43,9 @@ export default async function RootLayout({
         <SessionProviders>
           <NextIntlClientProvider>
             <AbilityProvider>
-              <ReactQueryProvider>{children}</ReactQueryProvider>
+              <ReactQueryProvider>
+                <EmployeesProvider>{children}</EmployeesProvider>
+              </ReactQueryProvider>
             </AbilityProvider>
           </NextIntlClientProvider>
         </SessionProviders>

@@ -15,8 +15,7 @@ export const DeleteListButton = ({
 }) => {
   const router = useRouter();
   const { isAdmin } = useAbility();
-  const tUI = useTranslations("UI");
-  const t = useTranslations("Settings");
+  const t = useTranslations("Home");
 
   const deleteBreakList = async (id: number) => {
     if (!isAdmin) return toast.error(t("insufficientRights"));
@@ -43,7 +42,7 @@ export const DeleteListButton = ({
         variant={"default"}
         onClick={() => deleteBreakList(data?.id)}
       >
-        {tUI("delete")}
+        {t("delete")}
       </Button>
     </div>
   );

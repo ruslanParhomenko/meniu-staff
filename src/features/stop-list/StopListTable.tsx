@@ -36,7 +36,7 @@ export const StopListTable = ({
   nameTag,
   saveMutation,
 }: StopLitTableProps) => {
-  const t = useTranslations("Navigation");
+  const t = useTranslations("Home");
   const { isObserver, isCucina, isAdmin, isBar, isUser } = useAbility();
 
   const LABEL = {

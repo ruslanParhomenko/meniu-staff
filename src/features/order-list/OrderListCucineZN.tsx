@@ -17,7 +17,6 @@ import { useFormContext } from "react-hook-form";
 import { InputWrapper } from "@/components/wrapper/InputWrapper";
 import { OrderCardWrapper } from "@/components/wrapper/OrderCardWrapper";
 import { Label } from "@/components/ui/label";
-
 export const OrderListCuisine = () => {
   const form = useFormContext();
   const { register } = form;
@@ -31,7 +30,6 @@ export const OrderListCuisine = () => {
       </InputWrapper>
       <InputWrapper>
         <OrderCardWrapper data={FRUITS_CUISINE} name="FRUITS_CUISINE" />
-
         <OrderCardWrapper data={SPICES} name="SPICES" />
         <OrderCardWrapper data={BAKERY} name="BAKERY" />
         <OrderCardWrapper data={OTHER} name="OTHER" />
@@ -42,7 +40,6 @@ export const OrderListCuisine = () => {
         <div className="flex flex-col w-full justify-center items-center py-2">
           <Label className="py-2  font-bold text-blue-600">EMPTY</Label>
         </div>
-
         {EMPTY.map((item, index) => {
           return (
             <div key={index} className="flex justify-between gap-2">

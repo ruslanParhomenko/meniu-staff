@@ -1,8 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { useEmployees } from "@/hooks/useEmploees";
-
+import { Employee } from "@/generated/prisma";
+import { useApi } from "@/hooks/use-query";
 import { useAbility } from "@/providers/AbilityProvider";
 import { Delete } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -10,9 +10,12 @@ import { useTranslations } from "next-intl";
 export function EmployeesListTable() {
   const t = useTranslations("Settings");
   const { isAdmin } = useAbility();
-  const { employeesQuery, deleteMutation } = useEmployees();
+  const { query, deleteMutation } = useApi<Employee>({
+    endpoint: "employees",
+    queryKey: "employees",
+  });
 
-  const employees = employeesQuery.data || [];
+  const employees = query.data || [];
   const deleteEmployee = (id: number) => {
     if (!isAdmin) return;
     deleteMutation.mutate(id);

@@ -23,7 +23,7 @@ export const ArhiveListTable = ({
   children: (breakList: any) => React.ReactNode;
   nameTag: string;
 }) => {
-  const t = useTranslations("Navigation");
+  const t = useTranslations("Home");
 
   const locale = useLocale();
   const localesMap: Record<string, DateFnsLocale> = {

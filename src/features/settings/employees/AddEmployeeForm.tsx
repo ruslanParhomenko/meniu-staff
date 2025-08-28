@@ -3,20 +3,32 @@ import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useEmployees } from "@/hooks/useEmploees";
+import { useApi } from "@/hooks/use-query";
 import { useAbility } from "@/providers/AbilityProvider";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-
+import { defaultEmployee, Employee, schemaEmployee } from "./schema";
+import { yupResolver } from "@hookform/resolvers/yup";
+type CreateEmployeeFormProps = {
+  name: string;
+  position: string;
+  rate: string;
+};
 export function AddEmployeeForm() {
-  const { createMutation } = useEmployees();
+  const { createMutation } = useApi<CreateEmployeeFormProps>({
+    endpoint: "employees",
+    queryKey: "employees",
+  });
 
   const { isAdmin } = useAbility();
-  const tUI = useTranslations("UI");
-  const t = useTranslations("Settings");
+  const t = useTranslations("Home");
 
-  const form = useForm<any>();
+  const form = useForm<Employee>({
+    resolver: yupResolver(schemaEmployee),
+    defaultValues: defaultEmployee,
+  });
+
   const {
     register,
     handleSubmit,
@@ -27,16 +39,18 @@ export function AddEmployeeForm() {
   const onSubmit = async (data: any) => {
     if (!isAdmin) return toast.error(t("insufficientRights"));
 
+    console.log(data);
+
     try {
       await createMutation.mutateAsync({
         name: `${data.firstName} ${data.lastName}`,
         position: data.position,
         rate: data.rate,
       });
-      toast.success(tUI("createdSuccessfully"));
+      toast.success(t("createdSuccessfully"));
       reset();
     } catch (error) {
-      toast.error(tUI("errorOccurred"));
+      toast.error("errorOccurred");
     }
   };
   return (
@@ -92,7 +106,7 @@ export function AddEmployeeForm() {
           </div>
 
           <Button type="submit" disabled={form.formState.isSubmitting}>
-            {tUI("save")}
+            {t("save")}
           </Button>
         </form>
       </Form>

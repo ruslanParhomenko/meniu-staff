@@ -22,7 +22,7 @@ import { Calendar } from "@/components/ui/calendar";
 import React, { useState, useEffect } from "react";
 
 function DatePickerInput({ fieldName }: { fieldName: string }) {
-  const tDate = useTranslations("Date");
+  const t = useTranslations("Home");
   const locale = useLocale();
   const locales: Record<string, Locale> = {
     ru,
@@ -57,7 +57,7 @@ function DatePickerInput({ fieldName }: { fieldName: string }) {
                         locale: locales[locale],
                       })
                     ) : (
-                      <span>{tDate("pickADate")}</span>
+                      <span>{t("pickADate")}</span>
                     )}
                   </Button>
                 </FormControl>

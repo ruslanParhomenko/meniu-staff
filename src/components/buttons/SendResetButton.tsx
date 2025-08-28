@@ -15,7 +15,7 @@ import {
 export function SendResetButton({ resetForm }: { resetForm: () => void }) {
   const { isObserver, isUser } = useAbility();
   const isDisabled = isObserver || isUser;
-  const t = useTranslations("UI");
+  const t = useTranslations("Home");
 
   const [openModal, setOpenModal] = useState<"save" | "reset" | null>(null);
 

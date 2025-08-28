@@ -1,5 +1,5 @@
 {
-  "UI": {
+  "Home": {
     "close": "Закрыть",
     "open": "Открыть",
     "toggle": "Переключить",
@@ -14,13 +14,9 @@
     "confirmReset": "Подтвердить сброс",
     "confirm": "Подтвердить",
     "createdSuccessfully": "Создано успешно",
-    "errorOccurred": "Произошла ошибка"
-  },
-  "Language": {
+    "errorOccurred": "Произошла ошибка",
     "romanian": "Румынский",
-    "russian": "Русский"
-  },
-  "Date": {
+    "russian": "Русский",
     "pickADate": "Выберите дату",
     "weekly": "Еженедельно",
     "monthly": "Ежемесячно",
@@ -43,9 +39,7 @@
     "thu": "Чт",
     "fri": "Пт",
     "sat": "Сб",
-    "sun": "Вс"
-  },
-  "Navigation": {
+    "sun": "Вс",
     "schedule": "График",
     "report": "Отчет",
     "reportCucina": "Отчет кухни",
@@ -81,14 +75,11 @@
     "portions": "Порции",
     "weight": "Вес",
     "time": "Смена",
-    "employees": "Сотрудник",
     "nameOutside": "в ...",
     "nameInside": "из ...",
     "reason": "Причина",
     "stopListCucina": "Стоп-лист кухни",
-    "stopListBar": "Стоп-лист Бара"
-  },
-  "Auth": {
+    "stopListBar": "Стоп-лист Бара",
     "login": "Вход",
     "logout": "Выход",
     "register": "Регистрация",
@@ -99,9 +90,7 @@
     "phone": "Телефон",
     "logIn": "Войти",
     "name": "Имя",
-    "adress": "Адрес"
-  },
-  "Settings": {
+    "adress": "Адрес",
     "firstName": "Имя",
     "lastName": "Фамилия",
     "position": "Должность",
