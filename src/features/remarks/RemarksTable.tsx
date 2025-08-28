@@ -18,7 +18,7 @@ import DatePickerInput from "@/components/inputs/DatePickerInput";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { OVER_HOURS, PENALITY, REASON } from "./constants";
 import toast from "react-hot-toast";
-import { BAR, useAbility } from "@/providers/AbilityProvider";
+import { useAbility } from "@/providers/AbilityProvider";
 import { useSession } from "next-auth/react";
 import { FetchDataButton } from "../../components/buttons/FetchDataButton";
 import { defaultRemarks, defaultRemarksForm, RemarksForm } from "./schema";
@@ -108,7 +108,9 @@ export default function RemarksTable() {
       const res = await fetch("/api/remarks-realtime");
       const allData = await res.json();
 
-      const userData = allData.find((item: any) => item.user_email === BAR[0]);
+      const userData = allData.find(
+        (item: any) => item.user_email === "cng.nv.rstrnt@gmail.com"
+      );
 
       if (userData?.form_data) {
         form.reset({
