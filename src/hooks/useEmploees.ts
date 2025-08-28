@@ -19,10 +19,14 @@ const fetcher = async (url: string, options?: RequestInit) => {
 export function useEmployees() {
   const queryClient = useQueryClient();
 
+  const TWELVE_HOURS_IN_MS = 1000 * 60 * 60 * 12;
+
   // 🔹 Получение всех сотрудников
   const employeesQuery = useQuery<Employee[]>({
     queryKey: ["employees"],
     queryFn: () => fetcher("/api/employees"),
+    staleTime: TWELVE_HOURS_IN_MS,
+    gcTime: TWELVE_HOURS_IN_MS,
   });
 
   // 🔹 Создание сотрудника

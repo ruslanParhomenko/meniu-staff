@@ -21,10 +21,13 @@ async function saveStopList(data: any) {
 
 export function useStopList() {
   const queryClient = useQueryClient();
+  const TWELVE_HOURS_IN_MS = 1000 * 60 * 60 * 12;
 
   const stopListQuery = useQuery({
     queryKey: ["stopList"],
     queryFn: fetchStopList,
+    staleTime: TWELVE_HOURS_IN_MS,
+    gcTime: TWELVE_HOURS_IN_MS,
   });
 
   const saveMutation = useMutation({

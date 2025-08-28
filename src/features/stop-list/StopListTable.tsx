@@ -54,11 +54,11 @@ export const StopListTable = ({
   return (
     <div className="xl:px-5">
       <Label className="text-lg font-semibold pb-7">{t(LABEL[nameTag])}</Label>
-      <Table className="[&_th]:text-center [&_td]:text-center table-fixed xl:w-150 ">
+      <Table className="[&_th]:text-center [&_td]:text-center table-fixed md:w-150 ">
         <TableHeader>
           <TableRow className="h-10">
-            <TableHead className="xl:w-80 w-40">Product</TableHead>
-            <TableHead className="xl:w-40 w-25">Date</TableHead>
+            <TableHead className="md:w-80 w-40">Product</TableHead>
+            <TableHead className="md:w-40 w-25">Date</TableHead>
             <TableHead className="text-left w-20">Actions</TableHead>
           </TableRow>
         </TableHeader>

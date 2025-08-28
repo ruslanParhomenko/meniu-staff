@@ -34,7 +34,7 @@ function SelectField({
 }: Props) {
   const { control } = useFormContext();
 
-  const options = data.map((item) => ({ label: item, value: item }));
+  const options = data?.map((item) => ({ label: item, value: item }));
 
   return (
     <Controller

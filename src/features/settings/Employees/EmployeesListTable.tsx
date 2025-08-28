@@ -19,7 +19,7 @@ export function EmployeesListTable() {
   };
 
   return (
-    <div className="w-full px-2 md:w-1/2">
+    <div className="w-full px-2 ">
       <h2 className="text-lg font-semibold mt-6">{t("employees")}:</h2>
       {employees.map((emp, idx) => (
         <div key={`${emp.id}-${idx}`} className="flex justify-between py-2">

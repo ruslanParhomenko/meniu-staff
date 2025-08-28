@@ -6,31 +6,28 @@ import { Form } from "@/components/ui/form";
 import { Label } from "@/components/ui/label";
 import { useAbility } from "@/providers/AbilityProvider";
 import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { defaultUser, schemaUser, UserType } from "./scema";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { SendResetButton } from "@/components/buttons/SendResetButton";
+import { useUsers } from "@/hooks/useUser";
 
 export function AddUserForm() {
   const { isAdmin } = useAbility();
   const tUI = useTranslations("UI");
   const t = useTranslations("Settings");
+  const { usersQuery, createUser, deleteUser } = useUsers();
 
-  const form = useForm<any>();
+  const form = useForm<UserType>({
+    resolver: yupResolver(schemaUser),
+    defaultValues: defaultUser,
+  });
   const { handleSubmit } = form;
 
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<UserType> = async (data) => {
     if (!isAdmin) return toast.error(t("insufficientRights"));
-
-    console.log(data);
-
-    // await fetch("/api/employees", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     name: `${data.firstName} ${data.lastName}`,
-    //     position: data.position,
-    //     rate: data.rate,
-    //   }),
-    // });
+    await createUser.mutateAsync(data);
     form.reset();
   };
   return (
@@ -50,13 +47,11 @@ export function AddUserForm() {
             </Label>
             <SelectField
               fieldName="role"
-              data={["admin", "user", "observer", "guest", "bar", "cucina"]}
+              data={["ADMIN", "USER", "OBSERVER", "GUEST", "BAR", "CUCINA"]}
             />
           </div>
 
-          <Button type="submit" disabled={form.formState.isSubmitting}>
-            {tUI("save")}
-          </Button>
+          <SendResetButton resetForm={form.reset} />
         </form>
       </Form>
     </div>

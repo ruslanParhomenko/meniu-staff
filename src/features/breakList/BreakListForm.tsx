@@ -47,8 +47,7 @@ const BreakList = () => {
   const { isMobile } = useSidebar();
   const session = useSession();
   const LOCAL_STORAGE_KEY = "breakListFormData";
-  // const { employees } = useEmployeeSqlData();
-  const { employeesQuery, createMutation, deleteMutation } = useEmployees();
+  const { employeesQuery } = useEmployees();
 
   const employees = employeesQuery.data ?? [];
   const selectedEmployees = employees
