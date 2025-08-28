@@ -136,7 +136,7 @@ export default function DailyReportForm() {
       const allData = await res.json();
 
       const userData = allData.find(
-        (item: any) => item.user_email === CUCINA[0]
+        (item: any) => item.user_email === "cng.nv.kitchen@gmail.com"
       );
 
       if (userData?.form_data) {

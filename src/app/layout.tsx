@@ -42,11 +42,11 @@ export default async function RootLayout({
       >
         <SessionProviders>
           <NextIntlClientProvider>
-            <AbilityProvider>
-              <ReactQueryProvider>
+            <ReactQueryProvider>
+              <AbilityProvider>
                 <EmployeesProvider>{children}</EmployeesProvider>
-              </ReactQueryProvider>
-            </AbilityProvider>
+              </AbilityProvider>
+            </ReactQueryProvider>
           </NextIntlClientProvider>
         </SessionProviders>
         <Toaster position="bottom-right" />

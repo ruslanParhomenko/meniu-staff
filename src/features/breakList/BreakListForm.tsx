@@ -112,7 +112,9 @@ const BreakList = () => {
       const res = await fetch("/api/break-list-realtime");
       const allData = await res.json();
 
-      const userData = allData.find((item: any) => item.user_email === BAR[0]);
+      const userData = allData.find(
+        (item: any) => item.user_email === "cng.nv.rstrnt@gmail.com"
+      );
 
       if (userData?.form_data) {
         form.reset({

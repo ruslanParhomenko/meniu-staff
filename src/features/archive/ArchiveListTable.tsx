@@ -34,8 +34,9 @@ export const ArhiveListTable = ({
   const [dataSelect, setDataSelect] = useState([{ label: "", value: "" }]);
   const [openItem, setOpenItem] = useState<string | null>(null);
 
-  const { data, refetch } = useData({
-    api: nameTag,
+  const { data, refetch } = useData<any>({
+    endpoint: nameTag,
+    queryKey: nameTag,
   });
 
   const id = useWatch({ name: `selectDataId_${nameTag}` });

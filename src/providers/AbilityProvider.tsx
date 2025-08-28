@@ -1,30 +1,37 @@
 "use client";
 
+import { User } from "@/generated/prisma";
+import { useApi } from "@/hooks/use-query";
 import { useSession } from "next-auth/react";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useMemo,
+} from "react";
 
-const ADMIN = [
-  "parhomenkogm@gmail.com",
-  "cng.nv.rstrnt.mngr@gmail.com",
-  "lavandavazat5@gmail.com",
-];
-export const BAR = ["cng.nv.rstrnt@gmail.com"];
-export const CUCINA = ["cng.nv.kitchen@gmail.com"];
-export const USER = ["cng.srvlnc@gmail.com"];
 type AbilityContextType = {
   isAdmin: boolean;
   isBar: boolean;
   isCucina: boolean;
   isObserver: boolean;
   isUser: boolean;
+  query: User[];
+  createMutation: (data: Omit<User, "id" | "createdAt">) => void;
+  deleteMutation: (id: number) => void;
 };
 
 const AbilityContext = createContext<AbilityContextType | null>(null);
 
 export function AbilityProvider({ children }: { children: React.ReactNode }) {
   const { data } = useSession();
+  const { query, createMutation, deleteMutation } = useApi<User>({
+    endpoint: "user",
+    queryKey: "users",
+  });
 
-  const [ability, setAbility] = useState<AbilityContextType>({
+  const [ability, setAbility] = useState({
     isAdmin: false,
     isBar: false,
     isCucina: false,
@@ -33,29 +40,45 @@ export function AbilityProvider({ children }: { children: React.ReactNode }) {
   });
 
   useEffect(() => {
-    if (data?.user?.email) {
-      const isAdmin = ADMIN.includes(data.user.email);
-      const isCucina = CUCINA.includes(data.user.email);
-      const isBar = BAR.includes(data.user.email);
-      const isUser = USER.includes(data.user.email);
-      const isObserver = !isAdmin && !isCucina && !isBar && !isUser;
+    const email = data?.user?.email;
+    const userData = query.data || [];
 
-      setAbility({ isAdmin, isCucina, isBar, isObserver, isUser });
-    } else {
-      setAbility({
-        isAdmin: false,
-        isCucina: false,
-        isBar: false,
-        isObserver: true,
-        isUser: false,
-      });
-    }
-  }, [data?.user?.email]);
+    if (!email) return;
+
+    const isAdmin =
+      email === "parhomenkogm@gmail.com" ||
+      userData.some((u) => u.role === "ADMIN" && u.mail === email);
+    const isBar =
+      email === "cng.nv.rstrnt@gmail.com" ||
+      userData.some((u) => u.role === "BAR" && u.mail === email);
+    const isCucina =
+      email === "cng.nv.kitchen@gmail.com" ||
+      userData.some((u) => u.role === "CUCINA" && u.mail === email);
+    const isUser =
+      email === "cng.srvlnc@gmail.com" ||
+      userData.some((u) => u.role === "USER" && u.mail === email);
+
+    setAbility({
+      isAdmin,
+      isBar,
+      isCucina,
+      isObserver: !isAdmin && !isBar && !isCucina && !isUser,
+      isUser,
+    });
+  }, [data?.user?.email, query.data]);
+
+  const value = useMemo(
+    () => ({
+      ...ability,
+      query: query.data || [],
+      createMutation: createMutation.mutate,
+      deleteMutation: deleteMutation.mutate,
+    }),
+    [ability, createMutation.mutate, deleteMutation.mutate]
+  );
 
   return (
-    <AbilityContext.Provider value={ability}>
-      {children}
-    </AbilityContext.Provider>
+    <AbilityContext.Provider value={value}>{children}</AbilityContext.Provider>
   );
 }
 

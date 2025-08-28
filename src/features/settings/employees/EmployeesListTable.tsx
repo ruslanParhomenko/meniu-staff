@@ -4,21 +4,18 @@ import { Label } from "@/components/ui/label";
 import { Employee } from "@/generated/prisma";
 import { useApi } from "@/hooks/use-query";
 import { useAbility } from "@/providers/AbilityProvider";
+import { useEmployees } from "@/providers/EmployeeProvider";
 import { Delete } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export function EmployeesListTable() {
-  const t = useTranslations("Settings");
+  const t = useTranslations("Home");
   const { isAdmin } = useAbility();
-  const { query, deleteMutation } = useApi<Employee>({
-    endpoint: "employees",
-    queryKey: "employees",
-  });
+  const { employees, delete: deleteMutation } = useEmployees();
 
-  const employees = query.data || [];
   const deleteEmployee = (id: number) => {
     if (!isAdmin) return;
-    deleteMutation.mutate(id);
+    deleteMutation(id);
   };
 
   return (

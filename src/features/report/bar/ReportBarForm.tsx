@@ -152,7 +152,9 @@ export function ReportBarForm() {
       const res = await fetch("/api/report-realtime");
       const allData = await res.json();
 
-      const userData = allData.find((item: any) => item.user_email === BAR[0]);
+      const userData = allData.find(
+        (item: any) => item.user_email === "cng.nv.rstrnt@gmail.com"
+      );
 
       if (userData?.form_data) {
         const tobaccoWithLocalNames = userData.form_data.tobacco.map(

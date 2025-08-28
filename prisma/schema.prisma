@@ -12,7 +12,6 @@ enum Role {
   USER
   ADMIN
   OBSERVER
-  GUEST
   BAR
   CUCINA
 }
@@ -20,7 +19,7 @@ enum Role {
 model User {
   id        Int      @id @default(autoincrement())
   mail      String   @unique
-  role      Role     @default(USER)
+  role      Role     @default(OBSERVER)
   createdAt DateTime @default(now())
 }
 

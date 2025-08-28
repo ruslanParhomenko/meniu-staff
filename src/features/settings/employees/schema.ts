@@ -7,7 +7,7 @@ export const schemaEmployee = yup.object().shape({
   rate: yup.string().required("role is required"),
 });
 
-export type Employee = yup.InferType<typeof schemaEmployee>;
+export type EmployeeFormData = yup.InferType<typeof schemaEmployee>;
 
 export const defaultEmployee = {
   firstName: "",

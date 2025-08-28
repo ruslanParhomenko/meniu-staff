@@ -9,6 +9,8 @@ interface EmployeesContextValue {
   employees: Employee[];
   isLoading: boolean;
   isError: boolean;
+  delete: (id: number) => void;
+  create: (data: Omit<Employee, "id" | "createdAt">) => void;
 }
 
 const EmployeesContext = createContext<EmployeesContextValue | undefined>(
@@ -16,7 +18,7 @@ const EmployeesContext = createContext<EmployeesContextValue | undefined>(
 );
 
 export function EmployeesProvider({ children }: { children: React.ReactNode }) {
-  const { query } = useApi<Employee>({
+  const { query, deleteMutation, createMutation } = useApi<Employee>({
     endpoint: "employees",
     queryKey: "employees",
   });
@@ -37,6 +39,8 @@ export function EmployeesProvider({ children }: { children: React.ReactNode }) {
         employees,
         isLoading: query.isLoading,
         isError: query.isError,
+        delete: deleteMutation.mutate,
+        create: createMutation.mutate,
       }}
     >
       {children}

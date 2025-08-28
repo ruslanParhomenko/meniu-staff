@@ -9,7 +9,7 @@ interface UseApiOptions {
   gcTime?: number;
 }
 
-export function useApi<TData>({
+export function useApi<T>({
   endpoint,
   queryKey,
   staleTime = 1000 * 60 * 60 * 12,
@@ -17,11 +17,11 @@ export function useApi<TData>({
 }: UseApiOptions) {
   const queryClient = useQueryClient();
 
+  type TCreate = Omit<T, "id" | "createdAt">;
+
   const api = `/api/${endpoint}`;
 
-  type TGetData = TData & { id: number };
-
-  const query = useQuery<TGetData[]>({
+  const query = useQuery<T[]>({
     queryKey: Array.isArray(queryKey) ? queryKey : [queryKey],
     queryFn: () => fetcher(api),
     staleTime: staleTime,
@@ -29,7 +29,7 @@ export function useApi<TData>({
   });
 
   const createMutation = useMutation({
-    mutationFn: (data: TData) =>
+    mutationFn: (data: TCreate) =>
       fetcher(api, {
         method: "POST",
         body: JSON.stringify(data),

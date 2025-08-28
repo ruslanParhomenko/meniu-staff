@@ -1,58 +1,44 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useApi } from "@/hooks/use-query";
 import { useAbility } from "@/providers/AbilityProvider";
 import { useTranslations } from "next-intl";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { defaultEmployee, Employee, schemaEmployee } from "./schema";
+import { defaultEmployee, EmployeeFormData, schemaEmployee } from "./schema";
 import { yupResolver } from "@hookform/resolvers/yup";
-type CreateEmployeeFormProps = {
-  name: string;
-  position: string;
-  rate: string;
-};
-export function AddEmployeeForm() {
-  const { createMutation } = useApi<CreateEmployeeFormProps>({
-    endpoint: "employees",
-    queryKey: "employees",
-  });
+import { useEmployees } from "@/providers/EmployeeProvider";
+import TextInput from "@/components/inputs/TextInput";
 
+export function AddEmployeeForm() {
+  const { create: createMutation } = useEmployees();
   const { isAdmin } = useAbility();
   const t = useTranslations("Home");
 
-  const form = useForm<Employee>({
+  const form = useForm<EmployeeFormData>({
     resolver: yupResolver(schemaEmployee),
     defaultValues: defaultEmployee,
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = form;
+  const { handleSubmit, reset } = form;
 
-  const onSubmit = async (data: any) => {
+  const onSubmit: SubmitHandler<EmployeeFormData> = (data) => {
     if (!isAdmin) return toast.error(t("insufficientRights"));
 
-    console.log(data);
-
     try {
-      await createMutation.mutateAsync({
+      createMutation({
         name: `${data.firstName} ${data.lastName}`,
         position: data.position,
         rate: data.rate,
       });
       toast.success(t("createdSuccessfully"));
       reset();
-    } catch (error) {
+    } catch {
       toast.error("errorOccurred");
     }
   };
+
   return (
     <div className="w-full px-2 md:w-1/2 ">
       <Form {...form}>
@@ -61,48 +47,27 @@ export function AddEmployeeForm() {
             <Label className="mb-2" htmlFor="firstName">
               {t("firstName")}
             </Label>
-            <Input
-              id="firstName"
-              {...register("firstName", { required: true })}
-            />
-            {errors.firstName && (
-              <p className="text-red-500 text-sm">{t("requiredField")}</p>
-            )}
+            <TextInput fieldName="firstName" fieldLabel="" />
           </div>
 
           <div className="my-2">
             <Label className="mb-2" htmlFor="lastName">
               {t("lastName")}
             </Label>
-            <Input
-              id="lastName"
-              {...register("lastName", { required: true })}
-            />
-            {errors.lastName && (
-              <p className="text-red-500 text-sm">{t("requiredField")}</p>
-            )}
+            <TextInput fieldName="lastName" fieldLabel="" />
           </div>
 
           <div className="my-2">
             <Label className="mb-2" htmlFor="position">
               {t("position")}
             </Label>
-            <Input
-              id="position"
-              {...register("position", { required: true })}
-            />
-            {errors.position && (
-              <p className="text-red-500 text-sm">{t("requiredField")}</p>
-            )}
+            <TextInput fieldName="position" fieldLabel="" />
           </div>
           <div className="my-2">
             <Label className="mb-2" htmlFor="rate">
               {t("rate")}
             </Label>
-            <Input id="rate" {...register("rate", { required: false })} />
-            {errors.rate && (
-              <p className="text-red-500 text-sm">{t("requiredField")}</p>
-            )}
+            <TextInput fieldName="rate" fieldLabel="" />
           </div>
 
           <Button type="submit" disabled={form.formState.isSubmitting}>

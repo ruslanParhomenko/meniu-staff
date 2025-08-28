@@ -10,15 +10,12 @@ import toast from "react-hot-toast";
 import { defaultUser, schemaUser, UserType } from "./schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SendResetButton } from "@/components/buttons/SendResetButton";
-import { useApi } from "@/hooks/use-query";
+import { Role } from "@/generated/prisma";
 
 export function AddUserForm() {
   const { isAdmin } = useAbility();
   const t = useTranslations("Home");
-  const { createMutation } = useApi<UserType>({
-    endpoint: "user",
-    queryKey: "users",
-  });
+  const { createMutation } = useAbility();
 
   const form = useForm<UserType>({
     resolver: yupResolver(schemaUser),
@@ -26,9 +23,12 @@ export function AddUserForm() {
   });
   const { handleSubmit } = form;
 
-  const onSubmit: SubmitHandler<UserType> = async (data) => {
+  const onSubmit: SubmitHandler<UserType> = (data) => {
     if (!isAdmin) return toast.error(t("insufficientRights"));
-    await createMutation.mutateAsync(data);
+    createMutation({
+      mail: data.mail,
+      role: data.role as Role,
+    });
     form.reset();
   };
   return (
@@ -48,7 +48,7 @@ export function AddUserForm() {
             </Label>
             <SelectField
               fieldName="role"
-              data={["ADMIN", "USER", "OBSERVER", "GUEST", "BAR", "CUCINA"]}
+              data={["ADMIN", "USER", "OBSERVER", "BAR", "CUCINA"]}
             />
           </div>
 
