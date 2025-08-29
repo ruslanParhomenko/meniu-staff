@@ -102,6 +102,7 @@
     "rate": "Tarif",
     "addUsers": "Adauga utilizatori",
     "mail": "Email",
-    "role": "Rol"
+    "role": "Rol",
+    "chooseItem": "Alege data"
   }
 }

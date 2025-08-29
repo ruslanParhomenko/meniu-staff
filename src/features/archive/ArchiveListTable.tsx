@@ -1,9 +1,8 @@
 "use client";
 import SelectInput from "@/components/inputs/SelectInput";
-import { useDataById } from "@/hooks/use-data-id";
 import { useWatch } from "react-hook-form";
 import { DeleteListButton } from "../../components/buttons/DeleteListButton";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import {
   Accordion,
   AccordionContent,
@@ -11,59 +10,59 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import React, { useEffect, useState } from "react";
-import { useData } from "@/hooks/use-data";
+import { format } from "date-fns";
+import { useApi } from "@/hooks/use-query";
+import { useAbility } from "@/providers/AbilityProvider";
+import { Label } from "@radix-ui/react-label";
+import {
+  BreakeList,
+  DailyReport,
+  DailyReportCucina,
+  RemarkReport,
+} from "@/generated/prisma";
 
-import { format, type Locale as DateFnsLocale } from "date-fns";
-import { ro, ru } from "date-fns/locale";
+type ApiDataMap = {
+  breakList: BreakeList;
+  report: DailyReport;
+  "report-cucina": DailyReportCucina;
+  remarks: RemarkReport;
+};
+type ApiDataByNameTag<T extends keyof ApiDataMap> = ApiDataMap[T];
 
-export const ArhiveListTable = ({
+export const ArhiveListTable = <T extends keyof ApiDataMap>({
   children,
   nameTag,
 }: {
-  children: (breakList: any) => React.ReactNode;
-  nameTag: string;
+  children: (data: ApiDataMap[T]) => React.ReactNode;
+  nameTag: T;
 }) => {
+  console.log(nameTag);
+  const { isObserver } = useAbility();
   const t = useTranslations("Home");
+  const [dataSelect, setDataSelect] = useState<
+    { label: string; value: string }[]
+  >([]);
 
-  const locale = useLocale();
-  const localesMap: Record<string, DateFnsLocale> = {
-    ru,
-    ro,
-  };
-
-  const [dataSelect, setDataSelect] = useState([{ label: "", value: "" }]);
   const [openItem, setOpenItem] = useState<string | null>(null);
 
-  const { data, refetch } = useData<any>({
+  const { query, deleteMutation } = useApi<ApiDataByNameTag<T>>({
     endpoint: nameTag,
     queryKey: nameTag,
   });
+  const { data } = isObserver ? { data: undefined } : query;
 
   const id = useWatch({ name: `selectDataId_${nameTag}` });
-
-  const { data: dataId, refetch: refetchId } = useDataById<any>({
-    id: id,
-    api: nameTag,
-  });
-
+  const selected = data?.find((item) => item.id === Number(id));
   useEffect(() => {
     if (!data) return;
-    const formattedData = data?.map((item) => {
-      const localeObj = localesMap[locale] || ru;
+    const formattedData = data.map((item) => {
       return {
         label: item.id.toLocaleString(),
-        value: format(new Date(item.date), "dd.MM.yyyy", {
-          locale: localeObj,
-        }),
+        value: format(new Date(item.date), "dd.MM.yy"),
       };
     });
     setDataSelect(formattedData);
   }, [data, nameTag]);
-
-  const handleRefetch = () => {
-    refetchId();
-    refetch();
-  };
 
   return (
     <Accordion
@@ -81,25 +80,34 @@ export const ArhiveListTable = ({
             color: "#1f2937",
           }}
         >
-          {t(nameTag)}
+          {t(nameTag as string)}
         </AccordionTrigger>
 
         <AccordionContent>
           <div className="md:w-1/4 w-full py-4" key={nameTag}>
-            <SelectInput
-              fieldName={`selectDataId_${nameTag}`}
-              data={dataSelect}
-            />
+            {isObserver ? (
+              <Label className="text-muted-foreground">
+                {t("insufficientRights")}
+              </Label>
+            ) : (
+              <SelectInput
+                fieldName={`selectDataId_${nameTag}`}
+                data={dataSelect}
+                placeHolder={t("chooseItem")}
+              />
+            )}
           </div>
 
-          {dataId && (
+          {data && id && selected && (
             <>
               <DeleteListButton
-                data={dataId}
-                api={nameTag}
-                refetch={handleRefetch}
+                data={{
+                  ...selected,
+                  date: format(new Date(selected.date), "dd.MM.yy"),
+                }}
+                deleteMutation={deleteMutation.mutate}
               />
-              {children(dataId)}
+              {children(selected)}
             </>
           )}
         </AccordionContent>

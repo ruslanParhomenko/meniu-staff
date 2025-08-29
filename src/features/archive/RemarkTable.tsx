@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/table";
 
 export default function RemarksTable({ data }: { data: any }) {
+  console.log(data);
   return (
     <div className="p-4 border rounded-md shadow-md ">
       <Table>
@@ -15,22 +16,20 @@ export default function RemarksTable({ data }: { data: any }) {
             <TableCell>name</TableCell>
             <TableCell>day hours</TableCell>
             <TableCell>night hours</TableCell>
-            <TableCell>reason</TableCell>
             <TableCell>penality</TableCell>
-            <TableCell>reason penality</TableCell>
+            <TableCell>reason</TableCell>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.remarks.map((remark: any) => {
+          {data?.remarks.map((remark: any) => {
             if (!remark.name) return;
             return (
               <TableRow key={remark.id}>
                 <TableCell>{remark.name || "-"}</TableCell>
                 <TableCell>{remark.dayHours || "-"}</TableCell>
                 <TableCell>{remark.nightHours || "-"}</TableCell>
-                <TableCell>{remark.reason || "-"}</TableCell>
                 <TableCell>{remark.penality || "-"}</TableCell>
-                <TableCell>{remark.reasonPenality || "-"}</TableCell>
+                <TableCell>{remark.reason || "-"}</TableCell>
               </TableRow>
             );
           })}

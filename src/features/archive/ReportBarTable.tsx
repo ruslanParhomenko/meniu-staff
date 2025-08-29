@@ -25,7 +25,7 @@ export const ReportBarTable = ({ data }: { data: any }) => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {data.tobacco.map((t: any) => (
+              {data?.tobacco?.map((t: any) => (
                 <TableRow key={t.id}>
                   <TableCell>{t?.name}</TableCell>
                   <TableCell className="text-center">
@@ -53,8 +53,8 @@ export const ReportBarTable = ({ data }: { data: any }) => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {data.expenses
-                  .filter((e: any) => e.name !== "")
+                {data?.expenses
+                  ?.filter((e: any) => e.name !== "")
                   .map((e: any, idx: number) => (
                     <TableRow key={idx}>
                       <TableCell className="text-center">
@@ -72,7 +72,7 @@ export const ReportBarTable = ({ data }: { data: any }) => {
                 <TableRow>
                   <TableCell className="font-bold">hours:</TableCell>
                   {data.cashVerify
-                    .filter((c: CashVerify) => c.value !== "0")
+                    ?.filter((c: CashVerify) => c.value !== "0")
                     .map((c: CashVerify) => (
                       <TableCell key={`h-${c.id}`}>
                         {c?.hours?.split(":")[0] || "—"}
@@ -82,7 +82,7 @@ export const ReportBarTable = ({ data }: { data: any }) => {
                 <TableRow>
                   <TableCell className="font-bold">value:</TableCell>
                   {data.cashVerify
-                    .filter((c: CashVerify) => c.value !== "0")
+                    ?.filter((c: CashVerify) => c.value !== "0")
                     .map((c: CashVerify) => (
                       <TableCell key={`v-${c.id}`}>{c.value || "—"}</TableCell>
                     ))}

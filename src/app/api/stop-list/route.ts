@@ -6,7 +6,7 @@ export async function GET() {
 
   return NextResponse.json(record || null, {
     headers: {
-      "Cache-Control": "s-maxage=30, stale-while-revalidate=60", // CDN cache на 30 сек
+      "Cache-Control": "s-maxage=30, stale-while-revalidate=60",
     },
   });
 }
@@ -15,7 +15,7 @@ export async function POST(req: Request) {
   const data = await req.json();
 
   const record = await prisma.stopListRecord.upsert({
-    where: { id: data.id ?? 1 }, // можно захардкодить id = 1, если всегда один объект
+    where: { id: data.id ?? 1 },
     update: {
       stopList: data.stopList,
       stopListCucina: data.stopListCucina,

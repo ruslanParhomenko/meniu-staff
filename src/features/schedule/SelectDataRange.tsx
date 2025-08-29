@@ -53,6 +53,7 @@ export const SelectDataRange = () => {
           </SelectContent>
         </Select>
       </div>
+
       {dataRange === "1" ? (
         <div className="flex items-center justify-center w-full h-full">
           data not found

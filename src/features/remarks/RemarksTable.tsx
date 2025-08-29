@@ -24,9 +24,18 @@ import { FetchDataButton } from "../../components/buttons/FetchDataButton";
 import { defaultRemarks, defaultRemarksForm, RemarksForm } from "./schema";
 import { AddRemoveFieldsButton } from "@/components/buttons/AddRemoveFieldsButton";
 import { useEmployees } from "@/providers/EmployeeProvider";
+import { useApi } from "@/hooks/use-query";
+import { Remark, RemarkReport } from "@/generated/prisma";
 
 export default function RemarksTable() {
-  const { isObserver, isBar } = useAbility();
+  const { isObserver, isBar, isCucina, isUser } = useAbility();
+  const { createMutation } = useApi<
+    RemarkReport & { remarks: Omit<Remark, "reportId" | "id">[] }
+  >({
+    endpoint: "remarks",
+    queryKey: "remarks",
+  });
+  const isDisabled = isObserver || isCucina || isUser;
   const session = useSession();
   const KEY_LOCAL = "remarks";
   const {
@@ -64,16 +73,13 @@ export default function RemarksTable() {
     form.reset(defaultRemarksForm);
     removeValue();
   };
-  const handleSubmit: SubmitHandler<RemarksForm> = async (data) => {
-    try {
-      await fetch("/api/remarks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+  const handleSubmit: SubmitHandler<RemarksForm> = (data) => {
+    createMutation.mutate({
+      ...data,
+      date: new Date(data.date),
+    });
 
-      toast.success("Отчет успешно создан");
-    } catch (err) {}
+    toast.success("Отчет успешно создан");
   };
 
   const watchAllFields = form.watch();
@@ -169,35 +175,35 @@ export default function RemarksTable() {
                     fieldName={`remarks.${idx}.name`}
                     fieldLabel=""
                     data={selectedEmployees}
-                    disabled={isObserver}
+                    disabled={isDisabled}
                   />
                 </TableCell>
                 <TableCell>
                   <SelectField
                     fieldName={`remarks.${idx}.dayHours`}
                     data={OVER_HOURS}
-                    disabled={isObserver}
+                    disabled={isDisabled}
                   />
                 </TableCell>
                 <TableCell>
                   <SelectField
                     fieldName={`remarks.${idx}.nightHours`}
                     data={OVER_HOURS}
-                    disabled={isObserver}
+                    disabled={isDisabled}
                   />
                 </TableCell>
                 <TableCell>
                   <SelectField
                     fieldName={`remarks.${idx}.penality`}
                     data={PENALITY}
-                    disabled={isObserver}
+                    disabled={isDisabled}
                   />
                 </TableCell>
                 <TableCell>
                   <SelectField
                     fieldName={`remarks.${idx}.reason`}
                     data={REASON.map((reason) => t(reason) as string)}
-                    disabled={isObserver}
+                    disabled={isDisabled}
                   />
                 </TableCell>
                 <TableCell>
@@ -205,7 +211,7 @@ export default function RemarksTable() {
                     formField={remarks}
                     defaultValues={defaultRemarks}
                     index={idx}
-                    disabled={isObserver}
+                    disabled={isDisabled}
                   />
                 </TableCell>
               </TableRow>

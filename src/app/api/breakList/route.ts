@@ -42,6 +42,9 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-  const breakeList = await prisma.breakeList.findMany();
+  const breakeList = await prisma.breakeList.findMany({
+    include: { rows: { include: { hours: true } } },
+    orderBy: { date: "desc" },
+  });
   return NextResponse.json(breakeList);
 }

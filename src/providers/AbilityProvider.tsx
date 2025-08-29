@@ -42,6 +42,7 @@ export function AbilityProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const email = data?.user?.email;
     const userData = query.data || [];
+    console.log({ email, userData });
 
     if (!email) return;
 

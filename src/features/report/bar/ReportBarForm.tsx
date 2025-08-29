@@ -22,11 +22,18 @@ import TableEspenses from "./TableExpenses";
 import TableCashVerify from "./TableCashVerify";
 import { SendResetButton } from "@/components/buttons/SendResetButton";
 import { FetchDataButton } from "@/components/buttons/FetchDataButton";
+import { useApi } from "@/hooks/use-query";
+import { DailyReport } from "@/generated/prisma";
 
 export function ReportBarForm() {
   const STORAGE_KEY = "report-bar";
   const { isBar } = useAbility();
   const session = useSession();
+
+  const { createMutation } = useApi<DailyReport>({
+    endpoint: "report",
+    queryKey: "report",
+  });
 
   const {
     getValue,
@@ -68,10 +75,10 @@ export function ReportBarForm() {
 
     removeValue();
   };
-  const handleSubmit: SubmitHandler<ReportBarFormValues> = async (data) => {
+  const handleSubmit: SubmitHandler<ReportBarFormValues> = (data) => {
     const formatedData = {
       ...data,
-      date: data.date,
+      date: new Date(data.date),
       tobacco: data.tobacco?.map((item) => ({
         ...item,
         stock: Number(item.stock || 0),
@@ -83,12 +90,9 @@ export function ReportBarForm() {
             Number(item.outgoing || 0)
         ),
       })),
+      total: Number(data.total),
     };
-    await fetch("/api/report/create", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formatedData),
-    });
+    createMutation.mutate(formatedData);
 
     const updatedTobacco = data?.tobacco?.map((item) => {
       const finalStock =

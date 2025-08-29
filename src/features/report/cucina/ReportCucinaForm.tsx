@@ -43,14 +43,19 @@ import { useSession } from "next-auth/react";
 import { FetchDataButton } from "@/components/buttons/FetchDataButton";
 import RenderTableCucina from "./RenderTableByFields";
 import { useEmployees } from "@/providers/EmployeeProvider";
+import { useApi } from "@/hooks/use-query";
+import { DailyReportCucina } from "@/generated/prisma";
 
 export default function DailyReportForm() {
   const t = useTranslations("Home");
 
   const STORAGE_KEY = "report-cucina";
-  const { isCucina } = useAbility();
+  const { isCucina, isObserver } = useAbility();
   const session = useSession();
-
+  const { createMutation } = useApi<DailyReportCucina>({
+    endpoint: "report-cucina",
+    queryKey: "report-cucina",
+  });
   const { employees } = useEmployees();
 
   const selectedEmployees = useMemo(
@@ -75,7 +80,7 @@ export default function DailyReportForm() {
     resolver: yupResolver(schemaReportCucina),
   });
 
-  const handleSubmit: SubmitHandler<ReportCucinaType> = async (data) => {
+  const handleSubmit: SubmitHandler<ReportCucinaType> = (data) => {
     const invalidShift = data.shifts.some((shift) => !shift.employees?.trim());
     if (invalidShift) {
       toast.error("Заполните всех сотрудников в сменах!");
@@ -83,19 +88,13 @@ export default function DailyReportForm() {
     }
 
     try {
-      const response = await fetch("/api/report-cucina/create", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+      createMutation.mutate({
+        ...data,
+        date: new Date(data.date),
       });
-
-      if (!response.ok) {
-        throw new Error("Ошибка при отправке формы");
-      }
 
       toast.success("Форма успешно отправлена!");
     } catch (error: any) {
-      console.error(error);
       toast.error(error?.message || "Произошла ошибка");
     }
   };
@@ -306,6 +305,7 @@ export default function DailyReportForm() {
           <Textarea
             placeholder="Введите текст..."
             {...form.register("notes")}
+            disabled={isObserver}
           />
           <SendResetButton resetForm={resetForm} />
         </div>

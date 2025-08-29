@@ -1,3 +1,5 @@
+import { BreakListItem } from "./schema";
+
 export const BREAK_LIST_DEFAULT: BreakListItem[] = [
   {
     id: "B8",
@@ -232,18 +234,6 @@ export const BREAK_LIST_DEFAULT: BreakListItem[] = [
   },
 ];
 
-export type BreakListItem = {
-  id: string;
-  name: string;
-  hours: Record<string, string>[];
-};
-
-// export const MINUTES_SELECT = [
-//   { label: "00", value: "00" },
-//   { label: "20", value: "20" },
-//   { label: "40", value: "40" },
-//   { label: "X", value: "X" },
-// ];
 export const MINUTES_SELECT = ["00", "20", "40", "X"];
 
 export const INTERVAL_00 = [

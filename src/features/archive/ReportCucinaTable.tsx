@@ -22,7 +22,7 @@ export default function ReportTable({ data: report }: any) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {report.shifts.map((shift: any) => (
+            {report.shifts?.map((shift: any) => (
               <TableRow key={shift.id}>
                 <TableCell>{shift.employees}</TableCell>
                 <TableCell>{shift.time}</TableCell>
@@ -40,7 +40,7 @@ export default function ReportTable({ data: report }: any) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {report.remains.map((item: any) => (
+            {report.remains?.map((item: any) => (
               <TableRow key={item.id}>
                 <TableCell>{item.product}</TableCell>
                 <TableCell>{item.portions}</TableCell>
@@ -60,7 +60,7 @@ export default function ReportTable({ data: report }: any) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {report.movement.map((item: any) => (
+            {report.movement?.map((item: any) => (
               <TableRow key={item.id}>
                 <TableCell className="truncate">{item.nameOutside}</TableCell>
                 <TableCell className="truncate">{item.nameInside}</TableCell>
@@ -78,7 +78,7 @@ export default function ReportTable({ data: report }: any) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {report.writeOff.map((item: any) => (
+            {report.writeOff?.map((item: any) => (
               <TableRow key={item.id}>
                 <TableCell>{item.product}</TableCell>
                 <TableCell>{item.weight}</TableCell>
@@ -111,7 +111,7 @@ export default function ReportTable({ data: report }: any) {
               ...report.preparedDesserts,
               ...report.cutting,
             ]
-              .filter((item) => item.product)
+              ?.filter((item) => item.product)
               .map((item: any, index) => (
                 <TableRow key={`${item.id}-${index}`}>
                   <TableCell>{item.product}</TableCell>
@@ -138,7 +138,7 @@ export default function ReportTable({ data: report }: any) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {report.staff.map((item: any) => (
+            {report.staff?.map((item: any) => (
               <TableRow key={item.id}>
                 <TableCell className="w-40">{item.product}</TableCell>
                 <TableCell className="text-center w-20">
@@ -153,7 +153,7 @@ export default function ReportTable({ data: report }: any) {
           </TableBody>
         </Table>
       </div>
-      {report.notes && <p>Notes: {report.notes}</p>}
+      {report?.notes && <p>Notes: {report.notes}</p>}
     </div>
   );
 }

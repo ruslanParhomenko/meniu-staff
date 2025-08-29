@@ -45,9 +45,9 @@ const RenderTableCucina = ({
 }: RenderEmployeesTableProps) => {
   const t = useTranslations("Home");
   const fieldsArray = useFieldArray({ control: form.control, name: name });
-  const { isObserver, isUser } = useAbility();
+  const { isObserver, isUser, isBar } = useAbility();
 
-  const isDisabled = isObserver || isUser;
+  const isDisabled = isObserver || isUser || isBar;
 
   const { field1, field2, field3, field4 } = placeHolder;
 

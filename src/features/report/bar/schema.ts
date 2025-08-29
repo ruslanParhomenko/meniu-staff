@@ -67,6 +67,7 @@ export const cashVerifyDefault = HOURS.map((hour) => ({
 //report bar
 export const reportBarSchema = yup.object().shape({
   date: yup.string().required("Date is required"),
+  total: yup.number(),
   expenses: expenseSchema,
   tobacco: tobaccoSchema,
   cashVerify: cashVerifySchema,
