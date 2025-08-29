@@ -26,13 +26,26 @@ export const ActionsButton = ({
   saveMutation,
 }: ActionsButtonProps) => {
   const { getValues } = useFormContext();
+
   const handleRemove = () => {
-    formFields.remove(idx);
+    if (formFields.fields.length === 1) {
+      formFields.replace([defaultStopList]);
+    } else {
+      formFields.remove(idx);
+    }
+
     saveMutation.mutate({
       id: 1,
       stopList: getValues("stopList").filter((i: any) => i.product),
       stopListCucina: getValues("stopListCucina").filter((i: any) => i.product),
     });
+  };
+
+  const handleAdd = () => {
+    const lastItem = formFields.fields[formFields.fields.length - 1];
+    if (lastItem.product) {
+      formFields.append(defaultStopList);
+    }
   };
 
   return (
@@ -41,7 +54,7 @@ export const ActionsButton = ({
         <Button
           type="button"
           variant="destructive"
-          onClick={() => handleRemove()}
+          onClick={handleRemove}
           disabled={disabled}
         >
           <Minus />
@@ -51,8 +64,8 @@ export const ActionsButton = ({
         <Button
           type="button"
           variant="outline"
-          onClick={() => formFields.append(defaultStopList)}
-          disabled={disabled}
+          onClick={handleAdd}
+          disabled={disabled || !item.product}
         >
           <Plus />
         </Button>

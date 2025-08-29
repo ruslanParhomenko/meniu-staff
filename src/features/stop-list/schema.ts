@@ -15,3 +15,4 @@ export const stopListSchema = yup.object({
 });
 
 export type StopListSchemaType = yup.InferType<typeof stopListSchema>;
+export const defaultStopListSchema = stopListSchema.getDefault();

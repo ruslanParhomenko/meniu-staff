@@ -4,7 +4,11 @@ import { useFieldArray, useForm, useWatch } from "react-hook-form";
 import { useEffect } from "react";
 import { formatNowData } from "@/utils/formatNow";
 import { useStopList } from "@/hooks/useStopList";
-import { stopListSchema, StopListSchemaType } from "./schema";
+import {
+  defaultStopListSchema,
+  stopListSchema,
+  StopListSchemaType,
+} from "./schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { StopListTable } from "./StopListTable";
 
@@ -14,7 +18,7 @@ export default function StopListForm() {
 
   const form = useForm<StopListSchemaType>({
     resolver: yupResolver(stopListSchema),
-    defaultValues: stopListSchema.getDefault(),
+    defaultValues: defaultStopListSchema,
   });
 
   const stopListValues = useFieldArray({
@@ -27,7 +31,17 @@ export default function StopListForm() {
   });
   useEffect(() => {
     if (!data) return;
-    form.reset(data);
+
+    form.reset({
+      stopList:
+        Array.isArray(data.stopList) && data.stopList.length > 0
+          ? data.stopList
+          : defaultStopListSchema.stopList,
+      stopListCucina:
+        Array.isArray(data.stopListCucina) && data.stopListCucina.length > 0
+          ? data.stopListCucina
+          : defaultStopListSchema.stopListCucina,
+    });
   }, [data, form]);
 
   const watchStopList = useWatch({ control: form.control, name: "stopList" });

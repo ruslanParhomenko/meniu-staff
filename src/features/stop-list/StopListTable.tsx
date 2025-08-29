@@ -10,7 +10,6 @@ import {
 } from "@/components/ui/table";
 import { ActionsButton } from "./ActionsButton";
 import { useAbility } from "@/providers/AbilityProvider";
-import SelectField from "@/components/inputs/SelectField";
 import { useTranslations } from "next-intl";
 import {
   MENU_ITEMS_CUCINA,
@@ -19,6 +18,7 @@ import {
 } from "../report/bar/constants";
 import { UseFieldArrayReturn } from "react-hook-form";
 import { StopListSchemaType } from "./schema";
+import SelectFieldWithSearch from "@/components/inputs/SelectWithSearch";
 
 type StopLitTableProps = {
   formFields: UseFieldArrayReturn<
@@ -66,10 +66,11 @@ export const StopListTable = ({
           {formFields.fields.map((item, idx) => (
             <TableRow key={item.id}>
               <TableCell>
-                <SelectField
+                <SelectFieldWithSearch
                   data={DATA_PRODUCTS[nameTag]}
                   fieldName={`${LABEL[nameTag]}.${idx}.product`}
                   disabled={DISABLED[nameTag]}
+                  className="h-10"
                 />
               </TableCell>
               <TableCell className="text-center">

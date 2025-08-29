@@ -1,4 +1,5 @@
 "use client";
+
 import { LogOut } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
 import { signOut, useSession } from "next-auth/react";
@@ -15,15 +16,14 @@ import LanguageSwitcher from "../../components/switches/LanguageSwitch";
 import { SIDEBAR_NAVIGATION } from "./constants";
 import { useSidebar } from "../../components/ui/sidebar";
 import { SidebarToggleButton } from "@/components/switches/SidebarToggleButton";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useAbility } from "@/providers/AbilityProvider";
 
 const SidebarNav = () => {
   const { toggleSidebar, isMobile } = useSidebar();
-  const pathname = usePathname().split("/")[1];
-
+  const pathname = usePathname();
   const t = useTranslations("Home");
-  const { data: session } = useSession();
-
-  const isCucina = session?.user?.email?.includes("cng.nv.kitchen@gmail.com");
+  const { isAdmin, isBar, isCucina, isUser } = useAbility();
 
   const handleMenuClick = () => {
     if (isMobile) {
@@ -31,34 +31,46 @@ const SidebarNav = () => {
     }
   };
 
+  const roleLabel = isAdmin
+    ? "ADMIN"
+    : isBar
+    ? "BAR"
+    : isCucina
+    ? "CUCINA"
+    : isUser
+    ? "USER"
+    : "OBSERVER";
+
   return (
     <>
       <div className="flex items-center lg:hidden">
         <SidebarToggleButton />
       </div>
+
       <Sidebar className="border-none">
         <SidebarContent>
-          <span className="text-xs pt-4 pl-2">
-            {session?.user?.email?.split("@")[0] || "Loading..."}
-          </span>
-
-          <SidebarMenu className="flex h-full flex-col gap-4 pt-10  ">
+          <div className="flex justify-center pt-2">
+            <Avatar className="w-full">
+              <AvatarFallback>{roleLabel}</AvatarFallback>
+            </Avatar>
+          </div>
+          <SidebarMenu className="flex h-full flex-col gap-4 pt-10">
             {SIDEBAR_NAVIGATION.map((item) => {
-              const isActivePath = pathname === item.url.split("/")[1];
+              const isActivePath =
+                pathname.split("/")[1] === item.url.split("/")[1];
 
               return (
-                <SidebarMenuButton
-                  key={item.title}
-                  isActive={isActivePath}
-                  asChild
-                  className={cn("text-blue-600 ", {
-                    "bg-blue-300! text-black hover:bg-blue-600 [&>span]:text-black":
-                      isActivePath,
-                  })}
-                >
+                <SidebarMenuButton key={item.title} asChild>
                   <Link
                     href={isCucina ? item.url2 : item.url}
                     onClick={handleMenuClick}
+                    className={cn(
+                      "text-[#2563EB] flex items-center w-full p-4 rounded-md",
+                      {
+                        "bg-[#93C5FD]! text-[#000000] hover:bg-[#2563EB] [&>span]:text-[#000000]":
+                          isActivePath,
+                      }
+                    )}
                   >
                     <span className="text-base">{t(item.title)}</span>
                   </Link>
@@ -68,13 +80,13 @@ const SidebarNav = () => {
           </SidebarMenu>
         </SidebarContent>
 
-        <SidebarFooter className="pb-20 ">
+        <SidebarFooter className="pb-20">
           <SidebarMenu className="flex flex-row justify-between items-center gap-4 px-6">
             <div
               className="cursor-pointer"
               onClick={() => signOut({ callbackUrl: "/" })}
             >
-              <LogOut className=" rotate-180 text-blue-600" />
+              <LogOut className="rotate-180 text-[#2563EB]" />
             </div>
 
             <LanguageSwitcher />
