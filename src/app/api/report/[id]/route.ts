@@ -16,3 +16,18 @@ export async function DELETE(
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+//get
+
+export async function GET(
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const report = await prisma.dailyReport.findUnique({
+    where: { id: Number(id) },
+    include: { cashVerify: true, tobacco: true, expenses: true },
+  });
+
+  return NextResponse.json(report);
+}

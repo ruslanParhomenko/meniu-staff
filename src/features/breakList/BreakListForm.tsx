@@ -7,7 +7,7 @@ import { Form } from "../../components/ui/form";
 import DatePickerInput from "@/components/inputs/DatePickerInput";
 import { SendResetButton } from "../../components/buttons/SendResetButton";
 import { FetchDataButton } from "../../components/buttons/FetchDataButton";
-import { useApi } from "@/hooks/use-query";
+import { useApi } from "@/hooks/useApi";
 import { BreakeList } from "@/generated/prisma";
 import {
   BREAK_LIST_ENDPOINT,
@@ -29,6 +29,7 @@ const BreakList = () => {
   const { createMutation } = useApi<BreakeList>({
     endpoint: BREAK_LIST_ENDPOINT,
     queryKey: BREAK_LIST_ENDPOINT,
+    fetchInit: false,
   });
 
   const savedData =

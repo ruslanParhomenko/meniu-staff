@@ -16,3 +16,31 @@ export async function DELETE(
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+//get
+
+export async function GET(
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+
+    const report = await prisma.breakeList.findUnique({
+      where: { id: Number(id) },
+      include: { rows: { include: { hours: true } } },
+    });
+
+    if (!report) {
+      return NextResponse.json({ error: "Report not found" }, { status: 404 });
+    }
+
+    return NextResponse.json(report);
+  } catch (error) {
+    console.error("GET /api/remarks/[id] error:", error);
+    return NextResponse.json(
+      { error: "Failed to fetch report" },
+      { status: 500 }
+    );
+  }
+}

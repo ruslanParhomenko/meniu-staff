@@ -55,15 +55,6 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-  const dailyReport = await prisma.dailyReport.findMany({
-    include: {
-      cashVerify: true,
-      tobacco: true,
-      expenses: true,
-    },
-    orderBy: {
-      date: "desc",
-    },
-  });
+  const dailyReport = await prisma.dailyReport.findMany();
   return NextResponse.json(dailyReport);
 }

@@ -34,18 +34,6 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-  try {
-    const reports = await prisma.remarkReport.findMany({
-      include: { remarks: true },
-      orderBy: { date: "desc" },
-    });
-
-    return NextResponse.json(reports);
-  } catch (error: any) {
-    console.error("❌ Prisma error:", error);
-    return NextResponse.json(
-      { error: error.message || "Failed to fetch remarks" },
-      { status: 500 }
-    );
-  }
+  const reports = await prisma.remarkReport.findMany();
+  return NextResponse.json(reports);
 }

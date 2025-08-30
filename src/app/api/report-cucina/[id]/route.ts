@@ -16,3 +16,27 @@ export async function DELETE(
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function GET(
+  _req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+
+  const report = await prisma.dailyReportCucina.findUnique({
+    where: { id: Number(id) },
+    include: {
+      shifts: true,
+      remains: true,
+      preparedSalads: true,
+      preparedSeconds: true,
+      preparedDesserts: true,
+      cutting: true,
+      staff: true,
+      movement: true,
+      writeOff: true,
+    },
+  });
+
+  return NextResponse.json(report);
+}

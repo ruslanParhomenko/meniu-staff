@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/accordion";
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
-import { useApi } from "@/hooks/use-query";
+import { useApi } from "@/hooks/useApi";
 import { useAbility } from "@/providers/AbilityProvider";
 import { Label } from "@radix-ui/react-label";
 import {
@@ -20,6 +20,7 @@ import {
   DailyReportCucina,
   RemarkReport,
 } from "@/generated/prisma";
+import { useArchive } from "@/hooks/useApiArchive";
 
 type ApiDataMap = {
   breakList: BreakeList;
@@ -27,7 +28,13 @@ type ApiDataMap = {
   "report-cucina": DailyReportCucina;
   remarks: RemarkReport;
 };
-type ApiDataByNameTag<T extends keyof ApiDataMap> = ApiDataMap[T];
+
+const dataObjectApi = {
+  breakList: "breakeList",
+  report: "dailyReport",
+  "report-cucina": "dailyReportCucina",
+  remarks: "remarkReport",
+};
 
 export const ArhiveListTable = <T extends keyof ApiDataMap>({
   children,
@@ -36,7 +43,6 @@ export const ArhiveListTable = <T extends keyof ApiDataMap>({
   children: (data: ApiDataMap[T]) => React.ReactNode;
   nameTag: T;
 }) => {
-  console.log(nameTag);
   const { isObserver } = useAbility();
   const t = useTranslations("Home");
   const [dataSelect, setDataSelect] = useState<
@@ -45,17 +51,24 @@ export const ArhiveListTable = <T extends keyof ApiDataMap>({
 
   const [openItem, setOpenItem] = useState<string | null>(null);
 
-  const { query, deleteMutation } = useApi<ApiDataByNameTag<T>>({
-    endpoint: nameTag,
-    queryKey: nameTag,
-  });
-  const { data } = isObserver ? { data: undefined } : query;
+  // const { query, deleteMutation } = useApi<ApiDataByNameTag<T>>({
+  //   endpoint: nameTag,
+  //   queryKey: nameTag,
+  // });
+  // const { data } = isObserver ? { data: undefined } : query;
+
+  const { data, isLoading, error, invalidate } = useArchive();
+  const dataKey = dataObjectApi[nameTag];
+  const arrayToFormat = data?.[dataKey] ?? [];
+
+  console.log("arrayToFormat", arrayToFormat);
 
   const id = useWatch({ name: `selectDataId_${nameTag}` });
-  const selected = data?.find((item) => item.id === Number(id));
+  const selected = arrayToFormat.find((item) => item.id === Number(id));
+
   useEffect(() => {
     if (!data) return;
-    const formattedData = data.map((item) => {
+    const formattedData = arrayToFormat?.map((item) => {
       return {
         label: item.id.toLocaleString(),
         value: format(new Date(item.date), "dd.MM.yy"),
@@ -105,7 +118,7 @@ export const ArhiveListTable = <T extends keyof ApiDataMap>({
                   ...selected,
                   date: format(new Date(selected.date), "dd.MM.yy"),
                 }}
-                deleteMutation={deleteMutation.mutate}
+                // deleteMutation={deleteMutation.mutate}
               />
               {children(selected)}
             </>

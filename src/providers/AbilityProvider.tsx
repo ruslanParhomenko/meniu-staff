@@ -1,7 +1,7 @@
 "use client";
 
 import { User } from "@/generated/prisma";
-import { useApi } from "@/hooks/use-query";
+import { useApi } from "@/hooks/useApi";
 import { useSession } from "next-auth/react";
 import React, {
   createContext,

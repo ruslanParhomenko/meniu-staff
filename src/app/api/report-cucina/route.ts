@@ -140,21 +140,6 @@ export async function POST(req: Request) {
 }
 
 export async function GET() {
-  const dailyReport = await prisma.dailyReportCucina.findMany({
-    include: {
-      shifts: true,
-      remains: true,
-      preparedSalads: true,
-      preparedSeconds: true,
-      preparedDesserts: true,
-      cutting: true,
-      staff: true,
-      movement: true,
-      writeOff: true,
-    },
-    orderBy: {
-      date: "desc",
-    },
-  });
+  const dailyReport = await prisma.dailyReportCucina.findMany();
   return NextResponse.json(dailyReport);
 }

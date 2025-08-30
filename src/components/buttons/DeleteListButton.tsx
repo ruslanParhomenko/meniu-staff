@@ -4,10 +4,10 @@ import { useTranslations } from "next-intl";
 
 export const DeleteListButton = ({
   data,
-  deleteMutation,
-}: {
+}: // deleteMutation,
+{
   data: { id: number; date: string };
-  deleteMutation: (id: number) => void;
+  // deleteMutation: (id: number) => void;
 }) => {
   const { isAdmin } = useAbility();
   const t = useTranslations("Home");
@@ -23,7 +23,7 @@ export const DeleteListButton = ({
       <Button
         type="button"
         variant={"default"}
-        onClick={() => deleteMutation(data?.id)}
+        // onClick={() => deleteMutation(data?.id)}
         disabled={!isAdmin}
       >
         {t("delete")}

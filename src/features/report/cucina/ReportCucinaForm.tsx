@@ -43,7 +43,7 @@ import { useSession } from "next-auth/react";
 import { FetchDataButton } from "@/components/buttons/FetchDataButton";
 import RenderTableCucina from "./RenderTableByFields";
 import { useEmployees } from "@/providers/EmployeeProvider";
-import { useApi } from "@/hooks/use-query";
+import { useApi } from "@/hooks/useApi";
 import { DailyReportCucina } from "@/generated/prisma";
 
 export default function DailyReportForm() {
@@ -55,6 +55,7 @@ export default function DailyReportForm() {
   const { createMutation } = useApi<DailyReportCucina>({
     endpoint: "report-cucina",
     queryKey: "report-cucina",
+    fetchInit: false,
   });
   const { employees } = useEmployees();
 

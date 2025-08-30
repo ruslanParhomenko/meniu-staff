@@ -22,7 +22,7 @@ import TableEspenses from "./TableExpenses";
 import TableCashVerify from "./TableCashVerify";
 import { SendResetButton } from "@/components/buttons/SendResetButton";
 import { FetchDataButton } from "@/components/buttons/FetchDataButton";
-import { useApi } from "@/hooks/use-query";
+import { useApi } from "@/hooks/useApi";
 import { DailyReport } from "@/generated/prisma";
 
 export function ReportBarForm() {
@@ -33,6 +33,7 @@ export function ReportBarForm() {
   const { createMutation } = useApi<DailyReport>({
     endpoint: "report",
     queryKey: "report",
+    fetchInit: false,
   });
 
   const {

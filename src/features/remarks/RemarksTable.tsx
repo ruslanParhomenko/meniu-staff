@@ -24,7 +24,7 @@ import { FetchDataButton } from "../../components/buttons/FetchDataButton";
 import { defaultRemarks, defaultRemarksForm, RemarksForm } from "./schema";
 import { AddRemoveFieldsButton } from "@/components/buttons/AddRemoveFieldsButton";
 import { useEmployees } from "@/providers/EmployeeProvider";
-import { useApi } from "@/hooks/use-query";
+import { useApi } from "@/hooks/useApi";
 import { Remark, RemarkReport } from "@/generated/prisma";
 
 export default function RemarksTable() {
@@ -34,6 +34,7 @@ export default function RemarksTable() {
   >({
     endpoint: "remarks",
     queryKey: "remarks",
+    fetchInit: false,
   });
   const isDisabled = isObserver || isCucina || isUser;
   const session = useSession();

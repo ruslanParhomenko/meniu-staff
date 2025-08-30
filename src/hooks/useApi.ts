@@ -7,6 +7,7 @@ interface UseApiOptions {
   queryKey: string | string[];
   staleTime?: number;
   gcTime?: number;
+  fetchInit?: boolean;
 }
 
 export function useApi<T>({
@@ -14,6 +15,7 @@ export function useApi<T>({
   queryKey,
   staleTime = 1000 * 60 * 60 * 12,
   gcTime = 1000 * 60 * 60 * 12,
+  fetchInit = true,
 }: UseApiOptions) {
   const queryClient = useQueryClient();
 
@@ -26,6 +28,7 @@ export function useApi<T>({
     queryFn: () => fetcher(api),
     staleTime: staleTime,
     gcTime: gcTime,
+    enabled: fetchInit,
   });
 
   const createMutation = useMutation({
