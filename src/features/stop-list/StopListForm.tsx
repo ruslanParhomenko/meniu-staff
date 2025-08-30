@@ -12,7 +12,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { StopListTable } from "./StopListTable";
 import { STOP_LIST_REALTIME } from "@/constants/endpoint-tag";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
-import { useDataSupabase } from "@/hooks/useRealTimeData";
+import { useDataSupaBase } from "@/hooks/useRealTimeData";
 import { useAbility } from "@/providers/AbilityProvider";
 import { FetchDataButton } from "@/components/buttons/FetchDataButton";
 
@@ -22,7 +22,7 @@ export default function StopListForm() {
   const { getValue, setValue: setLocalStorage } =
     useLocalStorageForm<StopListSchemaType>(LOCAL_STORAGE_KEY);
 
-  const { sendRealTime, fetchRealTime } = useDataSupabase({
+  const { sendRealTime, fetchRealTime } = useDataSupaBase({
     localStorageKey: LOCAL_STORAGE_KEY,
     apiKey: STOP_LIST_REALTIME,
     user: "bar",
@@ -57,7 +57,6 @@ export default function StopListForm() {
 
   const syncedRows = useRef<Record<number, boolean>>({});
 
-  // Автозаполнение даты
   useEffect(() => {
     watchStopList.forEach((item, idx) => {
       if (item?.product && !item.date) {
@@ -76,7 +75,6 @@ export default function StopListForm() {
     });
   }, [watchStopList, stopListValues.fields.length]);
 
-  // автозаполнение даты
   useEffect(() => {
     watchStopListCucina.forEach((item, idx) => {
       if (item?.product && !item.date) {
@@ -95,8 +93,7 @@ export default function StopListForm() {
     });
   }, [watchStopListCucina, stopListCucinaValues.fields.length]);
 
-  // авто-сохранение при изменении формы
-  const fetchSupabaseData = async () => {
+  const fetchSupaBaseData = async () => {
     const data = await fetchRealTime();
     if (data) {
       form.reset(data);
@@ -106,7 +103,7 @@ export default function StopListForm() {
   useEffect(() => {
     if (!isBar && !isCucina) return;
     const timeout = setTimeout(() => {
-      fetchSupabaseData();
+      fetchSupaBaseData();
     }, 1000);
     return () => clearTimeout(timeout);
   }, [isBar, isCucina]);
@@ -118,7 +115,7 @@ export default function StopListForm() {
           <StopListTable formFields={stopListValues} nameTag="bar" />
           <StopListTable formFields={stopListCucinaValues} nameTag="cucina" />
         </div>
-        <FetchDataButton fetchData={fetchSupabaseData} />
+        <FetchDataButton fetchData={fetchSupaBaseData} />
       </form>
     </Form>
   );

@@ -21,7 +21,7 @@ export const OrderListCuisine = () => {
   const form = useFormContext();
   const { register } = form;
   return (
-    <div className="flex flex-col gap-10 w-full justify-start mx-5 sm:flex-row">
+    <div className="flex flex-col gap-10 w-full justify-start md:mx-5 sm:flex-row">
       <InputWrapper>
         <OrderCardWrapper data={VEGETABLES} name="VEGETABLES" />
         <OrderCardWrapper data={GREEN} name="GREEN" />

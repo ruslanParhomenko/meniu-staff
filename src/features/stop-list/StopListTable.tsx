@@ -50,9 +50,9 @@ export const StopListTable = ({ formFields, nameTag }: StopLitTableProps) => {
       <Table className="[&_th]:text-center [&_td]:text-center table-fixed md:w-180 ">
         <TableHeader>
           <TableRow className="h-10">
-            <TableHead className="md:w-90 w-40">Product</TableHead>
-            <TableHead className="md:w-50 w-25">Date</TableHead>
-            <TableHead className="text-left md:w-40 w-20">Actions</TableHead>
+            <TableHead className="md:w-90 w-42">Product</TableHead>
+            <TableHead className="md:w-50 w-18">Date</TableHead>
+            <TableHead className="text-left md:w-40 w-10">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -81,7 +81,6 @@ export const StopListTable = ({ formFields, nameTag }: StopLitTableProps) => {
                   disabled={DISABLED[nameTag]}
                 />
               </TableCell>
-              <TableCell></TableCell>
             </TableRow>
           ))}
         </TableBody>

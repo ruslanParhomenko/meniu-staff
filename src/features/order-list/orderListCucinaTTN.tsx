@@ -17,7 +17,7 @@ import { InputWrapper } from "@/components/wrapper/InputWrapper";
 import { OrderCardWrapper } from "@/components/wrapper/OrderCardWrapper";
 export const OrderListTTNCucine = () => {
   return (
-    <div className="flex flex-col gap-10 w-full justify-start mx-5 sm:flex-row">
+    <div className="flex flex-col gap-10 w-full justify-start md:mx-5 sm:flex-row">
       <InputWrapper>
         <OrderCardWrapper data={ROGOB} name="ROGOB" />
         <OrderCardWrapper data={BLUESHARK} name="BLUESHARK" />

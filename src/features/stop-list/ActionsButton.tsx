@@ -37,7 +37,7 @@ export const ActionsButton = ({
   };
 
   return (
-    <div className="flex gap-2 justify-start items-center">
+    <div className="flex md:flex-row flex-col gap-2 md:justify-start justify-end">
       {(item.product || idx === formFields.fields.length - 1) && (
         <Button
           type="button"

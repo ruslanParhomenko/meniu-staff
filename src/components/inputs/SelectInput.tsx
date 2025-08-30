@@ -51,7 +51,7 @@ function SelectInput({
               >
                 {fieldLabel && (
                   <Label
-                    className={`${fieldLabel ? "w-2/3" : ""} ${
+                    className={`${fieldLabel ? "w-3/4" : ""} ${
                       field.value && field.value !== 0
                         ? "text-blue-600 font-bold"
                         : ""

@@ -11,7 +11,7 @@ export type BreakListFormValues = {
   rows: BreakListItem[];
 };
 
-export const defaultValuesBraekList = {
+export const defaultValuesBrakeList = {
   rows: BREAK_LIST_DEFAULT.map((item) => ({
     id: item.id,
     name: item.name,

@@ -5,6 +5,7 @@ import { QUANTITY_SELECT } from "@/features/order-list/constants";
 import { Separator } from "../ui/separator";
 import { useAbility } from "@/providers/AbilityProvider";
 import { useFormContext, useWatch } from "react-hook-form";
+import { Minus } from "lucide-react";
 
 export function OrderCardWrapper({
   data,
@@ -37,7 +38,7 @@ export function OrderCardWrapper({
                   className=" text-red-600 front-bold"
                   onClick={() => setValue(item, "")}
                 >
-                  -
+                  X
                 </button>
               )}
             </div>

@@ -18,7 +18,7 @@ import {
   TobaccoSchemaType,
 } from "./schema";
 import TableTobacco from "./TableTobacco";
-import TableEspenses from "./TableExpenses";
+import TableExpenses from "./TableExpenses";
 import TableCashVerify from "./TableCashVerify";
 import { SendResetButton } from "@/components/buttons/SendResetButton";
 import { FetchDataButton } from "@/components/buttons/FetchDataButton";
@@ -77,7 +77,7 @@ export function ReportBarForm() {
     removeValue();
   };
   const handleSubmit: SubmitHandler<ReportBarFormValues> = (data) => {
-    const formatedData = {
+    const formateData = {
       ...data,
       date: new Date(data.date),
       tobacco: data.tobacco?.map((item) => ({
@@ -93,7 +93,7 @@ export function ReportBarForm() {
       })),
       total: Number(data.total),
     };
-    createMutation.mutate(formatedData);
+    createMutation.mutate(formateData);
 
     const updatedTobacco = data?.tobacco?.map((item) => {
       const finalStock =
@@ -121,7 +121,7 @@ export function ReportBarForm() {
     toast.success("Бар отчет успешно сохранён !");
   };
 
-  //supabase
+  //supaBase
   const watchAllFields = form.watch();
   useEffect(() => {
     const sendDataToApi = async () => {
@@ -152,7 +152,7 @@ export function ReportBarForm() {
     return () => clearTimeout(timeout);
   }, [watchAllFields]);
 
-  const fetchSupabaseData = async () => {
+  const fetchSupaBaseData = async () => {
     try {
       const res = await fetch("/api/report-realtime");
       const allData = await res.json();
@@ -187,7 +187,7 @@ export function ReportBarForm() {
         );
       }
     } catch (err) {
-      console.error("Error fetching Supabase data:", err);
+      console.error("Error fetching  data:", err);
     }
   };
 
@@ -196,13 +196,13 @@ export function ReportBarForm() {
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <div className="flex items-center gap-4 justify-between">
           <DatePickerInput fieldName="date" />
-          <FetchDataButton fetchData={fetchSupabaseData} />
+          <FetchDataButton fetchData={fetchSupaBaseData} />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-[50%_5%_25%] md:gap-20 md:pr-20 pt-4">
           <TableTobacco />
           <div className="w-full" />
-          <TableEspenses />
+          <TableExpenses />
         </div>
         <TableCashVerify />
         <SendResetButton resetForm={resetForm} />

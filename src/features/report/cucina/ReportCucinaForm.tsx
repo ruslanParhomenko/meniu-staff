@@ -45,34 +45,46 @@ import RenderTableCucina from "./RenderTableByFields";
 import { useEmployees } from "@/providers/EmployeeProvider";
 import { useApi } from "@/hooks/useApi";
 import { DailyReportCucina } from "@/generated/prisma";
+import {
+  REPORT_CUCINA_ENDPOINT,
+  REPORT_CUCINA_REALTIME_ENDPOINT,
+} from "@/constants/endpoint-tag";
+import { useDataSupaBase } from "@/hooks/useRealTimeData";
 
 export default function DailyReportForm() {
   const t = useTranslations("Home");
+  const LOCAL_STORAGE_KEY = REPORT_CUCINA_ENDPOINT;
 
-  const STORAGE_KEY = "report-cucina";
   const { isCucina, isObserver } = useAbility();
-  const session = useSession();
+
+  //employees
+  const { employees } = useEmployees();
+  const selectedEmployees = employees
+    .filter((emp) => CUCINA_EMPLOYEES.includes(emp.position))
+    .map((emp) => emp.name);
+
+  //create
   const { createMutation } = useApi<DailyReportCucina>({
-    endpoint: "report-cucina",
-    queryKey: "report-cucina",
+    endpoint: REPORT_CUCINA_ENDPOINT,
+    queryKey: REPORT_CUCINA_ENDPOINT,
     fetchInit: false,
   });
-  const { employees } = useEmployees();
 
-  const selectedEmployees = useMemo(
-    () =>
-      employees
-        .filter((emp) => CUCINA_EMPLOYEES.includes(emp.position))
-        .map((emp) => emp.name),
-    [employees]
-  );
+  //realtime
+  const { sendRealTime, fetchRealTime } = useDataSupaBase({
+    localStorageKey: LOCAL_STORAGE_KEY,
+    apiKey: REPORT_CUCINA_REALTIME_ENDPOINT,
+    user: "cucina",
+  });
 
+  //localstorage
   const {
     getValue,
     setValue: setLocalStorage,
     removeValue,
-  } = useLocalStorageForm(STORAGE_KEY);
+  } = useLocalStorageForm(LOCAL_STORAGE_KEY);
 
+  //form
   const form = useForm<ReportCucinaType>({
     defaultValues: {
       ...(defaultReportCucina as ReportCucinaType),
@@ -80,6 +92,18 @@ export default function DailyReportForm() {
     },
     resolver: yupResolver(schemaReportCucina),
   });
+
+  const watchAllFields = form.watch();
+  //set locale supaBase
+  useEffect(() => {
+    if (!watchAllFields) return;
+    setLocalStorage(watchAllFields as ReportCucinaType);
+    if (!isCucina) return;
+    const timeout = setTimeout(() => {
+      sendRealTime();
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [watchAllFields]);
 
   const handleSubmit: SubmitHandler<ReportCucinaType> = (data) => {
     const invalidShift = data.shifts.some((shift) => !shift.employees?.trim());
@@ -99,74 +123,20 @@ export default function DailyReportForm() {
       toast.error(error?.message || "Произошла ошибка");
     }
   };
-  //supabase
-  const watchAllFields = form.watch();
-  useEffect(() => {
-    const sendDataToApi = async () => {
-      const localData = localStorage.getItem(STORAGE_KEY);
-      if (!localData) return;
-      if (!isCucina) return;
 
-      try {
-        const res = await fetch("/api/report-cucina-realtime", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user_email: session?.data?.user?.email,
-            form_data: JSON.parse(localData),
-          }),
-        });
-
-        const result = await res.json();
-        if (result.error) {
-          console.error("Sync error:", result.error);
-        }
-      } catch (err) {
-        console.error("Request error:", err);
-      }
-    };
-
-    const timeout = setTimeout(sendDataToApi, 500);
-    return () => clearTimeout(timeout);
-  }, [watchAllFields]);
-
-  const fetchSupabaseData = async () => {
-    try {
-      const res = await fetch("/api/report-cucina-realtime");
-      const allData = await res.json();
-
-      const userData = allData.find(
-        (item: any) => item.user_email === "cng.nv.kitchen@gmail.com"
-      );
-
-      if (userData?.form_data) {
-        form.reset({
-          ...(userData.form_data as ReportCucinaType),
-        });
-
-        localStorage.setItem(
-          STORAGE_KEY,
-          JSON.stringify({
-            ...userData?.form_data,
-          })
-        );
-      }
-    } catch (err) {
-      console.error("Error fetching Supabase data:", err);
-    }
-  };
-
-  useEffect(() => {
-    const subscription = form.watch((value) => {
-      setLocalStorage(value as ReportCucinaType);
-    });
-    return () => subscription.unsubscribe();
-  }, [form.watch, setLocalStorage]);
-
+  //reset
   const resetForm = () => {
     form.reset(defaultReportCucina);
-
     removeValue();
+  };
+
+  //fetch realtime
+  const fetchSupaBaseData = async () => {
+    const data = await fetchRealTime();
+    if (data) {
+      form.reset(data);
+      setLocalStorage(data as ReportCucinaType);
+    }
   };
 
   return (
@@ -175,7 +145,7 @@ export default function DailyReportForm() {
         <div className="w-full md:px-10 md:mx-auto md:max-w-5xl">
           <div className="flex items-center gap-4 justify-between">
             <DatePickerInput fieldName="date" />
-            <FetchDataButton fetchData={fetchSupabaseData} />
+            <FetchDataButton fetchData={fetchSupaBaseData} />
           </div>
 
           {selectedEmployees.length > 0 && (
@@ -304,7 +274,7 @@ export default function DailyReportForm() {
             {t("notes")}
           </Label>
           <Textarea
-            placeholder="Введите текст..."
+            placeholder="notes ..."
             {...form.register("notes")}
             disabled={isObserver}
           />

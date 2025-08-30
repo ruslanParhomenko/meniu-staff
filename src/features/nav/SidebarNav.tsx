@@ -2,7 +2,7 @@
 
 import { LogOut } from "lucide-react";
 import { Link, usePathname } from "@/i18n/navigation";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import {
   Sidebar,
@@ -46,7 +46,6 @@ const SidebarNav = () => {
       <div className="flex items-center lg:hidden">
         <SidebarToggleButton />
       </div>
-
       <Sidebar className="border-none">
         <SidebarContent>
           <div className="flex justify-center pt-2">
@@ -79,7 +78,6 @@ const SidebarNav = () => {
             })}
           </SidebarMenu>
         </SidebarContent>
-
         <SidebarFooter className="pb-20">
           <SidebarMenu className="flex flex-row justify-between items-center gap-4 px-6">
             <div
@@ -88,7 +86,6 @@ const SidebarNav = () => {
             >
               <LogOut className="rotate-180 text-[#2563EB]" />
             </div>
-
             <LanguageSwitcher />
           </SidebarMenu>
         </SidebarFooter>

@@ -1,7 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
 
-export const useDataSupabase = ({
+export const useDataSupaBase = ({
   localStorageKey,
   apiKey,
   user,
@@ -54,7 +54,7 @@ export const useDataSupabase = ({
       }
       return null;
     } catch (err) {
-      console.error("Error fetching Supabase data:", err);
+      console.error("Error fetching SupaBase data:", err);
       return null;
     }
   };

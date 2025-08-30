@@ -1,7 +1,5 @@
 "use client";
-
 import { useTranslations } from "next-intl";
-
 import { cn } from "@/lib/utils";
 import { Link, usePathname } from "@/i18n/navigation";
 

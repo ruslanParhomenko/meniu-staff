@@ -1,49 +1,58 @@
 "use client";
-
 import { useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
+
+import { useAbility } from "@/providers/AbilityProvider";
+import { useDataSupaBase } from "@/hooks/useRealTimeData";
+import { useApi } from "@/hooks/useApi";
+
 import { Form } from "../../components/ui/form";
 import DatePickerInput from "@/components/inputs/DatePickerInput";
 import { SendResetButton } from "../../components/buttons/SendResetButton";
 import { FetchDataButton } from "../../components/buttons/FetchDataButton";
-import { useApi } from "@/hooks/useApi";
+import { BreakListTable } from "./BreakListTable";
+
 import { BreakeList } from "@/generated/prisma";
 import {
   BREAK_LIST_ENDPOINT,
   BREAK_LIST_REALTIME_ENDPOINT,
 } from "@/constants/endpoint-tag";
-import { BreakListTable } from "./BreakListTable";
-import { useAbility } from "@/providers/AbilityProvider";
-import { BreakListFormValues, defaultValuesBraekList } from "./schema";
-import { useDataSupabase } from "@/hooks/useRealTimeData";
+import { BreakListFormValues, defaultValuesBrakeList } from "./schema";
 
 const BreakList = () => {
   const LOCAL_STORAGE_KEY = BREAK_LIST_ENDPOINT;
+
   const { isBar } = useAbility();
-  const { sendRealTime, fetchRealTime } = useDataSupabase({
-    localStorageKey: LOCAL_STORAGE_KEY,
-    apiKey: BREAK_LIST_REALTIME_ENDPOINT,
-    user: "bar",
-  });
+
+  //create
   const { createMutation } = useApi<BreakeList>({
     endpoint: BREAK_LIST_ENDPOINT,
     queryKey: BREAK_LIST_ENDPOINT,
     fetchInit: false,
   });
 
+  //realtime
+  const { sendRealTime, fetchRealTime } = useDataSupaBase({
+    localStorageKey: LOCAL_STORAGE_KEY,
+    apiKey: BREAK_LIST_REALTIME_ENDPOINT,
+    user: "bar",
+  });
+
+  //localstorage
   const savedData =
     typeof window !== "undefined"
       ? localStorage.getItem(LOCAL_STORAGE_KEY)
       : null;
-
   const parsedSavedData = savedData ? JSON.parse(savedData) : null;
 
+  //form
   const form = useForm<BreakListFormValues>({
-    defaultValues: parsedSavedData || defaultValuesBraekList,
+    defaultValues: parsedSavedData || defaultValuesBrakeList,
   });
   const watchAllFields = form.watch();
 
+  //set local supaBase
   useEffect(() => {
     if (!watchAllFields) return;
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(watchAllFields));
@@ -70,12 +79,14 @@ const BreakList = () => {
     }
   };
 
+  //reset
   const resetForm = () => {
-    form.reset(defaultValuesBraekList);
+    form.reset(defaultValuesBrakeList);
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   };
 
-  const fetchSupabaseData = async () => {
+  //fetch realtime
+  const fetchSupaBaseData = async () => {
     const data = await fetchRealTime();
     if (data) {
       form.reset(data);
@@ -89,7 +100,7 @@ const BreakList = () => {
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2">
           <div className="flex items-center gap-4 justify-between">
             <DatePickerInput fieldName="date" />
-            <FetchDataButton fetchData={fetchSupabaseData} />
+            <FetchDataButton fetchData={fetchSupaBaseData} />
           </div>
           <BreakListTable />
           <SendResetButton resetForm={resetForm} />

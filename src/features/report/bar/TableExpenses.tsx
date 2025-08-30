@@ -19,7 +19,7 @@ import { expensesDefault } from "./schema";
 
 const RECIPIENTS = ["NBM", "BAR", "NORI", "DISHES", "BN", "OTHER"];
 
-export default function TableEspenses() {
+export default function TableExpenses() {
   const { isObserver, isUser } = useAbility();
 
   const isDisabled = isObserver || isUser;

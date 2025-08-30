@@ -1,6 +1,23 @@
 "use client";
+import { useEffect } from "react";
+import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
+import toast from "react-hot-toast";
+
+import { useApi } from "@/hooks/useApi";
+import { useAbility } from "@/providers/AbilityProvider";
+import { useEmployees } from "@/providers/EmployeeProvider";
+import { useDataSupaBase } from "@/hooks/useRealTimeData";
+import { useLocalStorageForm } from "@/hooks/use-local-storage";
+
 import SelectInput from "@/components/inputs/SelectInput";
 import { Form } from "@/components/ui/form";
+import { SendResetButton } from "../../components/buttons/SendResetButton";
+import SelectField from "@/components/inputs/SelectField";
+import DatePickerInput from "@/components/inputs/DatePickerInput";
+import { AddRemoveFieldsButton } from "@/components/buttons/AddRemoveFieldsButton";
+import { FetchDataButton } from "../../components/buttons/FetchDataButton";
+import { Label } from "@radix-ui/react-dropdown-menu";
 import {
   Table,
   TableBody,
@@ -8,148 +25,108 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Label } from "@radix-ui/react-dropdown-menu";
-import { useEffect, useMemo } from "react";
-import { SubmitHandler, useFieldArray, useForm } from "react-hook-form";
-import { SendResetButton } from "../../components/buttons/SendResetButton";
-import SelectField from "@/components/inputs/SelectField";
-import { useTranslations } from "next-intl";
-import DatePickerInput from "@/components/inputs/DatePickerInput";
-import { useLocalStorageForm } from "@/hooks/use-local-storage";
+
 import { OVER_HOURS, PENALITY, REASON } from "./constants";
-import toast from "react-hot-toast";
-import { useAbility } from "@/providers/AbilityProvider";
-import { useSession } from "next-auth/react";
-import { FetchDataButton } from "../../components/buttons/FetchDataButton";
 import { defaultRemarks, defaultRemarksForm, RemarksForm } from "./schema";
-import { AddRemoveFieldsButton } from "@/components/buttons/AddRemoveFieldsButton";
-import { useEmployees } from "@/providers/EmployeeProvider";
-import { useApi } from "@/hooks/useApi";
 import { Remark, RemarkReport } from "@/generated/prisma";
+import {
+  REMARKS_ENDPOINT,
+  REMARKS_REALTIME_ENDPOINT,
+} from "@/constants/endpoint-tag";
 
 export default function RemarksTable() {
+  const t = useTranslations("Home");
+  const LOCAL_STORAGE_KEY = REMARKS_ENDPOINT;
+
   const { isObserver, isBar, isCucina, isUser } = useAbility();
+  const isDisabled = isObserver || isCucina || isUser;
+
+  //employees
+  const { employees } = useEmployees();
+  const selectedEmployees = employees.map((employee) => ({
+    label: employee.name,
+    value: employee.name,
+  }));
+
+  //create
   const { createMutation } = useApi<
     RemarkReport & { remarks: Omit<Remark, "reportId" | "id">[] }
   >({
-    endpoint: "remarks",
-    queryKey: "remarks",
+    endpoint: REMARKS_ENDPOINT,
+    queryKey: REMARKS_ENDPOINT,
     fetchInit: false,
   });
-  const isDisabled = isObserver || isCucina || isUser;
-  const session = useSession();
-  const KEY_LOCAL = "remarks";
+
+  //realtime
+  const { sendRealTime, fetchRealTime } = useDataSupaBase({
+    localStorageKey: LOCAL_STORAGE_KEY,
+    apiKey: REMARKS_REALTIME_ENDPOINT,
+    user: "bar",
+  });
+
+  //localStorage
   const {
     getValue,
     setValue: setLocalStorage,
     removeValue,
-  } = useLocalStorageForm<RemarksForm>(KEY_LOCAL);
-  const t = useTranslations("Home");
-
+  } = useLocalStorageForm<RemarksForm>(LOCAL_STORAGE_KEY);
   const localData = getValue();
+
+  //form
   const form = useForm<RemarksForm>({
     defaultValues: {
       ...defaultRemarksForm,
       ...localData,
     },
   });
+  const remarks = useFieldArray({
+    control: form.control,
+    name: "remarks",
+  });
 
-  const { employees } = useEmployees();
-  const selectedEmployees = useMemo(
-    () =>
-      employees.map((employee) => ({
-        label: employee.name,
-        value: employee.name,
-      })),
-    [employees]
-  );
+  const watchAllFields = form.watch();
+
+  // set local supaBase
   useEffect(() => {
-    const subscription = form.watch((value) =>
-      setLocalStorage(value as RemarksForm)
-    );
-    return () => subscription.unsubscribe();
-  }, [form, setLocalStorage]);
+    if (!watchAllFields) return;
+    setLocalStorage(watchAllFields as RemarksForm);
+    if (!isBar) return;
+    const timeout = setTimeout(() => {
+      sendRealTime();
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [watchAllFields]);
 
-  const resetForm = () => {
-    form.reset(defaultRemarksForm);
-    removeValue();
-  };
   const handleSubmit: SubmitHandler<RemarksForm> = (data) => {
     createMutation.mutate({
       ...data,
       date: new Date(data.date),
     });
-
     toast.success("Отчет успешно создан");
   };
 
-  const watchAllFields = form.watch();
-  useEffect(() => {
-    const sendDataToApi = async () => {
-      const localData = localStorage.getItem(KEY_LOCAL);
-      if (!localData) return;
-      if (!isBar) return;
-
-      try {
-        const res = await fetch("/api/remarks-realtime", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            user_email: session?.data?.user?.email,
-            form_data: JSON.parse(localData),
-          }),
-        });
-
-        const result = await res.json();
-        if (result.error) {
-        }
-      } catch (err) {}
-    };
-
-    const timeout = setTimeout(sendDataToApi, 500);
-    return () => clearTimeout(timeout);
-  }, [watchAllFields]);
-
-  const fetchSupabaseData = async () => {
-    try {
-      const res = await fetch("/api/remarks-realtime");
-      const allData = await res.json();
-
-      const userData = allData.find(
-        (item: any) => item.user_email === "cng.nv.rstrnt@gmail.com"
-      );
-
-      if (userData?.form_data) {
-        form.reset({
-          ...userData.form_data,
-          date: userData.form_data.date,
-          remarks: userData.form_data.remarks,
-        });
-
-        localStorage.setItem(
-          KEY_LOCAL,
-          JSON.stringify({
-            ...userData.form_data,
-          })
-        );
-      }
-    } catch (err) {}
+  //reset
+  const resetForm = () => {
+    form.reset(defaultRemarksForm);
+    removeValue();
   };
 
-  const remarks = useFieldArray({
-    control: form.control,
-    name: "remarks",
-  });
+  //fetch realtime
+  const fetchSupaBaseData = async () => {
+    const data = await fetchRealTime();
+    if (data) {
+      form.reset(data);
+      setLocalStorage(data as RemarksForm);
+    }
+  };
+
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(handleSubmit)}
-        className="space-y-2 p-5"
-      >
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2 ">
         <Label className="text-lg font-semibold pb-7">Employee Remarks</Label>
         <div className="flex items-center gap-4 justify-between">
           <DatePickerInput fieldName="date" />
-          <FetchDataButton fetchData={fetchSupabaseData} />
+          <FetchDataButton fetchData={fetchSupaBaseData} />
         </div>
         <Table className="[&_th]:text-center [&_td]:text-center table-fixed md:w-300 hidden md:block">
           <TableHeader>
@@ -219,7 +196,7 @@ export default function RemarksTable() {
             ))}
           </TableBody>
         </Table>
-        <div className="flex flex-col gap-4 md:hidden">
+        <div className="flex flex-col gap-2 md:hidden">
           {remarks?.fields?.map((item, idx) => (
             <div
               key={item.id ?? idx}

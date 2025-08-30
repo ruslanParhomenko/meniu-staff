@@ -4,8 +4,8 @@ import PageNav from "../nav/PageNav";
 import { ORDER_NAV_ITEMS } from "./constants";
 
 function OrderNav() {
-  const patchname = usePathname();
-  const mainPath = patchname.split("/")[1];
+  const pathname = usePathname();
+  const mainPath = pathname.split("/")[1];
 
   return <PageNav navItems={ORDER_NAV_ITEMS} mainRoute={mainPath} />;
 }
