@@ -12,7 +12,7 @@ import { useEmployees } from "@/providers/EmployeeProvider";
 import TextInput from "@/components/inputs/TextInput";
 
 export function AddEmployeeForm() {
-  const { create: createMutation } = useEmployees();
+  // const { create: createMutation } = useEmployees();
   const { isAdmin } = useAbility();
   const t = useTranslations("Home");
 
@@ -23,26 +23,26 @@ export function AddEmployeeForm() {
 
   const { handleSubmit, reset } = form;
 
-  const onSubmit: SubmitHandler<EmployeeFormData> = (data) => {
-    if (!isAdmin) return toast.error(t("insufficientRights"));
+  // const onSubmit: SubmitHandler<EmployeeFormData> = (data) => {
+  //   if (!isAdmin) return toast.error(t("insufficientRights"));
 
-    try {
-      createMutation({
-        name: `${data.firstName} ${data.lastName}`,
-        position: data.position,
-        rate: data.rate,
-      });
-      toast.success(t("createdSuccessfully"));
-      reset();
-    } catch {
-      toast.error("errorOccurred");
-    }
-  };
+  //   try {
+  //     createMutation({
+  //       name: `${data.firstName} ${data.lastName}`,
+  //       position: data.position,
+  //       rate: data.rate,
+  //     });
+  //     toast.success(t("createdSuccessfully"));
+  //     reset();
+  //   } catch {
+  //     toast.error("errorOccurred");
+  //   }
+  // };
 
   return (
     <div className="w-full px-2 md:w-1/2 ">
       <Form {...form}>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">
+        <form onSubmit={handleSubmit(() => {})} className="space-y-4 ">
           <div className="my-2">
             <Label className="mb-2" htmlFor="firstName">
               {t("firstName")}

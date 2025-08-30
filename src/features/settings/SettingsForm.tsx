@@ -21,7 +21,7 @@ export default function SettingsForm() {
             {t("addEmployees")} +
           </AccordionTrigger>
           <AccordionContent>
-            <div className="grid md:grid-cols-2">
+            <div className="grid md:grid-cols-[40%_60%]">
               <AddEmployeeForm />
               <EmployeesListTable />
             </div>

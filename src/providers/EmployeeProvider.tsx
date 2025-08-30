@@ -1,16 +1,15 @@
 "use client";
 
-import { Employee } from "@/generated/prisma";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
-import { useApi } from "@/hooks/use-query";
-import { createContext, useContext, useEffect } from "react";
+import { Employee, useGoogleEmployees } from "@/hooks/useGoogleEmploeey";
+import { createContext, use, useContext, useEffect } from "react";
 
 interface EmployeesContextValue {
   employees: Employee[];
   isLoading: boolean;
-  isError: boolean;
-  delete: (id: number) => void;
-  create: (data: Omit<Employee, "id" | "createdAt">) => void;
+  // isError: boolean;
+  // delete: (id: number) => void;
+  // create: (data: Omit<Employee, "id" | "createdAt">) => void;
 }
 
 const EmployeesContext = createContext<EmployeesContextValue | undefined>(
@@ -18,29 +17,35 @@ const EmployeesContext = createContext<EmployeesContextValue | undefined>(
 );
 
 export function EmployeesProvider({ children }: { children: React.ReactNode }) {
-  const { query, deleteMutation, createMutation } = useApi<Employee>({
-    endpoint: "employees",
-    queryKey: "employees",
-  });
+  // const { query, deleteMutation, createMutation } = useApi<Employee>({
+  //   endpoint: "employees",
+  //   queryKey: "employees",
+  // });
 
   const { getValue, setValue } = useLocalStorageForm<Employee[]>("employees");
 
-  const employees = query.data || getValue() || [];
+  // const employees = query.data || getValue() || [];
+  const { data, isLoading, error, invalidate } = useGoogleEmployees({});
+
+  console.log(data, error);
+
+  // useEffect(() => {
+  //   if (query.data) {
+  //     setValue(query.data);
+  //   }
+  // }, [query.data, setValue]);
 
   useEffect(() => {
-    if (query.data) {
-      setValue(query.data);
+    if (data) {
+      setValue(data);
     }
-  }, [query.data, setValue]);
+  }, [data, setValue]);
 
   return (
     <EmployeesContext.Provider
       value={{
-        employees,
-        isLoading: query.isLoading,
-        isError: query.isError,
-        delete: deleteMutation.mutate,
-        create: createMutation.mutate,
+        employees: data || getValue() || [],
+        isLoading: isLoading,
       }}
     >
       {children}

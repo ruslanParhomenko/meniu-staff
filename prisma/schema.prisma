@@ -23,6 +23,7 @@ model User {
   createdAt DateTime @default(now())
 }
 
+/*
 model Employee {
   id        Int      @id @default(autoincrement())
   name      String
@@ -30,6 +31,8 @@ model Employee {
   rate      String?
   createdAt DateTime @default(now())
 }
+*/
+
 
 model BreakeList {
   id   Int      @id @default(autoincrement())
