@@ -1,7 +1,6 @@
 "use client";
 
-import { User } from "@/generated/prisma";
-import { useApi } from "@/hooks/useApi";
+import { useGoogleEmployees, User } from "@/hooks/useGoogleEmploeey";
 import { useSession } from "next-auth/react";
 import React, {
   createContext,
@@ -18,18 +17,20 @@ type AbilityContextType = {
   isObserver: boolean;
   isUser: boolean;
   query: User[];
-  createMutation: (data: Omit<User, "id" | "createdAt">) => void;
-  deleteMutation: (id: number) => void;
+  // createMutation: (data: Omit<User, "id" | "createdAt">) => void;
+  // deleteMutation: (id: number) => void;
 };
 
 const AbilityContext = createContext<AbilityContextType | null>(null);
 
 export function AbilityProvider({ children }: { children: React.ReactNode }) {
   const { data } = useSession();
-  const { query, createMutation, deleteMutation } = useApi<User>({
-    endpoint: "user",
-    queryKey: "users",
-  });
+  // const { query, createMutation, deleteMutation } = useApi<User>({
+  //   endpoint: "user",
+  //   queryKey: "users",
+  // });
+
+  const { data: user, isLoading, invalidate } = useGoogleEmployees({});
 
   const [ability, setAbility] = useState({
     isAdmin: false,
@@ -41,8 +42,7 @@ export function AbilityProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const email = data?.user?.email;
-    const userData = query.data || [];
-    console.log({ email, userData });
+    const userData = user?.users || [];
 
     if (!email) return;
 
@@ -66,16 +66,16 @@ export function AbilityProvider({ children }: { children: React.ReactNode }) {
       isObserver: !isAdmin && !isBar && !isCucina && !isUser,
       isUser,
     });
-  }, [data?.user?.email, query.data]);
+  }, [data?.user?.email, user?.users]);
 
   const value = useMemo(
     () => ({
       ...ability,
-      query: query.data || [],
-      createMutation: createMutation.mutate,
-      deleteMutation: deleteMutation.mutate,
+      query: user?.users || [],
+      // createMutation: createMutation.mutate,
+      // deleteMutation: deleteMutation.mutate,
     }),
-    [ability, createMutation.mutate, deleteMutation.mutate]
+    [ability]
   );
 
   return (

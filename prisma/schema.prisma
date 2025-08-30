@@ -8,31 +8,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  USER
-  ADMIN
-  OBSERVER
-  BAR
-  CUCINA
-}
-
-model User {
-  id        Int      @id @default(autoincrement())
-  mail      String   @unique
-  role      Role     @default(OBSERVER)
-  createdAt DateTime @default(now())
-}
-
-/*
-model Employee {
-  id        Int      @id @default(autoincrement())
-  name      String
-  position  String
-  rate      String?
-  createdAt DateTime @default(now())
-}
-*/
-
 
 model BreakeList {
   id   Int      @id @default(autoincrement())
@@ -95,33 +70,6 @@ model Expense {
   sum      String
   reportId Int
   report   DailyReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
-}
-
-model ReportBarRealtime {
-  id         String   @id @default(uuid())
-  user_email String?
-  form_data  Json?
-  created_at DateTime @default(now())
-
-  @@map("report_bar_realtime")
-}
-
-model ReportCucinaRealtime {
-  id         String   @id @default(uuid())
-  user_email String?
-  form_data  Json?
-  created_at DateTime @default(now())
-
-  @@map("report_cucina_realtime")
-}
-
-model remarks_realtime {
-  id         String   @id @default(uuid())
-  user_email String?  @unique(map: "remarks_realtime_user_email_idx")
-  form_data  Json?
-  created_at DateTime @default(now())
-
-  @@map("remarks_realtime")
 }
 
 model RemarkReport {

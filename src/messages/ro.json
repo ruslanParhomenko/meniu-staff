@@ -103,6 +103,7 @@
     "addUsers": "Adauga utilizatori",
     "mail": "Email",
     "role": "Rol",
-    "chooseItem": "Alege data"
+    "chooseItem": "Alege data",
+    "users": "Utilizatori"
   }
 }

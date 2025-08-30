@@ -22,29 +22,25 @@ export function EmployeesProvider({ children }: { children: React.ReactNode }) {
   //   queryKey: "employees",
   // });
 
+  const { data, isLoading, invalidate } = useGoogleEmployees({});
   const { getValue, setValue } = useLocalStorageForm<Employee[]>("employees");
 
-  // const employees = query.data || getValue() || [];
-  const { data, isLoading, error, invalidate } = useGoogleEmployees({});
-
-  console.log(data, error);
-
-  // useEffect(() => {
-  //   if (query.data) {
-  //     setValue(query.data);
-  //   }
-  // }, [query.data, setValue]);
+  useEffect(() => {
+    if (data?.employees) {
+      setValue(data.employees);
+    }
+  }, [data?.employees, setValue]);
 
   useEffect(() => {
-    if (data) {
-      setValue(data);
+    if (data?.employees) {
+      setValue(data.employees);
     }
-  }, [data, setValue]);
+  }, [data?.employees, setValue]);
 
   return (
     <EmployeesContext.Provider
       value={{
-        employees: data || getValue() || [],
+        employees: data?.employees || getValue() || [],
         isLoading: isLoading,
       }}
     >

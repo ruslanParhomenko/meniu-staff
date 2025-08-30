@@ -19,8 +19,7 @@ export function EmployeesListTable() {
   };
 
   return (
-    <div className="w-full px-2 ">
-      <h2 className="text-lg font-semibold mt-6">{t("employees")}:</h2>
+    <div className="w-full p-4 ">
       {employees.map((emp, idx) => (
         <div key={`${emp.date}-${idx}`} className="flex justify-between py-2">
           <Label className="min-w-1/5">
