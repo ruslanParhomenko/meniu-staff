@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/accordion";
 import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
-import { useApi } from "@/hooks/useApi";
+// import { useApi } from "@/hooks/useApi";
 import { useAbility } from "@/providers/AbilityProvider";
 import { Label } from "@radix-ui/react-label";
 import {
@@ -20,7 +20,7 @@ import {
   DailyReportCucina,
   RemarkReport,
 } from "@/generated/prisma";
-import { useArchive } from "@/hooks/useApiArchive";
+import { ArchiveData, useArchive } from "@/hooks/useApiArchive";
 
 type ApiDataMap = {
   breakList: BreakeList;
@@ -29,7 +29,7 @@ type ApiDataMap = {
   remarks: RemarkReport;
 };
 
-const dataObjectApi = {
+const dataObjectApi: Record<keyof ApiDataMap, keyof ArchiveData> = {
   breakList: "breakeList",
   report: "dailyReport",
   "report-cucina": "dailyReportCucina",
@@ -51,18 +51,10 @@ export const ArhiveListTable = <T extends keyof ApiDataMap>({
 
   const [openItem, setOpenItem] = useState<string | null>(null);
 
-  // const { query, deleteMutation } = useApi<ApiDataByNameTag<T>>({
-  //   endpoint: nameTag,
-  //   queryKey: nameTag,
-  // });
-  // const { data } = isObserver ? { data: undefined } : query;
-
   const { data, isLoading, error, invalidate } = useArchive();
-  const dataKey = dataObjectApi[nameTag];
-  const arrayToFormat = data?.[dataKey] ?? [];
-
-  console.log("arrayToFormat", arrayToFormat);
-
+  const dataKey = dataObjectApi[nameTag] as keyof ArchiveData;
+  const arrayToFormat: Array<ApiDataMap[T]> =
+    (data?.[dataKey] as Array<ApiDataMap[T]>) ?? [];
   const id = useWatch({ name: `selectDataId_${nameTag}` });
   const selected = arrayToFormat.find((item) => item.id === Number(id));
 
