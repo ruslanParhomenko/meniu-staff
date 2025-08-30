@@ -16,12 +16,12 @@ import {
 import { BreakListTable } from "./BreakListTable";
 import { useAbility } from "@/providers/AbilityProvider";
 import { BreakListFormValues, defaultValuesBraekList } from "./schema";
-import { useBreakListSupabase } from "@/hooks/useRealTimeData";
+import { useDataSupabase } from "@/hooks/useRealTimeData";
 
 const BreakList = () => {
   const LOCAL_STORAGE_KEY = BREAK_LIST_ENDPOINT;
   const { isBar } = useAbility();
-  const { sendRealTime, fetchRealTime } = useBreakListSupabase({
+  const { sendRealTime, fetchRealTime } = useDataSupabase({
     localStorageKey: LOCAL_STORAGE_KEY,
     apiKey: BREAK_LIST_REALTIME_ENDPOINT,
     user: "bar",
@@ -81,61 +81,6 @@ const BreakList = () => {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
     }
   };
-
-  // const fetchSupabaseData = async () => {
-  //   try {
-  //     const res = await fetch("/api/break-list-realtime");
-  //     const allData = await res.json();
-
-  //     const userData = allData.find(
-  //       (item: any) => item.user_email === "cng.nv.rstrnt@gmail.com"
-  //     );
-
-  //     if (userData?.form_data) {
-  //       form.reset({
-  //         date: userData.form_data.date,
-  //         rows: userData.form_data.rows.map((row: any) => ({
-  //           id: row.id,
-  //           name: row.name,
-  //           hours: row.hours,
-  //         })),
-  //       });
-  //       localStorage.setItem(
-  //         LOCAL_STORAGE_KEY,
-  //         JSON.stringify(userData.form_data)
-  //       );
-  //     }
-  //   } catch (err) {
-  //     console.error("Error fetching Supabase data:", err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   const sendDataToApi = async () => {
-  //     const localData = localStorage.getItem(LOCAL_STORAGE_KEY);
-  //     if (!localData) return;
-  //     if (!isBar) return;
-
-  //     try {
-  //       const res = await fetch("/api/break-list-realtime", {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify({
-  //           user_email: session?.data?.user?.email,
-  //           form_data: JSON.parse(localData),
-  //         }),
-  //       });
-
-  //       const result = await res.json();
-  //       if (result.error) console.error("Sync error:", result.error);
-  //     } catch (err) {
-  //       console.error("Request error:", err);
-  //     }
-  //   };
-
-  //   const timeout = setTimeout(sendDataToApi, 500);
-  //   return () => clearTimeout(timeout);
-  // }, [watchAllFields]);
 
   return (
     <div className="w-full">

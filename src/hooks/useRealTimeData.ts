@@ -1,30 +1,31 @@
 "use client";
 import { useSession } from "next-auth/react";
 
-export const useBreakListSupabase = ({
+export const useDataSupabase = ({
   localStorageKey,
   apiKey,
   user,
 }: {
   localStorageKey: string;
   apiKey: string;
-  user: "bar" | "cucina";
+  user: "bar" | "cucina" | "all";
 }) => {
   const fetchMail = {
-    bar: "cng.nv.rstrnt@gmail.com",
-    cucina: "cng.nv.kitchen@gmail.com",
+    bar: ["cng.nv.rstrnt@gmail.com"],
+    cucina: ["cng.nv.kitchen@gmail.com"],
+    all: ["cng.nv.rstrnt@gmail.com", "cng.nv.kitchen@gmail.com"],
   };
   const session = useSession();
-  const sendRealTime = async () => {
-    const localData = localStorage.getItem(localStorageKey);
-    if (!localData) return;
+  const sendRealTime = async (formData?: any) => {
+    const dataToSend = formData || localStorage.getItem(localStorageKey);
+    if (!dataToSend) return;
     try {
       const res = await fetch(`/api/${apiKey}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           user_email: session?.data?.user?.email,
-          form_data: JSON.parse(localData),
+          form_data: JSON.parse(dataToSend),
         }),
       });
 
@@ -40,8 +41,8 @@ export const useBreakListSupabase = ({
       const res = await fetch(`/api/${apiKey}`);
       const allData = await res.json();
 
-      const userData = allData.find(
-        (item: any) => item.user_email === fetchMail[user]
+      const userData = allData.find((item: any) =>
+        fetchMail[user].includes(item.user_email)
       );
 
       if (userData?.form_data) {

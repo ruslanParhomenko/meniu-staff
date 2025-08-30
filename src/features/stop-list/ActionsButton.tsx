@@ -13,9 +13,6 @@ type ActionsButtonProps = {
   idx: number;
   item: StopListItemSchemaType;
   disabled: boolean;
-  saveMutation: {
-    mutate: (payload: StopListSchemaType) => void;
-  };
 };
 
 export const ActionsButton = ({
@@ -23,22 +20,13 @@ export const ActionsButton = ({
   idx,
   item,
   disabled,
-  saveMutation,
 }: ActionsButtonProps) => {
-  const { getValues } = useFormContext();
-
   const handleRemove = () => {
     if (formFields.fields.length === 1) {
       formFields.replace([defaultStopList]);
     } else {
       formFields.remove(idx);
     }
-
-    saveMutation.mutate({
-      id: 1,
-      stopList: getValues("stopList").filter((i: any) => i.product),
-      stopListCucina: getValues("stopListCucina").filter((i: any) => i.product),
-    });
   };
 
   const handleAdd = () => {

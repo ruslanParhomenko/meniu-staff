@@ -7,6 +7,7 @@ export const REPORT_BAR_ENDPOINT = "report";
 export const REPORT_CUCINA_ENDPOINT = "report-cucina";
 export const REPORT_CUCINA_REALTIME_ENDPOINT = "report-cucina-realtime";
 export const REPORT_BAR_REALTIME_ENDPOINT = "report-realtime";
+export const STOP_LIST_REALTIME = "stop-list-realtime";
 
 export const SEND_TELEGRAM_TTN_ENDPOINT = "send-telegram-ttn";
 export const SEND_TELEGRAM_ZN_ENDPOINT = "send-telegram-zn";

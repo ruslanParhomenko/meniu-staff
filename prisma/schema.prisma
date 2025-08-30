@@ -112,15 +112,6 @@ model ReportCucinaRealtime {
   @@map("report_cucina_realtime")
 }
 
-model break_list_realtime {
-  id         String   @id
-  user_email String?  @unique(map: "break_list_realtime_user_email_idx")
-  form_data  Json?
-  created_at DateTime @default(now())
-
-  @@map("break_list_realtime")
-}
-
 model remarks_realtime {
   id         String   @id @default(uuid())
   user_email String?  @unique(map: "remarks_realtime_user_email_idx")
@@ -128,14 +119,6 @@ model remarks_realtime {
   created_at DateTime @default(now())
 
   @@map("remarks_realtime")
-}
-
-model StopListRecord {
-  id             Int      @id @default(autoincrement())
-  stopList       Json
-  stopListCucina Json?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
 }
 
 model RemarkReport {

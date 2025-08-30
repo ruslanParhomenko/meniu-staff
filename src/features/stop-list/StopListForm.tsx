@@ -1,9 +1,8 @@
 "use client";
 import { Form } from "@/components/ui/form";
 import { useFieldArray, useForm, useWatch } from "react-hook-form";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { formatNowData } from "@/utils/formatNow";
-import { useStopList } from "@/hooks/useStopList";
 import {
   defaultStopListSchema,
   stopListSchema,
@@ -11,15 +10,35 @@ import {
 } from "./schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { StopListTable } from "./StopListTable";
+import { STOP_LIST_REALTIME } from "@/constants/endpoint-tag";
+import { useLocalStorageForm } from "@/hooks/use-local-storage";
+import { useDataSupabase } from "@/hooks/useRealTimeData";
+import { useAbility } from "@/providers/AbilityProvider";
+import { FetchDataButton } from "@/components/buttons/FetchDataButton";
 
 export default function StopListForm() {
-  const { stopListQuery, saveMutation } = useStopList();
-  const { data, isLoading } = stopListQuery;
+  const { isBar, isCucina } = useAbility();
+  const LOCAL_STORAGE_KEY = STOP_LIST_REALTIME;
+  const { getValue, setValue: setLocalStorage } =
+    useLocalStorageForm<StopListSchemaType>(LOCAL_STORAGE_KEY);
+
+  const { sendRealTime, fetchRealTime } = useDataSupabase({
+    localStorageKey: LOCAL_STORAGE_KEY,
+    apiKey: STOP_LIST_REALTIME,
+    user: "bar",
+  });
 
   const form = useForm<StopListSchemaType>({
     resolver: yupResolver(stopListSchema),
-    defaultValues: defaultStopListSchema,
+    defaultValues: { ...defaultStopListSchema, ...getValue() },
   });
+
+  useEffect(() => {
+    const subscription = form.watch((value) => {
+      setLocalStorage(value as StopListSchemaType);
+    });
+    return () => subscription.unsubscribe();
+  }, [form.watch, setLocalStorage]);
 
   const stopListValues = useFieldArray({
     control: form.control,
@@ -29,20 +48,6 @@ export default function StopListForm() {
     control: form.control,
     name: "stopListCucina",
   });
-  useEffect(() => {
-    if (!data) return;
-
-    form.reset({
-      stopList:
-        Array.isArray(data.stopList) && data.stopList.length > 0
-          ? data.stopList
-          : defaultStopListSchema.stopList,
-      stopListCucina:
-        Array.isArray(data.stopListCucina) && data.stopListCucina.length > 0
-          ? data.stopListCucina
-          : defaultStopListSchema.stopListCucina,
-    });
-  }, [data, form]);
 
   const watchStopList = useWatch({ control: form.control, name: "stopList" });
   const watchStopListCucina = useWatch({
@@ -50,59 +55,70 @@ export default function StopListForm() {
     name: "stopListCucina",
   });
 
+  const syncedRows = useRef<Record<number, boolean>>({});
+
   // Автозаполнение даты
   useEffect(() => {
     watchStopList.forEach((item, idx) => {
       if (item?.product && !item.date) {
-        form.setValue(`stopList.${idx}.date`, formatNowData(), {
-          shouldDirty: true,
+        const date = formatNowData();
+        stopListValues.update(idx, {
+          ...stopListValues.fields[idx],
+          ...item,
+          date,
         });
       }
+      if (!isBar) return;
+      if (!syncedRows.current[idx] && item.product && item.date) {
+        sendRealTime();
+        syncedRows.current[idx] = true;
+      }
     });
-  }, [watchStopList]);
+  }, [watchStopList, stopListValues.fields.length]);
 
   // автозаполнение даты
   useEffect(() => {
     watchStopListCucina.forEach((item, idx) => {
       if (item?.product && !item.date) {
-        form.setValue(`stopListCucina.${idx}.date`, formatNowData(), {
-          shouldDirty: true,
+        const date = formatNowData();
+        stopListCucinaValues.update(idx, {
+          ...stopListCucinaValues.fields[idx],
+          ...item,
+          date,
         });
       }
+      if (!isCucina) return;
+      if (!syncedRows.current[idx] && item.product && item.date) {
+        sendRealTime();
+        syncedRows.current[idx] = true;
+      }
     });
-  }, [watchStopListCucina]);
+  }, [watchStopListCucina, stopListCucinaValues.fields.length]);
 
   // авто-сохранение при изменении формы
+  const fetchSupabaseData = async () => {
+    const data = await fetchRealTime();
+    if (data) {
+      form.reset(data);
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+    }
+  };
   useEffect(() => {
-    const subscription = form.watch((values) => {
-      if (!values || !data) return;
-      const payload = {
-        id: data.id,
-        stopList: values.stopList,
-        stopListCucina: values.stopListCucina,
-      };
-      saveMutation.mutate(payload);
-    });
-    return () => subscription.unsubscribe();
-  }, [form, data, saveMutation]);
-
-  if (isLoading) return null;
+    if (!isBar && !isCucina) return;
+    const timeout = setTimeout(() => {
+      fetchSupabaseData();
+    }, 1000);
+    return () => clearTimeout(timeout);
+  }, [isBar, isCucina]);
 
   return (
     <Form {...form}>
       <form className="space-y-2">
-        <div className="grid xl:grid-cols-2 gap-5">
-          <StopListTable
-            formFields={stopListValues}
-            nameTag="bar"
-            saveMutation={saveMutation}
-          />
-          <StopListTable
-            formFields={stopListCucinaValues}
-            nameTag="cucina"
-            saveMutation={saveMutation}
-          />
+        <div className="grid xl:grid-cols-2 gap-5 pb-5">
+          <StopListTable formFields={stopListValues} nameTag="bar" />
+          <StopListTable formFields={stopListCucinaValues} nameTag="cucina" />
         </div>
+        <FetchDataButton fetchData={fetchSupabaseData} />
       </form>
     </Form>
   );

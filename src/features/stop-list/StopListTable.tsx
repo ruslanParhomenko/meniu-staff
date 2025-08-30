@@ -26,18 +26,11 @@ type StopLitTableProps = {
     "stopList" | "stopListCucina"
   >;
   nameTag: "bar" | "cucina";
-  saveMutation: {
-    mutate: (payload: StopListSchemaType) => void;
-  };
 };
 
-export const StopListTable = ({
-  formFields,
-  nameTag,
-  saveMutation,
-}: StopLitTableProps) => {
+export const StopListTable = ({ formFields, nameTag }: StopLitTableProps) => {
   const t = useTranslations("Home");
-  const { isObserver, isCucina, isAdmin, isBar, isUser } = useAbility();
+  const { isObserver, isCucina, isBar, isUser } = useAbility();
 
   const LABEL = {
     bar: "stopList",
@@ -54,12 +47,12 @@ export const StopListTable = ({
   return (
     <div className="xl:px-5">
       <Label className="text-lg font-semibold pb-7">{t(LABEL[nameTag])}</Label>
-      <Table className="[&_th]:text-center [&_td]:text-center table-fixed md:w-150 ">
+      <Table className="[&_th]:text-center [&_td]:text-center table-fixed md:w-180 ">
         <TableHeader>
           <TableRow className="h-10">
-            <TableHead className="md:w-80 w-40">Product</TableHead>
-            <TableHead className="md:w-40 w-25">Date</TableHead>
-            <TableHead className="text-left w-20">Actions</TableHead>
+            <TableHead className="md:w-90 w-40">Product</TableHead>
+            <TableHead className="md:w-50 w-25">Date</TableHead>
+            <TableHead className="text-left md:w-40 w-20">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -86,7 +79,6 @@ export const StopListTable = ({
                   idx={idx}
                   item={item}
                   disabled={DISABLED[nameTag]}
-                  saveMutation={saveMutation}
                 />
               </TableCell>
               <TableCell></TableCell>
