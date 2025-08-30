@@ -92,7 +92,7 @@ const RenderTableCucina = ({
             key={field.id}
             className="grid md:grid-cols-[90%_10%] grid-cols-[80%_14%]"
           >
-            <div className="grid grid-cols-[42%_20%_20%_8%] gap-1 md:grid-cols-[50%_20%_15%_10%] md:gap-3 pb-2">
+            <div className="grid grid-cols-[42%_23%_18%_8%] gap-1 md:grid-cols-[50%_20%_15%_10%] md:gap-3 pb-2">
               {field1 && dataArrayField1 && (
                 <SelectFieldWithSearch
                   fieldName={`${name}.${index}.${field1}`}
@@ -108,14 +108,14 @@ const RenderTableCucina = ({
                   data={dataArrayField2}
                   placeHolder={field2 ? t(field2) : ""}
                   disabled={isDisabled}
-                  className="md:w-30 w-14"
+                  className="md:w-30 w-16"
                 />
               ) : (
                 <NumericInput
                   fieldName={`${name}.${index}.${field2}`}
                   placeholder={field2 ? t(field2) : ""}
                   disabled={isDisabled}
-                  className="md:w-30 w-14"
+                  className="md:w-30 w-16"
                 />
               )}
               {field3 && dataArrayField3 ? (
@@ -124,24 +124,24 @@ const RenderTableCucina = ({
                   data={dataArrayField3}
                   placeHolder={field3 ? t(field3) : ""}
                   disabled={isDisabled}
-                  className="md:w-20 w-14"
+                  className="md:w-20 w-12"
                 />
               ) : (
                 <NumericInput
                   fieldName={`${name}.${index}.${field3}`}
                   placeholder={field3 ? t(field3) : ""}
                   disabled={isDisabled}
-                  className="md:w-20 w-14"
+                  className="md:w-20 w-12"
                 />
               )}
               {field4 && productValue && (
-                <div className="text-sm text-red-600 flex items-center justify-center md:w-10">
+                <div className="text-sm text-red-600 flex items-center justify-center md:w-10 w-8">
                   {form.watch(`${name}.${index}.${field4}` as any)}
                 </div>
               )}
             </div>
 
-            <div className="flex gap-1">
+            <div className="flex gap-1 justify-start items-start">
               <AddRemoveFieldsButton
                 formField={fieldsArray}
                 defaultValues={defaultValue}

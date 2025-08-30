@@ -150,7 +150,7 @@ export default function RemarksTable() {
           <DatePickerInput fieldName="date" />
           <FetchDataButton fetchData={fetchSupabaseData} />
         </div>
-        <Table className="[&_th]:text-center [&_td]:text-center table-fixed xl:w-300 w-150">
+        <Table className="[&_th]:text-center [&_td]:text-center table-fixed md:w-300 hidden md:block">
           <TableHeader>
             <TableRow className="h-10 ">
               <TableCell className="text-center md:w-80 w-12">Name</TableCell>
@@ -218,6 +218,69 @@ export default function RemarksTable() {
             ))}
           </TableBody>
         </Table>
+        <div className="flex flex-col gap-4 md:hidden">
+          {remarks?.fields?.map((item, idx) => (
+            <div
+              key={item.id ?? idx}
+              className="border rounded-lg p-2 shadow-sm bg-white"
+            >
+              <div className="grid grid-cols-[40%_60%] gap-1 mb-2">
+                <span className="text-base">Name:</span>
+                <SelectInput
+                  fieldName={`remarks.${idx}.name`}
+                  fieldLabel=""
+                  data={selectedEmployees}
+                  disabled={isDisabled}
+                />
+              </div>
+
+              <div className="grid grid-cols-[40%_60%] gap-1 mb-2">
+                <span className="text-base">Day Hours:</span>
+                <SelectField
+                  fieldName={`remarks.${idx}.dayHours`}
+                  data={OVER_HOURS}
+                  disabled={isDisabled}
+                />
+              </div>
+
+              <div className="grid grid-cols-[40%_60%] gap-1 mb-2">
+                <span className="text-base">Night Hours:</span>
+                <SelectField
+                  fieldName={`remarks.${idx}.nightHours`}
+                  data={OVER_HOURS}
+                  disabled={isDisabled}
+                />
+              </div>
+
+              <div className="grid grid-cols-[40%_60%] gap-1 mb-2">
+                <span className="text-base">Penality:</span>
+                <SelectField
+                  fieldName={`remarks.${idx}.penality`}
+                  data={PENALITY}
+                  disabled={isDisabled}
+                />
+              </div>
+
+              <div className="grid grid-cols-[40%_60%] gap-1 mb-2">
+                <span className="text-base">Reason:</span>
+                <SelectField
+                  fieldName={`remarks.${idx}.reason`}
+                  data={REASON.map((reason) => t(reason) as string)}
+                  disabled={isDisabled}
+                />
+              </div>
+
+              <div className="flex justify-end mt-2">
+                <AddRemoveFieldsButton
+                  formField={remarks}
+                  defaultValues={defaultRemarks}
+                  index={idx}
+                  disabled={isDisabled}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
         <SendResetButton resetForm={resetForm} />
       </form>
     </Form>

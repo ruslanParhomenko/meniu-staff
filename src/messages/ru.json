@@ -97,7 +97,7 @@
     "requiredField": "Обязательное поле",
     "employees": "Сотрудники",
     "addEmployee": "Добавить сотрудника",
-    "insufficientRights": "Недостаточно прав",
+    "insufficientRights": "Доступ закрыт",
     "addEmployees": "Добавить сотрудников",
     "rate": "Ставка",
     "addUsers": "Добавить пользователей",
