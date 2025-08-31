@@ -21,6 +21,8 @@ import {
   RemarkReport,
 } from "@/generated/prisma";
 import { ArchiveData, useArchive } from "@/hooks/useApiArchive";
+import { useApi } from "@/hooks/useApi";
+import { useArchiveMutations } from "@/hooks/useApiActions";
 
 type ApiDataMap = {
   breakList: BreakeList;
@@ -50,13 +52,21 @@ export const ArhiveListTable = <T extends keyof ApiDataMap>({
   >([]);
 
   const [openItem, setOpenItem] = useState<string | null>(null);
-
   const { data, isLoading, error, invalidate } = useArchive();
+  const { deleteMutation } = useArchiveMutations({
+    endpoint: nameTag,
+  });
+
   const dataKey = dataObjectApi[nameTag] as keyof ArchiveData;
   const arrayToFormat: Array<ApiDataMap[T]> =
     (data?.[dataKey] as Array<ApiDataMap[T]>) ?? [];
   const id = useWatch({ name: `selectDataId_${nameTag}` });
   const selected = arrayToFormat.find((item) => item.id === Number(id));
+
+  const removeItem = () => {
+    deleteMutation.mutate(Number(id));
+    invalidate();
+  };
 
   useEffect(() => {
     if (!data) return;
@@ -110,7 +120,7 @@ export const ArhiveListTable = <T extends keyof ApiDataMap>({
                   ...selected,
                   date: format(new Date(selected.date), "dd.MM.yy"),
                 }}
-                // deleteMutation={deleteMutation.mutate}
+                deleteMutation={removeItem}
               />
               {children(selected)}
             </>
