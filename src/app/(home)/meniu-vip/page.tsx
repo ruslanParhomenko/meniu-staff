@@ -15,7 +15,7 @@ export default function Home() {
     <>
       <div
         className={`transform transition-all duration-700 
-        flex flex-col  items-center gap-14  pt-30 ${
+        flex flex-col  items-center gap-14  pt-40 ${
           isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-20"
         }`}
       >

@@ -4,7 +4,7 @@ export default function FrameTop() {
   return (
     <>
       <Image
-        className="absolute top-0.5 right-0.5"
+        className="absolute top-[-20px] right-[-20px]"
         priority
         src="../2.svg"
         alt="2"
@@ -12,7 +12,7 @@ export default function FrameTop() {
         height={80}
       />
       <Image
-        className="absolute top-0.5 left-0.5 -rotate-90 "
+        className="absolute top-[-20px] left-[-20px] -rotate-90 "
         priority
         src="../2.svg"
         alt="2"

@@ -53,7 +53,7 @@ const SidebarNav = () => {
               <AvatarFallback>{roleLabel}</AvatarFallback>
             </Avatar>
           </div>
-          <SidebarMenu className="flex h-full flex-col gap-4 pt-10">
+          <SidebarMenu className="flex h-full flex-col gap-4 pt-5">
             {SIDEBAR_NAVIGATION.map((item) => {
               const isActivePath =
                 pathname.split("/")[1] === item.url.split("/")[1];

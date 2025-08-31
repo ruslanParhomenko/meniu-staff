@@ -28,7 +28,7 @@ export function RenderItemMeniu({ item, leftPage, rightPage }: any) {
   const arrData = data?.vip[itemSelect];
   if (isLoading) return null;
   return (
-    <div {...handlers} className="w-full px-4 pb-4 relative">
+    <div {...handlers} className="w-full md:px-4 pb-4 relative">
       <ButtonNavigationPage leftPage={left} rightPage={right} />
       {arrData?.map((el: any, index: number) => (
         <div key={index}>

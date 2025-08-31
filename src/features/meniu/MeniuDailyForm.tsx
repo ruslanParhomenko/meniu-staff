@@ -1,18 +1,13 @@
 "use client";
 import Image from "next/image";
-
 import { useRouter } from "next/navigation";
-import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useMeniuData } from "@/hooks/useDataMeniuData";
 import ButtonNavigationPage from "@/components/meniu/ButtonNavigationPage";
 import { useSwipeable } from "react-swipeable";
 
-// import { useSwipeable } from "react-swipeable";
-
 export default function DailyMenuForm() {
-  const { data, isLoading, error } = useMeniuData();
-  console.log(data);
+  const { data, isLoading } = useMeniuData();
   const dataDaily = data && data.daily;
   const t = useTranslations("Meniu");
   const router = useRouter();
@@ -24,7 +19,7 @@ export default function DailyMenuForm() {
     onSwipedLeft: () => router.push(right),
     onSwipedRight: () => router.push(left),
   });
-
+  if (isLoading) return null;
   return (
     <div
       {...handlers}

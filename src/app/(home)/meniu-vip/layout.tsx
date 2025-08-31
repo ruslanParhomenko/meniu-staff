@@ -9,7 +9,7 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="antialiased  min-h-screen md:max-w-[480px] w-full relative mx-auto px-2 pb-4">
+    <div className="antialiased  min-h-screen md:max-w-[480px] w-full relative mx-auto md:px-2 pb-4">
       <Header />
       <FrameTop />
       {children}
