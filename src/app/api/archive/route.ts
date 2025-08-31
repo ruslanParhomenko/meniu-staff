@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 
-export const revalidate = 60 * 60 * 12;
+export const revalidate = 43200;
 
 export async function GET() {
   const [dailyReportCucina, dailyReport, remarkReport, breakeList] =
