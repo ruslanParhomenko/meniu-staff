@@ -92,16 +92,10 @@ export default function ReportTable({ data: report }: any) {
         <Table className="md:w-120 table-fixed w-full">
           <TableHeader>
             <TableRow>
-              <TableHead className="text-blue-600 w-45">Prepared</TableHead>
-              <TableHead className="text-blue-600 text-center w-5">
-                p.
-              </TableHead>
-              <TableHead className="text-blue-600 text-center w-5">
-                w.
-              </TableHead>
-              <TableHead className="text-blue-600 text-center w-8">
-                t.
-              </TableHead>
+              <TableHead className="text-blue-600 w-30">Prepared</TableHead>
+              <TableHead className="text-blue-600 w-8">p.</TableHead>
+              <TableHead className="text-blue-600 w-8">w.</TableHead>
+              <TableHead className="text-blue-600 w-8">time</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -114,9 +108,11 @@ export default function ReportTable({ data: report }: any) {
               ?.filter((item) => item.product)
               .map((item: any, index) => (
                 <TableRow key={`${item.id}-${index}`}>
-                  <TableCell>{item.product}</TableCell>
-                  <TableCell>{item.portions}</TableCell>
-                  <TableCell>{item.weight}</TableCell>
+                  <TableCell className="truncate">
+                    {item.product || "-"}
+                  </TableCell>
+                  <TableCell>{item.portions || "-"}</TableCell>
+                  <TableCell>{item.weight || "-"}</TableCell>
                   <TableCell className="text-red-600">{item.time}</TableCell>
                 </TableRow>
               ))}
@@ -125,29 +121,19 @@ export default function ReportTable({ data: report }: any) {
         <Table className="md:w-120 table-fixed">
           <TableHeader>
             <TableRow>
-              <TableHead className="text-blue-600 w-45">Staff</TableHead>
-              <TableHead className="text-blue-600 text-center w-5">
-                p.
-              </TableHead>
-              <TableHead className="text-blue-600 text-center w-5">
-                w.
-              </TableHead>
-              <TableHead className="text-blue-600 text-center w-8">
-                t.
-              </TableHead>
+              <TableHead className="text-blue-600 w-30">Staff</TableHead>
+              <TableHead className="text-blue-600 w-8">p.</TableHead>
+              <TableHead className="text-blue-600  w-8">w.</TableHead>
+              <TableHead className="text-blue-600  w-8">time</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {report.staff?.map((item: any) => (
               <TableRow key={item.id}>
-                <TableCell className="w-40">{item.product}</TableCell>
-                <TableCell className="text-center w-20">
-                  {item.portions}
-                </TableCell>
-                <TableCell className="text-center w-20">
-                  {item.weight}
-                </TableCell>
-                <TableCell className="text-center w-24">{item?.time}</TableCell>
+                <TableCell className="truncate">{item.product}</TableCell>
+                <TableCell>{item.portions || "-"}</TableCell>
+                <TableCell>{item.weight || "-"}</TableCell>
+                <TableCell>{item?.time || "-"}</TableCell>
               </TableRow>
             ))}
           </TableBody>
