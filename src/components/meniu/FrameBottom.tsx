@@ -4,7 +4,7 @@ export default function FrameBotton() {
   return (
     <>
       <Image
-        className="absolute bottom-[-20px] right-[-20px] rotate-90"
+        className="absolute bottom-[-20px] right-[-10px] rotate-90"
         src="/2.svg"
         alt="2"
         priority
@@ -12,7 +12,7 @@ export default function FrameBotton() {
         height={80}
       />
       <Image
-        className="absolute bottom-[-20px] left-[-20px] rotate-180"
+        className="absolute bottom-[-20px] left-[-10px] rotate-180"
         src="/2.svg"
         alt="2"
         priority
