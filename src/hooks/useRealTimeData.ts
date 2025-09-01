@@ -3,17 +3,14 @@ import { useSession } from "next-auth/react";
 
 export const useDataSupaBase = ({
   localStorageKey,
-  apiKey,
-  user,
+  apiKey
 }: {
   localStorageKey: string;
   apiKey: string;
-  user: "bar" | "cucina" | "all";
 }) => {
   const fetchMail = {
     bar: ["cng.nv.rstrnt@gmail.com"],
-    cucina: ["cng.nv.kitchen@gmail.com"],
-    all: ["cng.nv.rstrnt@gmail.com", "cng.nv.kitchen@gmail.com"],
+    cucina: ["cng.nv.kitchen@gmail.com"]
   };
   const session = useSession();
   const sendRealTime = async (formData?: any) => {
@@ -41,16 +38,24 @@ export const useDataSupaBase = ({
       const res = await fetch(`/api/${apiKey}`);
       const allData = await res.json();
 
-      const userData = allData.find((item: any) =>
-        fetchMail[user].includes(item.user_email)
-      );
+      const dataBar = allData.filter((item: any) =>
+        fetchMail.bar.includes(item.user_email)
+      ).map((item: any) => item.form_data);
 
-      if (userData?.form_data) {
-        localStorage.setItem(
-          localStorageKey,
-          JSON.stringify(userData.form_data)
-        );
-        return userData.form_data;
+      const dataCucina = allData.filter((item: any) =>
+        fetchMail.cucina.includes(item.user_email)
+      ).map((item: any) => item.form_data);
+      const resetData = {
+        bar: dataBar[0] || [],
+        cucina: dataCucina[0] || [],
+      };
+
+      if (resetData) {
+        // localStorage.setItem(
+        //   localStorageKey,
+        //   JSON.stringify(resetData)
+        // );
+        return resetData
       }
       return null;
     } catch (err) {

@@ -133,9 +133,10 @@ export default function DailyReportForm() {
   //fetch realtime
   const fetchSupaBaseData = async () => {
     const data = await fetchRealTime();
-    if (data) {
-      form.reset(data);
-      setLocalStorage(data as ReportCucinaType);
+    const resetData = data?.cucina || [];
+    if (resetData) {
+      form.reset(resetData);
+      setLocalStorage(resetData as ReportCucinaType);
     }
   };
 

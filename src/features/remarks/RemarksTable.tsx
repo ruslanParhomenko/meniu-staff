@@ -60,8 +60,7 @@ export default function RemarksTable() {
   //realtime
   const { sendRealTime, fetchRealTime } = useDataSupaBase({
     localStorageKey: LOCAL_STORAGE_KEY,
-    apiKey: REMARKS_REALTIME_ENDPOINT,
-    user: "bar",
+    apiKey: REMARKS_REALTIME_ENDPOINT
   });
 
   //localStorage
@@ -114,9 +113,12 @@ export default function RemarksTable() {
   //fetch realtime
   const fetchSupaBaseData = async () => {
     const data = await fetchRealTime();
-    if (data) {
-      form.reset(data);
-      setLocalStorage(data as RemarksForm);
+    const resetData = data?.bar?.remarks || [];
+    if (resetData) {
+      form.reset({
+        ...resetData,
+      });
+      setLocalStorage(resetData as RemarksForm);
     }
   };
 

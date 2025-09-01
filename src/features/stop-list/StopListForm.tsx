@@ -24,8 +24,7 @@ export default function StopListForm() {
 
   const { sendRealTime, fetchRealTime } = useDataSupaBase({
     localStorageKey: LOCAL_STORAGE_KEY,
-    apiKey: STOP_LIST_REALTIME,
-    user: "bar",
+    apiKey: STOP_LIST_REALTIME
   });
 
   const form = useForm<StopListSchemaType>({
@@ -49,16 +48,18 @@ export default function StopListForm() {
     name: "stopListCucina",
   });
 
-  const watchStopList = useWatch({ control: form.control, name: "stopList" });
+  const watchStopList = useWatch({ control: form.control, name: "stopList" }) ?? [];
+  console.log(watchStopList)
   const watchStopListCucina = useWatch({
     control: form.control,
     name: "stopListCucina",
-  });
+  }) ?? [];
 
   const syncedRows = useRef<Record<number, boolean>>({});
 
   useEffect(() => {
-    watchStopList.forEach((item, idx) => {
+    if (!Array.isArray(watchStopList)) return;
+    watchStopList?.forEach((item, idx) => {
       if (item?.product && !item.date) {
         const date = formatNowData();
         stopListValues.update(idx, {
@@ -76,7 +77,8 @@ export default function StopListForm() {
   }, [watchStopList, stopListValues.fields.length]);
 
   useEffect(() => {
-    watchStopListCucina.forEach((item, idx) => {
+    if (!Array.isArray(watchStopListCucina)) return;
+    watchStopListCucina?.forEach((item, idx) => {
       if (item?.product && !item.date) {
         const date = formatNowData();
         stopListCucinaValues.update(idx, {
@@ -95,9 +97,15 @@ export default function StopListForm() {
 
   const fetchSupaBaseData = async () => {
     const data = await fetchRealTime();
-    if (data) {
-      form.reset(data);
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+    const resetData = {
+      stopList: data?.bar?.stopList || [],
+      stopListCucina: data?.cucina.stopListCucina || [],
+    };
+    if (resetData) {
+      form.reset({
+        ...resetData,
+      });
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(resetData));
     }
   };
   useEffect(() => {

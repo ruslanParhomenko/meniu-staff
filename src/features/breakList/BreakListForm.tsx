@@ -35,8 +35,7 @@ const BreakList = () => {
   //realtime
   const { sendRealTime, fetchRealTime } = useDataSupaBase({
     localStorageKey: LOCAL_STORAGE_KEY,
-    apiKey: BREAK_LIST_REALTIME_ENDPOINT,
-    user: "bar",
+    apiKey: BREAK_LIST_REALTIME_ENDPOINT
   });
 
   //localstorage
@@ -89,9 +88,14 @@ const BreakList = () => {
   //fetch realtime
   const fetchSupaBaseData = async () => {
     const data = await fetchRealTime();
-    if (data) {
-      form.reset(data);
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(data));
+    const resetData = data?.bar || [];
+    console.log(resetData)  
+
+    if (resetData) {
+      form.reset({
+        ...resetData,
+      });
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(resetData));
     }
   };
 

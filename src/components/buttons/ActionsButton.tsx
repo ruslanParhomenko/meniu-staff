@@ -18,7 +18,6 @@ export const ActionsButton = ({
   disabled,
   defaultValues,
 }: ActionsButtonProps) => {
-  console.log("item:", item);
   const handleRemove = () => {
     if (formFields.fields.length === 1) {
       console.log("Removing index:", idx, "Item:", formFields.fields);

@@ -57,7 +57,7 @@ export const BreakListTable = () => {
       </TableHeader>
 
       <TableBody>
-        {form.getValues("rows").map((row, rowIndex) => {
+        {form.getValues("rows")?.map((row, rowIndex) => {
           const rowHasTrue = TIME_LABELS.some((time) => {
             const fieldName = `rows.${rowIndex}.hours.${time}`;
             const value = form.getValues(
@@ -85,7 +85,7 @@ export const BreakListTable = () => {
           });
 
           return (
-            <TableRow key={row.id}>
+            <TableRow key={`${row.id}-${rowIndex}`}>
               <TableCell>
                 <input value={row.id} disabled className="w-10 text-center" />
               </TableCell>
@@ -101,8 +101,8 @@ export const BreakListTable = () => {
                   fieldName={`rows[${rowIndex}].name`}
                   data={selectedEmployees}
                   disabled={isDisabled}
-                  className={`!min-w-[120px] ${
-                    rowHasTrue ? "!text-rd font-bold text-base" : ""
+                  className={`!min-w-[120px] md:w-[160px] text-base ${
+                    rowHasTrue ? "!text-rd" : ""
                   }`}
                 />
               </TableCell>
@@ -138,7 +138,7 @@ export const BreakListTable = () => {
                       data={MINUTES_SELECT}
                       disabled={isDisabled}
                       className={`${
-                        isTrue ? "!text-rd font-bold text-xl" : ""
+                        isTrue ? "!text-rd font-bold text-[18px]" : ""
                       } ${selectedValue === "X" ? "bg-[#727171]" : "bg-white"}`}
                     />
                   </TableCell>
