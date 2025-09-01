@@ -13,6 +13,7 @@ import {
   defaultValuesReportBar,
   expensesDefault,
   LIST_TOBACCO,
+  productTransferDefault,
   ReportBarFormValues,
   reportBarSchema,
   TobaccoSchemaType,
@@ -24,6 +25,7 @@ import { SendResetButton } from "@/components/buttons/SendResetButton";
 import { FetchDataButton } from "@/components/buttons/FetchDataButton";
 import { useApi } from "@/hooks/useApi";
 import { DailyReport } from "@/generated/prisma";
+import TableProductsTransfer from "./TableProductsTransfer";
 
 export function ReportBarForm() {
   const STORAGE_KEY = "report-bar";
@@ -72,6 +74,7 @@ export function ReportBarForm() {
       tobacco: resetTobacco as TobaccoSchemaType,
       cashVerify: cashVerifyDefault,
       expenses: expensesDefault,
+      productTransfer: productTransferDefault,
     });
 
     removeValue();
@@ -91,7 +94,9 @@ export function ReportBarForm() {
             Number(item.outgoing || 0)
         ),
       })),
-      total: Number(data.total),
+      cashVerify: data.cashVerify?.filter((item) => item.value),
+      expenses: data.expenses?.filter((item) => item.name),
+      productTransfer: data.productTransfer?.filter((item) => item.name),
     };
     createMutation.mutate(formateData);
 
@@ -115,6 +120,7 @@ export function ReportBarForm() {
       tobacco: updatedTobacco as TobaccoSchemaType,
       cashVerify: cashVerifyDefault,
       expenses: expensesDefault,
+      productTransfer: productTransferDefault,
     };
 
     form.reset(updatedData);
@@ -201,10 +207,10 @@ export function ReportBarForm() {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-[50%_5%_25%] md:gap-20 md:pr-20 pt-4">
+        <div className="grid grid-cols-1 md:grid-cols-[40%_20%_30%] md:gap-20 md:pr-20 pt-4">
           <TableTobacco />
-          <div className="w-full" />
           <TableExpenses />
+          <TableProductsTransfer />
         </div>
         <TableCashVerify />
         <SendResetButton resetForm={resetForm} />

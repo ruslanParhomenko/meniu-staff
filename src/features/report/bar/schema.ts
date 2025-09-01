@@ -1,14 +1,32 @@
 import * as yup from "yup";
+//products transfer
+export const productTransferSchema = yup.array(
+  yup.object().shape({
+    name: yup.string(),
+    quantity: yup.string(),
+    destination: yup.string(),
+  })
+);
+
+export type ProductTransferSchemaType = yup.InferType<
+  typeof productTransferSchema
+>;
+export const productTransferDefault = new Array(7).fill({
+  name: "",
+  quantity: "",
+  destination: "",
+});
+
 //expenses
 export const expenseSchema = yup.array(
   yup.object().shape({
-    name: yup.string(),
-    sum: yup.string(),
+    name: yup.string().default(""),
+    sum: yup.string().default(""),
   })
 );
 
 export type ExpensesSchemaType = yup.InferType<typeof expenseSchema>;
-export const expensesDefault = new Array(8).fill({
+export const expensesDefault = new Array(7).fill({
   name: "",
   sum: "",
 });
@@ -67,10 +85,10 @@ export const cashVerifyDefault = HOURS.map((hour) => ({
 //report bar
 export const reportBarSchema = yup.object().shape({
   date: yup.string().required("Date is required"),
-  total: yup.number(),
   expenses: expenseSchema,
   tobacco: tobaccoSchema,
   cashVerify: cashVerifySchema,
+  productTransfer: productTransferSchema,
 });
 
 export type ReportBarFormValues = yup.InferType<typeof reportBarSchema>;
@@ -78,4 +96,5 @@ export const defaultValuesReportBar = {
   expenses: expensesDefault,
   tobacco: tobaccoDefault,
   cashVerify: cashVerifyDefault,
+  productTransfer: productTransferDefault,
 };

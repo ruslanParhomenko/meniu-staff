@@ -8,10 +8,9 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model BreakeList {
   id   Int      @id @default(autoincrement())
-  date DateTime
+  date DateTime @unique
   rows Row[]
 
   @@index([date])
@@ -22,27 +21,52 @@ model Row {
   externalId String
   name       String?
   scheduleId Int
-  hours      Hour[]
   schedule   BreakeList @relation(fields: [scheduleId], references: [id], onDelete: Cascade)
-}
 
-model Hour {
-  id    Int    @id @default(autoincrement())
-  hour  String
-  value String
-  rowId Int
-  row   Row    @relation(fields: [rowId], references: [id], onDelete: Cascade)
+  h_9  String? @db.Char(2)
+  h_10 String? @db.Char(2)
+  h_11 String? @db.Char(2)
+  h_12 String? @db.Char(2)
+  h_13 String? @db.Char(2)
+  h_14 String? @db.Char(2)
+  h_15 String? @db.Char(2)
+  h_16 String? @db.Char(2)
+  h_17 String? @db.Char(2)
+  h_18 String? @db.Char(2)
+  h_19 String? @db.Char(2)
+  h_20 String? @db.Char(2)
+  h_21 String? @db.Char(2)
+  h_22 String? @db.Char(2)
+  h_23 String? @db.Char(2)
+  h_24 String? @db.Char(2)
+  h_01 String? @db.Char(2)
+  h_02 String? @db.Char(2)
+  h_03 String? @db.Char(2)
+  h_04 String? @db.Char(2)
+  h_05 String? @db.Char(2)
+  h_06 String? @db.Char(2)
+  h_07 String? @db.Char(2)
+  h_00 String? @db.Char(2)
 
-  @@unique([rowId, hour])
+  @@index([scheduleId])
 }
 
 model DailyReport {
-  id         Int          @id @default(autoincrement())
-  date       DateTime
-  total      Float        @default(0)
-  cashVerify CashVerify[]
-  expenses   Expense[]
-  tobacco    Tobacco[]
+  id              Int               @id @default(autoincrement())
+  date            DateTime
+  cashVerify      CashVerify[]
+  expenses        Expense[]
+  tobacco         Tobacco[]
+  productTransfer ProductTransfer[]
+}
+
+model ProductTransfer {
+  id          Int         @id @default(autoincrement())
+  name        String
+  quantity    String
+  destination String
+  reportId    Int
+  report      DailyReport @relation(fields: [reportId], references: [id], onDelete: Cascade)
 }
 
 model CashVerify {

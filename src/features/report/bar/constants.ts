@@ -43,6 +43,19 @@ import {
   VITAFOR,
 } from "@/features/order-list/constants";
 
+export const WAREHOUSES = [
+  "BAR",
+  "CUCINA",
+  "OFFICE",
+  "BN",
+  "WRITEOFF",
+  "STAFF",
+  "IT",
+  "CCTV",
+  "HR",
+];
+export const RECIPIENTS = ["NBM", "BAR", "NORI", "DISHES", "BN", "OTHER"];
+
 export const SELECT_COUNT = [
   "0",
   "1",

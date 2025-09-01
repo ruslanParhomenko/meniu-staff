@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { ActionsButton } from "./ActionsButton";
+import { ActionsButton } from "../../components/buttons/ActionsButton";
 import { useAbility } from "@/providers/AbilityProvider";
 import { useTranslations } from "next-intl";
 import {
@@ -17,7 +17,7 @@ import {
   PRODUCTS_CUCINA,
 } from "../report/bar/constants";
 import { UseFieldArrayReturn } from "react-hook-form";
-import { StopListSchemaType } from "./schema";
+import { defaultStopList, StopListSchemaType } from "./schema";
 import SelectFieldWithSearch from "@/components/inputs/SelectWithSearch";
 
 type StopLitTableProps = {
@@ -44,6 +44,7 @@ export const StopListTable = ({ formFields, nameTag }: StopLitTableProps) => {
     bar: isObserver || isCucina || isUser,
     cucina: isObserver || isBar || isUser,
   };
+
   return (
     <div className="xl:px-5">
       <Label className="text-lg font-semibold pb-7">{t(LABEL[nameTag])}</Label>
@@ -77,8 +78,9 @@ export const StopListTable = ({ formFields, nameTag }: StopLitTableProps) => {
                 <ActionsButton
                   formFields={formFields}
                   idx={idx}
-                  item={item}
+                  item={item.product}
                   disabled={DISABLED[nameTag]}
+                  defaultValues={defaultStopList}
                 />
               </TableCell>
             </TableRow>

@@ -28,6 +28,7 @@ export async function GET() {
           cashVerify: true,
           tobacco: true,
           expenses: true,
+          productTransfer: true,
         },
         orderBy: { date: "desc" },
       }),
@@ -38,7 +39,9 @@ export async function GET() {
       }),
       prisma.breakeList.findMany({
         take: 31,
-        include: { rows: { include: { hours: true } } },
+        include: {
+          rows: true,
+        },
         orderBy: { date: "desc" },
       }),
     ]);

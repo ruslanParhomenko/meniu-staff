@@ -90,7 +90,7 @@ export const BreakListTable = () => {
           return (
             <TableRow key={row.id}>
               <TableCell>
-                <input value={row.id} disabled className="w-8 text-center" />
+                <input value={row.id} disabled className="w-10 text-center" />
               </TableCell>
 
               <TableCell

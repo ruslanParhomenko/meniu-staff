@@ -1,18 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Minus, Plus } from "lucide-react";
-import {
-  defaultStopList,
-  StopListItemSchemaType,
-  StopListSchemaType,
-} from "./schema";
-import { UseFieldArrayReturn, useFormContext } from "react-hook-form";
+import { UseFieldArrayReturn } from "react-hook-form";
 
 type ActionsButtonProps = {
-  formFields: UseFieldArrayReturn<StopListSchemaType>;
+  formFields: UseFieldArrayReturn<any>;
   idx: number;
-  item: StopListItemSchemaType;
+  item: any;
   disabled: boolean;
+  defaultValues: any;
 };
 
 export const ActionsButton = ({
@@ -20,25 +16,28 @@ export const ActionsButton = ({
   idx,
   item,
   disabled,
+  defaultValues,
 }: ActionsButtonProps) => {
+  console.log("item:", item);
   const handleRemove = () => {
     if (formFields.fields.length === 1) {
-      formFields.replace([defaultStopList]);
+      console.log("Removing index:", idx, "Item:", formFields.fields);
+      formFields.replace([defaultValues]);
     } else {
       formFields.remove(idx);
     }
   };
 
   const handleAdd = () => {
-    const lastItem = formFields.fields[formFields.fields.length - 1];
-    if (lastItem.product) {
-      formFields.append(defaultStopList);
+    const firstItem = formFields.fields[0] as Record<string, any>;
+    if (firstItem && firstItem[Object.keys(firstItem)[1]] !== "") {
+      formFields.append(defaultValues);
     }
   };
 
   return (
     <div className="flex md:flex-row flex-col gap-2 md:justify-start justify-end">
-      {(item.product || idx === formFields.fields.length - 1) && (
+      {(item || idx === formFields.fields.length - 1) && (
         <Button
           type="button"
           variant="destructive"
@@ -53,7 +52,7 @@ export const ActionsButton = ({
           type="button"
           variant="outline"
           onClick={handleAdd}
-          disabled={disabled || !item.product}
+          disabled={disabled || !item}
         >
           <Plus />
         </Button>

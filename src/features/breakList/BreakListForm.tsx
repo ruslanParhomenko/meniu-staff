@@ -64,6 +64,7 @@ const BreakList = () => {
   }, [watchAllFields]);
 
   const handleSubmit: SubmitHandler<BreakListFormValues> = (data) => {
+    console.log("Submitting data:", data);
     if (!data.date) {
       toast.error("Дата не выбрана");
       return;

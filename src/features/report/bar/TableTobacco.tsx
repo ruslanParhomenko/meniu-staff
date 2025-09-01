@@ -33,10 +33,10 @@ export default function TableTobacco() {
         <TableHeader>
           <TableRow className="h-10">
             <TableHead className="md:w-40 w-30"></TableHead>
-            <TableHead className="w-30">Stock</TableHead>
+            <TableHead className="w-30">stock</TableHead>
             <TableHead className="w-20">+</TableHead>
             <TableHead className="w-20">-</TableHead>
-            <TableHead className="w-30">Final</TableHead>
+            <TableHead className="w-30">final</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -49,6 +49,7 @@ export default function TableTobacco() {
                   fieldName={`tobacco.${idx}.incoming`}
                   data={SELECT_COUNT}
                   disabled={isDisabled}
+                  className="h-8!"
                 />
               </TableCell>
               <TableCell className="px-2">
@@ -56,6 +57,7 @@ export default function TableTobacco() {
                   fieldName={`tobacco.${idx}.outgoing`}
                   data={SELECT_COUNT}
                   disabled={isDisabled}
+                  className="h-8!"
                 />
               </TableCell>
               <TableCell className="px-2">

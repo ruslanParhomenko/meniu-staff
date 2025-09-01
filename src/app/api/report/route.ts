@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   const body = await req.json();
-  const { cashVerify, tobacco, expenses, date } = body;
+  const { cashVerify, tobacco, expenses, date, productTransfer } = body;
   const report = await prisma.dailyReport.create({
     data: {
       date: new Date(date),
@@ -28,11 +28,19 @@ export async function POST(req: Request) {
           sum: e.sum,
         })),
       },
+      productTransfer: {
+        create: productTransfer.map((p: any) => ({
+          name: p.name,
+          quantity: p.quantity,
+          destination: p.destination,
+        })),
+      },
     },
     include: {
       cashVerify: true,
       tobacco: true,
       expenses: true,
+      productTransfer: true,
     },
   });
 

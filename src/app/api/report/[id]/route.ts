@@ -26,7 +26,12 @@ export async function GET(
   const { id } = await params;
   const report = await prisma.dailyReport.findUnique({
     where: { id: Number(id) },
-    include: { cashVerify: true, tobacco: true, expenses: true },
+    include: {
+      cashVerify: true,
+      tobacco: true,
+      expenses: true,
+      productTransfer: true,
+    },
   });
 
   return NextResponse.json(report);

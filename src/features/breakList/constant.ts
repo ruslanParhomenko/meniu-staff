@@ -2,7 +2,7 @@ import { BreakListItem } from "./schema";
 
 export const BREAK_LIST_DEFAULT: BreakListItem[] = [
   {
-    id: "B8",
+    id: "8-20",
     name: "",
     hours: [
       { "9": "X" },
@@ -31,7 +31,7 @@ export const BREAK_LIST_DEFAULT: BreakListItem[] = [
     ],
   },
   {
-    id: "8",
+    id: "8-20",
     name: "",
     hours: [
       { "9": "40" },
@@ -59,7 +59,7 @@ export const BREAK_LIST_DEFAULT: BreakListItem[] = [
     ],
   },
   {
-    id: "9",
+    id: "9-21",
     name: "",
     hours: [
       { "9": "X" },
@@ -88,7 +88,7 @@ export const BREAK_LIST_DEFAULT: BreakListItem[] = [
     ],
   },
   {
-    id: "14",
+    id: "14-02",
     name: "",
     hours: [
       { "9": "X" },
@@ -117,7 +117,7 @@ export const BREAK_LIST_DEFAULT: BreakListItem[] = [
     ],
   },
   {
-    id: "18",
+    id: "18-06",
     name: "",
     hours: [
       { "9": "X" },
@@ -146,7 +146,7 @@ export const BREAK_LIST_DEFAULT: BreakListItem[] = [
     ],
   },
   {
-    id: "B20",
+    id: "20-08",
     name: "",
     hours: [
       { "9": "X" },
@@ -175,7 +175,7 @@ export const BREAK_LIST_DEFAULT: BreakListItem[] = [
     ],
   },
   {
-    id: "W20",
+    id: "20-08",
     name: "",
     hours: [
       { "9": "X" },
@@ -204,7 +204,7 @@ export const BREAK_LIST_DEFAULT: BreakListItem[] = [
     ],
   },
   {
-    id: "20",
+    id: "20-08",
     name: "",
     hours: [
       { "9": "X" },

@@ -68,6 +68,32 @@ export const ReportBarTable = ({ data }: { data: any }) => {
               </TableBody>
             </Table>
             <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead className="text-center">product</TableHead>
+                  <TableHead className="text-center">quantity</TableHead>
+                  <TableHead className="text-center">destination</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {data?.productTransfer
+                  ?.filter((e: any) => e.name !== "")
+                  .map((e: any, idx: number) => (
+                    <TableRow key={idx}>
+                      <TableCell className="text-center">
+                        {e.name || "—"} :
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {e.quantity || "0"}
+                      </TableCell>
+                      <TableCell className="text-center">
+                        {e.destination || "-"}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+              </TableBody>
+            </Table>
+            <Table>
               <TableBody>
                 <TableRow>
                   <TableCell className="font-bold">hours:</TableCell>
