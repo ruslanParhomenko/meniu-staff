@@ -27,7 +27,7 @@ import { DailyReport } from "@/generated/prisma";
 
 export function ReportBarForm() {
   const STORAGE_KEY = "report-bar";
-  const { isBar } = useAbility();
+  const { isBar, isAdmin, isUser } = useAbility();
   const session = useSession();
 
   const { createMutation } = useApi<DailyReport>({
@@ -196,7 +196,9 @@ export function ReportBarForm() {
       <form onSubmit={form.handleSubmit(handleSubmit)}>
         <div className="flex items-center gap-4 justify-between">
           <DatePickerInput fieldName="date" />
-          <FetchDataButton fetchData={fetchSupaBaseData} />
+          {(isAdmin || isUser) && (
+            <FetchDataButton fetchData={fetchSupaBaseData} />
+          )}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-[50%_5%_25%] md:gap-20 md:pr-20 pt-4">

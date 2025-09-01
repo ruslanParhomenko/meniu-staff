@@ -44,6 +44,7 @@ import {
 } from "@/features/order-list/constants";
 
 export const SELECT_COUNT = [
+  "0",
   "1",
   "2",
   "3",
