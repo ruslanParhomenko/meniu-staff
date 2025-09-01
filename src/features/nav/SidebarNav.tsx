@@ -63,13 +63,10 @@ const SidebarNav = () => {
                   <Link
                     href={isCucina ? item.url2 : item.url}
                     onClick={handleMenuClick}
-                    className={cn(
-                      "text-[#2563EB] flex items-center w-full p-4 rounded-md",
-                      {
-                        "bg-[#93C5FD]! text-[#000000] hover:bg-[#2563EB] [&>span]:text-[#000000]":
-                          isActivePath,
-                      }
-                    )}
+                    className={cn(" flex items-center w-full p-4 rounded-md", {
+                      "bg-[#1DA1F2]! text-[#000000] hover:bg-[#211df2]  [&>span]:text-[#ffff]":
+                        isActivePath,
+                    })}
                   >
                     <span className="text-base">{t(item.title)}</span>
                   </Link>

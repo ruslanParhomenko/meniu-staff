@@ -72,8 +72,8 @@ function SelectFieldWithSearch({
                       className={cn(
                         "w-full border rounded-md px-2 py-1 text-left flex justify-between items-center [&>svg]:hidden",
                         field.value
-                          ? "text-red-600 font-bold text-base overflow-hidden text-ellipsis whitespace-nowrap"
-                          : "text-gray-600 text-base",
+                          ? " font-bold text-base overflow-hidden text-ellipsis whitespace-nowrap"
+                          : "text-gray-300 text-base",
                         className
                       )}
                       disabled={disabled}

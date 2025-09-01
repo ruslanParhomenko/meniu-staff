@@ -26,10 +26,13 @@ export default function TableExpenses() {
     current[idx] = expensesDefault[0];
     form.setValue("expenses", current);
   };
+  const fieldsValues = form.watch("expenses");
 
   return (
     <div className="">
-      <Label className="text-lg font-semibold pb-7">Expenses</Label>
+      <Label className="text-lg font-semibold pb-7 text-[#1DA1F2]">
+        Expenses
+      </Label>
       <Table className="[&_th]:text-center [&_td]:text-center">
         <TableHeader>
           <TableRow className="h-10">
@@ -57,13 +60,15 @@ export default function TableExpenses() {
                 />
               </TableCell>
               <TableCell className="px-2">
-                <Button
-                  variant={"destructive"}
-                  className="h-8 cursor-pointer"
-                  onClick={() => reset(idx)}
-                >
-                  X
-                </Button>
+                {fieldsValues[idx].name && (
+                  <Button
+                    variant={"destructive"}
+                    className="h-8 cursor-pointer"
+                    onClick={() => reset(idx)}
+                  >
+                    X
+                  </Button>
+                )}
               </TableCell>
             </TableRow>
           ))}

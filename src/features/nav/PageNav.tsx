@@ -38,9 +38,9 @@ function PageNav({
                 key={page.title}
                 href={`/${mainRoute}/${page.href}`}
                 className={cn(
-                  "text-nowrap hover:text-blue-600",
+                  "text-nowrap hover:text-[#1DA1F2]",
                   isActive(page.href)
-                    ? "border-b-[3px] border-blue-500 pb-4 font-bold text-blue-600"
+                    ? "border-b-[3px] border-[#1DA1F2] pb-4 font-bold text-[#1DA1F2]"
                     : ""
                 )}
               >

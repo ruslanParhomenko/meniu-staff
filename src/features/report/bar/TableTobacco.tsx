@@ -28,7 +28,9 @@ export default function TableTobacco() {
 
   return (
     <div className="w-full">
-      <Label className="text-lg font-semibold pb-7">Tobacco</Label>
+      <Label className="text-lg font-semibold pb-7 text-[#1DA1F2]">
+        Tobacco
+      </Label>
       <Table className="w-full [&_th]:text-center [&_td]:text-center">
         <TableHeader>
           <TableRow className="h-10">

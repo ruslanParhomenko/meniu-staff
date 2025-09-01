@@ -270,7 +270,7 @@ export default function DailyReportForm() {
             dataArrayField3={REASON}
             defaultValue={defaultProductsSeconds}
           />
-          <Label className="font-semibold py-4 text-md text-blue-600">
+          <Label className="font-semibold py-4 text-md text-[#1DA1F2]">
             {t("notes")}
           </Label>
           <Textarea

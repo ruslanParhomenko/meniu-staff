@@ -77,10 +77,10 @@ const RenderTableCucina = ({
 
   return (
     <div className="pt-6">
-      <Label className="font-semibold py-2 text-md text-blue-600">
+      <Label className="font-semibold py-2 text-md text-[#1DA1F2]">
         {t(name as string)} :
       </Label>
-      <Separator className="py-px my-1 bg-blue-600" />
+      <Separator className="py-px my-1 bg-[#1DA1F2]" />
 
       {fieldsArray.fields.map((field, index) => {
         const productValue = form.watch(

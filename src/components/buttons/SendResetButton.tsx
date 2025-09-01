@@ -40,8 +40,7 @@ export function SendResetButton({ resetForm }: { resetForm: () => void }) {
         <div className="flex justify-between md:justify-start items-center py-2 md:gap-10">
           <Button
             type="button"
-            variant="default"
-            className="hover:bg-blue-600"
+            className="hover:bg-blue-600 bg-[#1DA1F2]"
             disabled={isDisabled}
             onClick={() => setOpenModal("save")}
           >

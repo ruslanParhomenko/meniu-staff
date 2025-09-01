@@ -48,8 +48,8 @@ export const BreakListTable = () => {
                 style={{ color: isCurrentHour ? "red" : "blue" }}
                 className={`text-center text-xl ${
                   isCurrentHour
-                    ? "text-red-600 font-bold text-xl"
-                    : "text-blue-600"
+                    ? "text-[#dc2626] font-bold text-xl"
+                    : "text-[#211df2]"
                 }`}
               >
                 {h}:
@@ -105,9 +105,8 @@ export const BreakListTable = () => {
                   data={selectedEmployees}
                   disabled={isDisabled}
                   className={`!min-w-[120px] ${
-                    rowHasTrue ? "!text-red-600 font-bold text-[18px]" : ""
+                    rowHasTrue ? "!text-[#dc2626] font-bold text-[18px]" : ""
                   }`}
-                  style={rowHasTrue ? { color: "#dc2626" } : undefined}
                 />
               </TableCell>
 
@@ -142,7 +141,7 @@ export const BreakListTable = () => {
                       data={MINUTES_SELECT}
                       disabled={isDisabled}
                       className={`${
-                        isTrue ? "!text-red-600 font-bold text-xl" : ""
+                        isTrue ? "!text-[#dc2626] font-bold text-xl" : ""
                       } ${selectedValue === "X" ? "bg-gray-400" : "bg-white"}`}
                       style={{
                         color: isTrue ? "#dc2626" : undefined,

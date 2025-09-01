@@ -26,10 +26,12 @@ export default function TableProductsTransfer() {
     current[idx] = productTransferDefault[0];
     form.setValue("productTransfer", current);
   };
-
+  const fieldsValues = form.watch("productTransfer");
   return (
     <div className="w-full">
-      <Label className="text-lg font-semibold pb-7">Transfer</Label>
+      <Label className="text-lg font-semibold pb-7 text-[#1DA1F2]">
+        Transfer
+      </Label>
       <Table className="w-full [&_th]:text-center [&_td]:text-center">
         <TableHeader>
           <TableRow className="h-10">
@@ -66,13 +68,15 @@ export default function TableProductsTransfer() {
                 />
               </TableCell>
               <TableCell>
-                <Button
-                  variant={"destructive"}
-                  className="h-8 cursor-pointer"
-                  onClick={() => reset(idx)}
-                >
-                  X
-                </Button>
+                {fieldsValues[idx].name && (
+                  <Button
+                    variant={"destructive"}
+                    className="h-8 cursor-pointer"
+                    onClick={() => reset(idx)}
+                  >
+                    X
+                  </Button>
+                )}
               </TableCell>
             </TableRow>
           ))}

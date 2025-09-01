@@ -19,7 +19,7 @@ export function OrderCardWrapper({
   return (
     <div>
       <div className="flex flex-col w-full justify-center items-center py-2">
-        <Label className="py-2  font-bold text-blue-600">{name}</Label>
+        <Label className="py-2  font-bold text-[#1DA1F2]">{name}</Label>
       </div>
       {data.map((item, index) => {
         const value = useWatch({ control, name: item });
