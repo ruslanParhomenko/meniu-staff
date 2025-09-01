@@ -15,7 +15,7 @@ export function SidebarToggleButton() {
         fixed bottom-4 left-1/2 -translate-x-1/2 
         z-50 md:hidden
         p-3 rounded-full bg-white shadow-lg 
-        text-blue-600 hover:bg-gray-100
+        text-rd hover:bg-gray-100
       "
       aria-label="Toggle Sidebar"
     >
