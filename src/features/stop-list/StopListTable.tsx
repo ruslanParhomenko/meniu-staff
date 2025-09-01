@@ -47,15 +47,15 @@ export const StopListTable = ({ formFields, nameTag }: StopLitTableProps) => {
 
   return (
     <div className="xl:px-5">
-      <Label className="text-lg font-semibold pb-7 text-[#1DA1F2]">
+      <Label className="text-lg font-semibold pb-7 text-bl">
         {t(LABEL[nameTag])}
       </Label>
-      <Table className="[&_th]:text-center [&_td]:text-center table-fixed md:w-180 ">
+      <Table className="[&_th]:text-center [&_td]:text-center table-fixed md:w-160 ">
         <TableHeader>
           <TableRow className="h-10">
             <TableHead className="md:w-90 w-42">Product</TableHead>
             <TableHead className="md:w-50 w-18">Date</TableHead>
-            <TableHead className="text-left md:w-40 w-10">Actions</TableHead>
+            <TableHead className="text-left md:w-30 w-10">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

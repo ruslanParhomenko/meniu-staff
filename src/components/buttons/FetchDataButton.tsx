@@ -11,7 +11,7 @@ export const FetchDataButton = ({ fetchData }: { fetchData?: () => void }) => {
         <Button
           type="button"
           variant="secondary"
-          className="hover:bg-red-600"
+          className="hover:bg-rd text-bl hover:text-black"
           onClick={() => fetchData?.()}
           disabled={isDisabled}
         >

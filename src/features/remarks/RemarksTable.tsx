@@ -123,7 +123,7 @@ export default function RemarksTable() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-2 ">
-        <Label className="text-lg font-semibold pb-7 text-[#211df2]">
+        <Label className="text-lg font-semibold pb-7 text-bl">
           Employee Remarks
         </Label>
         <div className="flex items-center gap-4 justify-between">

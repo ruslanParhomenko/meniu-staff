@@ -32,14 +32,14 @@ const SidebarNav = () => {
   };
 
   const roleLabel = isAdmin
-    ? "ADMIN"
+    ? "admin"
     : isBar
-    ? "BAR"
+    ? "bar"
     : isCucina
-    ? "CUCINA"
+    ? "cucina"
     : isUser
-    ? "USER"
-    : "OBSERVER";
+    ? "user"
+    : "observer";
 
   return (
     <>
@@ -50,7 +50,9 @@ const SidebarNav = () => {
         <SidebarContent>
           <div className="flex justify-center pt-2">
             <Avatar className="w-full">
-              <AvatarFallback>{roleLabel}</AvatarFallback>
+              <AvatarFallback className="text-sm text-rd">
+                {roleLabel}
+              </AvatarFallback>
             </Avatar>
           </div>
           <SidebarMenu className="flex h-full flex-col gap-4 pt-5">
@@ -63,8 +65,8 @@ const SidebarNav = () => {
                   <Link
                     href={isCucina ? item.url2 : item.url}
                     onClick={handleMenuClick}
-                    className={cn(" flex items-center w-full p-4 rounded-md", {
-                      "bg-[#1DA1F2]! text-[#000000] hover:bg-[#211df2]  [&>span]:text-[#ffff]":
+                    className={cn("flex items-center w-full p-4 rounded-md", {
+                      "bg-bl! text-base hover:bg-bl  [&>span]:text-[#ffff]":
                         isActivePath,
                     })}
                   >
@@ -81,7 +83,7 @@ const SidebarNav = () => {
               className="cursor-pointer"
               onClick={() => signOut({ callbackUrl: "/" })}
             >
-              <LogOut className="rotate-180 text-[#2563EB]" />
+              <LogOut className="rotate-180 text-bl" />
             </div>
             <LanguageSwitcher />
           </SidebarMenu>

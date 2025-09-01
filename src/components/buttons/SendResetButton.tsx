@@ -40,7 +40,7 @@ export function SendResetButton({ resetForm }: { resetForm: () => void }) {
         <div className="flex justify-between md:justify-start items-center py-2 md:gap-10">
           <Button
             type="button"
-            className="hover:bg-blue-600 bg-[#1DA1F2]"
+            className="hover:bg-blue-600 bg-bl"
             disabled={isDisabled}
             onClick={() => setOpenModal("save")}
           >
@@ -50,7 +50,7 @@ export function SendResetButton({ resetForm }: { resetForm: () => void }) {
           <Button
             type="button"
             variant="secondary"
-            className="hover:bg-red-600 text-[#1DA1F2]"
+            className="hover:bg-rd text-bl hover:text-black"
             disabled={isDisabled}
             onClick={() => setOpenModal("reset")}
           >

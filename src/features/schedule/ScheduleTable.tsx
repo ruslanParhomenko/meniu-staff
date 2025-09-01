@@ -50,27 +50,21 @@ export function ScheduleTable({ dataRange }: { dataRange: any }) {
                         setSelectedColumn((prev) => (prev === j ? null : j));
                       }
                     }}
-                    style={{
-                      color:
-                        isHighlighted || shouldEmphasize
-                          ? "#dc2626"
-                          : undefined,
-                    }}
                     className={`
                   h-10 w-9
                   ${noBorderRow ? "" : "border"}
                   ${noBorderRow ? "" : "border-[#e5e7eb]"}
-                  ${isBlueColor ? "text-blue-600" : ""}
-                  ${isSelected ? "text-blue-600" : ""}
+                  ${isBlueColor ? "text-bl" : ""}
+                  ${isSelected ? "text-bl" : ""}
                   ${
                     j === 4
                       ? "min-w-[30px] sticky left-0 z-5 text-left bg-white/90"
                       : "text-center"
                   }
-                  ${isHighlighted ? "font-bold  text-red-600 " : ""}
+                  ${isHighlighted ? "font-bold  text-rd" : ""}
                   
                   ${i === 0 ? "cursor-pointer" : ""}
-                  ${shouldEmphasize ? "font-bold text-red-600 " : ""}
+                  ${shouldEmphasize ? "font-bold text-rd" : ""}
                 `}
                   >
                     {cell}

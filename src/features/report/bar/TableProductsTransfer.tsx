@@ -29,9 +29,7 @@ export default function TableProductsTransfer() {
   const fieldsValues = form.watch("productTransfer");
   return (
     <div className="w-full">
-      <Label className="text-lg font-semibold pb-7 text-[#1DA1F2]">
-        Transfer
-      </Label>
+      <Label className="text-lg font-semibold pb-7 text-bl">Transfer</Label>
       <Table className="w-full [&_th]:text-center [&_td]:text-center">
         <TableHeader>
           <TableRow className="h-10">

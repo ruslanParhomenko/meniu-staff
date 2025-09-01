@@ -46,9 +46,7 @@ export const BreakListTable = () => {
               <TableHead
                 key={i}
                 className={`text-center text-xl ${
-                  isCurrentHour
-                    ? "text-[#dc2626] font-bold text-xl"
-                    : "text-[#1DA1F2]"
+                  isCurrentHour ? "text-rd font-bold text-xl" : "text-bl"
                 }`}
               >
                 {h}:
@@ -104,7 +102,7 @@ export const BreakListTable = () => {
                   data={selectedEmployees}
                   disabled={isDisabled}
                   className={`!min-w-[120px] ${
-                    rowHasTrue ? "!text-[#dc2626] font-bold text-[18px]" : ""
+                    rowHasTrue ? "!text-rd font-bold text-base" : ""
                   }`}
                 />
               </TableCell>
@@ -140,14 +138,8 @@ export const BreakListTable = () => {
                       data={MINUTES_SELECT}
                       disabled={isDisabled}
                       className={`${
-                        isTrue ? "!text-[#dc2626] font-bold text-xl" : ""
-                      } ${selectedValue === "X" ? "bg-gray-400" : "bg-white"}`}
-                      style={{
-                        color: isTrue ? "#dc2626" : undefined,
-                        backgroundColor:
-                          selectedValue === "X" ? "#9ca3af" : "#ffffff",
-                        fontWeight: isTrue ? 700 : undefined,
-                      }}
+                        isTrue ? "!text-rd font-bold text-xl" : ""
+                      } ${selectedValue === "X" ? "bg-[#727171]" : "bg-white"}`}
                     />
                   </TableCell>
                 );

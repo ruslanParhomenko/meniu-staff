@@ -43,7 +43,7 @@ export const ActionsButton = ({
           variant="outline"
           onClick={handleRemove}
           disabled={disabled}
-          className="border-[#dc2626] border-2"
+          className="border-rd border-1 text-rd"
         >
           <Minus />
         </Button>
@@ -54,6 +54,7 @@ export const ActionsButton = ({
           variant="outline"
           onClick={handleAdd}
           disabled={disabled || !item}
+          className="border-bl border-1 text-bl"
         >
           <Plus />
         </Button>

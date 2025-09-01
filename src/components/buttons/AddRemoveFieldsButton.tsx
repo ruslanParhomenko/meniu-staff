@@ -29,7 +29,7 @@ export function AddRemoveFieldsButton({
         type="button"
         variant={"outline"}
         size="icon"
-        className="border-[#dc2626] border-2 text-[#dc2626]"
+        className="border-rd border-1 text-rd"
         onClick={handleRemove}
         disabled={disabled}
       >
@@ -41,7 +41,7 @@ export function AddRemoveFieldsButton({
           type="button"
           variant="outline"
           size="icon"
-          className="text-[#1DA1F2] border-[#1DA1F2] border-2"
+          className="text-bl border-bl border-1"
           onClick={() => formField.append(defaultValues)}
           disabled={disabled}
         >

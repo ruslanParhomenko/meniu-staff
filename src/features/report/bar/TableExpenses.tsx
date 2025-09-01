@@ -30,9 +30,7 @@ export default function TableExpenses() {
 
   return (
     <div className="">
-      <Label className="text-lg font-semibold pb-7 text-[#1DA1F2]">
-        Expenses
-      </Label>
+      <Label className="text-lg font-semibold pb-7 text-bl">Expenses</Label>
       <Table className="[&_th]:text-center [&_td]:text-center">
         <TableHeader>
           <TableRow className="h-10">
