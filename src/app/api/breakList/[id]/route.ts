@@ -28,7 +28,7 @@ export async function GET(
 
     const report = await prisma.breakeList.findUnique({
       where: { id: Number(id) },
-      include: { rows: { include: { hours: true } } },
+      include: { rows: true },
     });
 
     if (!report) {
