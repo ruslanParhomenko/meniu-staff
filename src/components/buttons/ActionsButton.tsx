@@ -40,9 +40,10 @@ export const ActionsButton = ({
       {(item || idx === formFields.fields.length - 1) && (
         <Button
           type="button"
-          variant="destructive"
+          variant="outline"
           onClick={handleRemove}
           disabled={disabled}
+          className="border-[#dc2626] border-2"
         >
           <Minus />
         </Button>

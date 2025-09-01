@@ -27,8 +27,9 @@ export function AddRemoveFieldsButton({
     <div className="flex gap-1 justify-center items-center">
       <Button
         type="button"
-        variant="destructive"
+        variant={"outline"}
         size="icon"
+        className="border-[#dc2626] border-2 text-[#dc2626]"
         onClick={handleRemove}
         disabled={disabled}
       >
@@ -40,6 +41,7 @@ export function AddRemoveFieldsButton({
           type="button"
           variant="outline"
           size="icon"
+          className="text-[#1DA1F2] border-[#1DA1F2] border-2"
           onClick={() => formField.append(defaultValues)}
           disabled={disabled}
         >

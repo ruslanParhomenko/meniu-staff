@@ -50,7 +50,7 @@ export function SendResetButton({ resetForm }: { resetForm: () => void }) {
           <Button
             type="button"
             variant="secondary"
-            className="hover:bg-red-600"
+            className="hover:bg-red-600 text-[#1DA1F2]"
             disabled={isDisabled}
             onClick={() => setOpenModal("reset")}
           >

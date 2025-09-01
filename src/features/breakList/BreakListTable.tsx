@@ -45,11 +45,10 @@ export const BreakListTable = () => {
             return (
               <TableHead
                 key={i}
-                style={{ color: isCurrentHour ? "red" : "blue" }}
                 className={`text-center text-xl ${
                   isCurrentHour
                     ? "text-[#dc2626] font-bold text-xl"
-                    : "text-[#211df2]"
+                    : "text-[#1DA1F2]"
                 }`}
               >
                 {h}:
