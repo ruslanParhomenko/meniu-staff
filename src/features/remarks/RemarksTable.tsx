@@ -26,13 +26,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { OVER_HOURS, PENALITY, REASON } from "./constants";
+import { OVER_HOURS, REASON } from "./constants";
 import { defaultRemarks, defaultRemarksForm, RemarksForm } from "./schema";
 import { Remark, RemarkReport } from "@/generated/prisma";
 import {
   REMARKS_ENDPOINT,
   REMARKS_REALTIME_ENDPOINT,
 } from "@/constants/endpoint-tag";
+import NumericInput from "@/components/inputs/NumericInput";
 
 export default function RemarksTable() {
   const t = useTranslations("Home");
@@ -60,7 +61,7 @@ export default function RemarksTable() {
   //realtime
   const { sendRealTime, fetchRealTime } = useDataSupaBase({
     localStorageKey: LOCAL_STORAGE_KEY,
-    apiKey: REMARKS_REALTIME_ENDPOINT
+    apiKey: REMARKS_REALTIME_ENDPOINT,
   });
 
   //localStorage
@@ -175,16 +176,15 @@ export default function RemarksTable() {
                   />
                 </TableCell>
                 <TableCell>
-                  <SelectField
+                  <NumericInput
                     fieldName={`remarks.${idx}.penality`}
-                    data={PENALITY}
                     disabled={isDisabled}
                   />
                 </TableCell>
                 <TableCell>
                   <SelectField
                     fieldName={`remarks.${idx}.reason`}
-                    data={REASON.map((reason) => t(reason) as string)}
+                    data={REASON}
                     disabled={isDisabled}
                   />
                 </TableCell>
@@ -236,9 +236,8 @@ export default function RemarksTable() {
 
               <div className="grid grid-cols-[40%_60%] gap-1 mb-2">
                 <span className="text-base">Penality:</span>
-                <SelectField
+                <NumericInput
                   fieldName={`remarks.${idx}.penality`}
-                  data={PENALITY}
                   disabled={isDisabled}
                 />
               </div>
@@ -247,7 +246,7 @@ export default function RemarksTable() {
                 <span className="text-base">Reason:</span>
                 <SelectField
                   fieldName={`remarks.${idx}.reason`}
-                  data={REASON.map((reason) => t(reason) as string)}
+                  data={REASON}
                   disabled={isDisabled}
                 />
               </div>

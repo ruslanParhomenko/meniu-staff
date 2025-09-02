@@ -3,17 +3,20 @@
 import { useFormContext } from "react-hook-form";
 import { FormControl, FormField, FormItem, FormMessage } from "../ui/form";
 import { Input } from "../ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 type NumericInputProps = {
   fieldName: string;
   id?: string;
-  type?: string;
   readonly?: boolean;
   disabled?: boolean;
-  placeholder?: string | undefined;
-  step?: number;
-  min?: number;
-  max?: number;
+  placeholder?: string;
   className?: string;
 };
 
@@ -23,51 +26,81 @@ function NumericInput({
   placeholder,
   readonly,
   disabled,
-  type = "text",
-  step,
-  min,
-  max,
   className,
 }: NumericInputProps) {
-  const { control, watch } = useFormContext();
-  watch();
+  const { control } = useFormContext();
+  const [open, setOpen] = useState(false);
+
   return (
     <FormField
       control={control}
       name={fieldName}
-      render={() => {
-        return (
-          <FormField
-            control={control}
-            name={fieldName}
-            render={({ field: { value, onChange } }) => (
-              <FormItem>
-                <div>
-                  <FormControl>
-                    <Input
-                      placeholder={placeholder}
-                      type={type}
-                      step={step}
-                      min={min}
-                      max={max}
-                      id={id}
-                      value={value ?? ""}
-                      onChange={onChange}
-                      readOnly={readonly}
-                      disabled={disabled}
-                      className={`flex w-15 items-center justify-center px-0 text-center text-xs md:w-36 md:text-base ${
-                        className ?? ""
-                      }`}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </div>
-              </FormItem>
-            )}
-          />
-        );
-      }}
+      render={({ field: { value, onChange } }) => (
+        <FormItem>
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <FormControl>
+                <Input
+                  id={id}
+                  placeholder={placeholder}
+                  value={value ?? ""}
+                  readOnly
+                  disabled={disabled}
+                  onClick={() => setOpen(true)}
+                  className={`cursor-pointer text-center ${className ?? ""}`}
+                />
+              </FormControl>
+            </PopoverTrigger>
+            <PopoverContent className="w-50 p-2 grid grid-cols-3 gap-2 border-none bg-[#e5e7eb]">
+              {Array.from({ length: 9 }, (_, i) => i + 1).map((num) => (
+                <Button
+                  key={num}
+                  variant="outline"
+                  className="h-10 text-xl bg-[#e5e7eb]"
+                  onClick={() => onChange((value ?? "") + num)}
+                >
+                  {num}
+                </Button>
+              ))}
+              <Button
+                variant="outline"
+                className="h-10 text-xl text-rd bg-[#e5e7eb]"
+                onClick={() => onChange((value ?? "").slice(0, -1))}
+              >
+                X
+              </Button>
+              <Button
+                variant="outline"
+                className="h-10 text-xl bg-[#e5e7eb]"
+                onClick={() => onChange((value ?? "") + "0")}
+              >
+                0
+              </Button>
+              <Button
+                variant="outline"
+                className="h-10 text-xl bg-[#e5e7eb]"
+                onClick={() => {
+                  if (!(value ?? "").includes(".")) {
+                    onChange((value ?? "") + ".");
+                  }
+                }}
+              >
+                .
+              </Button>
+              <Button
+                variant="outline"
+                className="h-10 text-xl col-span-3 border-[#e5e7eb] text-bl bg-[#e5e7eb]"
+                onClick={() => setOpen(false)}
+              >
+                ok
+              </Button>
+            </PopoverContent>
+          </Popover>
+          <FormMessage />
+        </FormItem>
+      )}
     />
   );
 }
+
 export default NumericInput;

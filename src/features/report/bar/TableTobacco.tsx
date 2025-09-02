@@ -15,6 +15,7 @@ import SelectField from "@/components/inputs/SelectField";
 import { SELECT_COUNT } from "./constants";
 import { useFormContext, useWatch } from "react-hook-form";
 import { useAbility } from "@/providers/AbilityProvider";
+import NumericInput from "@/components/inputs/NumericInput";
 
 export default function TableTobacco() {
   const { isObserver, isUser } = useAbility();
@@ -45,17 +46,15 @@ export default function TableTobacco() {
               <TableCell className="px-2">{item.name}</TableCell>
               <TableCell className="px-2">{item.stock}</TableCell>
               <TableCell className="px-2">
-                <SelectField
+                <NumericInput
                   fieldName={`tobacco.${idx}.incoming`}
-                  data={SELECT_COUNT}
                   disabled={isDisabled}
                   className="h-8!"
                 />
               </TableCell>
               <TableCell className="px-2">
-                <SelectField
+                <NumericInput
                   fieldName={`tobacco.${idx}.outgoing`}
-                  data={SELECT_COUNT}
                   disabled={isDisabled}
                   className="h-8!"
                 />

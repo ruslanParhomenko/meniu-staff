@@ -140,7 +140,7 @@
     "Side Dishes": "Garnituri",
     "Desserts": "Deserturi",
     "Omlette": "Omletă",
-    "Oatmeal with fresh fruits": "Fulgi de ovăz cu fructe proaspete",
+    "Oatmeal with fresh fruits": "Fulgi de ovăz cu fructe",
     "Pancakes with red caviar": "Clătite cu icre roșii",
     "Pancakes with salmon": "Clătite cu somon",
     "Bread and butter with caviar": "Pâine cu unt și icre",
@@ -155,7 +155,7 @@
     "Eggplant caviar": "Icre de vinete",
     "Zama": "Zama",
     "Mushroom cream soup": "Supă cremă de ciuperci",
-    "Grilled salmon steak": "Friptură de somon la grătar",
+    "Grilled salmon steak": "Somon la grătar",
     "Grilled Dorada": "Doradă la grătar",
     "Shrimps with Salsa": "Creveți cu salsa",
     "Grilled tiger prawns": "Creveți tigru la grătar",
@@ -165,7 +165,7 @@
     "Rack of milk veal": "Coaste de vițel cu lapte",
     "Spaghetti Bolognese": "Spaghete Bolognese",
     "Burger": "Burger",
-    "Club sandwich with french fries": "Sandwich Club cu cartofi prăjiți",
+    "Club sandwich with french fries": "Sandwich",
     "Rice with vegetables": "Orez cu legume",
     "French fries": "Cartofi prăjiți",
     "Mashed potatoes": "Piure de cartofi",
@@ -229,6 +229,7 @@
     "Căciula lui Guguță": "Căciula lui Guguță",
     "Dovlecei prajiti": "Dovlecei prajiti",
     "Salata Taraneasca": "Salata Taranească",
-    "Ardei prajiti": "Ardei prăjiți"
+    "Ardei prajiti": "Ardei prăjiți",
+    "Ciorba Soleanca": "Ciorbă Soleanca"
   }
 }
