@@ -73,8 +73,7 @@ export default function DailyReportForm() {
   //realtime
   const { sendRealTime, fetchRealTime } = useDataSupaBase({
     localStorageKey: LOCAL_STORAGE_KEY,
-    apiKey: REPORT_CUCINA_REALTIME_ENDPOINT,
-    user: "cucina",
+    apiKey: REPORT_CUCINA_REALTIME_ENDPOINT
   });
 
   //localstorage
