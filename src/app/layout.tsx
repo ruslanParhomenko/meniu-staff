@@ -11,7 +11,6 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { AbilityProvider } from "@/providers/AbilityProvider";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
-import { EmployeesProvider } from "@/providers/EmployeeProvider";
 import Header from "@/components/meniu/Header";
 import FrameTop from "@/components/meniu/FrameTop";
 import FrameBotton from "@/components/meniu/FrameBottom";
@@ -44,13 +43,11 @@ export default async function RootLayout({
           <NextIntlClientProvider>
             <ReactQueryProvider>
               <AbilityProvider>
-                <EmployeesProvider>
                   <div className="antialiased relative mx-auto h-screen">
                     <FrameTop />
                     {children}
                     <FrameBotton />
                   </div>
-                </EmployeesProvider>
               </AbilityProvider>
             </ReactQueryProvider>
           </NextIntlClientProvider>
