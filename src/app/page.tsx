@@ -1,24 +1,29 @@
+"use client";
 import AuthRedirect from "@/providers/AuthRedirect";
-import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
+import GoogleButton from "@/components/buttons/GoogleButton";
+import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import Header from "@/components/meniu/Header";
 
 export default function Home() {
+  const t = useTranslations("Meniu");
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setIsVisible(true), 400);
+  }, []);
   return (
     <AuthRedirect>
-      <main className="flex h-full flex-col gap-20 pb-10">
-        <div className="relative h-[40vh] w-full">
-          <div className="bg-linear-to-t absolute inset-0 from-white via-transparent to-transparent" />
-        </div>
-
-        <div className="flex flex-col items-center gap-6 px-6 text-center">
-          <Button
-            className="w-full font-bold md:max-w-[40%] lg:max-w-[30%]"
-            asChild
-          >
-            <Link href={"/signin"}>Get Started</Link>
-          </Button>
-        </div>
-      </main>
+      <div
+        className={`transform transition-all duration-700 
+                flex flex-col justify-between  items-center   pt-80 ${
+                  isVisible
+                    ? "opacity-100 translate-x-0"
+                    : "opacity-0 translate-x-20"
+                }`}
+      >
+        <GoogleButton />
+      </div>
     </AuthRedirect>
   );
 }

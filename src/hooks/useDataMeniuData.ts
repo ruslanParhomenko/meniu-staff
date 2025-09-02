@@ -1,7 +1,7 @@
 "use client";
 import { useQuery } from "@tanstack/react-query";
 const API_URL_MENIU =
-  "https://script.google.com/macros/s/AKfycbwqxcEmovwsYhWQ5-hTsNuubAiAWgAedzyJNVFfb_C0lhdglvXjPuiXF8FcD0KyFmthRw/exec";
+  "https://script.google.com/macros/s/AKfycbxtCCWo3UGXR9N1WSAqoUUJIrqCLaaozsiK8Rnngjo3nCRPN9crMx6mIKfukBIBEii-Mg/exec";
 
 async function fetchDaily() {
   const response = await fetch(API_URL_MENIU, {

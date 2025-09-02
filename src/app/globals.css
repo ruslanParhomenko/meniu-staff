@@ -1,10 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-/* @import "tailwindcss/preflight"; */
-
-@tailwind utilities;
-
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
@@ -50,7 +46,7 @@
   --color-rd: #e0245e;
 }
 
-/* :root {
+:root {
   --radius: 0.625rem;
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.13 0.028 261.692);
@@ -83,43 +79,9 @@
   --sidebar-ring: oklch(0.707 0.022 261.325);
   --background: oklch(1 0 0);
   --foreground: oklch(0.13 0.028 261.692);
-} */
-:root {
-  --radius: 0.625rem;
-  --card: #ffffff; /* oklch(1 0 0) — белый */
-  --card-foreground: #21212b; /* oklch(0.13 0.028 261.692) — тёмно-серый */
-  --popover: #ffffff; /* oklch(1 0 0) */
-  --popover-foreground: #21212b; /* oklch(0.13 0.028 261.692) */
-  --primary: #4c51bf; /* oklch(0.21 0.034 264.665) — насыщенный синий */
-  --primary-foreground: #f9fafb; /* oklch(0.985 0.002 247.839) — очень светлый */
-  --secondary: #f9fafb; /* oklch(0.967 0.003 264.542) — светлый */
-  --secondary-foreground: #4c51bf; /* oklch(0.21 0.034 264.665) */
-  --muted: #f9fafb; /* oklch(0.967 0.003 264.542) */
-  --muted-foreground: #6b7280; /* oklch(0.551 0.027 264.364) — серый */
-  --accent: #f9fafb; /* oklch(0.967 0.003 264.542) */
-  --accent-foreground: #4c51bf; /* oklch(0.21 0.034 264.665) */
-  --destructive: #dc2626; /* oklch(0.577 0.245 27.325) — красный */
-  --border: #e5e7eb; /* oklch(0.928 0.006 264.531) — светло-серый */
-  --input: #e5e7eb; /* то же */
-  --ring: #818cf8; /* oklch(0.707 0.022 261.325) — светло-синий */
-  --chart-1: #34d399; /* oklch(0.646 0.222 41.116) — мятный */
-  --chart-2: #60a5fa; /* oklch(0.6 0.118 184.704) — голубой */
-  --chart-3: #fbbf24; /* oklch(0.398 0.07 227.392) — жёлтый */
-  --chart-4: #a78bfa; /* oklch(0.828 0.189 84.429) — лавандовый */
-  --chart-5: #f87171; /* oklch(0.769 0.188 70.08) — розовый */
-  --sidebar: #f9fafb; /* oklch(0.985 0.002 247.839) */
-  --sidebar-foreground: #21212b; /* oklch(0.13 0.028 261.692) */
-  --sidebar-primary: #4c51bf; /* oklch(0.21 0.034 264.665) */
-  --sidebar-primary-foreground: #f9fafb; /* oklch(0.985 0.002 247.839) */
-  --sidebar-accent: #f9fafb; /* oklch(0.967 0.003 264.542) */
-  --sidebar-accent-foreground: #4c51bf; /* oklch(0.21 0.034 264.665) */
-  --sidebar-border: #e5e7eb; /* oklch(0.928 0.006 264.531) */
-  --sidebar-ring: #818cf8; /* oklch(0.707 0.022 261.325) */
-  --background: #ffffff; /* oklch(1 0 0) */
-  --foreground: #21212b; /* oklch(0.13 0.028 261.692) */
 }
 
-/* .dark {
+.dark {
   --background: oklch(0.13 0.028 261.692);
   --foreground: oklch(0.985 0.002 247.839);
   --card: oklch(0.21 0.034 264.665);
@@ -151,39 +113,6 @@
   --sidebar-accent-foreground: oklch(0.985 0.002 247.839);
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.551 0.027 264.364);
-} */
-.dark {
-  --background: #21212b;
-  --foreground: #f9fafb;
-  --card: #4c51bf;
-  --card-foreground: #f9fafb;
-  --popover: #4c51bf;
-  --popover-foreground: #f9fafb;
-  --primary: #ededef; /* заменяем светлый цвет для контраста */
-  --primary-foreground: #4c51bf;
-  --secondary: #475569;
-  --secondary-foreground: #f9fafb;
-  --muted: #475569;
-  --muted-foreground: #818cf8;
-  --accent: #475569;
-  --accent-foreground: #f9fafb;
-  --destructive: #b91c1c;
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.15);
-  --ring: #818cf8;
-  --chart-1: #3cb371;
-  --chart-2: #4682f4;
-  --chart-3: #fbbf24;
-  --chart-4: #9876f0;
-  --chart-5: #a52a2a;
-  --sidebar: #4c51bf;
-  --sidebar-foreground: #f9fafb;
-  --sidebar-primary: #3cb371;
-  --sidebar-primary-foreground: #f9fafb;
-  --sidebar-accent: #475569;
-  --sidebar-accent-foreground: #f9fafb;
-  --sidebar-border: rgba(255, 255, 255, 0.1);
-  --sidebar-ring: #818cf8;
 }
 
 @layer base {

@@ -11,16 +11,16 @@ const AuthRedirect = ({ children }: { children: React.ReactNode }) => {
   const { data: session } = useSession();
 
   useEffect(() => {
-    if (session === undefined) return;
+    if (session === undefined) router.replace("/");
 
     if (session?.user) {
-      router.replace("/schedule/bar");
+      router.replace("/meniu-staff");
     } else {
       setIsCheckingAuth(true);
     }
   }, [session, router]);
 
-  if (!isCheckingAuth) return <div>Loading...</div>;
+  if (!isCheckingAuth) return null;
 
   return <>{children}</>;
 };

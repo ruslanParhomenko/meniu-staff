@@ -231,5 +231,14 @@
     "Salata Taraneasca": "Salata Taranească",
     "Ardei prajiti": "Ardei prăjiți",
     "Ciorba Soleanca": "Ciorbă Soleanca"
+  },
+  "Staff": {
+    "Monday": "Luni",
+    "Tuesday": "Marți",
+    "Wednesday": "Miercuri",
+    "Thursday": "Joi",
+    "Friday": "Vineri",
+    "Saturday": "Sâmbătă",
+    "Sunday": "Duminică"
   }
 }
