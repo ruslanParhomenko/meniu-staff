@@ -15,11 +15,6 @@ export const LANGUAGES_LIST = [
   { label: "russian", lang: "ru" },
 ];
 
-export const LANGUAGES_FLAG: Record<string, string> = {
-  ro: "romanian.png",
-  ru: "russian.png",
-};
-
 export default function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
@@ -34,13 +29,13 @@ export default function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="relative flex h-8 w-8 items-center justify-center overflow-hidden rounded-full focus:outline-none">
+        <button className="relative flex h-6 w-6 items-center justify-center overflow-hidden rounded-full focus:outline-none">
           <Image
-            src={`/languageFlag/${LANGUAGES_FLAG[locale]}`}
+            src={"/global.png"}
             alt={locale}
             fill
             className="object-cover"
-            sizes="32px"
+            sizes="28px"
           />
         </button>
       </DropdownMenuTrigger>
@@ -54,7 +49,7 @@ export default function LanguageSwitcher() {
             <DropdownMenuItem
               key={lang}
               onSelect={() => changeLanguage(lang)}
-              className="cursor-pointer px-4 py-2 text-sm hover:bg-[#175CD340] hover:text-white focus:bg-[#347AE2] focus:text-white"
+              className="cursor-pointer px-4 py-2 text-sm hover:bg-[#175CD340] focus:bg-[#347AE2] "
             >
               {t(label)}
             </DropdownMenuItem>

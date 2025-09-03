@@ -7,14 +7,6 @@ import { useSendTelegram } from "@/hooks/use-send-telegram";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { SendResetButton } from "@/components/buttons/SendResetButton";
 
-import {
-  defaultEmptyValuesBar,
-  defaultEmptyValuesCucina,
-  defaultValuesZNBar,
-  defaultValuesZNCucina,
-  OrderListFormType,
-} from "@/features/order-list/schemas";
-
 export const OrderListTelegramForm = ({
   children,
   user,
@@ -24,38 +16,22 @@ export const OrderListTelegramForm = ({
   user: string;
   url: string;
 }) => {
-  const DATA_USER = {
-    barTTN: {
-      key: "order-ttn-bar",
-      default: defaultEmptyValuesBar,
-    },
-    cucinaTTN: {
-      key: "order-ttn-cucina",
-      default: defaultEmptyValuesCucina,
-    },
-    barZN: {
-      key: "order-bar",
-      default: defaultValuesZNBar,
-    },
-    cucinaZN: {
-      key: "order-cucina",
-      default: defaultValuesZNCucina,
-    },
-  };
   const URL_TELEGRAM = {
     ttn: "/api/send-telegram-ttn",
     zn: "/api/send-telegram-zn",
   };
-  type UserKey = keyof typeof DATA_USER;
 
-  const STORAGE_KEY = DATA_USER[user as UserKey]?.key;
-  const defaultValues = DATA_USER[user as UserKey]?.default;
+  const STORAGE_KEY = "orderListForm";
+  const defaultValues = {
+    text: "",
+    rows: [],
+  };
 
   const { sendTelegramMessage } = useSendTelegram();
   const { getValue, setValue, removeValue } =
-    useLocalStorageForm<OrderListFormType>(STORAGE_KEY);
+    useLocalStorageForm<any>(STORAGE_KEY);
 
-  const form = useForm<OrderListFormType>({
+  const form = useForm<any>({
     defaultValues: {
       ...defaultValues,
       ...getValue(),
@@ -73,7 +49,7 @@ export const OrderListTelegramForm = ({
     removeValue();
   };
 
-  const sendTextTelegram: SubmitHandler<OrderListFormType> = async (data) => {
+  const sendTextTelegram: SubmitHandler<any> = async (data) => {
     sendTelegramMessage(
       data,
       URL_TELEGRAM[url as keyof typeof URL_TELEGRAM],
