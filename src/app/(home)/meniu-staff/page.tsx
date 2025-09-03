@@ -17,7 +17,7 @@ export default function MeniuStaff() {
     setOpenAccordion(getCurrentDay());
   }, []);
   return (
-    <div className="min-h-screen flex flex-col items-center pt-15 pb-5 px-4">
+    <div className="min-h-screen flex flex-col items-center pt-15 pb-10 px-4">
       <MeniuStaffTable
         dataStaff={dataStaff}
         nameTag="monday"
