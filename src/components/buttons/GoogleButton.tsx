@@ -10,7 +10,7 @@ const GoogleButton = () => {
   const callbackUrl = searchParams.get("callbackUrl") || "/";
   return (
     <button
-      className="rounded-3xl border border-solid border-transparent bg-white text-center text-3xl font-bold   flex items-center justify-center text-background gap-4 shadow-lg hover:shadow-xl active:scale-95 transition-all duration-150 px-5 mt-10"
+      className="rounded-xl  bg-transparent text-center text-3xl font-bold   text-background  shadow-md  px-5"
       onClick={() => {
         signIn("google", {
           callbackUrl: callbackUrl,

@@ -1,7 +1,12 @@
 import { useTranslations } from "next-intl";
-import { Accordion, AccordionItem, AccordionTrigger } from "../ui/accordion";
-import { Label } from "../ui/label";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+} from "../../components/ui/accordion";
+import { Label } from "../../components/ui/label";
 import { RatingDots } from "@/utils/ratingDots";
+import { useFormContext } from "react-hook-form";
 
 export default function MeniuStaffTable({
   dataStaff,
@@ -16,6 +21,8 @@ export default function MeniuStaffTable({
 }) {
   const t = useTranslations("Staff");
   const isOpen = openAccordion === nameTag;
+  const form = useFormContext();
+  const { register } = form;
 
   const handleAccordionToggle = () => {
     if (isOpen) setOpenAccordion("");
@@ -38,7 +45,10 @@ export default function MeniuStaffTable({
             className="cursor-pointer px-4 no-underline focus:no-underline flex items-center justify-center gap-3 [&>svg]:hidden"
             onClick={handleAccordionToggle}
           >
-            <Label className={`text-xl ${isOpen ? "font-bold" : "opacity-60"}`}>
+            <Label
+              className={`text-xl ${isOpen ? "font-bold" : "opacity-60"}`}
+              {...register(nameTag)}
+            >
               {t(nameTag)}
             </Label>
           </AccordionTrigger>
@@ -51,13 +61,19 @@ export default function MeniuStaffTable({
                 : "0px",
             }}
           >
-            <div className="flex flex-col gap-2 py-2">
+            <div className="flex flex-col gap-2 pt-2 pb-5">
               {dataStaff?.[nameTag]?.map((item: string, index: number) => (
-                <div key={index} className="grid grid-cols-[60%_40%]">
-                  <span className="text-base text-left" data-phone="false">
-                    {item}
-                  </span>
-                  <RatingDots />
+                <div
+                  key={index}
+                  className="grid grid-cols-[60%_40%] items-center"
+                >
+                  <input
+                    type="hidden"
+                    value={item}
+                    {...register(`${nameTag}.${index}.item`)}
+                  />
+                  <span className="text-base text-left">{item}</span>
+                  <RatingDots name={`${nameTag}.${index}.rating`} />
                 </div>
               ))}
             </div>

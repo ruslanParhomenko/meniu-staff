@@ -10,7 +10,7 @@ import "regenerator-runtime/runtime";
 import { AbilityProvider } from "@/providers/AbilityProvider";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
 import FrameTop from "@/components/meniu/FrameTop";
-import FrameBotton from "@/components/meniu/FrameBottom";
+import FrameBotton from "@/components/meniu/FrameBotton";
 
 const lora = Lora({
   variable: "--font-lora",
