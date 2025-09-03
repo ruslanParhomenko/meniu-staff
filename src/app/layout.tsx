@@ -41,9 +41,7 @@ export default async function RootLayout({
             <ReactQueryProvider>
               <AbilityProvider>
                 <div className="antialiased relative mx-auto h-[100vh]">
-                  <FrameTop />
                   {children}
-                  <FrameBotton />
                 </div>
               </AbilityProvider>
             </ReactQueryProvider>

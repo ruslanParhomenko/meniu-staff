@@ -8,15 +8,42 @@ import { useState, useEffect } from "react";
 import { useMeniuData } from "@/hooks/useDataMeniuData";
 import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
+import { useLocalStorageForm } from "@/hooks/use-local-storage";
+import { useDataSupaBase } from "@/hooks/useRealTimeData";
 
 export default function MeniuStaffForm() {
   const { data } = useMeniuData();
+  const LOCAL_STORAGE_KEY = "meniu-staff";
+  //localstorage
+  const {
+    getValue,
+    setValue: setLocalStorage,
+    removeValue,
+  } = useLocalStorageForm<any>(LOCAL_STORAGE_KEY);
+
+  //realtime
+  const { sendRealTime, fetchRealTime } = useDataSupaBase({
+    localStorageKey: LOCAL_STORAGE_KEY,
+    apiKey: "meniu-staff",
+  });
   const dataStaff = data && data.staff;
   const session = useSession();
   const user = session.data?.user?.name;
 
   const form = useForm();
   const { register } = form;
+
+  const watchAllFields = form.watch();
+  //set locale supaBase
+  useEffect(() => {
+    if (!watchAllFields) return;
+    setLocalStorage(watchAllFields);
+    if (!user) return;
+    const timeout = setTimeout(() => {
+      sendRealTime();
+    }, 60000);
+    return () => clearTimeout(timeout);
+  }, [watchAllFields]);
 
   const [openAccordion, setOpenAccordion] = useState("");
 
@@ -57,7 +84,7 @@ export default function MeniuStaffForm() {
           <input type="hidden" value={user!} {...register("user")} />
         </form>
       </Form>
-      <div className="flex flex-row w-full items-center justify-around px-4 pt-2 gap-2 mt-auto">
+      <div className="flex flex-row w-full items-center justify-around px-4  gap-2 mt-auto">
         <button
           type="button"
           className="cursor-pointer"

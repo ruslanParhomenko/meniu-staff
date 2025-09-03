@@ -32,7 +32,7 @@ export default function MeniuStaffTable({
   if (!dataStaff) return null;
 
   return (
-    <div className="rounded-3xl w-full shadow-xs mt-4 flex items-center justify-center bg-foreground text-background">
+    <div className="rounded-xl w-full shadow-xs my-auto flex items-center justify-center bg-foreground text-background">
       <Accordion
         type="single"
         value={openAccordion}
