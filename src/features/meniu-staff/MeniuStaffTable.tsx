@@ -65,7 +65,7 @@ export default function MeniuStaffTable({
               {dataStaff?.[nameTag]?.map((item: string, index: number) => (
                 <div
                   key={index}
-                  className="grid grid-cols-[60%_40%] items-center"
+                  className="grid grid-cols-[58%_40%] items-center"
                 >
                   <input
                     type="hidden"

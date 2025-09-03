@@ -29,7 +29,10 @@ export default function LanguageSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="relative flex h-6 w-6 items-center justify-center overflow-hidden rounded-full focus:outline-none">
+        <button
+          type="button"
+          className="relative flex h-6 w-6 items-center justify-center overflow-hidden rounded-full focus:outline-none"
+        >
           <Image
             src={"/global.png"}
             alt={locale}

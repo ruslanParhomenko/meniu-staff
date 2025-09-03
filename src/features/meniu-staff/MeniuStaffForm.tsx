@@ -24,18 +24,18 @@ export default function MeniuStaffForm() {
     setOpenAccordion(getCurrentDay());
   }, []);
 
-  if (!session.data?.user) return null;
+  if (session.status === "loading") return null;
 
   return (
-    <div className="min-h-screen flex flex-col items-center pt-15 pb-10 px-1">
+    <div className="min-h-screen flex flex-col items-center pt-15 pb-15 px-1">
       <Form {...form}>
         <form
+          id="menuForm"
           onSubmit={form.handleSubmit((formData) => {
             console.log("Form submit:", formData);
           })}
           className="w-full flex flex-col flex-1"
         >
-          {/* --- твои аккордеоны --- */}
           {[
             "monday",
             "tuesday",
@@ -61,19 +61,14 @@ export default function MeniuStaffForm() {
         <button
           type="button"
           className="cursor-pointer"
-          onClick={(e) => {
-            e.stopPropagation();
+          onClick={() => {
             signOut({ callbackUrl: "/" });
           }}
         >
           <LogOut className="rotate-180 text-foreground" />
         </button>
 
-        <button
-          type="submit"
-          className="px-4 py-2  rounded"
-          form="formMeniuStaff"
-        >
+        <button type="submit" className="px-4 py-2  rounded" form="menuForm">
           Send
         </button>
 
