@@ -40,7 +40,7 @@ export default async function RootLayout({
           <NextIntlClientProvider>
             <ReactQueryProvider>
               <AbilityProvider>
-                <div className="antialiased relative mx-auto h-screen">
+                <div className="antialiased relative mx-auto h-[100vh]">
                   <FrameTop />
                   {children}
                   <FrameBotton />

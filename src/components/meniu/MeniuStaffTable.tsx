@@ -54,7 +54,9 @@ export default function MeniuStaffTable({
             <div className="flex flex-col gap-2 py-2">
               {dataStaff?.[nameTag]?.map((item: string, index: number) => (
                 <div key={index} className="grid grid-cols-[60%_40%]">
-                  <span className="text-base text-left">{item}</span>
+                  <span className="text-base text-left" data-phone="false">
+                    {item}
+                  </span>
                   <RatingDots />
                 </div>
               ))}

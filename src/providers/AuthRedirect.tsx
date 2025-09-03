@@ -11,7 +11,7 @@ const AuthRedirect = ({ children }: { children: React.ReactNode }) => {
   const { data: session } = useSession();
 
   useEffect(() => {
-    if (session === undefined) router.replace("/");
+    if (session === undefined) null;
 
     if (session?.user) {
       router.replace("/meniu-staff");
