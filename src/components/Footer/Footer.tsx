@@ -4,7 +4,7 @@ import { LogOut } from "lucide-react";
 
 export default function Footer() {
   return (
-    <div className="flex flex-row w-full items-center justify-around px-4 pt-2 gap-2 mt-auto">
+    <div className="flex flex-row w-full items-center justify-around px-4 pt-5 gap-2 mt-auto">
       <button
         type="button"
         className="cursor-pointer"
