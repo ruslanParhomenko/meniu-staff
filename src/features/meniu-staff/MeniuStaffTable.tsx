@@ -55,7 +55,7 @@ export default function MeniuStaffTable({
           </AccordionTrigger>
 
           <AccordionContent>
-            <div className="flex flex-col gap-2 pt-2 pb-5">
+            <div className="flex flex-col gap-2 pt-2 pb-4">
               {dataStaff?.[nameTag]?.map((item: string, index: number) => (
                 <div
                   key={index}

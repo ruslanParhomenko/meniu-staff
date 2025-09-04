@@ -61,7 +61,7 @@ export const OrderListTelegramForm = ({
   };
 
   return (
-    <div className=" rounded-xl w-full shadow-xs my-auto flex items-center justify-center bg-foreground text-background">
+    <div className="rounded-xl w-full shadow-xs my-auto flex items-center justify-center bg-foreground text-background">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(sendTextTelegram)}
@@ -77,7 +77,7 @@ export const OrderListTelegramForm = ({
           >
             <AccordionItem value="feedback">
               <AccordionTrigger
-                className="cursor-pointer px-4 no-underline focus:no-underline flex items-center justify-center gap-3 [&>svg]:hidden hover:no-underline"
+                className="cursor-pointer px-4 no-underline focus:no-underline flex items-center justify-center gap-2 [&>svg]:hidden hover:no-underline"
                 onClick={handleAccordionToggle}
               >
                 <Label
@@ -88,20 +88,20 @@ export const OrderListTelegramForm = ({
               </AccordionTrigger>
 
               <AccordionContent>
-                <div className="flex flex-col gap-2 pt-2 pb-5">
+                <div className="flex flex-col gap-2">
                   <Textarea
                     placeholder="notes ..."
                     {...form.register("notes")}
                   />
                   <div className="flex gap-4 w-full justify-end items-center px-4 ">
                     <button
-                      className="border border-background rounded w-10"
+                      className="bg-background border border-background rounded-md w-12 text-foreground"
                       type="submit"
                     >
                       ok
                     </button>
                     <button
-                      className="border border-background rounded w-10"
+                      className="bg-background border border-background rounded-md w-12 text-foreground"
                       type="button"
                       onClick={resetForm}
                     >

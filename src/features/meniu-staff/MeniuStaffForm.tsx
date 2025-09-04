@@ -87,7 +87,7 @@ export default function MeniuStaffForm() {
   // }, [user, dataStaff, form.reset]);
   if (session.status === "loading") return null;
   return (
-    <div className="min-h-screen flex flex-col items-center pt-10 pb-10 px-1">
+    <div className="h-full flex flex-col items-center pt-8 pb-8 px-1">
       <Form {...form}>
         <form
           id="menuForm"
