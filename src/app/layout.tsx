@@ -9,9 +9,6 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { AbilityProvider } from "@/providers/AbilityProvider";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
-import FrameTop from "@/components/meniu/FrameTop";
-import FrameBotton from "@/components/meniu/FrameBotton";
-
 const lora = Lora({
   variable: "--font-lora",
   subsets: ["latin"],
@@ -40,7 +37,7 @@ export default async function RootLayout({
           <NextIntlClientProvider>
             <ReactQueryProvider>
               <AbilityProvider>
-                <div className="antialiased relative mx-auto h-[100vh]">
+                <div className="antialiased relative mx-auto h-[100vh] max-w-[500px]">
                   {children}
                 </div>
               </AbilityProvider>

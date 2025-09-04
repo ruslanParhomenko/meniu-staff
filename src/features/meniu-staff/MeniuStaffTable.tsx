@@ -3,6 +3,7 @@ import {
   Accordion,
   AccordionItem,
   AccordionTrigger,
+  AccordionContent,
 } from "../../components/ui/accordion";
 import { Label } from "../../components/ui/label";
 import { RatingDots } from "@/utils/ratingDots";
@@ -42,7 +43,7 @@ export default function MeniuStaffTable({
       >
         <AccordionItem value={nameTag}>
           <AccordionTrigger
-            className="cursor-pointer px-4 no-underline focus:no-underline flex items-center justify-center gap-3 [&>svg]:hidden"
+            className="cursor-pointer px-4 no-underline focus:no-underline flex items-center justify-center gap-3 [&>svg]:hidden hover:no-underline"
             onClick={handleAccordionToggle}
           >
             <Label
@@ -53,14 +54,7 @@ export default function MeniuStaffTable({
             </Label>
           </AccordionTrigger>
 
-          <div
-            className="overflow-hidden transition-[max-height] duration-500 ease-in-out"
-            style={{
-              maxHeight: isOpen
-                ? `${dataStaff?.[nameTag]?.length * 50}px`
-                : "0px",
-            }}
-          >
+          <AccordionContent>
             <div className="flex flex-col gap-2 pt-2 pb-5">
               {dataStaff?.[nameTag]?.map((item: string, index: number) => (
                 <div
@@ -77,7 +71,7 @@ export default function MeniuStaffTable({
                 </div>
               ))}
             </div>
-          </div>
+          </AccordionContent>
         </AccordionItem>
       </Accordion>
     </div>

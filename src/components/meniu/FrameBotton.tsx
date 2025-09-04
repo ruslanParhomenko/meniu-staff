@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-export default function FrameBotton() {
+export default function FrameBotton({ size }: { size: number }) {
   return (
     <>
       <Image
@@ -8,16 +8,16 @@ export default function FrameBotton() {
         src="/2.svg"
         alt="2"
         priority
-        width={80}
-        height={80}
+        width={size}
+        height={size}
       />
       <Image
         className="absolute bottom-0 left-0 rotate-180"
         src="/2.svg"
         alt="2"
         priority
-        width={80}
-        height={80}
+        width={size}
+        height={size}
       />
     </>
   );

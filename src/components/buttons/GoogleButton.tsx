@@ -12,7 +12,7 @@ const GoogleButton = () => {
   const callbackUrl = searchParams.get("callbackUrl") || "/";
   return (
     <>
-      <FrameTop />
+      <FrameTop size={80} />
       <button
         className="rounded-xl  bg-transparent text-center text-3xl font-bold   text-background  shadow-md  px-5"
         onClick={() => {
@@ -41,7 +41,7 @@ const GoogleButton = () => {
           />
         </h1>
       </button>
-      <FrameBotton />
+      <FrameBotton size={80} />
     </>
   );
 };

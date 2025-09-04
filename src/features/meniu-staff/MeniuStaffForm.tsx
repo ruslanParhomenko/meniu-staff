@@ -1,7 +1,5 @@
 "use client";
-import LanguageSwitcher from "@/components/switches/LanguageSwitch";
-import { LogOut } from "lucide-react";
-import { signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import MeniuStaffTable from "@/features/meniu-staff/MeniuStaffTable";
 import { getCurrentDay } from "@/utils/getCurrentDay";
 import { useState, useEffect } from "react";
@@ -10,6 +8,20 @@ import { Form } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { useDataSupaBase } from "@/hooks/useRealTimeData";
+import Footer from "@/components/Footer/Footer";
+import { OrderListTelegramForm } from "@/providers/SendTelegramForm";
+
+interface FormValues {
+  user?: string;
+  monday?: string;
+  tuesday?: string;
+  wednesday?: string;
+  thursday?: string;
+  friday?: string;
+  saturday?: string;
+  sunday?: string;
+  [key: string]: any;
+}
 
 export default function MeniuStaffForm() {
   const { data } = useMeniuData();
@@ -29,18 +41,31 @@ export default function MeniuStaffForm() {
   const dataStaff = data && data.staff;
   const session = useSession();
   const user = session.data?.user?.name;
-
-  const form = useForm();
+  const form = useForm<FormValues>({
+    defaultValues: {
+      ...dataStaff,
+      ...getValue(),
+    },
+    mode: "onBlur",
+  });
   const { register } = form;
 
-  const watchAllFields = form.watch();
+  const watchAllFields: FormValues = form.watch();
   //set locale supaBase
   useEffect(() => {
     if (!watchAllFields) return;
     setLocalStorage(watchAllFields);
     if (!user) return;
     const timeout = setTimeout(() => {
-      sendRealTime();
+      const currentDay = getCurrentDay();
+      if (!watchAllFields?.[currentDay] || !user) return;
+      const dataToSend = {
+        user: watchAllFields?.user,
+        [currentDay]: watchAllFields?.[currentDay],
+        date: new Date().toISOString(),
+      };
+
+      sendRealTime({ ...dataToSend });
     }, 60000);
     return () => clearTimeout(timeout);
   }, [watchAllFields]);
@@ -51,15 +76,23 @@ export default function MeniuStaffForm() {
     setOpenAccordion(getCurrentDay());
   }, []);
 
+  // useEffect(() => {
+  //   if (user && dataStaff) {
+  //     form.reset({
+  //       ...dataStaff,
+  //       ...getValue(),
+  //       user: user,
+  //     });
+  //   }
+  // }, [user, dataStaff, form.reset]);
   if (session.status === "loading") return null;
-
   return (
-    <div className="min-h-screen flex flex-col items-center pt-15 pb-15 px-1">
+    <div className="min-h-screen flex flex-col items-center pt-10 pb-10 px-1">
       <Form {...form}>
         <form
           id="menuForm"
           onSubmit={form.handleSubmit((formData) => {
-            console.log("Form submit:", formData);
+            // console.log("Form submit:", formData);
           })}
           className="w-full flex flex-col flex-1"
         >
@@ -81,26 +114,16 @@ export default function MeniuStaffForm() {
             />
           ))}
 
-          <input type="hidden" value={user!} {...register("user")} />
+          {user && <input type="hidden" value={user} {...register("user")} />}
         </form>
       </Form>
-      <div className="flex flex-row w-full items-center justify-around px-4  gap-2 mt-auto">
-        <button
-          type="button"
-          className="cursor-pointer"
-          onClick={() => {
-            signOut({ callbackUrl: "/" });
-          }}
-        >
-          <LogOut className="rotate-180 text-foreground" />
-        </button>
-
-        <button type="submit" className="px-4 py-2  rounded" form="menuForm">
-          Send
-        </button>
-
-        <LanguageSwitcher />
-      </div>
+      <OrderListTelegramForm
+        user={user || ""}
+        openAccordion={openAccordion}
+        setOpenAccordion={setOpenAccordion}
+      />
+      {/* <button onClick={fetchRealTime}>fetch</button> */}
+      <Footer />
     </div>
   );
 }

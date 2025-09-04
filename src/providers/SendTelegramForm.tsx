@@ -5,32 +5,34 @@ import { useEffect } from "react";
 import { useSendTelegram } from "@/hooks/use-send-telegram";
 
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
-import { SendResetButton } from "@/components/buttons/SendResetButton";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Label } from "@/components/ui/label";
+import { useTranslations } from "next-intl";
 
 export const OrderListTelegramForm = ({
-  children,
   user,
-  url,
+  openAccordion,
+  setOpenAccordion,
 }: {
-  children: React.ReactNode;
   user: string;
-  url: string;
+  openAccordion: string;
+  setOpenAccordion: (value: string) => void;
 }) => {
-  const URL_TELEGRAM = {
-    ttn: "/api/send-telegram-ttn",
-    zn: "/api/send-telegram-zn",
-  };
-
-  const STORAGE_KEY = "orderListForm";
+  const t = useTranslations("Staff");
+  const STORAGE_KEY = "notes";
   const defaultValues = {
-    text: "",
-    rows: [],
+    notes: "",
   };
 
   const { sendTelegramMessage } = useSendTelegram();
   const { getValue, setValue, removeValue } =
     useLocalStorageForm<any>(STORAGE_KEY);
-
   const form = useForm<any>({
     defaultValues: {
       ...defaultValues,
@@ -50,19 +52,68 @@ export const OrderListTelegramForm = ({
   };
 
   const sendTextTelegram: SubmitHandler<any> = async (data) => {
-    sendTelegramMessage(
-      data,
-      URL_TELEGRAM[url as keyof typeof URL_TELEGRAM],
-      user
-    );
+    sendTelegramMessage(data, "api/send-telegram", user);
+  };
+  const isOpen = openAccordion === "feedback";
+  const handleAccordionToggle = () => {
+    if (isOpen) setOpenAccordion("");
+    else setOpenAccordion("feedback");
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(sendTextTelegram)}>
-        {children}
-        <SendResetButton resetForm={resetForm} />
-      </form>
-    </Form>
+    <div className=" rounded-xl w-full shadow-xs my-auto flex items-center justify-center bg-foreground text-background">
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(sendTextTelegram)}
+          id="telegram-form"
+          className="w-full px-4"
+        >
+          <Accordion
+            type="single"
+            value={openAccordion}
+            onValueChange={setOpenAccordion}
+            collapsible
+            className="w-full"
+          >
+            <AccordionItem value="feedback">
+              <AccordionTrigger
+                className="cursor-pointer px-4 no-underline focus:no-underline flex items-center justify-center gap-3 [&>svg]:hidden hover:no-underline"
+                onClick={handleAccordionToggle}
+              >
+                <Label
+                  className={`text-xl ${isOpen ? "font-bold" : "opacity-60"}`}
+                >
+                  {t("feedback")}
+                </Label>
+              </AccordionTrigger>
+
+              <AccordionContent>
+                <div className="flex flex-col gap-2 pt-2 pb-5">
+                  <Textarea
+                    placeholder="notes ..."
+                    {...form.register("notes")}
+                  />
+                  <div className="flex gap-4 w-full justify-end items-center px-4 ">
+                    <button
+                      className="border border-background rounded w-10"
+                      type="submit"
+                    >
+                      ok
+                    </button>
+                    <button
+                      className="border border-background rounded w-10"
+                      type="button"
+                      onClick={resetForm}
+                    >
+                      X
+                    </button>
+                  </div>
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </form>
+      </Form>
+    </div>
   );
 };

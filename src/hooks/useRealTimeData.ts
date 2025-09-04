@@ -3,26 +3,24 @@ import { useSession } from "next-auth/react";
 
 export const useDataSupaBase = ({
   localStorageKey,
-  apiKey
+  apiKey,
 }: {
   localStorageKey: string;
   apiKey: string;
 }) => {
-  const fetchMail = {
-    bar: ["cng.nv.rstrnt@gmail.com"],
-    cucina: ["cng.nv.kitchen@gmail.com"]
-  };
   const session = useSession();
   const sendRealTime = async (formData?: any) => {
-    const dataToSend = formData || localStorage.getItem(localStorageKey);
-    if (!dataToSend) return;
+    // const store = localStorage.getItem(localStorageKey) || "{}";
+
+    console.log("dataToSend", formData);
+    if (!formData) return;
     try {
       const res = await fetch(`/api/${apiKey}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           user_email: session?.data?.user?.email,
-          form_data: JSON.parse(dataToSend),
+          form_data: formData,
         }),
       });
 
@@ -38,24 +36,14 @@ export const useDataSupaBase = ({
       const res = await fetch(`/api/${apiKey}`);
       const allData = await res.json();
 
-      const dataBar = allData.filter((item: any) =>
-        fetchMail.bar.includes(item.user_email)
-      ).map((item: any) => item.form_data);
+      console.log("Fetched SupaBase data:", allData);
 
-      const dataCucina = allData.filter((item: any) =>
-        fetchMail.cucina.includes(item.user_email)
-      ).map((item: any) => item.form_data);
-      const resetData = {
-        bar: dataBar[0] || [],
-        cucina: dataCucina[0] || [],
-      };
-
-      if (resetData) {
+      if (allData) {
         // localStorage.setItem(
         //   localStorageKey,
         //   JSON.stringify(resetData)
         // );
-        return resetData
+        return allData;
       }
       return null;
     } catch (err) {
