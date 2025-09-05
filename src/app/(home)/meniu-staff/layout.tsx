@@ -4,9 +4,9 @@ import FrameTop from "@/components/meniu/FrameTop";
 const LayoutMeniuStaff = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
-      <FrameTop size={80} />
+      <FrameTop size={60} />
       {children}
-      <FrameBotton size={80} />
+      <FrameBotton size={60} />
     </>
   );
 };

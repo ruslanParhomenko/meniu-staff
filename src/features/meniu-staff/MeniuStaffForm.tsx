@@ -109,7 +109,7 @@ export default function MeniuStaffForm() {
           String(sendCountRef.current)
         );
       }
-    }, 30000);
+    }, 20000);
 
     return () => clearTimeout(timeout);
   }, [currentDayValue, user, currentDay]);
@@ -159,30 +159,38 @@ export default function MeniuStaffForm() {
   }, []);
   if (session.status === "loading") return null;
   return (
-    <div className="h-full flex flex-col items-center pt-12 pb-4 px-1 mx-2">
+    <div className="h-full flex flex-col items-center pt-4 pb-2 px-1 mx-2">
       <Form {...form}>
         <form
           id="menuForm"
           onSubmit={form.handleSubmit((formData) => {})}
           className="w-full flex flex-col flex-1"
         >
-          {[
-            "monday",
-            "tuesday",
-            "wednesday",
-            "thursday",
-            "friday",
-            "saturday",
-            "sunday",
-          ].map((day) => (
-            <MeniuStaffTable
-              key={day}
-              dataStaff={dataStaff}
-              nameTag={day}
-              openAccordion={openAccordion}
-              setOpenAccordion={setOpenAccordion}
-            />
-          ))}
+          {user ? (
+            <>
+              {[
+                "monday",
+                "tuesday",
+                "wednesday",
+                "thursday",
+                "friday",
+                "saturday",
+                "sunday",
+              ].map((day) => (
+                <MeniuStaffTable
+                  key={day}
+                  dataStaff={dataStaff}
+                  nameTag={day}
+                  openAccordion={openAccordion}
+                  setOpenAccordion={setOpenAccordion}
+                />
+              ))}
+            </>
+          ) : (
+            <div className="flex flex-col flex-1 items-center justify-center">
+              <h1 className="text-2xl font-bold">необходимо авторизоваться</h1>
+            </div>
+          )}
 
           {user && <input type="hidden" value={user} {...register("user")} />}
         </form>
