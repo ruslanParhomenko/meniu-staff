@@ -54,7 +54,7 @@ export default function MeniuStaffForm() {
 
   const watchAllFields: FormValues = form.watch();
   const currentDay = getCurrentDay();
-  const currentDayValue = useWatch({
+  const currentDayValue: FormValues = useWatch({
     control: form.control,
     name: currentDay,
   });
@@ -85,7 +85,7 @@ export default function MeniuStaffForm() {
   useEffect(() => {
     if (!currentDayValue || !user) return;
 
-    if (sendCountRef.current >= 5) {
+    if (sendCountRef.current >= 6) {
       toast.error("Лимит отправок достигнут для текущего дня");
       return;
     }
@@ -93,7 +93,9 @@ export default function MeniuStaffForm() {
     const timeout = setTimeout(() => {
       const dataToSend = {
         user: watchAllFields?.user,
-        [currentDay]: currentDayValue,
+        [currentDay]: Array.isArray(currentDayValue)
+          ? currentDayValue.filter((item) => item.rating)
+          : currentDayValue,
         date: new Date().toISOString(),
       };
 
