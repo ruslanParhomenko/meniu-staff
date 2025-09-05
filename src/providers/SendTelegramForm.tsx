@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/accordion";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
+import { RotateCcw, Send, SendHorizonal } from "lucide-react";
 
 export const OrderListTelegramForm = ({
   user,
@@ -94,18 +95,11 @@ export const OrderListTelegramForm = ({
                     {...form.register("notes")}
                   />
                   <div className="flex gap-4 w-full justify-end items-center px-4 ">
-                    <button
-                      className="bg-background border border-background rounded-md w-12 text-foreground"
-                      type="submit"
-                    >
-                      ok
+                    <button className="w-12" type="submit">
+                      <SendHorizonal className="mx-auto text-background" />
                     </button>
-                    <button
-                      className="bg-background border border-background rounded-md w-12 text-foreground"
-                      type="button"
-                      onClick={resetForm}
-                    >
-                      X
+                    <button className="w-12" type="button" onClick={resetForm}>
+                      <RotateCcw className="mx-auto text-background" />
                     </button>
                   </div>
                 </div>

@@ -30,7 +30,7 @@ export default function MeniuStaffTable({
     else setOpenAccordion(nameTag);
   };
 
-  if (!dataStaff) return null;
+  const skeletonItems = Array(4).fill(""); // количество полос-заглушек
 
   return (
     <div className="rounded-xl w-full shadow-xs my-auto flex items-center justify-center bg-foreground text-background">
@@ -56,20 +56,30 @@ export default function MeniuStaffTable({
 
           <AccordionContent>
             <div className="flex flex-col gap-2 pt-2 pb-4">
-              {dataStaff?.[nameTag]?.map((item: string, index: number) => (
-                <div
-                  key={index}
-                  className="grid grid-cols-[58%_40%] items-center"
-                >
-                  <input
-                    type="hidden"
-                    value={item}
-                    {...register(`${nameTag}.${index}.item`)}
-                  />
-                  <span className="text-base text-left">{item}</span>
-                  <RatingDots name={`${nameTag}.${index}.rating`} />
-                </div>
-              ))}
+              {dataStaff?.[nameTag]
+                ? dataStaff[nameTag].map((item: string, index: number) => (
+                    <div
+                      key={index}
+                      className="grid grid-cols-[58%_40%] items-center"
+                    >
+                      <input
+                        type="hidden"
+                        value={item}
+                        {...register(`${nameTag}.${index}.item`)}
+                      />
+                      <span className="text-base text-left">{item}</span>
+                      <RatingDots name={`${nameTag}.${index}.rating`} />
+                    </div>
+                  ))
+                : skeletonItems.map((_, index) => (
+                    <div
+                      key={index}
+                      className="grid grid-cols-[58%_40%] items-center gap-2 animate-pulse"
+                    >
+                      <div className="h-5 bg-background/30 rounded w-full"></div>
+                      <div className="h-5 bg-background/30 rounded w-full"></div>
+                    </div>
+                  ))}
             </div>
           </AccordionContent>
         </AccordionItem>

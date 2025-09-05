@@ -2,14 +2,16 @@
 import { useSession } from "next-auth/react";
 import MeniuStaffTable from "@/features/meniu-staff/MeniuStaffTable";
 import { getCurrentDay } from "@/utils/getCurrentDay";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use, useRef } from "react";
 import { useMeniuData } from "@/hooks/useDataMeniuData";
 import { Form } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { useDataSupaBase } from "@/hooks/useRealTimeData";
 import Footer from "@/components/Footer/Footer";
 import { OrderListTelegramForm } from "@/providers/SendTelegramForm";
+import { de } from "date-fns/locale";
+import toast from "react-hot-toast";
 
 interface FormValues {
   user?: string;
@@ -51,49 +53,115 @@ export default function MeniuStaffForm() {
   const { register } = form;
 
   const watchAllFields: FormValues = form.watch();
+  const currentDay = getCurrentDay();
+  const currentDayValue = useWatch({
+    control: form.control,
+    name: currentDay,
+  });
   //set locale supaBase
+  const sendCountRef = useRef(0);
+  const [lastDay, setLastDay] = useState(currentDay);
+
+  // Инициализация из localStorage на клиенте
   useEffect(() => {
-    if (!watchAllFields) return;
-    setLocalStorage(watchAllFields);
-    if (!user) return;
+    if (typeof window === "undefined") return;
+
+    const saved = localStorage.getItem(`sendCount-${currentDay}`);
+    sendCountRef.current = saved ? Number(saved) : 0;
+  }, [currentDay]);
+
+  // Обнуляем счетчик при смене дня
+  useEffect(() => {
+    if (currentDay !== lastDay) {
+      sendCountRef.current = 0;
+      setLastDay(currentDay);
+      if (typeof window !== "undefined") {
+        localStorage.setItem(`sendCount-${currentDay}`, "0");
+      }
+    }
+  }, [currentDay, lastDay]);
+
+  // Эффект отправки — только при изменении currentDayValue
+  useEffect(() => {
+    if (!currentDayValue || !user) return;
+
+    if (sendCountRef.current >= 5) {
+      toast.error("Лимит отправок достигнут для текущего дня");
+      return;
+    }
+    toast.success("Данные сохраненятся в течении 30 секунд");
+
     const timeout = setTimeout(() => {
-      const currentDay = getCurrentDay();
-      if (!watchAllFields?.[currentDay] || !user) return;
       const dataToSend = {
         user: watchAllFields?.user,
-        [currentDay]: watchAllFields?.[currentDay],
+        [currentDay]: currentDayValue,
         date: new Date().toISOString(),
       };
 
-      sendRealTime({ ...dataToSend });
-    }, 60000);
+      sendRealTime(dataToSend);
+
+      sendCountRef.current += 1;
+      if (typeof window !== "undefined") {
+        localStorage.setItem(
+          `sendCount-${currentDay}`,
+          String(sendCountRef.current)
+        );
+      }
+    }, 30000);
+
     return () => clearTimeout(timeout);
-  }, [watchAllFields]);
+  }, [currentDayValue, user, currentDay]);
 
   const [openAccordion, setOpenAccordion] = useState("");
+  useEffect(() => {
+    setLocalStorage({
+      ...dataStaff,
+      [currentDay]: watchAllFields?.[currentDay],
+    });
+  }, [watchAllFields]);
+  const otherFields = useWatch({
+    control: form.control,
+    name: [
+      "monday",
+      "tuesday",
+      "wednesday",
+      "thursday",
+      "friday",
+      "saturday",
+      "sunday",
+    ].filter((day) => day !== currentDay),
+  });
+  const prevOtherFieldsRef = useRef(otherFields);
+
+  useEffect(() => {
+    if (!prevOtherFieldsRef.current) {
+      prevOtherFieldsRef.current = otherFields;
+      return;
+    }
+
+    const changed = otherFields.some(
+      (val, i) => val !== prevOtherFieldsRef.current[i]
+    );
+
+    if (changed) {
+      toast.error("Оценка применяется только к текущему дню", {
+        duration: 3000,
+      });
+    }
+
+    prevOtherFieldsRef.current = [...otherFields];
+  }, [otherFields]);
 
   useEffect(() => {
     setOpenAccordion(getCurrentDay());
   }, []);
-
-  // useEffect(() => {
-  //   if (user && dataStaff) {
-  //     form.reset({
-  //       ...dataStaff,
-  //       ...getValue(),
-  //       user: user,
-  //     });
-  //   }
-  // }, [user, dataStaff, form.reset]);
   if (session.status === "loading") return null;
   return (
-    <div className="h-full flex flex-col items-center pt-8 pb-8 px-1">
+    <div className="h-full flex flex-col items-center pt-12 pb-4 px-1 mx-2">
       <Form {...form}>
         <form
           id="menuForm"
-          onSubmit={form.handleSubmit((formData) => {
-            // console.log("Form submit:", formData);
-          })}
+          onSubmit={form.handleSubmit((formData) => {})}
           className="w-full flex flex-col flex-1"
         >
           {[
@@ -122,7 +190,6 @@ export default function MeniuStaffForm() {
         openAccordion={openAccordion}
         setOpenAccordion={setOpenAccordion}
       />
-      {/* <button onClick={fetchRealTime}>fetch</button> */}
       <Footer />
     </div>
   );

@@ -1,7 +1,7 @@
 "use client";
 import { useLocale } from "next-intl";
-import Image from "next/image";
 import { useRouter } from "@/i18n/navigation";
+import { Globe } from "lucide-react";
 
 export default function LanguageSwitcher() {
   const locale = useLocale();
@@ -20,13 +20,7 @@ export default function LanguageSwitcher() {
       onClick={() => changeLanguage(nextLang)}
       className="relative flex h-6 w-6 items-center justify-center overflow-hidden rounded-full focus:outline-none"
     >
-      <Image
-        src={"/global.png"}
-        alt={locale}
-        fill
-        className="object-cover"
-        sizes="28px"
-      />
+      <Globe className="text-foreground" />
     </button>
   );
 }
