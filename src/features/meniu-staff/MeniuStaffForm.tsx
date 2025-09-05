@@ -187,11 +187,13 @@ export default function MeniuStaffForm() {
           {user && <input type="hidden" value={user} {...register("user")} />}
         </form>
       </Form>
-      <OrderListTelegramForm
-        user={user || ""}
-        openAccordion={openAccordion}
-        setOpenAccordion={setOpenAccordion}
-      />
+      {user && (
+        <OrderListTelegramForm
+          user={user}
+          openAccordion={openAccordion}
+          setOpenAccordion={setOpenAccordion}
+        />
+      )}
       <Footer />
     </div>
   );
