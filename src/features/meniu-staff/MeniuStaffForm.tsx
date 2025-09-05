@@ -81,9 +81,17 @@ export default function MeniuStaffForm() {
     }
   }, [currentDay, lastDay]);
 
+  console.log("currentDayValue", currentDayValue);
+
   // Эффект отправки — только при изменении currentDayValue
   useEffect(() => {
     if (!currentDayValue || !user) return;
+
+    const hasRating = Array.isArray(currentDayValue)
+      ? currentDayValue.some((item) => item.rating)
+      : !!currentDayValue?.rating;
+
+    if (!hasRating) return;
 
     if (sendCountRef.current >= 6) {
       toast.error("Лимит отправок достигнут для текущего дня");
