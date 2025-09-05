@@ -117,7 +117,7 @@ export default function MeniuStaffForm() {
           String(sendCountRef.current)
         );
       }
-    }, 20000);
+    }, 10000);
 
     return () => clearTimeout(timeout);
   }, [currentDayValue, user, currentDay]);
