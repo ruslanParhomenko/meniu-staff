@@ -89,7 +89,6 @@ export default function MeniuStaffForm() {
       toast.error("Лимит отправок достигнут для текущего дня");
       return;
     }
-    toast.success("Данные сохраненятся в течении 30 секунд");
 
     const timeout = setTimeout(() => {
       const dataToSend = {
@@ -99,6 +98,7 @@ export default function MeniuStaffForm() {
       };
 
       sendRealTime(dataToSend);
+      toast.success("Данные отправлены");
 
       sendCountRef.current += 1;
       if (typeof window !== "undefined") {
