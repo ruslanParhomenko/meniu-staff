@@ -94,7 +94,7 @@ export default function MeniuStaffForm() {
     if (!hasRating) return;
 
     if (sendCountRef.current >= 6) {
-      toast.error("Лимит отправок достигнут для текущего дня");
+      // toast.error("Лимит отправок достигнут для текущего дня");
       return;
     }
 
