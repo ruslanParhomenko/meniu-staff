@@ -167,7 +167,7 @@ export default function MeniuStaffForm() {
   }, []);
   if (session.status === "loading") return null;
   return (
-    <div className="h-full flex flex-col items-center pt-4 pb-2 px-1 mx-2">
+    <div className="h-full flex flex-col items-center py-1.5 mx-1.5">
       <Form {...form}>
         <form
           id="menuForm"
