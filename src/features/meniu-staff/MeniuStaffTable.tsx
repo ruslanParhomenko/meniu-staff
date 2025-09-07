@@ -81,8 +81,8 @@ export default function MeniuStaffTable({
                       key={index}
                       className="grid grid-cols-[58%_40%] items-center gap-2 animate-pulse"
                     >
-                      <div className="h-5 bg-gr/30 rounded w-full"></div>
-                      <div className="h-5 bg-gr/30 rounded w-full"></div>
+                      <div className="h-5 bg-background rounded w-full"></div>
+                      <div className="h-5 bg-background rounded w-full"></div>
                     </div>
                   ))}
             </div>

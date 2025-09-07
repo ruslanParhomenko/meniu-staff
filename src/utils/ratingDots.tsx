@@ -13,7 +13,7 @@ export const RatingDots = ({ name }: RatingDotsProps) => {
   const rating = watch(name) || 0;
 
   return (
-    <div className="flex w-full justify-center items-center gap-4">
+    <div className="flex w-full justify-center items-center gap-3">
       {[1, 2, 3, 4, 5].map((i) => (
         <button
           key={i}
@@ -28,11 +28,11 @@ export const RatingDots = ({ name }: RatingDotsProps) => {
         </button>
       ))}
       <span
-        className="w-5 text-center text-md text-background font-bold pl-2 cursor-pointer inline-block"
+        className="w-5 text-center text-md text-background font-bold cursor-pointer inline-block"
         onClick={() => setValue(name, 0)}
       >
         {rating === 0 ? (
-          <StarIcon className="size-3 fill-current text-black cursor-pointer mx-auto" />
+          <StarIcon className="size-4 fill-current text-black cursor-pointer mx-auto" />
         ) : (
           rating
         )}
