@@ -2,7 +2,7 @@
 
 import { useFormContext } from "react-hook-form";
 import { cn } from "@/lib/utils";
-import { StarIcon } from "lucide-react";
+import { DotIcon, StarIcon } from "lucide-react";
 
 type RatingDotsProps = {
   name: string;
@@ -13,7 +13,7 @@ export const RatingDots = ({ name }: RatingDotsProps) => {
   const rating = watch(name) || 0;
 
   return (
-    <div className="flex w-full justify-center items-center gap-3">
+    <div className="flex w-full justify-center items-center">
       {[1, 2, 3, 4, 5].map((i) => (
         <button
           key={i}
@@ -24,11 +24,11 @@ export const RatingDots = ({ name }: RatingDotsProps) => {
             i <= rating ? "text-background" : "text-black"
           )}
         >
-          ●
+          <DotIcon className="size-5 fill-current cursor-pointer mx-auto" />
         </button>
       ))}
       <span
-        className="w-5 text-center text-md text-background font-bold cursor-pointer inline-block"
+        className="w-10 text-center text-md text-background font-bold cursor-pointer inline-block"
         onClick={() => setValue(name, 0)}
       >
         {rating === 0 ? (

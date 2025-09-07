@@ -63,7 +63,7 @@ export default function MeniuStaffTable({
                 ? dataStaff[nameTag].map((item: string, index: number) => (
                     <div
                       key={index}
-                      className="grid grid-cols-[58%_42%] items-center"
+                      className="grid grid-cols-[57%_43%] items-center"
                     >
                       <input
                         type="hidden"
@@ -73,7 +73,9 @@ export default function MeniuStaffTable({
                       <span className="text-md text-left font-bold">
                         {item}
                       </span>
-                      <RatingDots name={`${nameTag}.${index}.rating`} />
+                      {item && (
+                        <RatingDots name={`${nameTag}.${index}.rating`} />
+                      )}
                     </div>
                   ))
                 : skeletonItems.map((_, index) => (
