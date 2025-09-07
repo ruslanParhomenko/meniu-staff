@@ -44,7 +44,6 @@
 
   --color-bl: #1da1f2;
   --color-rd: #e0245e;
-  --color-gr: #3a3f2e;
 }
 
 :root {
@@ -62,7 +61,7 @@
   --accent: oklch(0.967 0.003 264.542);
   --accent-foreground: oklch(0.21 0.034 264.665);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(28.445% 0.11404 262.123);
+  --border: oklch(0.928 0.006 264.531);
   --input: oklch(0.928 0.006 264.531);
   --ring: oklch(0.707 0.022 261.325);
   --chart-1: oklch(0.646 0.222 41.116);
@@ -78,16 +77,10 @@
   --sidebar-accent-foreground: oklch(0.21 0.034 264.665);
   --sidebar-border: oklch(0.928 0.006 264.531);
   --sidebar-ring: oklch(0.707 0.022 261.325);
-  /* --background: #f9fbfd; */
-  --background: #f5f9fc; /* светлый пастельный фон (тренд на soft UI) */
-  --foreground: #2c2c38; /* глубокий графитовый текст — современный нейтральный */
-  --muted: #6b7280; /* вторичный текст, серый с лёгким холодным подтоном */
-  --accent: #2d6bc9; /* акцент (ссылки, кнопки) — глубокий синий, в тренде */
-  --highlight: #c94f2d; /* дополнительный акцент — терракота, теплый контраст */
-
-  /* Шрифты */
-  --font-family: var(--font-fraunces);
-  /* --foreground: #355c8c;  */
+  /* --background: #f9fbfd; 
+  --foreground: #2a4d7a; */
+  --background: #f5f9fc;
+  --foreground: #355c8c;
 }
 
 .dark {

@@ -35,26 +35,30 @@ export default function MeniuStaffTable({
         value={openAccordion}
         onValueChange={setOpenAccordion}
         collapsible
-        className="w-full px-2"
+        className="w-full px-2 border-none"
       >
-        <AccordionItem value={nameTag}>
-          <AccordionItem value={nameTag}>
-            <AccordionTrigger
-              className="cursor-pointer px-4 flex items-center justify-between  hover:no-underline [&>svg]:font-bold [&>svg]:text-foreground"
-              onClick={handleAccordionToggle}
+        <AccordionItem
+          value={nameTag}
+          className={`border rounded-md border-foreground transition-colors duration-500 ${
+            isOpen ? "bg-foreground text-background" : "bg-transparent"
+          }`}
+        >
+          <AccordionTrigger
+            className="cursor-pointer px-2 flex items-center justify-between hover:no-underline [&>svg]:font-bold [&>svg]:hidden"
+            onClick={handleAccordionToggle}
+          >
+            <Label
+              className={`text-xl transition-colors duration-500 ${
+                isOpen ? "font-bold" : "text-muted-foreground"
+              }`}
+              {...register(nameTag)}
             >
-              <Label
-                className={`text-xl ${
-                  isOpen ? "font-bold text-gr" : "text-muted-foreground"
-                }`}
-                {...register(nameTag)}
-              >
-                {t(nameTag)}
-              </Label>
-            </AccordionTrigger>
-          </AccordionItem>
-          <AccordionContent>
-            <div className="flex flex-col gap-3 pt-4 texte-gr">
+              {t(nameTag)}
+            </Label>
+          </AccordionTrigger>
+
+          <AccordionContent className="transition-all duration-500 overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
+            <div className="flex flex-col gap-3 p-2">
               {dataStaff?.[nameTag]
                 ? dataStaff[nameTag].map((item: string, index: number) => (
                     <div

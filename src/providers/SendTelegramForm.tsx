@@ -74,9 +74,17 @@ export const OrderListTelegramForm = ({
             value={openAccordion}
             onValueChange={setOpenAccordion}
             collapsible
-            className="w-full"
+            className="w-full px-2 border-none"
           >
-            <AccordionItem value="feedback">
+            <AccordionItem
+              value="feedback"
+              className={`border rounded-md border-foreground transition-all duration-500 overflow-hidden
+  ${
+    isOpen
+      ? "bg-foreground text-background opacity-100 max-h-[1000px]"
+      : "bg-transparent opacity-0 max-h-0"
+  }`}
+            >
               <AccordionTrigger
                 className="cursor-pointer  px-4 no-underline focus:no-underline flex items-center justify-center gap-2 [&>svg]:hidden hover:no-underline"
                 onClick={handleAccordionToggle}
@@ -87,7 +95,7 @@ export const OrderListTelegramForm = ({
                   <Textarea
                     placeholder="notes ..."
                     {...form.register("notes")}
-                    className="resize-none bg-gr/50 text-white "
+                    className="resize-none"
                   />
                   <div className="flex gap-4 w-full justify-end items-center pt-2">
                     <button className="w-12" type="submit">

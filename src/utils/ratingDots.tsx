@@ -21,18 +21,18 @@ export const RatingDots = ({ name }: RatingDotsProps) => {
           onClick={() => setValue(name, i)}
           className={cn(
             "text-md transition-colors",
-            i <= rating ? "text-rd" : "text-gr"
+            i <= rating ? "text-background" : "text-black"
           )}
         >
           ●
         </button>
       ))}
       <span
-        className="w-5 text-center text-md text-rd font-bold pl-2 cursor-pointer inline-block"
+        className="w-5 text-center text-md text-background font-bold pl-2 cursor-pointer inline-block"
         onClick={() => setValue(name, 0)}
       >
         {rating === 0 ? (
-          <StarIcon className="size-3 fill-current text-gr cursor-pointer mx-auto" />
+          <StarIcon className="size-3 fill-current text-black cursor-pointer mx-auto" />
         ) : (
           rating
         )}

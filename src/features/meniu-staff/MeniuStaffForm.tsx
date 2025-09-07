@@ -9,20 +9,8 @@ import { useForm, useWatch } from "react-hook-form";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { useDataSupaBase } from "@/hooks/useRealTimeData";
 import Footer from "@/components/footer/Footer";
-import { OrderListTelegramForm } from "@/providers/SendTelegramForm";
 import toast from "react-hot-toast";
-
-interface FormValues {
-  user?: string;
-  monday?: string;
-  tuesday?: string;
-  wednesday?: string;
-  thursday?: string;
-  friday?: string;
-  saturday?: string;
-  sunday?: string;
-  [key: string]: any;
-}
+import { FormValues } from "./schema";
 
 export default function MeniuStaffForm() {
   const { data } = useMeniuData();
@@ -32,7 +20,7 @@ export default function MeniuStaffForm() {
     useLocalStorageForm<any>(LOCAL_STORAGE_KEY);
 
   //realtime
-  const { sendRealTime, fetchRealTime } = useDataSupaBase({
+  const { sendRealTime } = useDataSupaBase({
     localStorageKey: LOCAL_STORAGE_KEY,
     apiKey: "meniu-staff",
   });
@@ -182,7 +170,11 @@ export default function MeniuStaffForm() {
         </form>
       </Form>
 
-      <Footer />
+      <Footer
+        openAccordion={openAccordion}
+        setOpenAccordion={setOpenAccordion}
+        nameTag={"feedback"}
+      />
     </div>
   );
 }
