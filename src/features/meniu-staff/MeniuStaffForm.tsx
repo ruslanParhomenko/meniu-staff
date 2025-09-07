@@ -122,9 +122,10 @@ export default function MeniuStaffForm() {
       (val, i) => val !== prevOtherFieldsRef.current[i]
     );
     if (changed) {
-      toast.error("Оценка применяется только к текущему дню", {
-        duration: 3000,
-      });
+      const timeOut = setTimeout(() => {
+        toast.error("Оценка применяется только к текущему дню");
+      }, 4000);
+      return () => clearTimeout(timeOut);
     }
     prevOtherFieldsRef.current = [...otherFields];
   }, [otherFields]);
