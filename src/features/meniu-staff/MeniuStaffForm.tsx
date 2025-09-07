@@ -8,9 +8,9 @@ import { Form } from "@/components/ui/form";
 import { useForm, useWatch } from "react-hook-form";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { useDataSupaBase } from "@/hooks/useRealTimeData";
-import Footer from "@/components/footer/Footer";
 import toast from "react-hot-toast";
 import { FormValues } from "./schema";
+import Footer from "@/components/footer/Footer";
 
 export default function MeniuStaffForm() {
   const { data } = useMeniuData();
