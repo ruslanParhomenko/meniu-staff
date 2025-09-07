@@ -11,14 +11,14 @@ export default function FrameTop({ size }: { size: number }) {
         width={size}
         height={size}
       />
-      <Image
+      {/* <Image
         className="absolute top-0 left-0"
         priority
         src="/top.png"
         alt="2"
         width={size}
         height={size}
-      />
+      /> */}
     </>
   );
 }

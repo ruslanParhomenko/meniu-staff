@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Lora } from "next/font/google";
+import { Fraunces } from "next/font/google";
 import "./globals.css";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
@@ -9,11 +9,13 @@ import "core-js/stable";
 import "regenerator-runtime/runtime";
 import { AbilityProvider } from "@/providers/AbilityProvider";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
-const lora = Lora({
-  variable: "--font-lora",
+
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ["500", "700"],
+  weight: ["400", "500", "600", "700"], // Fraunces поддерживает много градаций
   style: ["normal", "italic"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -30,7 +32,7 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${lora.variable} antialiased`}
+        className={`${fraunces.variable} antialiased`}
         suppressHydrationWarning={true}
       >
         <SessionProviders>
@@ -44,7 +46,7 @@ export default async function RootLayout({
             </ReactQueryProvider>
           </NextIntlClientProvider>
         </SessionProviders>
-        <Toaster position="bottom-right" />
+        <Toaster position="top-center" />
       </body>
     </html>
   );
