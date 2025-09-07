@@ -10,7 +10,7 @@ import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { useDataSupaBase } from "@/hooks/useRealTimeData";
 import toast from "react-hot-toast";
 import { FormValues } from "./schema";
-import Footer from "@/components/footer/Footer";
+import FooterButton from "@/components/buttons/FooterButton";
 
 export default function MeniuStaffForm() {
   const { data } = useMeniuData();
@@ -170,7 +170,7 @@ export default function MeniuStaffForm() {
         </form>
       </Form>
 
-      <Footer
+      <FooterButton
         openAccordion={openAccordion}
         setOpenAccordion={setOpenAccordion}
         nameTag={"feedback"}

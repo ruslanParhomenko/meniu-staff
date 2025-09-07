@@ -4,7 +4,7 @@ import LanguageSwitcher from "../switches/LanguageSwitch";
 import { LogOut, Mail } from "lucide-react";
 import { OrderListTelegramForm } from "@/providers/SendTelegramForm";
 
-export default function Footer({
+export default function FooterButton({
   openAccordion,
   setOpenAccordion,
   nameTag,
