@@ -79,9 +79,8 @@
   --sidebar-ring: oklch(0.707 0.022 261.325);
   /* --background: #f9fbfd; 
   --foreground: #2a4d7a; */
-  --font-famaly: var(--font-lora);
-  --background: #f5f9fc; /* молочно-голубоватый */
-  --foreground: #355c8c; /* глубокий, но не слишком тёмный синий */
+  --background: #f5f9fc;
+  --foreground: #355c8c;
 }
 
 .dark {

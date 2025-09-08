@@ -1,7 +1,6 @@
 "use client";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
-import Image from "next/image";
 import { useTranslations } from "next-intl";
 import FrameTop from "../meniu/FrameTop";
 import FrameBotton from "../meniu/FrameBotton";

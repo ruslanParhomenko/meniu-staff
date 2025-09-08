@@ -1,10 +1,13 @@
+import FrameBotton from "@/components/meniu/FrameBotton";
+import FrameTop from "@/components/meniu/FrameTop";
+
 const LayoutMeniuStaff = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
-      {/* <FrameTop size={60} /> */}
+    <div className="py-4 h-screen">
+      <FrameTop size={50} />
       {children}
-      {/* <FrameBotton size={60} /> */}
-    </>
+      <FrameBotton size={50} />
+    </div>
   );
 };
 

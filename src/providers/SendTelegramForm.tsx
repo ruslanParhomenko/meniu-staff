@@ -12,19 +12,19 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
-import { RotateCcw, Send, SendHorizonal } from "lucide-react";
+import { RotateCcw, SendHorizonal } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 export const OrderListTelegramForm = ({
-  user,
   openAccordion,
   setOpenAccordion,
 }: {
-  user: string;
   openAccordion: string;
   setOpenAccordion: (value: string) => void;
 }) => {
+  const session = useSession();
+  const user = session.data?.user?.name;
   const t = useTranslations("Staff");
   const STORAGE_KEY = "notes";
   const defaultValues = {
@@ -53,7 +53,7 @@ export const OrderListTelegramForm = ({
   };
 
   const sendTextTelegram: SubmitHandler<any> = async (data) => {
-    sendTelegramMessage(data, "api/send-telegram", user);
+    sendTelegramMessage(data, "api/send-telegram", user!);
   };
   const isOpen = openAccordion === "feedback";
   const handleAccordionToggle = () => {
@@ -62,44 +62,47 @@ export const OrderListTelegramForm = ({
   };
 
   return (
-    <div className="rounded-xl w-full shadow-xs my-auto flex items-center justify-center bg-foreground text-background">
+    <div className="w-full my-auto flex items-center justify-center">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(sendTextTelegram)}
           id="telegram-form"
-          className="w-full px-4"
+          className="w-full"
         >
           <Accordion
             type="single"
             value={openAccordion}
             onValueChange={setOpenAccordion}
             collapsible
-            className="w-full"
+            className="w-full px-2 border-none"
           >
-            <AccordionItem value="feedback">
+            <AccordionItem
+              value="feedback"
+              className={`border rounded-md border-foreground transition-all duration-500 overflow-hidden
+  ${
+    isOpen
+      ? "bg-foreground text-background opacity-100 max-h-[1000px]"
+      : "bg-transparent opacity-0 max-h-0"
+  }`}
+            >
               <AccordionTrigger
-                className="cursor-pointer px-4 no-underline focus:no-underline flex items-center justify-center gap-2 [&>svg]:hidden hover:no-underline"
+                className="cursor-pointer  px-4 no-underline focus:no-underline flex items-center justify-center gap-2 [&>svg]:hidden hover:no-underline"
                 onClick={handleAccordionToggle}
-              >
-                <Label
-                  className={`text-xl ${isOpen ? "font-bold" : "opacity-60"}`}
-                >
-                  {t("feedback")}
-                </Label>
-              </AccordionTrigger>
+              ></AccordionTrigger>
 
-              <AccordionContent>
-                <div className="flex flex-col gap-2">
+              <AccordionContent className="px-1.5">
+                <div className="flex flex-col">
                   <Textarea
                     placeholder="notes ..."
                     {...form.register("notes")}
+                    className="resize-none"
                   />
-                  <div className="flex gap-4 w-full justify-end items-center px-4 ">
+                  <div className="flex gap-4 w-full justify-end items-center pt-2">
                     <button className="w-12" type="submit">
-                      <SendHorizonal className="mx-auto text-background" />
+                      <SendHorizonal className="mx-auto text-gr" />
                     </button>
                     <button className="w-12" type="button" onClick={resetForm}>
-                      <RotateCcw className="mx-auto text-background" />
+                      <RotateCcw className="mx-auto text-gr" />
                     </button>
                   </div>
                 </div>

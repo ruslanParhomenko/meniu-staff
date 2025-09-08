@@ -2,41 +2,25 @@
 import { useSession } from "next-auth/react";
 import MeniuStaffTable from "@/features/meniu-staff/MeniuStaffTable";
 import { getCurrentDay } from "@/utils/getCurrentDay";
-import { useState, useEffect, use, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useMeniuData } from "@/hooks/useDataMeniuData";
 import { Form } from "@/components/ui/form";
 import { useForm, useWatch } from "react-hook-form";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
 import { useDataSupaBase } from "@/hooks/useRealTimeData";
-import Footer from "@/components/Footer/Footer";
-import { OrderListTelegramForm } from "@/providers/SendTelegramForm";
-import { de } from "date-fns/locale";
 import toast from "react-hot-toast";
-
-interface FormValues {
-  user?: string;
-  monday?: string;
-  tuesday?: string;
-  wednesday?: string;
-  thursday?: string;
-  friday?: string;
-  saturday?: string;
-  sunday?: string;
-  [key: string]: any;
-}
+import { FormValues } from "./schema";
+import FooterButton from "@/components/buttons/FooterButton";
 
 export default function MeniuStaffForm() {
   const { data } = useMeniuData();
   const LOCAL_STORAGE_KEY = "meniu-staff";
   //localstorage
-  const {
-    getValue,
-    setValue: setLocalStorage,
-    removeValue,
-  } = useLocalStorageForm<any>(LOCAL_STORAGE_KEY);
+  const { getValue, setValue: setLocalStorage } =
+    useLocalStorageForm<any>(LOCAL_STORAGE_KEY);
 
   //realtime
-  const { sendRealTime, fetchRealTime } = useDataSupaBase({
+  const { sendRealTime } = useDataSupaBase({
     localStorageKey: LOCAL_STORAGE_KEY,
     apiKey: "meniu-staff",
   });
@@ -51,7 +35,6 @@ export default function MeniuStaffForm() {
     mode: "onBlur",
   });
   const { register } = form;
-
   const watchAllFields: FormValues = form.watch();
   const currentDay = getCurrentDay();
   const currentDayValue: FormValues = useWatch({
@@ -62,15 +45,11 @@ export default function MeniuStaffForm() {
   const sendCountRef = useRef(0);
   const [lastDay, setLastDay] = useState(currentDay);
 
-  // Инициализация из localStorage на клиенте
   useEffect(() => {
     if (typeof window === "undefined") return;
-
     const saved = localStorage.getItem(`sendCount-${currentDay}`);
     sendCountRef.current = saved ? Number(saved) : 0;
   }, [currentDay]);
-
-  // Обнуляем счетчик при смене дня
   useEffect(() => {
     if (currentDay !== lastDay) {
       sendCountRef.current = 0;
@@ -80,13 +59,8 @@ export default function MeniuStaffForm() {
       }
     }
   }, [currentDay, lastDay]);
-
-  console.log("currentDayValue", currentDayValue);
-
-  // Эффект отправки — только при изменении currentDayValue
   useEffect(() => {
     if (!currentDayValue || !user) return;
-
     const hasRating = Array.isArray(currentDayValue)
       ? currentDayValue.some((item) => item.rating)
       : !!currentDayValue?.rating;
@@ -97,7 +71,6 @@ export default function MeniuStaffForm() {
       // toast.error("Лимит отправок достигнут для текущего дня");
       return;
     }
-
     const timeout = setTimeout(() => {
       const dataToSend = {
         user: watchAllFields?.user,
@@ -109,7 +82,6 @@ export default function MeniuStaffForm() {
 
       sendRealTime(dataToSend);
       toast.success("Данные отправлены");
-
       sendCountRef.current += 1;
       if (typeof window !== "undefined") {
         localStorage.setItem(
@@ -118,10 +90,8 @@ export default function MeniuStaffForm() {
         );
       }
     }, 10000);
-
     return () => clearTimeout(timeout);
   }, [currentDayValue, user, currentDay]);
-
   const [openAccordion, setOpenAccordion] = useState("");
   useEffect(() => {
     setLocalStorage({
@@ -148,17 +118,15 @@ export default function MeniuStaffForm() {
       prevOtherFieldsRef.current = otherFields;
       return;
     }
-
     const changed = otherFields.some(
       (val, i) => val !== prevOtherFieldsRef.current[i]
     );
-
     if (changed) {
-      toast.error("Оценка применяется только к текущему дню", {
-        duration: 3000,
-      });
+      const timeOut = setTimeout(() => {
+        toast.error("Оценка применяется только к текущему дню");
+      }, 4000);
+      return () => clearTimeout(timeOut);
     }
-
     prevOtherFieldsRef.current = [...otherFields];
   }, [otherFields]);
 
@@ -167,7 +135,7 @@ export default function MeniuStaffForm() {
   }, []);
   if (session.status === "loading") return null;
   return (
-    <div className="h-full flex flex-col items-center py-1.5 mx-1.5">
+    <div className="h-full flex flex-col items-center py-2">
       <Form {...form}>
         <form
           id="menuForm"
@@ -196,21 +164,18 @@ export default function MeniuStaffForm() {
             </>
           ) : (
             <div className="flex flex-col flex-1 items-center justify-center">
-              <h1 className="text-2xl font-bold">необходимо авторизоваться</h1>
+              <h1 className="text-xl font-bold">необходимо авторизоваться</h1>
             </div>
           )}
-
           {user && <input type="hidden" value={user} {...register("user")} />}
         </form>
       </Form>
-      {user && (
-        <OrderListTelegramForm
-          user={user}
-          openAccordion={openAccordion}
-          setOpenAccordion={setOpenAccordion}
-        />
-      )}
-      <Footer />
+
+      <FooterButton
+        openAccordion={openAccordion}
+        setOpenAccordion={setOpenAccordion}
+        nameTag={"feedback"}
+      />
     </div>
   );
 }

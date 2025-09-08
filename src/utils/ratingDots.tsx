@@ -2,7 +2,7 @@
 
 import { useFormContext } from "react-hook-form";
 import { cn } from "@/lib/utils";
-import { StarIcon } from "lucide-react";
+import { Circle, StarIcon } from "lucide-react";
 
 type RatingDotsProps = {
   name: string;
@@ -24,16 +24,15 @@ export const RatingDots = ({ name }: RatingDotsProps) => {
             i <= rating ? "text-background" : "text-black"
           )}
         >
-          ●
+          <Circle className="size-4 px-0.5 fill-current cursor-pointer mx-auto" />
         </button>
       ))}
-
       <span
-        className="text-md text-background px-2"
+        className="w-10 text-center text-md text-background font-bold cursor-pointer inline-block"
         onClick={() => setValue(name, 0)}
       >
-        {rating === 0 || rating === "" ? (
-          <StarIcon className="size-4 fill-current" />
+        {rating === 0 ? (
+          <StarIcon className="size-4 fill-current text-black cursor-pointer mx-auto" />
         ) : (
           rating
         )}
