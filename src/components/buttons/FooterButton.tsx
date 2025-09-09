@@ -33,7 +33,7 @@ export default function FooterButton({
         openAccordion={openAccordion}
         setOpenAccordion={setOpenAccordion}
       />
-      <div className="flex flex-row w-full items-center justify-around px-4 pt-5 gap-2 mt-auto">
+      <div className="flex flex-row w-full items-center justify-around px-4 pt-5 gap-2 mt-auto sticky bottom-0 bg-background/60">
         <button
           type="button"
           className="cursor-pointer"
