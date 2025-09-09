@@ -12,6 +12,7 @@ export default function AdminPage() {
   }, []);
 
   async function toggleMode() {
+    if (mode === null) return;
     const newMode = !mode;
     const res = await fetch("/api/mode", {
       method: "POST",
@@ -29,8 +30,8 @@ export default function AdminPage() {
       <h1 className="text-xl font-bold">Admin Panel</h1>
       <p>Текущее состояние: {mode ? "✅ Включено" : "❌ Выключено"}</p>
       <button
+        className="px-4 py-2 bg-blue-600 text-white rounded"
         onClick={toggleMode}
-        className="px-4 py-2 rounded bg-blue-600 text-white"
       >
         Переключить
       </button>
