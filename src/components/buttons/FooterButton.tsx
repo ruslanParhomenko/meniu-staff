@@ -1,8 +1,10 @@
 "use client";
 import { signOut } from "next-auth/react";
 import LanguageSwitcher from "../switches/LanguageSwitch";
-import { LogOut, Mail } from "lucide-react";
+import { LogOut, Mail, Settings } from "lucide-react";
 import { OrderListTelegramForm } from "@/providers/SendTelegramForm";
+import { useRouter } from "@/i18n/navigation";
+import { useAbility } from "@/providers/AbilityProvider";
 
 export default function FooterButton({
   openAccordion,
@@ -13,11 +15,17 @@ export default function FooterButton({
   setOpenAccordion: (value: string) => void;
   nameTag: string;
 }) {
+  const { isAdmin } = useAbility();
+  const router = useRouter();
   const isOpen = openAccordion === nameTag;
 
   const handleAccordionToggle = () => {
     if (isOpen) setOpenAccordion("");
     else setOpenAccordion("feedback");
+  };
+
+  const replaceRootPage = () => {
+    isAdmin && router.replace("/admin");
   };
   return (
     <>
@@ -34,6 +42,9 @@ export default function FooterButton({
           }}
         >
           <LogOut className="rotate-180 text-foreground" />
+        </button>
+        <button className="w-12" type="button" onClick={replaceRootPage}>
+          <Settings className="mx-auto text-foreground" />
         </button>
         <button className="w-12" type="button" onClick={handleAccordionToggle}>
           <Mail className="mx-auto text-foreground" />
