@@ -10,7 +10,7 @@ import { Button } from "../ui/button";
 const GoogleButton = () => {
   const t = useTranslations("Meniu");
   const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const callbackUrl = searchParams.get("callbackUrl") || "/meniu-staff";
   return (
     <>
       <FrameTop size={150} />
