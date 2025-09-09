@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import FrameTop from "../meniu/FrameTop";
 import FrameBotton from "../meniu/FrameBotton";
 import { Dot } from "lucide-react";
+import { Button } from "../ui/button";
 
 const GoogleButton = () => {
   const t = useTranslations("Meniu");
@@ -13,19 +14,17 @@ const GoogleButton = () => {
   return (
     <>
       <FrameTop size={150} />
-      <button
+      <Button
+        variant={"default"}
         onClick={() => {
           signIn("google", {
             callbackUrl: callbackUrl,
           });
         }}
+        className="flex items-center gap-2 text-center text-4xl font-bold text-background p-8 px-12 rounded-full"
       >
-        <h1 className="flex items-center gap-2 text-center text-6xl font-bold text-foreground">
-          <Dot className="h-10 w-10" />
-          {t("menu")}
-          <Dot className="h-10 w-10" />
-        </h1>
-      </button>
+        {t("menu")}
+      </Button>
       <FrameBotton size={150} />
     </>
   );
