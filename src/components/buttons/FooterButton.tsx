@@ -43,9 +43,9 @@ export default function FooterButton({
         >
           <LogOut className="rotate-180 text-foreground" />
         </button>
-        <button className="w-12" type="button" onClick={replaceRootPage}>
+        {/* <button className="w-12" type="button" onClick={replaceRootPage}>
           <Settings className="mx-auto text-foreground" />
-        </button>
+        </button> */}
         <button className="w-12" type="button" onClick={handleAccordionToggle}>
           <Mail className="mx-auto text-foreground" />
         </button>
