@@ -20,7 +20,7 @@ export default function LanguageSwitcher() {
       onClick={() => changeLanguage(nextLang)}
       className="relative flex h-6 w-6 items-center justify-center overflow-hidden rounded-full focus:outline-none"
     >
-      <Globe className="text-foreground" />
+      <Globe className="text-white" />
     </button>
   );
 }

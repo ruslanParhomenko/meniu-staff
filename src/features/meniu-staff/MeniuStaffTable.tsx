@@ -8,6 +8,8 @@ import {
 import { Label } from "../../components/ui/label";
 import { RatingDots } from "@/utils/ratingDots";
 import { useFormContext } from "react-hook-form";
+import { cn } from "@/lib/utils";
+import { useEffect, useState } from "react";
 export default function MeniuStaffTable({
   dataStaff,
   nameTag,
@@ -28,8 +30,20 @@ export default function MeniuStaffTable({
     else setOpenAccordion(nameTag);
   };
   const skeletonItems = Array(4).fill("");
+
+  const [delayedOpen, setDelayedOpen] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setDelayedOpen(false);
+      const timer = setTimeout(() => setDelayedOpen(true), 700);
+      return () => clearTimeout(timer);
+    } else {
+      setDelayedOpen(false);
+    }
+  }, [isOpen]);
   return (
-    <div className="w-full my-auto flex items-center justify-center text-foreground">
+    <div className="w-full my-auto flex items-center justify-cente">
       <Accordion
         type="single"
         value={openAccordion}
@@ -39,8 +53,8 @@ export default function MeniuStaffTable({
       >
         <AccordionItem
           value={nameTag}
-          className={`border rounded-md border-foreground transition-colors duration-500 ${
-            isOpen ? "bg-foreground text-background" : "bg-transparent"
+          className={`border rounded-md border-white transition-colors duration-500 ${
+            isOpen ? "bg-white text-black" : "bg-transparent"
           }`}
         >
           <AccordionTrigger
@@ -49,7 +63,7 @@ export default function MeniuStaffTable({
           >
             <Label
               className={`text-xl transition-colors duration-500 ${
-                isOpen ? "font-bold" : "text-muted-foreground"
+                isOpen ? "font-bold" : "text-white"
               }`}
               {...register(nameTag)}
             >
@@ -57,13 +71,22 @@ export default function MeniuStaffTable({
             </Label>
           </AccordionTrigger>
 
-          <AccordionContent className="transition-all duration-500 overflow-hidden data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
-            <div className="flex flex-col gap-3 p-2">
+          <AccordionContent
+            className={cn(
+              "overflow-hidden transition-all duration-500 ease-in-out px-1"
+            )}
+          >
+            <div
+              className={cn(
+                "flex flex-col gap-3 py-2 transition-all duration-1000 ease-in-out",
+                delayedOpen ? "px-6" : "px-1"
+              )}
+            >
               {dataStaff?.[nameTag]
                 ? dataStaff[nameTag].map((item: string, index: number) => (
                     <div
                       key={index}
-                      className="grid grid-cols-[57%_43%] items-center"
+                      className="grid grid-cols-[57%_43%] items-center animate-fadeIn"
                     >
                       <input
                         type="hidden"
@@ -83,8 +106,8 @@ export default function MeniuStaffTable({
                       key={index}
                       className="grid grid-cols-[58%_40%] items-center gap-2 animate-pulse"
                     >
-                      <div className="h-5 bg-background rounded w-full"></div>
-                      <div className="h-5 bg-background rounded w-full"></div>
+                      <div className="h-5 bg-black rounded w-full"></div>
+                      <div className="h-5 bg-black rounded w-full"></div>
                     </div>
                   ))}
             </div>

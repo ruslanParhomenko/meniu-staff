@@ -3,27 +3,19 @@ import { useSession } from "next-auth/react";
 import MeniuStaffTable from "@/features/meniu-staff/MeniuStaffTable";
 import { getCurrentDay } from "@/utils/getCurrentDay";
 import { useState, useEffect, useRef } from "react";
-import { useMeniuData } from "@/hooks/useDataMeniuData";
 import { Form } from "@/components/ui/form";
-import { useForm, useWatch } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { useLocalStorageForm } from "@/hooks/use-local-storage";
-import { useDataSupaBase } from "@/hooks/useRealTimeData";
-import toast from "react-hot-toast";
 import { FormValues } from "./schema";
 import FooterButton from "@/components/buttons/FooterButton";
 
-export default function MeniuStaffForm() {
-  const { data } = useMeniuData();
+export default function MeniuStaffForm({ data }: { data: any }) {
   const LOCAL_STORAGE_KEY = "meniu-staff";
+
   //localstorage
   const { getValue, setValue: setLocalStorage } =
     useLocalStorageForm<any>(LOCAL_STORAGE_KEY);
 
-  //realtime
-  const { sendRealTime } = useDataSupaBase({
-    localStorageKey: LOCAL_STORAGE_KEY,
-    apiKey: "meniu-staff",
-  });
   const dataStaff = data && data.staff;
   const session = useSession();
   const user = session.data?.user?.name;
@@ -37,10 +29,7 @@ export default function MeniuStaffForm() {
   const { register } = form;
   const watchAllFields: FormValues = form.watch();
   const currentDay = getCurrentDay();
-  const currentDayValue: FormValues = useWatch({
-    control: form.control,
-    name: currentDay,
-  });
+
   //set locale supaBase
   const sendCountRef = useRef(0);
   const [lastDay, setLastDay] = useState(currentDay);
@@ -59,39 +48,7 @@ export default function MeniuStaffForm() {
       }
     }
   }, [currentDay, lastDay]);
-  useEffect(() => {
-    if (!currentDayValue || !user) return;
-    const hasRating = Array.isArray(currentDayValue)
-      ? currentDayValue.some((item) => item.rating)
-      : !!currentDayValue?.rating;
 
-    if (!hasRating) return;
-
-    if (sendCountRef.current >= 6) {
-      // toast.error("Лимит отправок достигнут для текущего дня");
-      return;
-    }
-    const timeout = setTimeout(() => {
-      const dataToSend = {
-        user: watchAllFields?.user,
-        [currentDay]: Array.isArray(currentDayValue)
-          ? currentDayValue.filter((item) => item.rating)
-          : currentDayValue,
-        date: new Date().toISOString(),
-      };
-
-      sendRealTime(dataToSend);
-      toast.success("Данные отправлены");
-      sendCountRef.current += 1;
-      if (typeof window !== "undefined") {
-        localStorage.setItem(
-          `sendCount-${currentDay}`,
-          String(sendCountRef.current)
-        );
-      }
-    }, 10000);
-    return () => clearTimeout(timeout);
-  }, [currentDayValue, user, currentDay]);
   const [openAccordion, setOpenAccordion] = useState("");
   useEffect(() => {
     setLocalStorage({
@@ -99,47 +56,17 @@ export default function MeniuStaffForm() {
       [currentDay]: watchAllFields?.[currentDay],
     });
   }, [watchAllFields]);
-  const otherFields = useWatch({
-    control: form.control,
-    name: [
-      "monday",
-      "tuesday",
-      "wednesday",
-      "thursday",
-      "friday",
-      "saturday",
-      "sunday",
-    ].filter((day) => day !== currentDay),
-  });
-  const prevOtherFieldsRef = useRef(otherFields);
-
-  useEffect(() => {
-    if (!prevOtherFieldsRef.current) {
-      prevOtherFieldsRef.current = otherFields;
-      return;
-    }
-    const changed = otherFields.some(
-      (val, i) => val !== prevOtherFieldsRef.current[i]
-    );
-    if (changed) {
-      const timeOut = setTimeout(() => {
-        toast.error("Оценка применяется только к текущему дню");
-      }, 4000);
-      return () => clearTimeout(timeOut);
-    }
-    prevOtherFieldsRef.current = [...otherFields];
-  }, [otherFields]);
 
   useEffect(() => {
     setOpenAccordion(getCurrentDay());
   }, []);
   if (session.status === "loading") return null;
   return (
-    <div className="h-full flex flex-col items-center py-2">
+    <div className="h-full flex flex-col items-center py-2  mx-auto  max-w-[500px] bg-black/80">
       <Form {...form}>
         <form
           id="menuForm"
-          onSubmit={form.handleSubmit((formData) => {})}
+          onSubmit={form.handleSubmit(() => {})}
           className="w-full flex flex-col flex-1"
         >
           {user ? (

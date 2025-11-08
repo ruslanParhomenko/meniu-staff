@@ -2,9 +2,6 @@
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import FrameTop from "../meniu/FrameTop";
-import FrameBotton from "../meniu/FrameBotton";
-import { Dot } from "lucide-react";
 import { Button } from "../ui/button";
 
 const GoogleButton = () => {
@@ -13,7 +10,6 @@ const GoogleButton = () => {
   const callbackUrl = searchParams.get("callbackUrl") || "/meniu-staff";
   return (
     <>
-      <FrameTop size={150} />
       <Button
         variant={"default"}
         onClick={() => {
@@ -21,11 +17,10 @@ const GoogleButton = () => {
             callbackUrl: callbackUrl,
           });
         }}
-        className="flex items-center gap-2 text-center text-4xl font-bold text-background p-8 px-12 rounded-full"
+        className="flex items-center gap-2 text-center text-3xl font-bold  p-8 px-16 bg-white text-black hover:bg-black/60 hover:text-white hover:shadow-lg hover:shadow-black/20"
       >
         {t("menu")}
       </Button>
-      <FrameBotton size={150} />
     </>
   );
 };

@@ -21,14 +21,14 @@ export const RatingDots = ({ name }: RatingDotsProps) => {
           onClick={() => setValue(name, i)}
           className={cn(
             "text-md transition-colors",
-            i <= rating ? "text-background" : "text-black"
+            i <= rating ? "text-black" : "text-gray-300/60"
           )}
         >
           <Circle className="size-4 px-0.5 fill-current cursor-pointer mx-auto" />
         </button>
       ))}
       <span
-        className="w-10 text-center text-md text-background font-bold cursor-pointer inline-block"
+        className="w-10 text-center text-md text-black font-bold cursor-pointer inline-block"
         onClick={() => setValue(name, 0)}
       >
         {rating === 0 ? (
